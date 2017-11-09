@@ -1,0 +1,14 @@
+/*GLOBAL*/
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  font-size: 13px;
+  background-color: #fff;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
