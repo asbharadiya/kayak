@@ -19,8 +19,6 @@ var mongoStore = require("connect-mongo/es5")(expressSessions);
 
 var cors = require('cors');
 
-require('./routes/passport')(passport);
-
 var router = express.Router();
 require('./routes/router')(router,passport);
 
@@ -69,7 +67,7 @@ app.use(expressSessions({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/',router);
+app.use('/api/v1',router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

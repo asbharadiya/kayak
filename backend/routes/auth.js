@@ -28,7 +28,7 @@ module.exports = function(passport) {
 	}
 
 	module.checkSession = function(req,res){
-		res.status(200).json({status:200,statusText:"Success",data:{uname:req.user.uname}});
+		res.status(200).json({status:200,statusText:"Success",data:{username:req.user.uname}});
 	}
 
 	module.logout = function(req,res){
