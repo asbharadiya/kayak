@@ -1,0 +1,90 @@
+header {
+  position: fixed;
+  left: 240px;
+  right: 0px;
+  top: 0px;
+  background: #fff;
+  padding: 40px 40px 0 40px;
+  height: 100px;
+  z-index: 5;
+  box-shadow: 0 8px 8px -8px rgba(0,0,0,0.2);
+}
+
+header .page-title-container {
+  float: left;
+}
+
+ header .page-title-container h1 {
+  font-size: 20px;
+  line-height: 32px;
+  padding: 0;
+  margin: 0;
+  color: #1B2733;
+}
+
+header .topnav-container {
+  float: right;
+}
+
+header .topnav-container .nav {
+  height: 32px;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  line-height: 32px;
+}
+
+header .topnav-container .nav .dropdown .dropdown-toggle {
+  color: #1B2733;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 0px;
+}
+
+header .topnav-container .nav .dropdown .dropdown-toggle .caret {
+  /*display: none;*/
+}
+
+header .topnav-container .nav .dropdown .dropdown-toggle .div-circular img {
+  width: 32px;
+  height: 32px;
+}
+
+header .topnav-container .nav .dropdown .dropdown-toggle:focus, .dashboard-page .page-content header .topnav-container ul .dropdown .dropdown-toggle:hover {
+  background: none;
+}
+
+header .topnav-container .nav .dropdown.open .dropdown-toggle {
+  background: none;
+}
+
+header .topnav-container .nav .dropdown.open .dropdown-menu {
+  right: 0px;
+  left: auto;
+  padding: 0px;
+  display: inline-block;
+  box-sizing: inherit;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+  min-width: 220px;
+  background-color: #FFF;
+  box-shadow: 0 0 0 1px rgba(99, 114, 130, 0.16), 0 8px 16px rgba(27, 39, 51, 0.08);
+  border-radius: 4px;
+  outline: none;
+  border: 0px;
+  margin-top: 8px;
+}
+
+header .topnav-container .nav .dropdown.open .dropdown-menu li.user-label {
+  margin-top: 9px;
+}
+
+header .topnav-container .nav .dropdown.open .dropdown-menu li:focus {
+  outline: none;
+}
+
+header .topnav-container .nav .dropdown.open .dropdown-menu li a {
+  padding: 9px 16px;
+  outline: none;
+}
