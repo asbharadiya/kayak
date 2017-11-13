@@ -11,8 +11,8 @@ var profile = require('./services/profile');
 var mongo = require('./services/mongo');
 mongo.createConnectionPool();
 
-var mongoWithDbPool = require('./services/mongoWithDbPool');
-mongoWithDbPool.connect();
+// var mongoWithDbPool = require('./services/mongoWithDbPool');
+// mongoWithDbPool.connect();
 
 var config = require('config');
 var topic_name = config.kafkaTopic;

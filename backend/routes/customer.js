@@ -5,7 +5,7 @@ var topic_name = config.kafkaTopic;
 
 function getCustomers(req,res){
 	kafka.make_request(topic_name,'getCustomers',{
-		
+		//data
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});

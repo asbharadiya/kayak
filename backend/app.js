@@ -14,8 +14,19 @@ var passport = require('passport');
 var app = express();
 
 var mongoSessionURL = config.dbUrl;
+
 var expressSessions = require("express-session");
-var mongoStore = require("connect-mongo/es5")(expressSessions);
+var MySQLStore = require('express-mysql-session')(session);
+
+var options = {
+    host: config.mySqlHost,
+    port: config.mySqlPort,
+    user: config.mySqlUsername,
+    password: config.mySqlPassword,
+    database: config.mySqlDb
+};
+ 
+var sessionStore = new MySQLStore(options);
 
 var cors = require('cors');
 
@@ -59,9 +70,7 @@ app.use(expressSessions({
     //A session is uninitialized when it is new but not modified.
     duration: 24 * 60 * 60 * 1000,
     activeDuration: 6 * 60 * 60 * 1000,
-    store: new mongoStore({
-        url: mongoSessionURL
-    })
+    store: sessionStore
 }));
 
 app.use(passport.initialize());

@@ -7,6 +7,7 @@ function signin(msg, callback){
     var res = {};
     if(msg.email && msg.email !== '' 
         && msg.password && msg.password !== '') {
+        //TODO: change to MySQL
         mongo.getCollection('user', function(err,coll){
             coll.findOne({email:msg.email}, function(err,user){
                 if(err) {
@@ -45,6 +46,7 @@ function signup(msg, callback){
     var res = {};
     if(msg.email && msg.email !== '' 
         && msg.password && msg.password !== '') {
+        //TODO: change to MySQL
         mongo.getCollection('user', function(err,coll){
             coll.findOne({email:msg.email}, function(err,user){
                 if(err) {
