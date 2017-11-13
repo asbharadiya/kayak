@@ -1,11 +1,20 @@
-const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
+import axios from 'axios';
+const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001/api/v1'
 
 const headers = {
     'Accept': 'application/json'
 };
 
 export const signin = (payload) =>
-	fetch(api+'/api/signin', {
+	// axios.post(api+'/a/signin', {
+ //      payload : payload,
+ //    }).then(function (response) {
+ //       console.log('getting here');
+ //    })
+ //    .catch(function (error) {
+ //      //
+ //    });
+	fetch(api+'/a/signin', {
 	    method: 'POST',
 	    headers: {
 	    	...headers,

@@ -16,7 +16,7 @@ var app = express();
 var mongoSessionURL = config.dbUrl;
 
 var expressSessions = require("express-session");
-var MySQLStore = require('express-mysql-session')(session);
+var MySQLStore = require('express-mysql-session')(expressSessions);
 
 var options = {
     host: config.mySqlHost,

@@ -1,9 +1,9 @@
 var kafka = require('./kafka/client');
-
 module.exports = function(passport) {
+	require('./passport.js')(passport);
 	var module = {};
 
-	module.signin = function(req,res){
+	module.adminSignIn = function(req,res, next){
 		passport.authenticate('local-signin', function(err,result) {
 	        if(err) {
 	            return res.status(500).json({status:500,statusText:"Internal server error"});
@@ -12,7 +12,7 @@ module.exports = function(passport) {
 	        	req.session.passport = {user: result.data};
 	        }
 	        return res.status(result.code).json({status:result.code,statusText:result.message});
-	    })(req, res);
+	    })(req, res, next);
 	}
 
 	module.signup = function(req,res){

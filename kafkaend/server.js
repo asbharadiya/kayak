@@ -16,7 +16,6 @@ mongo.createConnectionPool();
 
 var config = require('config');
 var topic_name = config.kafkaTopic;
-
 console.log('server is running');
 
 var producer = connection.getProducer();   
@@ -45,6 +44,7 @@ consumer.on('message', function (message) {
             });
             break;
         case 'signup':
+            console.log('getto');
             auth.signup(data.data, function(err,res){
                 var payloads = [
                     {   

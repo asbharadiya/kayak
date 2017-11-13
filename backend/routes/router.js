@@ -9,7 +9,7 @@ module.exports = function(router,passport) {
 	var car = require('./car');
 	var booking = require('./booking');
 
-	router.post('/signin', auth.signin);
+	router.post('/a/signin', auth.adminSignIn);
 	router.post('/signup', auth.signup);
 	router.post('/logout', auth.logout);
 	router.get('/check_session', isAuthenticated, auth.checkSession);

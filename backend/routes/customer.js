@@ -13,6 +13,7 @@ function getCustomers(req,res){
             return res.status(result.code).json({status:result.code,statusText:result.message});
         }
     });
+}
 
 function getCustomerById(req,res){
 	kafka.make_request(topic_name,'getCustomerById',{

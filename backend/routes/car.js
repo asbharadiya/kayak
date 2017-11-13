@@ -37,6 +37,7 @@ function getCarById(req,res){
             return res.status(result.code).json({status:result.code,statusText:result.message});
         }
     });
+}
 
 function updateCarById(req,res){
 	kafka.make_request(topic_name,'updateCarById',{

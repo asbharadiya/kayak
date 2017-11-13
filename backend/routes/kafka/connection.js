@@ -6,7 +6,7 @@ function ConnectionProvider() {
             this.client = new kafka.Client("localhost:2181");
             this.kafkaConsumerConnection = new kafka.Consumer(this.client,[ { topic: topic_name, partition: 0 }]);
             this.client.on('ready', function () { 
-                //console.log('consumer ready!') 
+                console.log('consumer ready!') 
             })
         }
         return this.kafkaConsumerConnection;
@@ -18,7 +18,7 @@ function ConnectionProvider() {
             this.client = new kafka.Client("localhost:2181");
             this.kafkaProducerConnection = new kafka.HighLevelProducer(this.client);
             this.client.on('ready', function () { 
-                //console.log('producer ready!') 
+                console.log('producer ready!') 
             })
         }
         return this.kafkaProducerConnection;
