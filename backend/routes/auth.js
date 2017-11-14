@@ -4,7 +4,19 @@ module.exports = function(passport) {
 	var module = {};
 
 	module.adminSignIn = function(req,res, next){
-		passport.authenticate('local-signin', function(err,result) {
+		passport.authenticate('local-adminSignIn', function(err,result) {
+	        if(err) {
+	            return res.status(500).json({status:500,statusText:"Internal server error"});
+	        }
+	        if(result.code === 200) {
+	        	req.session.passport = {user: result.data};
+	        }
+	        return res.status(result.code).json({status:result.code,statusText:result.message});
+	    })(req, res, next);
+	}
+
+	module.customerSignIn = function(req,res, next){
+		passport.authenticate('local-customerSignIn', function(err,result) {
 	        if(err) {
 	            return res.status(500).json({status:500,statusText:"Internal server error"});
 	        }

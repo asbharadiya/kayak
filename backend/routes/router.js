@@ -37,6 +37,8 @@ module.exports = function(router,passport) {
 	router.get('/a/billings/:id', isAdminAuthenticated, booking.getBillById);
 
 	//user
+	router.post('/c/signin', auth.customerSignIn);
+
 	router.get('/c/customers/:id', isAuthenticated, profile.getProfile);
 	router.put('/c/profile', isAuthenticated, profile.updateProfile);
 	router.post('/c/credit_cards', isAuthenticated, profile.addCreditCard);

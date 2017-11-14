@@ -6,15 +6,39 @@ var topic = config.kafkaTopic;
 
 module.exports = function(passport) {
     //normal signin
-    passport.use('local-signin', new LocalStrategy({
+    passport.use('local-adminSignIn', new LocalStrategy({
         usernameField : 'email',
         passwordField : 'password',
     }, function(username,password,done) {
         process.nextTick(function() {
             try {
-                kafka.make_request(topic,'signin',{
+                kafka.make_request(topic,'adminSignIn',{
                     email:username,
-                    password:password
+                    password:password,
+                    role: 'ADMIN'
+                },function(err,res){
+                    if(err){
+                        done(err);
+                    } else {
+                        done(null,res);
+                    }
+                });
+            } catch (e) {
+                done(e);
+            }
+        });
+    }));
+
+    passport.use('local-customerSignIn', new LocalStrategy({
+        usernameField : 'email',
+        passwordField : 'password',
+    }, function(username,password,done) {
+        process.nextTick(function() {
+            try {
+                kafka.make_request(topic,'customerSignIn',{
+                    email:username,
+                    password:password,
+                    role: 'USER'
                 },function(err,res){
                     if(err){
                         done(err);

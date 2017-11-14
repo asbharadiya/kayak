@@ -6,21 +6,22 @@ const saltRounds = 10;
 
 function signin(msg, callback){
     var res = {};
-    console.log('gettin');
     if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5})) {
-        //TODO: change to MySQL
         var connection = mysql.getConnection();
         console.log(connection);
         connection.connect(function(err) {
             if (err) throw err;
             console.log("Connected!");
-            connection.query("select id, firstname, username, lastname, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
+            connection.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
                 connection.end();
                 if (err) throw err;
                 if(result[0]) {
-                    console.log(result);
                     var user = result[0];
-                    console.log(msg.password);
+                    if(user.role != msg.role) {
+                        res.code = 401;
+                        res.message = "Unauthorized user";
+                        callback(null, res);
+                    }
                     bcrypt.compare(msg.password, user.password, function(err,result) {
                             if(result) {
                                 res.code = 200;
