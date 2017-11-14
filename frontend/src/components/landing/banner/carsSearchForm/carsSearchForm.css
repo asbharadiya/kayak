@@ -1,0 +1,23 @@
+.form-container .form-body .fields-col .field-container.pickup {
+	width: 50%;
+}
+
+.form-container .form-body .fields-col .field-container.pickup input {
+
+}
+
+.form-container .form-body .fields-col .field-container.pickup-date {
+	width: 25%;
+}
+
+.form-container .form-body .fields-col .field-container.pickup-date input {
+	
+}
+
+.form-container .form-body .fields-col .field-container.dropoff-date {
+	width: 25%;
+}
+
+.form-container .form-body .fields-col .field-container.dropoff-date input {
+	
+}

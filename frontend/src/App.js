@@ -6,6 +6,7 @@ import './Responsive.css';
 import * as actions from './actions/auth';
 import Header from './components/header/header';
 import Landing from './components/landing/landing';
+import Listings from './components/listings/listings';
 
 class App extends Component {
 
@@ -17,15 +18,21 @@ class App extends Component {
     const isLogged = this.props.isLogged;
     return (
       <div className="page-wrapper">
-      <Header/>
       {
         isLogged === undefined ? (
           <div className="text-center"><h1>Loading...</h1></div>
         ) : (
           <BrowserRouter>
-            <Switch>
-              <Route exact path='/' component={Landing}/>
-            </Switch>
+            <div className="inner-page-wrapper">
+              <Header/>
+              <Switch>
+                <Route exact path='/' render={() => (
+                  <Redirect to="/hotels"/>
+                )}/>
+                <Route exact path='/:category' component={Landing}/>
+                <Route path='/:category/listings' component={Listings}/>
+              </Switch>
+            </div>
           </BrowserRouter>
         )
       }

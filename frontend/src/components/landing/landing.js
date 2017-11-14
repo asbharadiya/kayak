@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import './landing.css';
+import Banner from './banner/banner';
+import Content from './content/content';
 
 class Landing extends Component {
 
-  render() {
-    return (
-      <div>
-        <h2 className="text-center">This is Kayak landing page!!!</h2>
-      </div>
-    );
-  }
+  	render() {
+  		return (
+	      	<div className="landing-page-wrapper">
+	        	<Banner/>
+	        	<Content/>
+	      	</div>
+	    );
+  	}
 }
 
 export default Landing;

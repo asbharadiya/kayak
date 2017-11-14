@@ -1,0 +1,23 @@
+.form-container .form-body .fields-col .field-container.location {
+	width: 37.5%;
+}
+
+.form-container .form-body .fields-col .field-container.location input {
+
+}
+
+.form-container .form-body .fields-col .field-container.date {
+	width: 37.5%;
+}
+
+.form-container .form-body .fields-col .field-container.date input {
+	
+}
+
+.form-container .form-body .fields-col .field-container.guests {
+	width: 25%;
+}
+
+.form-container .form-body .fields-col .field-container.guests input {
+	
+}
