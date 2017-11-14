@@ -1,0 +1,34 @@
+.inline-search {
+	width: 90%;
+	margin: 0px auto;
+}
+
+.inline-search .form-container {
+	
+}
+
+.inline-search .form-container .form-body {
+
+}
+
+.inline-search .form-container .form-body .fields-col {
+	display: flex;
+    flex-wrap: wrap;
+}
+
+.inline-search .form-container .form-body .fields-col .field-container {
+	padding-right: 4px;
+}
+
+.inline-search .form-container .form-body .fields-col .field-container .form-control {
+	height: 48px;
+}
+
+.inline-search .form-container .form-body .button-col {
+	float: right;
+}
+
+.inline-search .form-container .form-body .button-col .btn-kayak {
+	height: 48px;
+	width: 48px;
+}
