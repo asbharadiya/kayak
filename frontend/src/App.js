@@ -4,18 +4,20 @@ import {connect} from 'react-redux';
 import './App.css';
 import './Responsive.css';
 import * as actions from './actions/auth';
-import Landing from './components/landing';
+import Header from './components/header/header';
+import Landing from './components/landing/landing';
 
 class App extends Component {
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.checkSession();
   }
 
   render() {
     const isLogged = this.props.isLogged;
     return (
-      <div>
+      <div className="page-wrapper">
+      <Header/>
       {
         isLogged === undefined ? (
           <div className="text-center"><h1>Loading...</h1></div>

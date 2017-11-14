@@ -10,7 +10,7 @@ import Home from './components/dashboard/home/home';
 
 class App extends Component {
 
-  componentWillMount(){
+  componentDidMount(){
     this.props.checkSession();
   }
 
