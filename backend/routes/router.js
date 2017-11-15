@@ -9,7 +9,7 @@ module.exports = function(router,passport) {
 	var car = require('./car');
 	var booking = require('./booking');
 
-	router.post('/signin', auth.signin);
+	router.post('/a/signin', auth.adminSignIn);
 	router.post('/signup', auth.signup);
 	router.post('/logout', auth.logout);
 	router.get('/check_session', isAuthenticated, auth.checkSession);
@@ -37,6 +37,8 @@ module.exports = function(router,passport) {
 	router.get('/a/billings/:id', isAdminAuthenticated, booking.getBillById);
 
 	//user
+	router.post('/c/signin', auth.customerSignIn);
+
 	router.get('/c/customers/:id', isAuthenticated, profile.getProfile);
 	router.put('/c/profile', isAuthenticated, profile.updateProfile);
 	router.post('/c/credit_cards', isAuthenticated, profile.addCreditCard);

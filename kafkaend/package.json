@@ -4,15 +4,21 @@
   "description": "",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "NODE_ENV=test node server.js"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-  	"kafka-node": "^2.2.3",
-    "mongodb": "^2.2.31",
+    "assert": "^1.4.1",
     "bcrypt": "^1.0.3",
-    "config": "^1.20.1"
+    "chai": "^4.1.2",
+    "config": "^1.20.1",
+    "kafka-node": "^2.2.3",
+    "mocha": "^4.0.1",
+    "mongodb": "^2.2.31",
+    "mysql": "^2.15.0",
+    "supertest": "^3.0.0",
+    "validator": "^9.1.1"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
