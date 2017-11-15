@@ -1,5 +1,4 @@
-import axios from 'axios';
-const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001/api/v1'
+const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3002/api/v1'
 
 const headers = {
     'Accept': 'application/json'
@@ -28,23 +27,8 @@ export const signin = (payload) =>
         return error;
     }); 
 
-export const signup = (payload) =>
-	fetch(api+'/api/signup', {
-	    method: 'POST',
-	    headers: {
-	    	...headers,
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify(payload)
-	}).then(res => {
-		return res;
-	}).catch(error => {
-        return error;
-    }); 
-
 export const checkSession = () =>
-	fetch(api+'/api/check_session', {
+	fetch(api+'/a/check_session', {
 	    method: 'GET',
 	    headers: {
 	    	...headers,
@@ -58,7 +42,7 @@ export const checkSession = () =>
     });  
 
 export const logout = () =>
-	fetch(api+'/api/logout', {
+	fetch(api+'/logout', {
 	    method: 'POST',
 	    headers: {
 	    	...headers,

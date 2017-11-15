@@ -9,12 +9,13 @@ module.exports = function(router,passport) {
 	var car = require('./car');
 	var booking = require('./booking');
 
-	router.post('/a/signin', auth.adminSignIn);
-	router.post('/signup', auth.signup);
-	router.post('/logout', auth.logout);
-	router.get('/check_session', isAuthenticated, auth.checkSession);
 
-	//admin
+    router.post('/logout', auth.logout);
+
+    //admin
+	router.post('/a/signin', auth.adminSignIn);
+	router.get('/a/check_session', isAdminAuthenticated, auth.checkSession);
+
 	router.get('/a/customers', isAdminAuthenticated, customer.getCustomers);
 	router.get('/a/customers/:id', isAdminAuthenticated, customer.getCustomerById);
 	router.put('/a/customers/:id', isAdminAuthenticated, customer.updateCustomerById);
@@ -28,7 +29,7 @@ module.exports = function(router,passport) {
 	router.get('/a/flights/:id', isAdminAuthenticated, flight.getFlightById);
 	router.put('/a/flights/:id', isAdminAuthenticated, flight.updateFlightById);
 	router.delete('/a/flights/:id', isAdminAuthenticated, flight.deleteFlightById);
-	router.post('/api/cars', car.addCar);
+	router.post('/a/cars', isAdminAuthenticated, car.addCar);
 	router.get('/a/cars', isAdminAuthenticated, car.getCars);
 	router.get('/a/cars/:id', isAdminAuthenticated, car.getCarById);
 	router.put('/a/cars/:id', isAdminAuthenticated, car.updateCarById);
@@ -38,6 +39,8 @@ module.exports = function(router,passport) {
 
 	//user
 	router.post('/c/signin', auth.customerSignIn);
+    router.post('/c/signup', auth.signup);
+    router.get('/c/check_session', isAuthenticated, auth.checkSession);
 
 	router.get('/c/customers/:id', isAuthenticated, profile.getProfile);
 	router.put('/c/profile', isAuthenticated, profile.updateProfile);
@@ -52,7 +55,7 @@ module.exports = function(router,passport) {
 	router.get('/c/bookings/:id', isAuthenticated, booking.getBookingById);
 	
 	function isAuthenticated(req, res, next) {
-		if(req.session.passport && req.session.passport.user._id) {
+		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'USER') {
 			next();
 	  	} else {
 			res.status(401).send();
@@ -60,7 +63,7 @@ module.exports = function(router,passport) {
 	}
 
 	function isAdminAuthenticated(req, res, next) {
-		if(req.session.passport && req.session.passport.user._id) {
+		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'ADMIN') {
 			next();
 	  	} else {
 			res.status(401).send();

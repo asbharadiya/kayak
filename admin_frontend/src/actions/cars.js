@@ -28,16 +28,12 @@ function addCarFailure(){
 
 
 export function addCar(payload) {
-	console.log("Action layload " , payload)
 	return function(dispatch) {
-		
 		return api.addCar(payload , function(error , response){
-
 			if(error){
 				dispatch(addCarFailure());
-			}else{
+			} else {
 				response.then((res) => {
-					console.log("Result in action ", res.data)
 					if(res.status === 200){
 						dispatch(addCarSuccess(res.data));
 					}else{

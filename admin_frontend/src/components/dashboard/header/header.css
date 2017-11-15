@@ -39,6 +39,7 @@ header .topnav-container .nav .dropdown .dropdown-toggle {
   font-size: 14px;
   text-decoration: none;
   padding: 0px;
+  background: none;
 }
 
 header .topnav-container .nav .dropdown .dropdown-toggle .caret {
