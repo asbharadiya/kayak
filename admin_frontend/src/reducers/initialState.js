@@ -1,5 +1,6 @@
 
 export default {
   isLogged: undefined,
-  username: ""
+  username: "",
+  allCars : null 
 }

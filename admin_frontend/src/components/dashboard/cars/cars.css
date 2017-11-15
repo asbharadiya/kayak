@@ -1,0 +1,36 @@
+	.foo {
+    outline: 1px solid orange;
+    
+	}
+	
+	.div-color{
+		background-color: #fafafa
+	}
+	
+	.car-content{
+		margin-top: 15px
+	}
+	
+	.car-content .addButtonDiv{
+		margin-bottom:15px ;
+		background-color: #fafafa
+	}
+	
+	.padd15{
+	padding: 15px
+	}
+	
+	.sharpCorner{
+		border-radius : 0 ;
+		padding: 15px ;
+		box-shadow : 1px 1px 1px 1px linen	
+	}
+	
+	.marginBottom15{
+		margin-bottom: 15px
+	}
+	
+	.col-xs-offset-right-2 {
+  margin-right: 16.66666667%;
+ 
+}

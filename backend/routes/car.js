@@ -4,13 +4,13 @@ var config = require('config');
 var topic_name = config.kafkaTopic;
 
 function addCar(req,res){
-	kafka.make_request(topic_name,'addCar',{
-		
-	},function(err,result){
+    console.log("Server called " , req.body)
+	kafka.make_request(topic_name,'addCar',req.body,function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            console.log("Result " , result)
+            return res.status(result.code).json({status:result.code,statusText:result.message, data:result.data});
         }
     });
 }
