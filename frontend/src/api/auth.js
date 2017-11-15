@@ -5,7 +5,7 @@ const headers = {
 };
 
 export const signin = (payload) =>
-	fetch(api+'/api/signin', {
+	fetch(api+'/c/signin', {
 	    method: 'POST',
 	    headers: {
 	    	...headers,
@@ -20,7 +20,7 @@ export const signin = (payload) =>
     }); 
 
 export const signup = (payload) =>
-	fetch(api+'/api/signup', {
+	fetch(api+'/c/signup', {
 	    method: 'POST',
 	    headers: {
 	    	...headers,
@@ -35,7 +35,7 @@ export const signup = (payload) =>
     }); 
 
 export const checkSession = () =>
-	fetch(api+'/api/check_session', {
+	fetch(api+'/c/check_session', {
 	    method: 'GET',
 	    headers: {
 	    	...headers,
@@ -49,7 +49,7 @@ export const checkSession = () =>
     });  
 
 export const logout = () =>
-	fetch(api+'/api/logout', {
+	fetch(api+'/logout', {
 	    method: 'POST',
 	    headers: {
 	    	...headers,

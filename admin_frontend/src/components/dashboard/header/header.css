@@ -51,7 +51,7 @@ header .topnav-container .nav .dropdown .dropdown-toggle .div-circular img {
   height: 32px;
 }
 
-header .topnav-container .nav .dropdown .dropdown-toggle:focus, .dashboard-page .page-content header .topnav-container ul .dropdown .dropdown-toggle:hover {
+header .topnav-container .nav .dropdown .dropdown-toggle:focus, header .topnav-container .nav .dropdown .dropdown-toggle:hover {
   background: none;
 }
 

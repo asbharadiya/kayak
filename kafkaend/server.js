@@ -25,25 +25,7 @@ consumer.on('message', function (message) {
     var data = JSON.parse(message.value)
     switch (data.km.value) {
         //auth
-        case 'adminSignIn':
-            auth.signin(data.data, function(err,res){
-                var payloads = [
-                    {   
-                        topic: data.replyTo,
-                        messages:JSON.stringify({
-                            correlationId:data.correlationId,
-                            data : res
-                        }),
-                        partition : 0
-                    }
-                ];
-                producer.send(payloads, function(err, data){
-                    //console.log(data);
-                });
-                return;
-            });
-            break;
-        case 'customerSignIn':
+        case 'signin':
             auth.signin(data.data, function(err,res){
                 var payloads = [
                     {   

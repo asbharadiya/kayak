@@ -12,7 +12,7 @@ module.exports = function(passport) {
     }, function(username,password,done) {
         process.nextTick(function() {
             try {
-                kafka.make_request(topic,'adminSignIn',{
+                kafka.make_request(topic,'signin',{
                     email:username,
                     password:password,
                     role: 'ADMIN'
@@ -35,7 +35,7 @@ module.exports = function(passport) {
     }, function(username,password,done) {
         process.nextTick(function() {
             try {
-                kafka.make_request(topic,'customerSignIn',{
+                kafka.make_request(topic,'signin',{
                     email:username,
                     password:password,
                     role: 'USER'
@@ -62,7 +62,9 @@ module.exports = function(passport) {
             try {
                 kafka.make_request(topic,'signup',{
                     email: req.body.email,
-                    password:req.body.password
+                    password:req.body.password,
+                    firstName:req.body.firstName,
+                    lastName:req.body.lastName
                 },function(err,res){
                     if(err){
                         done(err);

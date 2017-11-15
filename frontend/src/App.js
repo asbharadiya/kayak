@@ -7,6 +7,7 @@ import * as actions from './actions/auth';
 import Header from './components/header/header';
 import Landing from './components/landing/landing';
 import Listings from './components/listings/listings';
+import Profile from "./components/profile/profile";
 
 class App extends Component {
 
@@ -26,11 +27,18 @@ class App extends Component {
             <div className="inner-page-wrapper">
               <Header/>
               <Switch>
-                <Route exact path='/' render={() => (
-                  <Redirect to="/hotels"/>
-                )}/>
-                <Route exact path='/:category' component={Landing}/>
-                <Route path='/:category/listings' component={Listings}/>
+                    <Route exact path='/' render={() => (
+                      <Redirect to="/hotels"/>
+                    )}/>
+                    <Route exact path='/:category' component={Landing}/>
+                    <Route path='/:category/listings' component={Listings}/>
+                    <Route exact path='/user/profile' render={() => (
+                      !isLogged ? (
+                          <Redirect to="/"/>
+                      ) : (
+                          <Profile/>
+                      )
+                    )}/>
               </Switch>
             </div>
           </BrowserRouter>
