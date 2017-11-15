@@ -28,7 +28,7 @@ module.exports = function(router,passport) {
 	router.get('/a/flights/:id', isAdminAuthenticated, flight.getFlightById);
 	router.put('/a/flights/:id', isAdminAuthenticated, flight.updateFlightById);
 	router.delete('/a/flights/:id', isAdminAuthenticated, flight.deleteFlightById);
-	router.post('/a/cars', isAdminAuthenticated, car.addCar);
+	router.post('/api/cars', car.addCar);
 	router.get('/a/cars', isAdminAuthenticated, car.getCars);
 	router.get('/a/cars/:id', isAdminAuthenticated, car.getCarById);
 	router.put('/a/cars/:id', isAdminAuthenticated, car.updateCarById);

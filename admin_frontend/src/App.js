@@ -7,6 +7,7 @@ import * as actions from './actions/auth';
 import Signin from './components/signin/signin';
 import Dashboard from './components/dashboard/dashboard';
 import Home from './components/dashboard/home/home';
+import Cars from './components/dashboard/cars/cars';
 
 class App extends Component {
 
@@ -37,6 +38,13 @@ class App extends Component {
                     <Redirect to="/"/>
                   ) : (
                     <Home/>
+                  )
+                )}/>
+                <Route path='/cars' render={() => (
+                  isLogged ? (
+                    <Redirect to="/"/>
+                  ) : (
+                    <Cars/>
                   )
                 )}/>
               </Dashboard>

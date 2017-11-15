@@ -7,12 +7,13 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import reducer from './reducers';
-
+import promise from 'redux-promise-middleware'
+import { createLogger as logger } from 'redux-logger'
 
 const store = createStore(
     reducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk)
+    applyMiddleware(promise() , thunk , logger())
 );
 
 
