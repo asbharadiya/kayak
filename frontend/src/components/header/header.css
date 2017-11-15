@@ -5,7 +5,7 @@ header {
     right: 0px;
     height: 50px;
     color: #fff;
-    z-index: 11;
+    z-index: 1050;
     background: transparent;
 }
 
@@ -109,4 +109,118 @@ header .header-wrapper .menu-container a:hover, header .header-wrapper .menu-con
 
 header .header-wrapper .menu-container a i {
 	margin-right: 10px;
+}
+
+header .header-wrapper .menu-container .nav {
+	/*height: 32px;*/
+	/*margin: 0px;*/
+	/*padding: 0px;*/
+	/*list-style: none;*/
+	/*line-height: 32px;*/
+}
+
+header .header-wrapper .menu-container .nav .dropdown {
+	float: left;
+}
+
+header .header-wrapper .menu-container .nav .dropdown .dropdown-toggle {
+	padding: 0px;
+	float: left;
+}
+
+header .header-wrapper .menu-container .nav .dropdown .dropdown-toggle .caret {
+	display: none;
+}
+
+header .header-wrapper .menu-container .nav .dropdown .dropdown-toggle:focus, header .header-wrapper .menu-container .nav .dropdown .dropdown-toggle:hover {
+	background: none;
+}
+
+header .header-wrapper .menu-container .nav .dropdown.open .dropdown-toggle {
+	background: none;
+}
+
+header .header-wrapper .menu-container .nav .dropdown.open .dropdown-menu {
+	right: 0px;
+	left: auto;
+	padding: 0px;
+	display: inline-block;
+	box-sizing: inherit;
+	line-height: 24px;
+	min-width: 220px;
+	background-color: #FFF;
+	box-shadow: 0 0 0 1px rgba(99, 114, 130, 0.16), 0 8px 16px rgba(27, 39, 51, 0.08);
+	outline: none;
+	border: 0px;
+	border-radius: 0px;
+	margin-top: 0px;
+}
+
+header .header-wrapper .menu-container .nav .dropdown.open .dropdown-menu li.user-label {
+	margin-top: 9px;
+}
+
+header .header-wrapper .menu-container .nav .dropdown.open .dropdown-menu li:focus {
+	outline: none;
+}
+
+header .header-wrapper .menu-container .nav .dropdown.open .dropdown-menu li a {
+	padding: 10px 20px;
+	outline: none;
+	color: #333;
+	height: 56px;
+	line-height: 36px;
+	text-align: right;
+}
+
+header .header-wrapper .menu-container .nav .dropdown.open .dropdown-menu li a:hover {
+	background: #ebebed;
+}
+
+#authModal {
+
+}
+
+#authModal .modal-dialog {
+	width: 420px;
+}
+
+#authModal .modal-dialog .modal-content {
+	border: 0px;
+	border-radius: 0px;
+}
+
+#authModal .modal-dialog .modal-content .modal-body {
+	padding: 60px 80px;
+}
+
+#authModal .modal-dialog .modal-content .modal-body .form-body .form-group {
+	margin-bottom: 30px;
+}
+
+#authModal .modal-dialog .modal-content .modal-body .form-group.btn-container {
+	margin-bottom: 0px;
+}
+
+#authModal .modal-dialog .modal-content .modal-body .form-group.btn-container .btn-kayak {
+	width: 100%;
+}
+
+#authModal .modal-dialog .modal-content .modal-footer {
+	padding: 10px 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #e1e1e5;
+	color: #8b8b8e;
+}
+
+#authModal .modal-dialog .modal-content .modal-footer .btn-kayak {
+	padding: 0 10px;
+	height: 28px;
+	line-height: 28px;
+	background-color: #fff;
+	color: #8b8b8e;
+	background-image: none;
+	margin-left: 15px;
 }
