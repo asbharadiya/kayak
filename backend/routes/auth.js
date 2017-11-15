@@ -40,7 +40,7 @@ module.exports = function(passport) {
 	}
 
 	module.checkSession = function(req,res){
-		res.status(200).json({status:200,statusText:"Success",data:{username:req.user.uname}});
+		res.status(200).json({status:200,statusText:"Success",data:{username:req.user.username}});
 	}
 
 	module.logout = function(req,res){

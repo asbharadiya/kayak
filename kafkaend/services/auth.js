@@ -26,7 +26,7 @@ function signin(msg, callback){
                             if(result) {
                                 res.code = 200;
                                 res.message = "Success";
-                                res.data = {_id:user.id,uname:user.username};
+                                res.data = {_id:user.id,username:user.username,role:user.role};
                                 console.log(res);
                             } else {
                                 res.code = 401;

@@ -27,7 +27,7 @@ class Cars extends Component {
 
 
 	render() {
-		if(this.props.listOfCars != undefined){
+		if(this.props.listOfCars !== undefined){
 			console.log("Total number of cars " , this.props.listOfCars.length)	
 		}
 		
