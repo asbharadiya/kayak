@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import './cars.css';
-import {addCar} from '../../../actions/cars'
+import {addCar , setBackCarAddSuccess , getAllCars } from '../../../actions/cars'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
+import CarComponent  from './carComponent'
+
+//Loading
+import Loading from 'react-loading-spinner';
+
 
 class Cars extends Component {
 
 	constructor(props){
 		super(props);
 		this.state = {
-			carId : '' ,
+			carQuantity : 0 ,
 			carType : '' ,
 			carName : '' ,
 			occupancy : '',
 			luggage : '' ,
-			dailyRentalValue : false
+			dailyRentalValue : false,
+			addCarError : "" ,
+			showCarModal: false,
+			carAddLoading : false
 		}
 	}
 
@@ -25,43 +34,43 @@ class Cars extends Component {
 		})
 	}
 
+	componentWillMount(){
+		this.props.getAllCars()
+	}
+
+	componentWillReceiveProps(newProps) {    
+      if(newProps.carAddSuccess != null && newProps.carAddSuccess){
+      	this.setState({carAddLoading : false , showCarModal : false}) ;
+
+      	//setBack successfor carAddSuccess
+      	this.props.setBackCarAddSuccess();
+      }
+   }
+
 
 	render() {
-		if(this.props.listOfCars !== undefined){
-			console.log("Total number of cars " , this.props.listOfCars.length)	
-		}
-		
+		console.log("No of cars " , this.props.listOfCars)
 		return (
     		<div className=" car-content"> 
 				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv">
 					<div className="col-lg-10 col-sm-10 col-md-10">
 					</div>
 					<div className="col-lg-2 col-sm-2 col-md-2">
-						<button className="btn btn-info " data-toggle="modal" data-target="#myModal">Add Car</button>
+						<button className="btn btn-info addButton " onClick={() => {
+						      				this.setState({showCarModal : true})
+						      			}}>Add Car</button>
 					</div>
 				</div>
 				
-				
-				
-				<div id="myModal" className="modal fade" role="dialog">
-				  <div className="modal-dialog">
-				
-				    
-				    <div className="modal-content">
-					      <div className="modal-header">
-					        <button type="button" className="close" data-dismiss="modal">&times;</button>
-					        <h4 className="modal-title">Enter car details to add </h4>
-					      </div>
+				 <Modal show={this.state.showCarModal} onHide={this.closeCarModal} id="carModal" className="carModal">	
+					<Modal.Body className="carModalBody">
+					    
 					      
-					      <div className="modal-body">
-					      
-					      	
-					      
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="carid">Car ID</label>
-					      		<input className="form-control sharpCorner" id="carid" type="text"  onChange={(e) => {
+					     	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="carid">No of Cars to add</label>
+					      		<input className="form-control sharpCorner" id="carid" type="number"  onChange={(e) => {
 					      			this.setState({
-					      				carId : e.target.value
+					      				carQuantity : e.target.value
 					      			})
 					      		}} aria-describedby="basic-addon1"   />
 					      	</div>
@@ -134,7 +143,7 @@ class Cars extends Component {
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="carname">Daily Rental Value</label>
 					      		<span className="input-group-addon"><i ><b>$$$</b></i></span>
-								<input type="text" onChange={(e) => {
+								<input type="number" onChange={(e) => {
 							                              this.setState({
 							                                dailyRentalValue : e.target.value
 							                              })
@@ -142,36 +151,115 @@ class Cars extends Component {
 					      	</div>
 					      	
 					        
-					      </div>
 					      
-					      <div className="modal-footer">
-					        
-					        <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		
-					      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
-					      			<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+					   </Modal.Body>
+					   <Modal.Footer className="carModalFooter">
+                               	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 carAddErrorText">
+					      			{this.state.addCarError} 
+					      			
 					      		</div>
-					      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
-					      			<button type="button" className="btn btn-default" onClick={() => {
-					      				console.log(this.state)
-					      				this.props.addCar(this.state)
-					      			}} >Submit</button>
-					      		</div>
-					      	</div>
-					        
-					      </div>
-					    </div>
-					
-					  </div>
-					</div>
-				
 
 
-				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv">
-					<div className="col-lg-9 col-sm-9 col-md-9">
+						        <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+						      		
+						      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
+						      			<button type="button" className="btn btn-default" onClick={() => {
+						      				this.setState({showCarModal : false})
+						      			}}>Close</button>
+						      		</div>
+						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
+
+						      			<button type="button" className="btn btn-info" onClick={() => {
+						      				
+						      				if(this.state.carQuantity === 0 ){
+						      					this.setState({ addCarError : "Specify number of cars to add"})
+						      					return ;
+						      				}
+						      				if(this.state.carType === '' ){
+						      					this.setState({ addCarError : "Please select Car Type"})
+						      					return ;
+						      				}
+						      				if(this.state.carName === '' ){
+						      					this.setState({ addCarError : "Please enter Car Name"})
+						      					return ;
+						      				}
+						      				if(this.state.occupancy === '' ){
+						      					this.setState({ addCarError : "Please select number of occupants"})
+						      					return ;
+						      				}
+						      				if(this.state.luggage === '' ){
+						      					this.setState({ addCarError : "Please specify luggage is allowed or not"})
+						      					return ;
+						      				}
+						      				if(this.state.dailyRentalValue === false ){
+						      					this.setState({ addCarError : "Please specify daily rental value for the car"})
+						      					return ;
+						      				}
+						      				var obj = {
+						      					carQuantity : this.state.carQuantity ,
+												carType : this.state.carType ,
+												carName : this.state.carName ,
+												occupancy : this.state.occupancy,
+												luggage : this.state.luggage ,
+												dailyRentalValue : this.state.dailyRentalValue
+						      				}
+						      				this.setState({ addCarError : '' , carAddLoading : true})
+
+
+						      				this.props.addCar(obj)
+						      			}} >Submit 
+						      			</button>
+						      			
+						      		</div>
+						      	</div>
+
+						      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+						      		<div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
+						      			<Loading isLoading={this.state.carAddLoading} ></Loading>
+						      		</div>
+						      	</div>
+
+
+                          </Modal.Footer>
+					 </Modal>
+
+
+					 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
+						<div >
+							<section>
+								<div className="row listHeader">
+									<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+										<div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
+											<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+													<b>Car Name</b>
+												</div>
+												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+													<b>Type</b>
+												</div>
+												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+													<b># of Cars</b>
+												</div>
+												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+													<b>Rental Value</b>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+								
+							</section>
+
+						</div>
+
+
+						{
+							this.props.listOfCars.map((car , key) => {
+								return <CarComponent car={car}  key={key}> </CarComponent>
+							})
+						}
 					</div>
-					
-				</div>
 			</div>
 		
   	    );
@@ -181,14 +269,16 @@ class Cars extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addCar : (params) => dispatch(addCar(params))
+    addCar : (params) => dispatch(addCar(params)) ,
+    setBackCarAddSuccess : () => dispatch(setBackCarAddSuccess()),
+    getAllCars : () => dispatch(getAllCars()) 
   };
 }
 
 function mapStateToProps(state) {
     return {
-        listOfCars : state.carsReducer.allCars
-        
+        listOfCars : state.carsReducer.allCars , 
+        carAddSuccess : state.carsReducer.carAddSuccess
     };
 }
 

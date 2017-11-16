@@ -8,6 +8,7 @@ import Signin from './components/signin/signin';
 import Dashboard from './components/dashboard/dashboard';
 import Home from './components/dashboard/home/home';
 import Cars from './components/dashboard/cars/cars';
+import Test from './components/dashboard/test/Test';
 
 class App extends Component {
 
@@ -34,17 +35,24 @@ class App extends Component {
               )}/>
               <Dashboard>
                 <Route path='/home' render={() => (
-                  !isLogged ? (
+                  isLogged ? (
                     <Redirect to="/"/>
                   ) : (
                     <Home/>
                   )
                 )}/>
                 <Route path='/cars' render={() => (
-                  !isLogged ? (
+                  isLogged ? (
                     <Redirect to="/"/>
                   ) : (
                     <Cars/>
+                  )
+                )}/>
+                <Route path='/test' render={() => (
+                  isLogged ? (
+                    <Redirect to="/test"/>
+                  ) : (
+                    <Test/>
                   )
                 )}/>
               </Dashboard>

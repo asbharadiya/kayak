@@ -10,7 +10,7 @@ function addCar(req,res){
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
             console.log("Result " , result)
-            return res.status(result.code).json({status:result.code,statusText:result.message, data:result.data});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
@@ -22,7 +22,7 @@ function getCars(req,res){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
@@ -52,13 +52,16 @@ function updateCarById(req,res){
 }
 
 function deleteCarById(req,res){
+    console.log("To Delete is " , req.params.id) ;
+    var idToDelete = req.params.id ; 
 	kafka.make_request(topic_name,'deleteCarById',{
-		
+		idToDelete : idToDelete 
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+           console.log(result) ; 
+           return res.status(result.code).json({status:result.code,statusText:result.message, data:result.data});
         }
     });
 }

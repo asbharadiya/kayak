@@ -12,8 +12,7 @@
 	}
 	
 	.car-content .addButtonDiv{
-		margin-bottom:15px ;
-		background-color: #fafafa
+		
 	}
 	
 	.padd15{
@@ -33,4 +32,40 @@
 	.col-xs-offset-right-2 {
   margin-right: 16.66666667%;
  
+}
+
+ .car-content .addButtonDiv .addButton{
+
+ 	border: none;
+    text-decoration: none ;
+    border-radius: 0px;
+    height: 34px;
+    background-color: #ff690f;
+ }
+
+ .carAddErrorText{
+ 	color: red
+ }
+
+
+ .singleCarComponent .mainRowDiv .dataDiv{
+	line-height: 1.5 ;
+	
+	
+}
+
+
+.headerDiv{
+	border-bottom: 1px solid #F0F0F0;
+	height :40px;
+}
+
+.outline{
+	 outline: 1px solid orange;
+}
+
+.listHeader{
+	border-bottom: 1px solid #F0F0F0;
+	margin-top: 15px ;
+	text-align: left;
 }
