@@ -20,3 +20,38 @@ export const addCar = (payload , callback) => {
     });    
 } 
 	
+
+export const getAllCars = (callback) => {
+    fetch(api+'/a/cars', {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+    });    
+} 
+
+
+
+export const deleteCarById = ( id , callback) => {
+    console.log( api+'/a/cars/'+id ) ; 
+    fetch(api+'/a/cars/'+id, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+    });    
+} 
