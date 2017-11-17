@@ -57,6 +57,9 @@ export function setBackCarAddSuccess(){
 	return {type: "SET_BACK_CAR_ADD_SUCCESS" , payload : null}
 }
 
+export function setBackCarUpdateSuccess(){
+	return {type: "SET_BACK_CAR_UPDATE_SUCCESS" , payload : null}
+}
 
 
 
@@ -82,3 +85,54 @@ export function deleteCarById(id) {
 		})
 	};
 }
+
+
+
+function updateCarSuccess(data) {
+	return {type: "UPDATE_CAR_SUCCESS" , payload : data}
+}
+
+export function updateCarById(obj) {
+	return function(dispatch) {
+		return api.updateCarById(obj , function(error , response){
+			if(error){
+				dispatch({type: "UPDATE_CAR_FAILURE"})
+			} else {
+				response.then((res) => {
+					if(res.status === 200){
+						dispatch(updateCarSuccess(res.data))
+					}else{
+						dispatch({type: "UPDATE_CAR_FAILURE"})
+					}
+				})
+			}
+		})
+	};
+}
+
+
+function getCarByIDSuccess(data){
+	
+	return {type: "GET_CAR_TO_UPDATE_SUCCESS" , payload : data}
+}
+
+export function getCarById(id) {
+	return function(dispatch) {
+		return api.getCarById(id , function(error , response){
+			if(error){
+				dispatch({type: "GET_CAR_TO_UPDATE_FAILURE" , payload : null})
+			} else {
+				response.then((res) => {
+					if(res.status === 200){
+						dispatch(getCarByIDSuccess(res.data[0]))
+					}else{
+						dispatch({type: "GET_CAR_TO_UPDATE_FAILURE" , payload : null})
+					}
+				})
+			}
+		})
+	};
+}
+
+
+

@@ -28,25 +28,28 @@ function getCars(req,res){
 }
 
 function getCarById(req,res){
+    var id =  req.params.id
 	kafka.make_request(topic_name,'getCarById',{
-		
+		id
 	},function(err,result){
+        console.log("result.data " , result.data)
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
 
 function updateCarById(req,res){
-	kafka.make_request(topic_name,'updateCarById',{
-		
-	},function(err,result){
+    console.log("To Update is " , req.params.id) ;
+    console.log("Server called " , req.body)
+    
+	kafka.make_request(topic_name,'updateCarById',req.body,function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }

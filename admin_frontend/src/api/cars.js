@@ -40,9 +40,42 @@ export const getAllCars = (callback) => {
 
 
 export const deleteCarById = ( id , callback) => {
-    console.log( api+'/a/cars/'+id ) ; 
     fetch(api+'/a/cars/'+id, {
         method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+    });    
+} 
+
+
+export const updateCarById = ( obj , callback) => {
+    fetch(api+'/a/cars/'+obj._id, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+    });    
+} 
+
+
+export const getCarById = ( id , callback) => {
+    fetch(api+'/a/cars/'+id, {
+        method: 'GET',
         credentials: 'include',
         headers: {
             ...headers,

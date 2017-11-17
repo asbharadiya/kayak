@@ -28,7 +28,6 @@ class Cars extends Component {
 	}
 
 	onChangeLuggage(e){
-		console.log("Change luggage called ")
 		this.setState({
 			luggage : e.target.value
 		})
@@ -49,14 +48,14 @@ class Cars extends Component {
 
 
 	render() {
-		console.log("No of cars " , this.props.listOfCars)
+		
 		return (
     		<div className=" car-content"> 
 				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv">
 					<div className="col-lg-10 col-sm-10 col-md-10">
 					</div>
 					<div className="col-lg-2 col-sm-2 col-md-2">
-						<button className="btn btn-info addButton " onClick={() => {
+						<button className="btn btn-info addButton btn-sm" onClick={() => {
 						      				this.setState({showCarModal : true})
 						      			}}>Add Car</button>
 					</div>
@@ -154,6 +153,13 @@ class Cars extends Component {
 					      
 					   </Modal.Body>
 					   <Modal.Footer className="carModalFooter">
+                               	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+						      		<div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
+						      			<Loading isLoading={this.state.carAddLoading} ></Loading>
+						      		</div>
+						      	</div>
+
+
                                	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 carAddErrorText">
 					      			{this.state.addCarError} 
 					      			
@@ -213,11 +219,7 @@ class Cars extends Component {
 						      		</div>
 						      	</div>
 
-						      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-						      		<div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
-						      			<Loading isLoading={this.state.carAddLoading} ></Loading>
-						      		</div>
-						      	</div>
+						      	
 
 
                           </Modal.Footer>
