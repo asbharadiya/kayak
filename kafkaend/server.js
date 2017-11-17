@@ -13,13 +13,15 @@ mongo.createConnectionPool();
 
 // var mongoWithDbPool = require('./services/mongoWithDbPool');
 // mongoWithDbPool.connect();
+var mysql = require('./services/mysql');
+mysql.createConnectionPool(150);
 
 var config = require('config');
 var topic_name = config.kafkaTopic;
 console.log('server is running');
 
-var producer = connection.getProducer();   
-var consumer = connection.getConsumer(topic_name); 
+var producer = connection.getProducer();
+var consumer = connection.getConsumer(topic_name);
 
 consumer.on('message', function (message) {
     var data = JSON.parse(message.value)
@@ -28,7 +30,7 @@ consumer.on('message', function (message) {
         case 'signin':
             auth.signin(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -47,7 +49,7 @@ consumer.on('message', function (message) {
             console.log('getto');
             auth.signup(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -66,7 +68,7 @@ consumer.on('message', function (message) {
         case 'getCustomers':
             customer.getCustomers(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -84,7 +86,7 @@ consumer.on('message', function (message) {
         case 'getCustomerById':
             customer.getCustomerById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -102,7 +104,7 @@ consumer.on('message', function (message) {
         case 'updateCustomerById':
             customer.updateCustomerById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -120,7 +122,7 @@ consumer.on('message', function (message) {
         case 'addHotel':
             hotel.addHotel(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -138,7 +140,7 @@ consumer.on('message', function (message) {
         case 'getHotels':
             hotel.getHotels(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -156,7 +158,7 @@ consumer.on('message', function (message) {
         case 'getHotelById':
             hotel.getHotelById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -174,7 +176,7 @@ consumer.on('message', function (message) {
         case 'updateHotelById':
             hotel.updateHotelById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -192,7 +194,7 @@ consumer.on('message', function (message) {
         case 'deleteHotelById':
             hotel.deleteHotelById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -210,7 +212,7 @@ consumer.on('message', function (message) {
         case 'addFlight':
             flight.addFlight(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -228,7 +230,7 @@ consumer.on('message', function (message) {
         case 'getFlights':
             flight.getFlights(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -246,7 +248,7 @@ consumer.on('message', function (message) {
         case 'getFlightById':
             flight.getFlightById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -264,7 +266,7 @@ consumer.on('message', function (message) {
         case 'updateFlightById':
             flight.updateFlightById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -282,7 +284,7 @@ consumer.on('message', function (message) {
         case 'deleteFlightById':
             flight.deleteFlightById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -300,7 +302,7 @@ consumer.on('message', function (message) {
         case 'addCar':
             car.addCar(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -318,7 +320,7 @@ consumer.on('message', function (message) {
         case 'getCars':
             car.getCars(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -336,7 +338,7 @@ consumer.on('message', function (message) {
         case 'getCarById':
             car.getCarById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -354,7 +356,7 @@ consumer.on('message', function (message) {
         case 'updateCarById':
             car.updateCarById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -372,7 +374,7 @@ consumer.on('message', function (message) {
         case 'deleteCarById':
             car.deleteCarById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -390,7 +392,7 @@ consumer.on('message', function (message) {
         case 'getBills':
             booking.getBills(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -408,7 +410,7 @@ consumer.on('message', function (message) {
         case 'getBillById':
             booking.getBillById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -427,7 +429,7 @@ consumer.on('message', function (message) {
         case 'getProfile':
             profile.getProfile(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -445,7 +447,7 @@ consumer.on('message', function (message) {
         case 'updateProfile':
             profile.updateProfile(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -463,7 +465,7 @@ consumer.on('message', function (message) {
         case 'addCreditCard':
             profile.addCreditCard(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -481,7 +483,7 @@ consumer.on('message', function (message) {
         case 'getCreditCards':
             profile.getCreditCards(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -499,7 +501,7 @@ consumer.on('message', function (message) {
         case 'deleteCreditCardById':
             profile.deleteCreditCardById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -517,7 +519,7 @@ consumer.on('message', function (message) {
         case 'getHotelsForCustomer':
             hotel.getHotelsForCustomer(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -535,7 +537,7 @@ consumer.on('message', function (message) {
         case 'getFlightsForCustomer':
             hotel.getFlightsForCustomer(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -553,7 +555,7 @@ consumer.on('message', function (message) {
         case 'getCarsForCustomer':
             car.getCarsForCustomer(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -571,7 +573,7 @@ consumer.on('message', function (message) {
         case 'makeBooking':
             booking.makeBooking(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -589,7 +591,7 @@ consumer.on('message', function (message) {
         case 'getBookings':
             booking.getBookings(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
@@ -607,7 +609,7 @@ consumer.on('message', function (message) {
         case 'getBookingById':
             booking.getBookingById(data.data, function(err,res){
                 var payloads = [
-                    {   
+                    {
                         topic: data.replyTo,
                         messages:JSON.stringify({
                             correlationId:data.correlationId,
