@@ -90,16 +90,75 @@ function getCars(msg, callback){
 
 function getCarById(msg, callback){
 	var res = {};
-	res.code = 200;
-	res.message = "Success";
-	callback(null, res);
+	console.log(msg);
+	idToGet = new ObjectID(msg.id) ;
+
+	mongo.getCollection('cars' , function(err , collection){
+		collection.find({is_deleted : false , _id : idToGet}).toArray(function(err, result){
+					console.log("Getting object " , result)
+					if(err){
+						res.code = 500  ; 
+						res.status  = 500 ; 
+						res.message = "Fail to get all cars from the server"
+						callback(null , res) ; 
+					}else{
+						res.code = 200  ; 
+						res.status  = 200 ; 
+						res.message = "Success"
+						res.data = result
+						callback(null , res) ; 
+					}
+				}) 
+
+
+	})
 }
+
+
 
 function updateCarById(msg, callback){
 	var res = {};
-	res.code = 200;
-	res.message = "Success";
-	callback(null, res);
+
+	console.log("Updating Car " , msg) ;
+
+	idToUpdate = new ObjectID(msg._id) ;
+	console.log(idToUpdate) ;
+
+	msg._id = idToUpdate ; 
+
+	console.log(msg._id)
+
+	mongo.getCollection('cars' , function(err , collection){
+		collection.update({is_deleted : false , _id : idToUpdate }  ,
+		msg , function(err , response){
+			if(err){
+				res.code = 500;
+				res.message = "Error occured while Updating the Car";
+				callback(null, res);
+			}else{
+
+				collection.find({is_deleted : false}).toArray(function(err, result){
+					if(err){
+						res.code = 500  ; 
+						res.status  = 500 ; 
+						res.message = "Fail to get all cars from the server"
+						callback(null , res) ; 
+					}else{
+						res.code = 200  ; 
+						res.status  = 200 ; 
+						res.message = "Success"
+						res.data = result
+						callback(null , res) ; 
+					}
+				})   
+
+
+			}
+		})
+	})
+
+	
+
 }
 
 function deleteCarById(msg, callback){
