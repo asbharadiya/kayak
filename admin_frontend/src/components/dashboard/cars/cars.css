@@ -8,7 +8,6 @@
 	}
 	
 	.car-content{
-		margin: 0px;
 		margin-top: 15px
 	}
 	
@@ -67,6 +66,7 @@
 
 .listHeader{
 	border-bottom: 1px solid #F0F0F0;
+    margin: 0px;
 	margin-top: 15px ;
 	text-align: left;
 }
