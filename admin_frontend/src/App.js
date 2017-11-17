@@ -35,21 +35,21 @@ class App extends Component {
               )}/>
               <Dashboard>
                 <Route path='/home' render={() => (
-                  isLogged ? (
+                  !isLogged ? (
                     <Redirect to="/"/>
                   ) : (
                     <Home/>
                   )
                 )}/>
                 <Route path='/cars' render={() => (
-                  isLogged ? (
+                  !isLogged ? (
                     <Redirect to="/"/>
                   ) : (
                     <Cars/>
                   )
                 )}/>
                 <Route path='/test' render={() => (
-                  isLogged ? (
+                  !isLogged ? (
                     <Redirect to="/test"/>
                   ) : (
                     <Test/>

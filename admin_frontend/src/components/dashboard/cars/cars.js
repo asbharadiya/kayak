@@ -50,15 +50,11 @@ class Cars extends Component {
 	render() {
 		
 		return (
-    		<div className=" car-content"> 
-				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv">
-					<div className="col-lg-10 col-sm-10 col-md-10">
-					</div>
-					<div className="col-lg-2 col-sm-2 col-md-2">
-						<button className="btn btn-info addButton btn-sm" onClick={() => {
-						      				this.setState({showCarModal : true})
-						      			}}>Add Car</button>
-					</div>
+    		<div className="row car-content">
+				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
+					<button className="btn btn-primary btn-kayak" onClick={() => {
+                        this.setState({showCarModal : true})
+                    }}>Add Car</button>
 				</div>
 				
 				 <Modal show={this.state.showCarModal} onHide={this.closeCarModal} id="carModal" className="carModal">	
@@ -226,42 +222,33 @@ class Cars extends Component {
 					 </Modal>
 
 
-					 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
-						<div >
-							<section>
-								<div className="row listHeader">
-									<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-										<div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
-											<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-													<b>Car Name</b>
-												</div>
-												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-													<b>Type</b>
-												</div>
-												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-													<b># of Cars</b>
-												</div>
-												<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-													<b>Rental Value</b>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-								</div>
-								
-							</section>
+				 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
+					 <div className="row listHeader">
 
-						</div>
+						 <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
+							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+								 <b>Car Name</b>
+							 </div>
+							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+								 <b>Type</b>
+							 </div>
+							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+								 <b># of Cars</b>
+							 </div>
+							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+								 <b>Rental Value</b>
+							 </div>
+						 </div>
+
+					 </div>
 
 
-						{
-							this.props.listOfCars.map((car , key) => {
-								return <CarComponent car={car}  key={key}> </CarComponent>
-							})
-						}
-					</div>
+					{
+						this.props.listOfCars.map((car , key) => {
+							return <CarComponent car={car}  key={key}> </CarComponent>
+						})
+					}
+				</div>
 			</div>
 		
   	    );
