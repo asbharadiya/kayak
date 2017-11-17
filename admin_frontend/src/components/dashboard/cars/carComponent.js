@@ -67,7 +67,7 @@ class CarComponent extends Component {
 						</div>
 
 					</div>
-					<div className="col-md-2 col-sm-1 col-lg-1 col-xs-1 ">
+					<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 ">
 
 						<button className="btn btn-info btn-sm sharpButton" onClick={() => {
 							this.props.getCarById(this.props.car._id)
@@ -75,8 +75,7 @@ class CarComponent extends Component {
 								showCarUpdateModal : true
 							})
 						}}>Update</button>
-					</div>
-					<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 ">
+
 						<button className="btn btn-danger btn-sm sharpButton" onClick={() => {
 							this.setState({
 								openDeleteModal : true
