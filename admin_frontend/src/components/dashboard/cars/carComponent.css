@@ -20,3 +20,12 @@
 	border-radius: 0
 }
 
+.singleCarComponent .mainRowDiv  .buttonGroup .updateFontAwesome{
+	margin-right: 40px;
+	color : mediumblue;
+}
+
+
+.singleCarComponent .mainRowDiv  .buttonGroup .redIcon{
+	color : red;
+}

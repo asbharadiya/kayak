@@ -67,20 +67,22 @@ class CarComponent extends Component {
 						</div>
 
 					</div>
-					<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 ">
+					<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-						<button className="btn btn-info btn-sm sharpButton" onClick={() => {
+						
+						<a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={() => {
 							this.props.getCarById(this.props.car._id)
 							this.setState({
 								showCarUpdateModal : true
 							})
-						}}>Update</button>
-
-						<button className="btn btn-danger btn-sm sharpButton" onClick={() => {
+						}}></i></a>
+						
+						<a className="redIcon"><i className="fa fa-times fa-2x" aria-hidden="true" onClick={() => {
 							this.setState({
 								openDeleteModal : true
 							})
-						}}>Remove</button>
+						}}></i></a>
+						
 					</div>
 
 				</div>
@@ -112,7 +114,7 @@ class CarComponent extends Component {
 				<Modal show={this.state.showCarUpdateModal}  id="carModal" className="carModal">
 					<Modal.Body className="carModalBody">
 
-
+						<div className="pre-scrollable">
 							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 								<label htmlFor="carid">No of Cars to add</label>
 								<input className="form-control sharpCorner" value={this.state.carQuantity} id="carid" type="number"  onChange={(e) => {
@@ -197,7 +199,7 @@ class CarComponent extends Component {
 														}} className="form-control"  aria-describedby="basic-addon1" required />
 							</div>
 
-
+						</div>
 
 					   </Modal.Body>
 					   <Modal.Footer className="carModalFooter">

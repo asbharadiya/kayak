@@ -48,7 +48,6 @@ class Cars extends Component {
 
 
 	render() {
-		
 		return (
     		<div className="row car-content">
 				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
@@ -59,7 +58,7 @@ class Cars extends Component {
 				
 				 <Modal show={this.state.showCarModal} onHide={this.closeCarModal} id="carModal" className="carModal">	
 					<Modal.Body className="carModalBody">
-					    
+					    <div className="pre-scrollable">
 					      
 					     	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="carid">No of Cars to add</label>
@@ -145,7 +144,7 @@ class Cars extends Component {
 							                            }} className="form-control"  aria-describedby="basic-addon1" required />
 					      	</div>
 					      	
-					        
+					     </div>   
 					      
 					   </Modal.Body>
 					   <Modal.Footer className="carModalFooter">
@@ -205,10 +204,17 @@ class Cars extends Component {
 												luggage : this.state.luggage ,
 												dailyRentalValue : this.state.dailyRentalValue
 						      				}
-						      				this.setState({ addCarError : '' , carAddLoading : true})
+						      				this.setState({ addCarError : '' , 
+						      								carAddLoading : true,
+						      								carQuantity : 0 ,
+															carType : '' ,
+															carName : '' ,
+															occupancy : '',
+															luggage : '' ,
+															dailyRentalValue : false,
 
-
-						      				this.props.addCar(obj)
+						      							})
+											this.props.addCar(obj)
 						      			}} >Submit 
 						      			</button>
 						      			
