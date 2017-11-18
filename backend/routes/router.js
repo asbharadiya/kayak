@@ -19,11 +19,11 @@ module.exports = function(router,passport) {
 	router.get('/a/customers', isAdminAuthenticated, customer.getCustomers);
 	router.get('/a/customers/:id', isAdminAuthenticated, customer.getCustomerById);
 	router.put('/a/customers/:id', isAdminAuthenticated, customer.updateCustomerById);
-	router.post('/a/hotels', isAdminAuthenticated, hotel.addHotel);
-	router.get('/a/hotels', isAdminAuthenticated, hotel.getHotels);
-	router.get('/a/hotels/:id', isAdminAuthenticated, hotel.getHotelById);
-	router.put('/a/hotels/:id', isAdminAuthenticated, hotel.updateHotelById);
-	router.delete('/a/hotels/:id', isAdminAuthenticated, hotel.deleteHotelById);
+	router.post('/a/hotels', hotel.addHotel);
+	router.get('/a/hotels', hotel.getHotels);
+	router.get('/a/hotels/:id', hotel.getHotelById);
+	router.put('/a/hotels/:id', hotel.updateHotelById);
+	router.delete('/a/hotels/:id', hotel.deleteHotelById);
 	router.post('/a/flights', isAdminAuthenticated, flight.addFlight);
 	router.get('/a/flights', isAdminAuthenticated, flight.getFlights);
 	router.get('/a/flights/:id', isAdminAuthenticated, flight.getFlightById);

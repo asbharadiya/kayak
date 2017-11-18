@@ -1,6 +1,6 @@
-var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
 var GridStore = require('mongodb').GridStore;
-
+var mongoose = require("mongoose");
 var config = require('config');
 var mongoURL = config.dbUrl;
 
@@ -12,12 +12,16 @@ var cntnQueue = [];
 
 var createConnectionPool = function(){
   for(var count=0; count < numberOfConnection; count++){
-    MongoClient.connect(mongoURL, function(err, _db){
+    /*MongoClient.connect(mongoURL, function(err, _db){
       if (err) { 
         throw new Error('Could not connect: '+err)
       }
       cntnStack.push(_db);
-    });
+    });*/    
+    mongoose.connect(mongoURL, { useMongoClient: true }).then(
+	  () => { cntnStack.push(_db); },
+	  err => { throw new Error('Could not connect: '+err); }
+	);    
   }
   connected = true;
 }
@@ -108,3 +112,4 @@ exports.createConnectionPool = createConnectionPool;
 exports.getCollection = getCollection;
 exports.createGridStore = createGridStore;
 exports.readGridFS = readGridFS;
+exports.getConnection = getConnection;

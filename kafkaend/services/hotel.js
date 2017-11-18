@@ -1,37 +1,134 @@
+var mongo = require('./mongo');
+var validator = require('validator');
+var ObjectID = require('mongodb').ObjectID;
+var hotelModel = require('../models/hotel.js');
 
 function addHotel(msg, callback){
-    var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+	var res = {};
+	if(!validator.isEmpty(msg.name)){
+		msg.is_deleted = false;		
+		var newHotel = new hotelModel(msg);
+		newHotel.save(function (err) {
+			if(err) {
+				console.log(err);
+				res.code = 500 ; 
+				res.status  = 500 ; 
+				res.message = "Error occured while registering a hotel with server"
+				callback(null , res); 
+			} else {
+				res.code = 200  ; 
+				res.status  = 200 ; 
+				res.message = "Success";
+				callback(null , res) ; 
+			}
+		});
+	}else{
+		res.code = 400;
+		res.status  = 400 ; 
+		res.data = []
+		res.message = "Please pass the correct Parameteres";
+		callback(null, res);
+   }
 }
 
 function getHotels(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    hotelModel.find({ is_deleted : false}, function(err, result){
+    	if(err){
+			res.code = 500  ; 
+			res.status  = 500 ; 
+			res.message = "Fail to get all hotels from the server"
+			callback(null , res) ; 
+		}else{
+			res.code = 200  ; 
+			res.status  = 200 ; 
+			res.message = "Success"
+			res.data = result
+			callback(null , res) ; 
+		}
+    });
 }
 
 function getHotelById(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    var idToGet = new ObjectID(msg.id) ;
+    if(!validator.isEmpty(msg.id)){
+    	hotelModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result){
+        	if(err){
+				res.code = 500 ; 
+				res.status  = 500; 
+				res.message = "Fail to get hotel from the server";
+				callback(null , res); 
+			}else{
+				res.code = 200 ; 
+				res.status  = 200; 
+				res.message = "Success";
+				res.data = result;
+				callback(null , res);
+			}
+        });
+	}else{
+		res.code = 400;
+		res.status  = 400 ; 
+		res.data = []
+		res.message = "Please pass the correct Parameteres";
+		callback(null, res);
+   }
 }
 
 function updateHotelById(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    var idToUpdate = new ObjectID(msg.idToUpdate) ;
+    msg.is_deleted = false;
+    if(!validator.isEmpty(msg.idToUpdate)){
+    	hotelModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
+    		if(err){
+	    		console.log(err);
+				res.code = 500 ; 
+				res.status  = 500 ; 
+				res.message = "Error occured while updating a hotel"
+				callback(null , res); 
+			} else {
+				res.code = 200  ; 
+				res.status  = 200 ; 
+				res.message = "Hotel successfully updated";
+				callback(null , res) ; 
+			}
+		})
+	}else{
+		res.code = 400;
+		res.status  = 400 ; 
+		res.data = []
+		res.message = "Please pass the correct Parameteres";
+		callback(null, res);
+	}
 }
 
 function deleteHotelById(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    var idToDelete = new ObjectID(msg.idToDelete) ;
+    if(!validator.isEmpty(msg.idToDelete)){
+    	hotelModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true }}, { multi: false }, function(err , response){
+    		if(err){
+				console.log(err);
+				res.code = 500 ; 
+				res.status  = 500 ; 
+				res.message = "Error occured while deleting a hotel"
+				callback(null , res); 
+			}else{
+				res.code = 200  ; 
+				res.status  = 200 ; 
+				res.message = "Hotel successfully deleted";
+				callback(null , res) ; 
+			}
+		})
+	}else{
+		res.code = 400;
+		res.status  = 400 ; 
+		res.data = []
+		res.message = "Please pass the correct Parameteres";
+		callback(null, res);
+	}
 }
 
 function getHotelsForCustomer(msg, callback){
