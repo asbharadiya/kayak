@@ -261,7 +261,13 @@ class CarComponent extends Component {
 									<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
 
 										<button type="button" className="btn btn-info" onClick={() => {
+											var startDate = new Date(this.state.serviceStartDate);
+						      				startDate.setDate(startDate.getDate() + 1);
+						      				var endDate = new Date(this.state.serviceEndDate);
+						      				endDate.setDate(endDate.getDate() + 1);
+						      				console.log("Dates selected " , startDate , endDate) ;
 
+											
 											if(this.state.carQuantity === '' ){
 												this.setState({ updateCarError : "Specify number of cars to add"})
 												return ;
@@ -278,6 +284,33 @@ class CarComponent extends Component {
 												this.setState({ updateCarError : "Please select number of occupants"})
 												return ;
 											}
+											if(this.state.serviceStartDate === ''){
+						      					this.setState({ updateCarError : "Please enter service start date"})
+						      					return
+						      				}
+						      				
+						      				if(this.state.serviceEndDate === ''){
+						      					this.setState({ updateCarError : "Please enter service end date"})
+						      					return
+						      				}
+						      				if(startDate <= new Date())	{
+						      					this.setState({ updateCarError : "Service Start Date should be a future date"})
+						      					return
+						      				}
+						      				if(endDate <= new Date())	{
+						      					this.setState({ updateCarError : "Service End Date should be a future date"})
+						      					return
+						      				}
+
+						      				if(endDate <= startDate){
+
+						      					this.setState({ updateCarError : "Service End Date should be a greater than start date"})
+						      					return	
+						      				}
+						      				if(endDate <= startDate.setDate(startDate.getDate() + 14)){
+						      					this.setState({ updateCarError : "Service provided should not be less than 15 days"})
+						      					return ;
+						      				}
 											if(this.state.luggage === '' ){
 												this.setState({ updateCarError : "Please specify luggage is allowed or not"})
 												return ;
@@ -286,6 +319,8 @@ class CarComponent extends Component {
 												this.setState({ updateCarError : "Please specify daily rental value for the car"})
 												return ;
 											}
+
+
 											var obj = {
 												carQuantity : this.state.carQuantity ,
 												carType : this.state.carType ,
