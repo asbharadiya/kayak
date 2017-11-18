@@ -167,10 +167,11 @@ class Cars extends Component {
 						        </div>
 					      	</div>
 					      	
+
+
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="carname">Daily Rental Value</label>
-					      		<span className="input-group-addon"><i ><b>$$$</b></i></span>
-								<input type="number" onChange={(e) => {
+					      		<input type="number" onChange={(e) => {
 							                              this.setState({
 							                                dailyRentalValue : e.target.value
 							                              })
@@ -197,13 +198,13 @@ class Cars extends Component {
 						        <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 						      		
 						      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
-						      			<button type="button" className="btn btn-default" onClick={() => {
+						      			<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
 						      				this.setState({showCarModal : false})
 						      			}}>Close</button>
 						      		</div>
-						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
+						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  divForAddCarConfirm text-right">
 
-						      			<button type="button" className="btn btn-info" onClick={() => {
+						      			<button type="button" className="btn btn-info sharpCornerForInfoButton" onClick={() => {
 						      				var startDate = new Date(this.state.serviceStartDate);
 						      				startDate.setDate(startDate.getDate() + 1);
 						      				var endDate = new Date(this.state.serviceEndDate);

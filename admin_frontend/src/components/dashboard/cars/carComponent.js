@@ -105,13 +105,13 @@ class CarComponent extends Component {
 					<Modal.Footer className="carDeleteFooter">
 						 <div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
 							<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 col-md-offset-4 col-xs-offset-4 col-lg-offset-4 col-sm-offset-4">
-								<button className="btn btn-danger" onClick={() => {
+								<button className="btn btn-danger sharpCornerForInfoButton" onClick={() => {
 									this.props.deleteCarById(this.props.car._id)
 									this.setState({openDeleteModal : false})
 								}}>YES</button>
 							</div>
 							<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 ">
-								<button className="btn" onClick={() => {
+								<button className="btn sharpCornerForInfoButton" onClick={() => {
 									this.setState({openDeleteModal : false})
 								}}>NO</button>
 							</div>
@@ -225,7 +225,6 @@ class CarComponent extends Component {
 
 							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 								<label htmlFor="carname">Daily Rental Value</label>
-								<span className="input-group-addon"><i ><b>$$$</b></i></span>
 								<input type="number" value={this.state.dailyRentalValue} onChange={(e) => {
 														  this.setState({
 															dailyRentalValue : e.target.value
@@ -252,7 +251,7 @@ class CarComponent extends Component {
 								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 
 									<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
-										<button type="button" className="btn btn-default" onClick={() => {
+										<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
 											this.setState({
 												showCarUpdateModal : false
 											})
@@ -260,7 +259,7 @@ class CarComponent extends Component {
 									</div>
 									<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
 
-										<button type="button" className="btn btn-info" onClick={() => {
+										<button type="button" className="btn btn-info sharpCornerForInfoButton" onClick={() => {
 											var startDate = new Date(this.state.serviceStartDate);
 						      				startDate.setDate(startDate.getDate() + 1);
 						      				var endDate = new Date(this.state.serviceEndDate);
