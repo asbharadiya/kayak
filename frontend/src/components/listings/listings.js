@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 import './listings.css';
 import Search from './search/search';
 import Filters from './filters/filters';
 import Sorts from './sorts/sorts';
-import Content from './content/content';
+import FlightRow from './flightRow/flightRow';
+import HotelRow from './hotelRow/hotelRow';
+import CarRow from './carRow/carRow';
 
 class Listings extends Component {
 
   	render() {
+        const category = this.props.match.params.category;
     	return (
       		<div className="listings-page-wrapper">
       			<div className="inline-search-container">
@@ -22,7 +27,17 @@ class Listings extends Component {
       						<Sorts/>
       					</div>
       					<div className="data-container">
-      						<Content/>
+                            {
+                                this.props.listings.map((listing , key) => {
+                                    if(category === 'hotels') {
+                                        return <HotelRow data={listing} key={key}/>
+                                    } else if (category === 'flights') {
+                                        return <FlightRow data={listing} key={key}/>
+                                    } else {
+                                        return <CarRow data={listing} key={key}/>
+                                    }
+                                })
+                            }
       					</div>
       				</div>
       			</div>
@@ -31,4 +46,8 @@ class Listings extends Component {
   	}
 }
 
-export default Listings;
+function mapStateToProps(state) {
+    return {listings:state.listingsReducer.listings};
+}
+
+export default withRouter(connect(mapStateToProps)(props => <Listings {...props}/>));

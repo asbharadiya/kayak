@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import './filters.css';
 
 class Filters extends Component {
 
   	render() {
-    	      return (
+        const category = this.props.match.params.category;
+		return (
       		<div className="filters-content">
       			<div className="title-section">
       				<span className="title">Filters</span>
@@ -42,8 +44,8 @@ class Filters extends Component {
       				</div>
       			</div>
       		</div>
-    	      );
+		);
   	}
 }
 
-export default Filters;
+export default withRouter(props => <Filters {...props}/>);
