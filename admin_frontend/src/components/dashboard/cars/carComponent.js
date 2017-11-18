@@ -216,10 +216,10 @@ class CarComponent extends Component {
 								<div data-toggle="buttons">
 								  <label onClick={() => {
 									this.setState({ luggage : 'YES'  })
-								  }}className="btn btn-default btn-circle btn-lg">       <input type="radio" name="q1" value="YES"  /><i className="glyphicon glyphicon-ok"></i></label>
+								  }}className="btn btn-primary btn-circle btn-md lable-margin">       <input type="radio" name="q1" value="YES"  /><i className="glyphicon glyphicon-ok"></i></label>
 								  <label onClick={() => {
 									this.setState({ luggage : 'NO'  })
-								  }}className="btn btn-default btn-circle btn-lg">       <input type="radio" name="q1" value="NO" /><i className="glyphicon glyphicon-remove"></i></label>
+								  }}className="btn btn-danger btn-circle btn-md">       <input type="radio" name="q1" value="NO" /><i className="glyphicon glyphicon-remove"></i></label>
 								</div>
 							</div>
 
