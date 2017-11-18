@@ -23,7 +23,9 @@ class Cars extends Component {
 			dailyRentalValue : false,
 			addCarError : "" ,
 			showCarModal: false,
-			carAddLoading : false
+			carAddLoading : false ,
+			serviceStartDate : '' ,
+			serviceEndDate : ''
 		}
 	}
 
@@ -39,10 +41,21 @@ class Cars extends Component {
 
 	componentWillReceiveProps(newProps) {    
       if(newProps.carAddSuccess != null && newProps.carAddSuccess){
-      	this.setState({carAddLoading : false , showCarModal : false}) ;
+      	this.setState({carAddLoading : false ,
+			      		showCarModal : false,
+			      		carQuantity : 0 ,
+			      		carType : '' ,
+			      		carName : '' ,
+			      		occupancy : '',
+			      		luggage : '' ,
+			      		dailyRentalValue : false,
+			      		serviceStartDate : '' ,
+						serviceEndDate : ''
+		}) ;
 
       	//setBack successfor carAddSuccess
       	this.props.setBackCarAddSuccess();
+      		
       }
    }
 
@@ -58,16 +71,9 @@ class Cars extends Component {
 				
 				 <Modal show={this.state.showCarModal} onHide={this.closeCarModal} id="carModal" className="carModal">	
 					<Modal.Body className="carModalBody">
-					    <div className="pre-scrollable">
+					    <div className="scrollDiv">
 					      
-					     	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="carid">No of Cars to add</label>
-					      		<input className="form-control sharpCorner" id="carid" type="number"  onChange={(e) => {
-					      			this.setState({
-					      				carQuantity : e.target.value
-					      			})
-					      		}} aria-describedby="basic-addon1"   />
-					      	</div>
+					     	
 					      	
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="carType">Car Type</label>
@@ -121,7 +127,34 @@ class Cars extends Component {
 			                      
 			                  </select>
 					      	</div>
-					      	
+
+					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="carid">No of Cars to add</label>
+					      		<input className="form-control sharpCorner" id="carid" type="number"  onChange={(e) => {
+					      			this.setState({
+					      				carQuantity : e.target.value
+					      			})
+					      		}} aria-describedby="basic-addon1"   />
+					      	</div>
+
+					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="serviceAvailable">Service Start Date</label>
+					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+					      				this.setState({
+					      					serviceStartDate : e.target.value
+					      				})
+					      		}} aria-describedby="basic-addon1"   />
+					      	</div>
+					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="serviceAvailable">Service End Date</label>
+					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+					      				this.setState({
+					      					serviceEndDate : e.target.value
+					      				})
+					      		}} aria-describedby="basic-addon1"   />
+					      	</div>
+
+
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="luggage">Luggage</label>
 					      		<div data-toggle="buttons">
@@ -171,11 +204,13 @@ class Cars extends Component {
 						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
 
 						      			<button type="button" className="btn btn-info" onClick={() => {
+						      				var startDate = new Date(this.state.serviceStartDate);
+						      				startDate.setDate(startDate.getDate() + 1);
+						      				var endDate = new Date(this.state.serviceEndDate);
+						      				endDate.setDate(endDate.getDate() + 1);
+						      				console.log("Dates selected " , startDate , endDate) ;
+
 						      				
-						      				if(this.state.carQuantity === 0 ){
-						      					this.setState({ addCarError : "Specify number of cars to add"})
-						      					return ;
-						      				}
 						      				if(this.state.carType === '' ){
 						      					this.setState({ addCarError : "Please select Car Type"})
 						      					return ;
@@ -188,8 +223,39 @@ class Cars extends Component {
 						      					this.setState({ addCarError : "Please select number of occupants"})
 						      					return ;
 						      				}
+						      				if(this.state.carQuantity === 0 ){
+						      					this.setState({ addCarError : "Specify number of cars to add"})
+						      					return ;
+						      				}
+						      				if(this.state.serviceStartDate === ''){
+						      					this.setState({ addCarError : "Please enter service start date"})
+						      					return
+						      				}
+						      				
+						      				if(this.state.serviceEndDate === ''){
+						      					this.setState({ addCarError : "Please enter service end date"})
+						      					return
+						      				}
+						      				if(startDate <= new Date())	{
+						      					this.setState({ addCarError : "Service Start Date should be a future date"})
+						      					return
+						      				}
+						      				if(endDate <= new Date())	{
+						      					this.setState({ addCarError : "Service End Date should be a future date"})
+						      					return
+						      				}
+
+						      				if(endDate <= startDate){
+
+						      					this.setState({ addCarError : "Service End Date should be a greater than start date"})
+						      					return	
+						      				}
+						      				if(endDate <= startDate.setDate(startDate.getDate() + 14)){
+						      					this.setState({ addCarError : "Service provided should not be less than 15 days"})
+						      					return ;
+						      				}
 						      				if(this.state.luggage === '' ){
-						      					this.setState({ addCarError : "Please specify luggage is allowed or not"})
+						      					this.setState({ addCarError : "Please specify luggage allowed or not"})
 						      					return ;
 						      				}
 						      				if(this.state.dailyRentalValue === false ){
@@ -202,18 +268,18 @@ class Cars extends Component {
 												carName : this.state.carName ,
 												occupancy : this.state.occupancy,
 												luggage : this.state.luggage ,
-												dailyRentalValue : this.state.dailyRentalValue
+												dailyRentalValue : this.state.dailyRentalValue,
+												serviceStartDate : this.state.serviceStartDate,
+												serviceEndDate : this.state.serviceEndDate
 						      				}
-						      				this.setState({ addCarError : '' , 
-						      								carAddLoading : true,
-						      								carQuantity : 0 ,
-															carType : '' ,
-															carName : '' ,
-															occupancy : '',
-															luggage : '' ,
-															dailyRentalValue : false,
 
-						      							})
+						      				this.setState({
+						      					addCarError : '' , 
+      											carAddLoading : true
+						      				})
+
+						      				
+						      				
 											this.props.addCar(obj)
 						      			}} >Submit 
 						      			</button>
@@ -239,7 +305,7 @@ class Cars extends Component {
 								 <b>Type</b>
 							 </div>
 							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								 <b># of Cars</b>
+								 <b># of Cars/day</b>
 							 </div>
 							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
 								 <b>Rental Value</b>

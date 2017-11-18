@@ -6,18 +6,33 @@ var ObjectID = require('mongodb').ObjectID
 function addCar(msg, callback){
 	var res = {};
 	
-	console.log("in Kafka ", msg)
-
 	
 	
 
 	   if(validator.isNumeric( msg.carQuantity) && validator.isNumeric( msg.dailyRentalValue) && validator.isNumeric( msg.occupancy) 
 		){
 			
+			msg.createdDate = new Date();
+			msg.updatedDate = new Date() ; 
 			msg.carQuantity = parseInt(msg.carQuantity) ; 
 			msg.dailyRentalValue = parseInt(msg.dailyRentalValue) ; 
 			msg.occupancy = parseInt(msg.occupancy) ;
 			msg.is_deleted = false ; 
+
+			var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ; 
+
+			var availabilityDateObject = [] ; 
+			for(var i=0 ; i <= serviceDays ; i++){
+				var date = new Date(msg.serviceStartDate) ;
+				date.setDate(date.getDate() + i);
+				availabilityDateObject.push({availabilityDate : date , availableCars : msg.carQuantity})
+			}
+
+			
+			msg.availability = availabilityDateObject ;
+			delete msg.serviceEndDate;
+			delete msg.serviceStartDate;
+			console.log(msg )  ; 
 
 			mongo.getCollection('cars' , function(err , collection){
 
@@ -30,7 +45,7 @@ function addCar(msg, callback){
 								res.message = "Error occured while registering a car with server"
 								callback(null , res) ; 
 							   
-							}else{
+							}else{	
 
 
 								collection.find({is_deleted : false}).toArray(function(err, result){
@@ -68,7 +83,7 @@ function getCars(msg, callback){
 	var res = {};
 
 	mongo.getCollection('cars' , function(err , collection){
-		collection.find({is_deleted : false}).toArray(function(err, result){
+		collection.find({is_deleted : false} , {_id : 1 , carName : 1  , carQuantity : 1  , carType : 1  , dailyRentalValue : 1 }).toArray(function(err, result){
 			if(err){
 				res.code = 500  ; 
 				res.status  = 500 ; 
@@ -83,9 +98,6 @@ function getCars(msg, callback){
 			}
 		})   
 	})
-
-
-	
 }
 
 function getCarById(msg, callback){
@@ -95,13 +107,34 @@ function getCarById(msg, callback){
 
 	mongo.getCollection('cars' , function(err , collection){
 		collection.find({is_deleted : false , _id : idToGet}).toArray(function(err, result){
-					console.log("Getting object " , result)
+					
 					if(err){
 						res.code = 500  ; 
 						res.status  = 500 ; 
 						res.message = "Fail to get all cars from the server"
 						callback(null , res) ; 
 					}else{
+
+						var startDate =  result[0].availability[0].availabilityDate ;
+						startDate.setDate(startDate.getDate() + 1);
+						var endDate =  result[0].availability[result[0].availability.length-1].availabilityDate;
+						endDate.setDate(endDate.getDate() + 1);
+
+						var mmS = startDate.getMonth().toString().length > 1 ? startDate.getMonth() : '0' + startDate.getMonth().toString();
+						var ddS  = startDate.getDate().toString().length > 1 ? startDate.getDate() : '0' + startDate.getDate().toString() ; 
+						
+						var mmE = endDate.getMonth().toString().length > 1 ? endDate.getMonth() : '0' + endDate.getMonth().toString();
+						var ddE  = endDate.getDate().toString().length > 1 ? endDate.getDate() : '0' + endDate.getDate().toString() ; 
+						
+						startDate = startDate.getFullYear() +  "-" + mmS + "-" + ddS 
+						endDate = endDate.getFullYear() +  "-" + mmE + "-" + ddE 
+
+						delete result[0].availability;
+						result[0].serviceStartDate = startDate ;
+						result[0].serviceEndDate = endDate ; 
+
+
+
 						res.code = 200  ; 
 						res.status  = 200 ; 
 						res.message = "Success"
@@ -118,43 +151,54 @@ function getCarById(msg, callback){
 
 function updateCarById(msg, callback){
 	var res = {};
-
-	console.log("Updating Car " , msg) ;
-
 	idToUpdate = new ObjectID(msg._id) ;
-	console.log(idToUpdate) ;
-
 	msg._id = idToUpdate ; 
+	msg.updatedDate = new Date() ; 
+	
+	var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ; 
 
-	console.log(msg._id)
+	var availabilityDateObject = [] ; 
+	for(var i=0 ; i <= serviceDays ; i++){
+		var date = new Date(msg.serviceStartDate) ;
+		date.setDate(date.getDate() + i);
+		availabilityDateObject.push({availabilityDate : date , availableCars : msg.carQuantity})
+	}
 
+
+	msg.availability = availabilityDateObject ;
+	delete msg.serviceEndDate;
+	delete msg.serviceStartDate;
+
+
+
+	
 	mongo.getCollection('cars' , function(err , collection){
 		collection.update({is_deleted : false , _id : idToUpdate }  ,
-		msg , function(err , response){
-			if(err){
-				res.code = 500;
-				res.message = "Error occured while Updating the Car";
-				callback(null, res);
-			}else{
+			msg , function(err , response){
+				if(err){
+					res.code = 500;
+					res.message = "Error occured while Updating the Car";
+					callback(null, res);
+				}else{
 
-				collection.find({is_deleted : false}).toArray(function(err, result){
-					if(err){
-						res.code = 500  ; 
-						res.status  = 500 ; 
-						res.message = "Fail to get all cars from the server"
-						callback(null , res) ; 
-					}else{
-						res.code = 200  ; 
-						res.status  = 200 ; 
-						res.message = "Success"
-						res.data = result
-						callback(null , res) ; 
-					}
-				})   
+					collection.find({is_deleted : false}).toArray(function(err, result){
+						if(err){
+							res.code = 500  ; 
+							res.status  = 500 ; 
+							res.message = "Fail to get all cars from the server"
+							callback(null , res) ; 
+						}else{
+							res.code = 200  ; 
+							res.status  = 200 ; 
+							res.message = "Success"
+							res.data = result
+							callback(null , res) ; 
+						}
+					})   
 
 
-			}
-		})
+				}
+			})
 	})
 
 	
@@ -176,6 +220,7 @@ function deleteCarById(msg, callback){
 				if(result[0]){
 					
 					result[0].is_deleted  = true ; 
+					result[0].deletedDate = new Date();
 					collection.update({is_deleted : false , _id : idToDelete }  ,
                                     result[0] , function(err , response){
                                     	if(err){

@@ -21,7 +21,11 @@ class CarComponent extends Component {
 			dailyRentalValue : this.props.currentCarToUpdate.dailyRentalValue,
 			_id : '' ,
 			updateCarError : '' ,
-			carUpdateLoading : false
+			carUpdateLoading : false , 
+			serviceStartDate : '' ,
+			serviceEndDate : '',
+			createdDate : '' ,
+			updatedDate : ''
 		}
 	}
 
@@ -36,6 +40,10 @@ class CarComponent extends Component {
 			luggage : newProps.currentCarToUpdate.luggage ,
 			dailyRentalValue : newProps.currentCarToUpdate.dailyRentalValue,
 			_id : newProps.currentCarToUpdate._id,
+			serviceStartDate : newProps.currentCarToUpdate.serviceStartDate ,
+			serviceEndDate : newProps.currentCarToUpdate.serviceEndDate ,
+			createdDate : newProps.currentCarToUpdate.createdDate ,
+			updatedDate : newProps.currentCarToUpdate.updatedDate 
 	  })
 
 
@@ -43,12 +51,13 @@ class CarComponent extends Component {
       	
       	this.setState({carUpdateLoading : false , showCarUpdateModal : false}) ;
 
-      	//setBack successfor carAddSuccess
+      	//setBack success for carAddSuccess
       	this.props.setBackCarUpdateSuccess();
       }
    }
 
 	render() {
+		console.log("Plash " , this.state) ; 
 		return (
     		<div className="singleCarComponent">
 				<div className="row mainRowDiv">
@@ -114,15 +123,8 @@ class CarComponent extends Component {
 				<Modal show={this.state.showCarUpdateModal}  id="carModal" className="carModal">
 					<Modal.Body className="carModalBody">
 
-						<div className="pre-scrollable">
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-								<label htmlFor="carid">No of Cars to add</label>
-								<input className="form-control sharpCorner" value={this.state.carQuantity} id="carid" type="number"  onChange={(e) => {
-									this.setState({
-										carQuantity : e.target.value
-									})
-								}} aria-describedby="basic-addon1"   />
-							</div>
+						<div className="scrollDiv">
+							
 
 							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 								<label htmlFor="carType">Car Type</label>
@@ -176,6 +178,38 @@ class CarComponent extends Component {
 
 							  </select>
 							</div>
+
+							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+								<label htmlFor="carid">No of Cars to add</label>
+								<input className="form-control sharpCorner" value={this.state.carQuantity} id="carid" type="number"  onChange={(e) => {
+									this.setState({
+										carQuantity : e.target.value
+									})
+								}} aria-describedby="basic-addon1"   />
+							</div>
+
+
+							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="serviceAvailable">Service Start Date</label>
+					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+					      				this.setState({
+					      					serviceStartDate : e.target.value
+					      				})
+					      		}} aria-describedby="basic-addon1"   />
+					      		<div className="UpdatedDate">{this.state.serviceStartDate}</div>
+					      	</div>
+
+					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="serviceAvailable">Service End Date</label>
+					      		<input  className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+					      				this.setState({
+					      					serviceEndDate : e.target.value
+					      				})
+					      		}} aria-describedby="basic-addon1"   />
+					      		<div className="UpdatedDate">{this.state.serviceEndDate}</div>
+					      	</div>
+
+
 
 							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 								<label htmlFor="luggage">Luggage</label>
@@ -260,7 +294,11 @@ class CarComponent extends Component {
 												luggage : this.state.luggage ,
 												dailyRentalValue : this.state.dailyRentalValue,
 												is_deleted : false,
-												_id  : this.state._id
+												_id  : this.state._id,
+												serviceStartDate : this.state.serviceStartDate  ,
+												serviceEndDate : this.state.serviceEndDate ,
+												createdDate : this.state.createdDate ,
+												updatedDate : this.state.updatedDate
 											}
 											this.setState({ updateCarError : '' , carUpdateLoading : true})
 
