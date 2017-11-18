@@ -262,6 +262,8 @@ class Cars extends Component {
 						      					this.setState({ addCarError : "Please specify daily rental value for the car"})
 						      					return ;
 						      				}
+						      				console.log(this.state.serviceStartDate) ;
+						      				console.log(this.state.serviceEndDate)
 						      				var obj = {
 						      					carQuantity : this.state.carQuantity ,
 												carType : this.state.carType ,
