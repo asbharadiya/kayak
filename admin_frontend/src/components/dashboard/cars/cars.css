@@ -19,11 +19,7 @@
 	padding: 15px
 	}
 	
-	.sharpCorner{
-		border-radius : 0 ;
-		padding: 15px ;
-		box-shadow : 1px 1px 1px 1px linen	
-	}
+	
 	
 	.marginBottom15{
 		margin-bottom: 15px
@@ -70,3 +66,24 @@
 	margin-top: 15px ;
 	text-align: left;
 }
+
+
+.scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+	margin-top: 15px
+}
+
+.sharpCornerForInfoButton{
+		border-radius : 0 ;
+}
+
+.sharpCorner{
+		border-radius : 0 ;
+		padding: 15px ;
+		box-shadow : 1px 1px 1px 1px linen	
+	}
+
+	.lable-margin{
+		margin-right: 15px
+	}

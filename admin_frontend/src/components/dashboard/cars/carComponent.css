@@ -20,3 +20,27 @@
 	border-radius: 0
 }
 
+.singleCarComponent .mainRowDiv  .buttonGroup .updateFontAwesome{
+	margin-right: 40px;
+	color : mediumblue;
+}
+
+
+.singleCarComponent .mainRowDiv  .buttonGroup .redIcon{
+	color : red;
+}
+
+ .scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+	margin-top: 20px
+}
+
+.sharpCornerForInfoButton{
+		border-radius : 0 ;
+}
+
+ .UpdatedDate{
+	color :red;
+	margin-left: 15px
+}

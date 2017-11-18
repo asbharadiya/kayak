@@ -50,7 +50,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-    return {isLogged:state.isLogged};
+    return {isLogged:state.authReducer.isLogged};
 }
 
 function mapDispatchToProps(dispatch) {

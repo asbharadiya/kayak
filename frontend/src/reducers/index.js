@@ -1,18 +1,11 @@
+import {combineReducers} from 'redux';
+import authReducer from './auth';
+import listingsReducer from './listings';
 
-const initialState= {
-  isLogged: undefined,
-  uname: ""
-}
+const rootReducer = combineReducers({
+    // short hand property names
+    authReducer,
+    listingsReducer
+})
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "SESSION_ACTIVE" :
-      return {...state,isLogged:true,uname:action.data.uname};
-    case "SESSION_INACTIVE" :  
-      return {...state,isLogged:false};
-    default : 
-      return state;
-  }
-};
-
-export default reducer;
+export default rootReducer;
