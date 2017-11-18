@@ -29,3 +29,13 @@
 .singleCarComponent .mainRowDiv  .buttonGroup .redIcon{
 	color : red;
 }
+
+ .scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+}
+
+ .UpdatedDate{
+	color :red;
+	margin-left: 15px
+}

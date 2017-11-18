@@ -70,3 +70,9 @@
 	margin-top: 15px ;
 	text-align: left;
 }
+
+
+.scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+}
