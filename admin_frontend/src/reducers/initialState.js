@@ -14,6 +14,26 @@ export default {
   							occupancy : '',
   							luggage : "NO" ,
   							dailyRentalValue : 0
-  						}
+  						},
   //Cars Initial Data End
+
+  //Flights Initial Data
+  allFlights : [],
+  flightAddSuccess : null ,
+  flightUpdateSuccess : null,
+  currentFlightToUpdate : {
+                lightNumber : '' ,
+                airline : '' ,
+                source : '' ,
+                destination : '',
+                arrival : '' ,
+                departure : '',
+                flightAddFrom : '',
+                flightAddTill : '',
+                class : '',
+                price : '',
+                seats : '',
+  }
+
+  //Flights Initial Data End
 }
