@@ -315,7 +315,9 @@ class Flights extends Component {
 
 					 //Add flightsComponent
 					{
-						
+						this.props.listOfFlights.map((car , key) => {
+							return <FlightComponent flight={flight}  key={key}> </CarComponent>
+						})
 					}
 				</div>
 			</div>
