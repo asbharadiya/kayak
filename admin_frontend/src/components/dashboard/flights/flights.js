@@ -4,7 +4,7 @@ import {addFlight , setBackFlightAddSuccess , getAllFlights } from '../../../act
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
-//import CarComponent  from './carComponent'
+import FlightComponent  from './flightComponent'
 
 //Loading
 import Loading from 'react-loading-spinner';
@@ -315,8 +315,8 @@ class Flights extends Component {
 
 					 //Add flightsComponent
 					{
-						this.props.listOfFlights.map((car , key) => {
-							return <FlightComponent flight={flight}  key={key}> </CarComponent>
+						this.props.listOfFlights.map((flight , key) => {
+							return <FlightComponent flight={flight}  key={key}> </FlightComponent>
 						})
 					}
 				</div>
