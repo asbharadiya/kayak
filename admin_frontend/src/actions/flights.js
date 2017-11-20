@@ -37,13 +37,13 @@ export function getAllFlights() {
 	return function(dispatch) {
 		return api.getAllFlights(function(error , response){
 			if(error){
-				dispatch({type: "GET_ALL_CAR_FAILURE" });
+				dispatch({type: "GET_ALL_FLIGHT_FAILURE" });
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch({type: "GET_ALL_CAR_SUCCESS"  , payload :  res.data});
+						dispatch({type: "GET_ALL_FLIGHT_SUCCESS"  , payload :  res.data});
 					}else{
-						dispatch({type: "GET_ALL_CAR_FAILURE" });
+						dispatch({type: "GET_ALL_FLIGHT_FAILURE" });
 					}
 				})
 			}
@@ -68,9 +68,9 @@ function deleteFlightSuccess(data) {
   	return {type: "DELETE_FLIGHT_SUCCESS" , payload : data}
 }
 
-export function deleteCarById(id) {
+export function deleteFlightById(id) {
 	return function(dispatch) {
-		return api.deleteCarById(id , function(error , response){
+		return api.deleteFlightById(id , function(error , response){
 			if(error){
 				dispatch( deleteFlightFailure()) ;
 			} else {
@@ -92,17 +92,17 @@ function updateFlightSuccess(data) {
 	return {type: "UPDATE_FLIGHT_SUCCESS" , payload : data}
 }
 
-export function updateCarById(obj) {
+export function updateFlightById(obj) {
 	return function(dispatch) {
-		return api.updateCarById(obj , function(error , response){
+		return api.updateFlightById(obj , function(error , response){
 			if(error){
-				dispatch({type: "UPDATE_CAR_FAILURE"})
+				dispatch({type: "UPDATE_FLIGHT_FAILURE"})
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
 						dispatch(updateFlightSuccess(res.data))
 					}else{
-						dispatch({type: "UPDATE_CAR_FAILURE"})
+						dispatch({type: "UPDATE_FLIGHT_FAILURE"})
 					}
 				})
 			}
@@ -116,11 +116,11 @@ function getFlightByIDSuccess(data){
 	return {type: "GET_FLIGHT_TO_UPDATE_SUCCESS" , payload : data}
 }
 
-export function getCarById(id) {
+export function getFlightById(id) {
 	return function(dispatch) {
-		return api.getCarById(id , function(error , response){
+		return api.getFlightById(id , function(error , response){
 			if(error){
-				dispatch({type: "GET_CAR_TO_UPDATE_FAILURE" , payload : null})
+				dispatch({type: "GET_FLIGHT_TO_UPDATE_FAILURE" , payload : null})
 			} else {
 				response.then((res) => {
 					if(res.status === 200){

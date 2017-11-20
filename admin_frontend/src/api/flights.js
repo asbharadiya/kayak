@@ -39,8 +39,8 @@ export const getAllFlights = (callback) => {
 
 
 
-export const deleteCarById = ( id , callback) => {
-    fetch(api+'/a/cars/'+id, {
+export const deleteFlightById = ( id , callback) => {
+    fetch(api+'/a/flights/'+id, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -56,8 +56,8 @@ export const deleteCarById = ( id , callback) => {
 } 
 
 
-export const updateCarById = ( obj , callback) => {
-    fetch(api+'/a/cars/'+obj._id, {
+export const updateFlightById = ( obj , callback) => {
+    fetch(api+'/a/flights/'+obj._id, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -73,8 +73,8 @@ export const updateCarById = ( obj , callback) => {
 } 
 
 
-export const getCarById = ( id , callback) => {
-    fetch(api+'/a/cars/'+id, {
+export const getFlightById = ( id , callback) => {
+    fetch(api+'/a/flights/'+id, {
         method: 'GET',
         credentials: 'include',
         headers: {

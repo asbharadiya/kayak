@@ -1,85 +1,125 @@
 import React, { Component } from 'react';
-import './flights.css';
-import {addFlight , setBackFlightAddSuccess , getAllFlights } from '../../../actions/flights'
+import './flightComponent.css'
+import { Modal } from 'react-bootstrap';
+import { deleteFlightById , updateFlightById , setBackFlightUpdateSuccess , getFlightById } from '../../../actions/flights'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
-//import CarComponent  from './carComponent'
-
-//Loading
 import Loading from 'react-loading-spinner';
 
-
-class Flights extends Component {
-
+class FlightComponent extends Component {
+	
 	constructor(props){
 		super(props);
 		this.state = {
-			flightNumber : '' ,
-			airline : '' ,
-			source : '' ,
-			destination : '',
-			arrival : '' ,
-			departure : '',
-			serviceStartDate : '',
+			openDeleteModal : false,
+			showFlightUpdateModal : false,
+			flightNumber : this.props.currentFlightToUpdate.flightNumber ,
+			airline : this.props.currentFlightToUpdate.airline ,
+			source : this.props.currentFlightToUpdate.source ,
+			destination : this.props.currentFlightToUpdate.destination,
+			arrival : this.props.currentFlightToUpdate.arrival ,
+			departure : this.props.currentFlightToUpdate.departure,
+			serviceStartDate : this.props.currentFlightToUpdate.serviceStartDate,
+			serviceEndDate : this.props.currentFlightToUpdate.serviceEndDate,
+			class : this.props.currentFlightToUpdate.class,
+			price : this.props.currentFlightToUpdate.price,
+			seats : this.props.currentFlightToUpdate.seats,
+			_id : '' ,
+			updateFlightError : '' ,
+			flightUpdateLoading : false , 
+			serviceStartDate : '' ,
 			serviceEndDate : '',
-			class : '',
-			price : '',
-			seats : '',
-			addFlightError : "" ,
-			showFlightModal: false,
-			FlightAddLoading : false
+			createdDate : '' ,
+			updatedDate : ''
 		}
 	}
 
-	/*onChangeLuggage(e){
-		this.setState({
-			luggage : e.target.value
-		})
-	}*/
 
-	componentWillMount(){
-		this.props.getAllFlights()
-	}
+	componentWillReceiveProps(newProps) { 
+	
+	  this.setState({
+	  		flightNumber : this.newProps.currentFlightToUpdate.flightNumber ,
+	  	    airline : this.newProps.currentFlightToUpdate.airline ,
+	  	    source : this.newProps.currentFlightToUpdate.source ,
+	  	    destination : this.newProps.currentFlightToUpdate.destination ,
+	  	    arrival : this.newProps.currentFlightToUpdate.arrival ,
+	  	    departure : this.newProps.currentFlightToUpdate.departure ,
+	  	    serviceStartDate : this.newProps.currentFlightToUpdate.serviceStartDate ,
+	  	    serviceEndDate : this.newProps.currentFlightToUpdate.serviceEndDate ,
+	  	    class : this.newProps.currentFlightToUpdate.class ,
+	  	    price : this.newProps.currentFlightToUpdate.price ,
+	  	    seats : this.newProps.currentFlightToUpdate.seats ,
+			_id : newProps.currentFlightToUpdate._id,
+			createdDate : newProps.currentFlightToUpdate.createdDate ,
+			updatedDate : newProps.currentFlightToUpdate.updatedDate 
+	  })
 
-	componentWillReceiveProps(newProps) {    
-      if(newProps.flightAddSuccess != null && newProps.flightAddSuccess){
-      	this.setState({flightAddLoading : false ,
-      					showFlightModal : false,
-      					flightNumber : '' ,
-						airline : '' ,
-						source : '' ,
-						destination : '',
-						arrival : '' ,
-						departure : '',
-						serviceStartDate : '' ,
-						serviceEndDate : '',
-						class : '',
-						seats : '',
-						price : ''}) ;
 
-      	//setBack successfor carAddSuccess
-      	this.props.setBackFlightAddSuccess();
+      if(newProps.flightUpdateSuccess != null && newProps.flightUpdateSuccess){
+      	
+      	this.setState({flightUpdateLoading : false , showFlightUpdateModal : false}) ;
+
+      	//setBack success for carAddSuccess
+      	this.props.setBackFlightUpdateSuccess();
       }
    }
 
-
 	render() {
+		 
 		return (
-    		<div className="row flight-content">
-				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
-					<button className="btn btn-primary btn-kayak" onClick={() => {
-                        this.setState({showFlightModal : true})
-                    }}>Add Flight</button>
+    		<div className="singleFlightComponent">
+				<div className="row mainRowDiv">
+					<div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.airline}
+						</div>
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.source}
+						</div>
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.departure}
+						</div>
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.destination}
+						</div>
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.arrival}
+						</div>
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.class}
+						</div>
+						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							{this.props.flight.price}
+						</div>
+
+					</div>
+					<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
+
+						
+						<a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={() => {
+							this.props.getFlightById(this.props.flight._id)
+							this.setState({
+								showFlightUpdateModal : true
+							})
+						}}></i></a>
+						
+						<a className="redIcon"><i className="fa fa-times fa-2x" aria-hidden="true" onClick={() => {
+							this.setState({
+								openDeleteModal : true
+							})
+						}}></i></a>
+						
+					</div>
+
 				</div>
-				
+
 				 <Modal show={this.state.showFlightModal} id="flightModal" className="flightModal">	
 					<Modal.Body className="flightModalBody">
 					    <div className="scrollDiv">
 					      
 					     	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="flightid">Flight Number</label>
-					      		<input className="form-control sharpCorner" id="flightid" type="number"  onChange={(e) => {
+					      		<input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="number"  onChange={(e) => {
 					      			this.setState({
 					      				flightNumber : e.target.value
 					      			})
@@ -88,7 +128,7 @@ class Flights extends Component {
 					      	
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="airline">Airline Name</label>
-					      		<input className="form-control sharpCorner" id="airline" type="number"  onChange={(e) => {
+					      		<input value={this.state.airline} className="form-control sharpCorner" id="airline" type="number"  onChange={(e) => {
 					      			this.setState({
 					      				airline : e.target.value
 					      			})
@@ -97,7 +137,7 @@ class Flights extends Component {
 					      	
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="source">Source</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.source} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				source : e.target.value
 					      			})
@@ -106,7 +146,7 @@ class Flights extends Component {
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="destination">Destination</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.destination} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				destination : e.target.value
 					      			})
@@ -115,7 +155,7 @@ class Flights extends Component {
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="arrival">Arrival</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.arrival} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				arrival : e.target.value
 					      			})
@@ -124,7 +164,7 @@ class Flights extends Component {
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="departure">Departure</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.departure} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				departure : e.target.value
 					      			})
@@ -133,7 +173,7 @@ class Flights extends Component {
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="serviceStartDate">Flight Service Start Date</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.serviceStartDate} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				serviceStartDate : e.target.value
 					      			})
@@ -141,17 +181,17 @@ class Flights extends Component {
 					      	</div>
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="serviceEndDate">Flight Service End Date</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<label htmlFor="flightAddTill">Flight Service End Date</label>
+					      		<input value={this.state.serviceEndDate} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
-					      				serviceEndDate : e.target.value
+					      				flightAddTill : e.target.value
 					      			})
-					      		}} id="serviceEndDate" type="date"  aria-describedby="basic-addon1"   />
+					      		}} id="flightAddTill" type="date"  aria-describedby="basic-addon1"   />
 					      	</div>
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="class">Class</label>
-					      		<select onChange={(e) => {
+					      		<select value={this.state.class} onChange={(e) => {
 							                              this.setState({
 							                                class : e.target.value
 							                              })
@@ -169,7 +209,7 @@ class Flights extends Component {
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="seats">Number of Seats</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.seats} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				seats : e.target.value
 					      			})
@@ -178,7 +218,7 @@ class Flights extends Component {
 
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="price">Price</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input value={this.state.price} className="form-control sharpCorner" onChange={(e) => {
 					      			this.setState({
 					      				price : e.target.value
 					      			})
@@ -191,13 +231,13 @@ class Flights extends Component {
 					   <Modal.Footer className="flightModalFooter">
                                	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 						      		<div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
-						      			<Loading isLoading={this.state.flightAddLoading} ></Loading>
+						      			<Loading isLoading={this.state.flightUpdateLoading} ></Loading>
 						      		</div>
 						      	</div>
 
 
                                	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 flightAddErrorText">
-					      			{this.state.addFlightError} 
+					      			{this.state.updateFlightError} 
 					      			
 					      		</div>
 
@@ -206,55 +246,69 @@ class Flights extends Component {
 						      		
 						      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
 						      			<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
-						      				this.setState({showFlightModal : false})
+						      				this.setState({showFlightUpdateModal : false})
 						      			}}>Close</button>
 						      		</div>
 						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
 
 						      			<button type="button" className="btn btn-info sharpCornerForInfoButton" onClick={() => {
+											var startDate = new Date(this.state.serviceStartDate);
+						      				startDate.setDate(startDate.getDate() + 1);
+						      				var endDate = new Date(this.state.serviceEndDate);
+						      				endDate.setDate(endDate.getDate() + 1);
+						      				console.log("Dates selected " , startDate , endDate) ;
 						      				
 						      				if(this.state.flightNumber === '' ){
-						      					this.setState({ addFlightError : "Please Specify Flight Number"})
+						      					this.setState({ updateFlightError : "Please Specify Flight Number"})
 						      					return ;
 						      				}
 						      				if(this.state.airline === '' ){
-						      					this.setState({ addFlightError : "Please Specify Airline Name"})
+						      					this.setState({ updateFlightError : "Please Specify Airline Name"})
 						      					return ;
 						      				}
 						      				if(this.state.source === '' ){
-						      					this.setState({ addFlightError : "Please Specify Source Location"})
+						      					this.setState({ updateFlightError : "Please Specify Source Location"})
 						      					return ;
 						      				}
 						      				if(this.state.destination === '' ){
-						      					this.setState({ addFlightError : "Please Specify Destination"})
+						      					this.setState({ updateFlightError : "Please Specify Destination"})
 						      					return ;
 						      				}
 						      				if(this.state.arrival === '' ){
-						      					this.setState({ addFlightError : "Please Specify Arrival Time"})
+						      					this.setState({ updateFlightError : "Please Specify Arrival Time"})
 						      					return ;
 						      				}
 						      				if(this.state.departure === '' ){
-						      					this.setState({ addFlightError : "Please Specify Departure Time"})
+						      					this.setState({ updateFlightError : "Please Specify Departure Time"})
 						      					return ;
 						      				}
 						      				if(this.state.serviceStartDate === '' ){
-						      					this.setState({ addFlightError : "Please Specify Date from which service will start"})
+						      					this.setState({ updateFlightError : "Please Specify Date from which service will start"})
 						      					return ;
 						      				}
-						      				if(this.state.serviceEndDate === '' ){
-						      					this.setState({ addFlightError : "Please Specify Date on which service will end"})
+						      				if(this.state.flightAddTill === '' ){
+						      					this.setState({ updateFlightError : "Please Specify Date on which service will end"})
 						      					return ;
 						      				}
 						      				if(this.state.class === '' ){
-						      					this.setState({ addFlightError : "Please Specify Class"})
+						      					this.setState({ updateFlightError : "Please Specify Class"})
 						      					return ;
 						      				}
 						      				if(this.state.seats === '' ){
-						      					this.setState({ addFlightError : "Please Specify Seating Capacity"})
+						      					this.setState({ updateFlightError : "Please Specify Seating Capacity"})
 						      					return ;
 						      				}
 						      				if(this.state.price === '' ){
-						      					this.setState({ addFlightError : "Please Specify Price"})
+						      					this.setState({ updateFlightError : "Please Specify Price"})
+						      					return ;
+						      				}
+										if(endDate <= startDate){
+
+						      					this.setState({ updateCarError : "Service End Date should be a greater than start date"})
+						      					return	
+						      				}
+						      				if(endDate <= startDate.setDate(startDate.getDate() + 14)){
+						      					this.setState({ updateCarError : "Service provided should not be less than 15 days"})
 						      					return ;
 						      				}
 						      				
@@ -266,12 +320,12 @@ class Flights extends Component {
 												arrival : this.state.arrival ,
 												departure : this.state.departure,
 												serviceStartDate : this.state.serviceStartDate ,
-												serviceEndDate : this.state.serviceEndDate,
+												serviceEndDate : this.state.serviceEndDate ,
 												class : this.state.class ,
 												seats : this.state.seats,
 												price : this.state.price
 						      				}
-						      				this.setState({ addFlightError : '' , 
+						      				this.setState({ updateFlightError : '' , 
 						      								flightAddLoading : true
 						      								
 
@@ -290,55 +344,30 @@ class Flights extends Component {
 					 </Modal>
 
 
-				 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
-					 <div className="row listHeader">
-
-						 <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
-							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								 <b>Flight Name</b>
-							 </div>
-							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								 <b>Source & Departure</b>
-							 </div>
-							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								 <b>Destination & Arrival</b>
-							 </div>
-							 <div className="col-md-1 col-sm-1 col-lg-1 col-xs-1">
-								 <b>Class</b>
-							 </div>
-							 <div className="col-md-2 col-sm-2 col-lg-2 col-xs-2">
-								 <b>Cost</b>
-							 </div>
-						 </div>
-
-					 </div>
-
-					 //Add flightsComponent
-					{
-						
-					}
-				</div>
 			</div>
-		
   	    );
 	}
 }
 
 
+
 function mapDispatchToProps(dispatch) {
   return {
-    addFlight : (params) => dispatch(addFlight(params)) ,
-    setBackFlightAddSuccess : () => dispatch(setBackFlightAddSuccess()),
-    getAllFlights : () => dispatch(getAllFlights()) 
+    deleteFlightById : (id) => dispatch(deleteFlightById(id)) ,
+   	updateFlightById: (obj) => dispatch(updateFlightById(obj)) ,
+   	setBackFlightUpdateSuccess : () => dispatch(setBackFlightUpdateSuccess()) ,
+   	getFlightById : (id) => dispatch(getFlightById(id))
   };
 }
 
 function mapStateToProps(state) {
     return {
-        listOfFlights : state.flightsReducer.allFlights , 
-        flightAddSuccess : state.carsReducer.flightAddSuccess
+        listOfFlights : state.carsReducer.allFlights , 
+        flightAddSuccess : state.flightsReducer.flightAddSuccess,
+        flightUpdateSuccess : state.flightsReducer.flightUpdateSuccess,
+        currentFlightToUpdate : state.flightsReducer.currentFlightToUpdate
     };
 }
 
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <Flights {...props}/>));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <FlightComponent {...props}/>));
