@@ -7,13 +7,13 @@ var flightSchema = new mongoose.Schema({
 	airline : String ,
 	source : String ,
 	destination : String ,
-	arrival : Date ,
-	departure : Date ,
+	arrival : String ,
+	departure : String ,
 	serviceStartDate : Date,
 	serviceEndDate : Date,
 	class : String ,
-	price : Number ,
 	seats : Number ,
+	price : Number ,
 	is_deleted : Boolean
 });
 module.exports = mongoose.model('flight', flightSchema);

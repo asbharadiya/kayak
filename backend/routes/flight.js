@@ -4,9 +4,8 @@ var config = require('config');
 var topic_name = config.kafkaTopic;
 
 function addFlight(req,res){
-	kafka.make_request(topic_name,'addFlight',{
-		
-	},function(err,result){
+	console.log("Flight Server called " , req.body)
+	kafka.make_request(topic_name,'addFlight',req.body,function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {

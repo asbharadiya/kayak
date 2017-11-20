@@ -5,6 +5,7 @@ const headers = {
 };
 
 export const addFlight = (payload , callback) => {
+
     fetch(api+'/a/flights', {
         method: 'POST',
         credentials: 'include',

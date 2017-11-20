@@ -362,7 +362,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        listOfFlights : state.carsReducer.allFlights , 
+        listOfFlights : state.flightsReducer.allFlights , 
         flightAddSuccess : state.flightsReducer.flightAddSuccess,
         flightUpdateSuccess : state.flightsReducer.flightUpdateSuccess,
         currentFlightToUpdate : state.flightsReducer.currentFlightToUpdate

@@ -5,7 +5,8 @@ var flightModel = require('../models/flight.js');
 
 function addFlight(msg, callback){
 	var res = {};
-	if(!validator.isEmpty(msg.airline)){
+	if(true){
+
 		msg.is_deleted = false;		
 		var newFlight = new flightModel(msg);
 		newFlight.save(function (err) {

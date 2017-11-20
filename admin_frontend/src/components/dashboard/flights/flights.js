@@ -42,7 +42,8 @@ class Flights extends Component {
 		this.props.getAllFlights()
 	}
 
-	componentWillReceiveProps(newProps) {    
+	componentWillReceiveProps(newProps) { 
+		console.log('RECEIVED PROPS')   
       if(newProps.flightAddSuccess != null && newProps.flightAddSuccess){
       	this.setState({flightAddLoading : false ,
       					showFlightModal : false,
@@ -79,7 +80,7 @@ class Flights extends Component {
 					      
 					     	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="flightid">Flight Number</label>
-					      		<input className="form-control sharpCorner" id="flightid" type="number"  onChange={(e) => {
+					      		<input className="form-control sharpCorner" id="flightid" type="text"  onChange={(e) => {
 					      			this.setState({
 					      				flightNumber : e.target.value
 					      			})
@@ -88,7 +89,7 @@ class Flights extends Component {
 					      	
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="airline">Airline Name</label>
-					      		<input className="form-control sharpCorner" id="airline" type="number"  onChange={(e) => {
+					      		<input className="form-control sharpCorner" id="airline" type="text"  onChange={(e) => {
 					      			this.setState({
 					      				airline : e.target.value
 					      			})
@@ -313,11 +314,11 @@ class Flights extends Component {
 
 					 </div>
 
-					 //Add flightsComponent
+					
 					{
-						this.props.listOfFlights.map((flight , key) => {
-							return <FlightComponent flight={flight}  key={key}> </FlightComponent>
-						})
+						//this.props.listOfFlights.map((flight , key) => {
+							//return <FlightComponent flight={flight}  key={key}> </FlightComponent>
+						//})
 					}
 				</div>
 			</div>
@@ -338,7 +339,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         listOfFlights : state.flightsReducer.allFlights , 
-        flightAddSuccess : state.carsReducer.flightAddSuccess
+        flightAddSuccess : state.flightsReducer.flightAddSuccess
     };
 }
 
