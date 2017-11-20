@@ -19,7 +19,7 @@ export const addHotel = (payload , callback) => {
         callback( error , {});
     });    
 } 
-	
+    
 
 export const getAllHotels = (callback) => {
     fetch(api+'/a/hotels', {

@@ -7,11 +7,11 @@
 		background-color: #fafafa
 	}
 	
-	.car-content{
+	.hotel-content{
 		margin-top: 15px
 	}
 	
-	.car-content .addButtonDiv{
+	.hotel-content .addButtonDiv{
 		
 	}
 	
@@ -19,11 +19,7 @@
 	padding: 15px
 	}
 	
-	.sharpCorner{
-		border-radius : 0 ;
-		padding: 15px ;
-		box-shadow : 1px 1px 1px 1px linen	
-	}
+	
 	
 	.marginBottom15{
 		margin-bottom: 15px
@@ -34,7 +30,7 @@
  
 }
 
- .car-content .addButtonDiv .addButton{
+ .hotel-content .addButtonDiv .addButton{
 
  	border: none;
     text-decoration: none ;
@@ -43,12 +39,12 @@
     background-color: #ff690f;
  }
 
- .carAddErrorText{
+ .hotelAddErrorText{
  	color: red
  }
 
 
- .singleCarComponent .mainRowDiv .dataDiv{
+ .singleHotelComponent .mainRowDiv .dataDiv{
 	line-height: 1.5 ;
 	
 	
@@ -70,3 +66,24 @@
 	margin-top: 15px ;
 	text-align: left;
 }
+
+
+.scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+	margin-top: 15px
+}
+
+.sharpCornerForInfoButton{
+		border-radius : 0 ;
+}
+
+.sharpCorner{
+		border-radius : 0 ;
+		padding: 15px ;
+		box-shadow : 1px 1px 1px 1px linen	
+	}
+
+	.lable-margin{
+		margin-right: 15px
+	}
