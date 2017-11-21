@@ -16,7 +16,7 @@ export default {
     dailyRentalValue : 0,
     serviceStartDate : '',
     serviceEndDate : ''
-  }
+  },
   //Cars Initial Data End
 
   
