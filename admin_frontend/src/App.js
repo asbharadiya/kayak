@@ -8,6 +8,7 @@ import Signin from './components/signin/signin';
 import Dashboard from './components/dashboard/dashboard';
 import Home from './components/dashboard/home/home';
 import Cars from './components/dashboard/cars/cars';
+import Hotels from './components/dashboard/hotels/hotels';
 import Test from './components/dashboard/test/Test';
 
 class App extends Component {
@@ -46,6 +47,13 @@ class App extends Component {
                     <Redirect to="/"/>
                   ) : (
                     <Cars/>
+                  )
+                )}/>
+                <Route path='/hotels' render={() => (
+                  !isLogged ? (
+                    <Redirect to="/"/>
+                  ) : (
+                    <Hotels/>
                   )
                 )}/>
                 <Route path='/test' render={() => (

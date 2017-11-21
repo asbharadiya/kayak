@@ -1,31 +1,35 @@
-rd /s /q "C:\kafka_2.11-0.11.0.1\Data\kafka-logs"
+SET mongoLocation="L:\mongodb\"
+SET kafkaLocation="L:\sjsu\cmpe273\kafka_2.11-0.9.0.0\"
+SET kayakLocation="L:\sjsu\cmpe273\workSpace\kayak\"
 
-rd /s /q "C:\kafka_2.11-0.11.0.1\Data\Zookeeper"
+rd /s /q "%kafkaLocation%data\kafka"
 
-rd /s /q "C:\kafka_2.11-0.11.0.1\Data\Zookeeper\version-2"
+rd /s /q "%kafkaLocation%data\zookeeper\version-2"
 
-start cmd.exe /K "cd C:\data\Projects\273_Kayak\kayak\admin_frontend && npm run start"
+rd /s /q "%kafkaLocation%data\Zookeeper"
 
-timeout /t 10
+start cmd.exe /K "cd %mongoLocation%bin && mongod.exe --dbpath ..\data\db"
 
-start cmd.exe /K "cd C:\kafka_2.11-0.11.0.1\bin\windows && zookeeper-server-start.bat ../../config/zookeeper.properties"
-
-timeout /t 10
-
-start cmd.exe /K "cd C:\kafka_2.11-0.11.0.1\bin\windows && kafka-server-start.bat ../../config/server.properties"
+start cmd.exe /K "cd %kayakLocation%admin_frontend && npm run start"
 
 timeout /t 10
 
-start cmd.exe /K "cd C:\kafka_2.11-0.11.0.1\bin\windows && kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kayak"
+start cmd.exe /K "cd %kafkaLocation%bin\windows && zookeeper-server-start.bat ../../config/zookeeper.properties"
 
 timeout /t 10
 
-start cmd.exe /K "cd C:\kafka_2.11-0.11.0.1\bin\windows && kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic response_topic"
+start cmd.exe /K "cd %kafkaLocation%bin\windows && kafka-server-start.bat ../../config/server.properties"
 
 timeout /t 10
 
-start cmd.exe /K "cd C:\data\Projects\273_Kayak\kayak\backend && nodemon app.js"
+start cmd.exe /K "cd %kafkaLocation%bin\windows && kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kayak"
 
-start cmd.exe /K "cd C:\data\Projects\273_Kayak\kayak\kafkaend && nodemon server.js"
+timeout /t 10
 
-start cmd.exe /K "cd C:\mongodb\bin && mongo"
+start cmd.exe /K "cd %kafkaLocation%bin\windows && kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic response_topic"
+
+timeout /t 10
+
+start cmd.exe /K "cd %kayakLocation%backend && nodemon app.js"
+
+start cmd.exe /K "cd %kayakLocation%kafkaend && nodemon server.js"

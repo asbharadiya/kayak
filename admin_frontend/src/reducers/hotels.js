@@ -52,9 +52,6 @@ const reducer = (state = initialState, action) => {
 	      		...state,
 	      		currentHotelToUpdate : action.payload
 	    	};
-	    	
-
-	    	
 	    default : 
 	      	return state;
   	}
