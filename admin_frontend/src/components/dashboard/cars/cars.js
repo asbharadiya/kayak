@@ -20,7 +20,7 @@ class Cars extends Component {
 			carName : '' ,
 			occupancy : '',
 			luggage : '' ,
-			dailyRentalValue : false,
+			dailyRentalValue : 0,
 			addCarError : "" ,
 			showCarModal: false,
 			carAddLoading : false ,
@@ -50,9 +50,10 @@ class Cars extends Component {
 			      		carName : '' ,
 			      		occupancy : '',
 			      		luggage : '' ,
-			      		dailyRentalValue : false,
+			      		dailyRentalValue : 0,
 			      		serviceStartDate : '' ,
-						serviceEndDate : ''
+						serviceEndDate : '',
+						addCarError : ''
 		}) ;
 
       	this.props.getAllCars()
@@ -61,10 +62,19 @@ class Cars extends Component {
       	this.props.setBackCarDeleteSuccess();
       	
       }
+
+      if(newProps.carAddSuccess === false){
+      	this.setState({
+      		addCarError : 'Error occured while adding the car' ,
+      		carAddLoading : false
+      	})	
+      }
+
    }
 
 
 	render() {
+		
 		return (
     		<div className="row car-content">
 				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
@@ -203,7 +213,22 @@ class Cars extends Component {
 						      		
 						      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
 						      			<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
-						      				this.setState({showCarModal : false})
+						      				this.setState({
+																carQuantity : 0 ,
+																carType : '' ,
+																carName : '' ,
+																occupancy : '',
+																luggage : '' ,
+																dailyRentalValue : false,
+																addCarError : "" ,
+																showCarModal: false,
+																carAddLoading : false ,
+																serviceStartDate : '' ,
+																serviceEndDate : ''
+															})
+
+											this.props.setBackCarAddSuccess() ; 
+
 						      			}}>Close</button>
 						      		</div>
 						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  divForAddCarConfirm text-right">
@@ -267,8 +292,7 @@ class Cars extends Component {
 						      					this.setState({ addCarError : "Please specify daily rental value for the car"})
 						      					return ;
 						      				}
-						      				console.log(this.state.serviceStartDate) ;
-						      				console.log(this.state.serviceEndDate)
+						      				
 						      				var obj = {
 						      					carQuantity : this.state.carQuantity ,
 												carType : this.state.carType ,
@@ -285,7 +309,7 @@ class Cars extends Component {
       											carAddLoading : true
 						      				})
 
-						      				
+											this.props.setBackCarAddSuccess(); 						      				
 						      				
 											this.props.addCar(obj)
 						      			}} >Submit 

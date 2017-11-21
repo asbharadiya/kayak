@@ -153,7 +153,7 @@ function updateCarById(msg, callback){
 	delete msg.serviceStartDate;
 
 
-	console.log(msg) ; 
+	
 
 
 	carModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
