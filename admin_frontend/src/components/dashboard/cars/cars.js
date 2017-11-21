@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './cars.css';
-import {addCar , setBackCarAddSuccess , getAllCars } from '../../../actions/cars'
+import {addCar , setBackCarAddSuccess , getAllCars , setBackCarDeleteSuccess , setBackCarUpdateSuccess } from '../../../actions/cars'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
@@ -40,7 +40,9 @@ class Cars extends Component {
 	}
 
 	componentWillReceiveProps(newProps) {    
-      if(newProps.carAddSuccess != null && newProps.carAddSuccess){
+      if(  (newProps.carAddSuccess != null && newProps.carAddSuccess) ||
+      	   (newProps.carDeleteSuccess != null && newProps.carDeleteSuccess) )
+      {
       	this.setState({carAddLoading : false ,
 			      		showCarModal : false,
 			      		carQuantity : 0 ,
@@ -53,9 +55,11 @@ class Cars extends Component {
 						serviceEndDate : ''
 		}) ;
 
+      	this.props.getAllCars()
       	//setBack successfor carAddSuccess
       	this.props.setBackCarAddSuccess();
-      		
+      	this.props.setBackCarDeleteSuccess();
+      	
       }
    }
 
@@ -335,14 +339,18 @@ function mapDispatchToProps(dispatch) {
   return {
     addCar : (params) => dispatch(addCar(params)) ,
     setBackCarAddSuccess : () => dispatch(setBackCarAddSuccess()),
-    getAllCars : () => dispatch(getAllCars()) 
+    getAllCars : () => dispatch(getAllCars()) ,
+    setBackCarDeleteSuccess : () => dispatch(setBackCarDeleteSuccess()),
+    setBackCarUpdateSuccess : () => dispatch(setBackCarUpdateSuccess())
   };
 }
 
 function mapStateToProps(state) {
     return {
         listOfCars : state.carsReducer.allCars , 
-        carAddSuccess : state.carsReducer.carAddSuccess
+        carAddSuccess : state.carsReducer.carAddSuccess,
+        carDeleteSuccess : state.carsReducer.carDeleteSuccess,
+        carUpdateSuccess : state.carsReducer.carUpdateSuccess
     };
 }
 
