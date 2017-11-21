@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './carComponent.css'
 import { Modal } from 'react-bootstrap';
-import { deleteCarById , updateCarById , setBackCarUpdateSuccess , getCarById  , getAllCars} from '../../../actions/cars'
+import { deleteCarById , updateCarById , setBackCarUpdateSuccess , getCarById  , getAllCars , setBackJustUpdateVariable} from '../../../actions/cars'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
@@ -26,13 +26,17 @@ class CarComponent extends Component {
 			serviceEndDate : '',
 			createdDate : '' ,
 			updatedDate : '',
-			deletedDate : ''
+			deletedDate : '',
+			updateErrorMessage : ''
 		}
 	}
 
 
 	componentWillReceiveProps(newProps) { 
 	
+	  	
+
+
 	  	this.setState({
 	  	    carQuantity : newProps.currentCarToUpdate.carQuantity ,
 			carType : newProps.currentCarToUpdate.carType,
@@ -48,15 +52,23 @@ class CarComponent extends Component {
 			deletedDate : newProps.currentCarToUpdate.deletedDate
 	  })
 
-		console.log("New props " , newProps.carUpdateSuccess)
+		
       if(newProps.carUpdateSuccess != null && newProps.carUpdateSuccess){
-      	this.setState({carUpdateLoading : false , showCarUpdateModal : false}) ;
+      	this.setState({carUpdateLoading : false , showCarUpdateModal : false , updateErrorMessage : ''}) ;
 
       	this.props.getAllCars()
       	//setBack success for carAddSuccess
       	this.props.setBackCarUpdateSuccess();
       }
+
+      if(newProps.carUpdateSuccess === false){
+      	this.setState({carUpdateLoading : false , updateErrorMessage : 'Error occured while updating the car record'}) ;
+      }
    }
+
+
+  
+   
 
 	render() {
 		
@@ -246,7 +258,7 @@ class CarComponent extends Component {
 
 								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 carAddErrorText">
 									{this.state.updateCarError}
-
+									{this.state.updateErrorMessage}
 								</div>
 
 
@@ -255,8 +267,11 @@ class CarComponent extends Component {
 									<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
 										<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
 											this.setState({
-												showCarUpdateModal : false
+												showCarUpdateModal : false,
+												updateErrorMessage : '',
+												carUpdateLoading : false
 											})
+											this.props.setBackCarUpdateSuccess() ; 
 											}}>Close</button>
 									</div>
 									<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
@@ -266,7 +281,7 @@ class CarComponent extends Component {
 						      				startDate.setDate(startDate.getDate() + 1);
 						      				var endDate = new Date(this.state.serviceEndDate);
 						      				endDate.setDate(endDate.getDate() + 1);
-						      				console.log("Dates selected " , startDate , endDate) ;
+						      				
 
 											
 											if(this.state.carQuantity === '' ){
@@ -321,6 +336,7 @@ class CarComponent extends Component {
 												return ;
 											}
 
+											this.props.setBackJustUpdateVariable() ; 
 
 											var obj = {
 												carQuantity : this.state.carQuantity ,
@@ -366,7 +382,8 @@ function mapDispatchToProps(dispatch) {
    	updateCarById: (obj) => dispatch(updateCarById(obj)) ,
    	setBackCarUpdateSuccess : () => dispatch(setBackCarUpdateSuccess()) ,
    	getCarById : (id) => dispatch(getCarById(id)),
-   	getAllCars : () => dispatch(getAllCars())
+   	getAllCars : () => dispatch(getAllCars()),
+   	setBackJustUpdateVariable : () => dispatch(setBackJustUpdateVariable())
   };
 }
 

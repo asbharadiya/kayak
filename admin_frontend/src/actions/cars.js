@@ -124,7 +124,12 @@ function updateCarSuccess() {
 }
 
 function updateCarFailure() {
-	return {type: "UPDATE_CAR_FAILURE" , payload : {success : false , updatePlainObject : updatePlainObject }}; 
+	return {type: "UPDATE_CAR_FAILURE" , payload : {success : false  }}; 
+}
+
+
+export function setBackJustUpdateVariable() {
+	return {type: "SET_BACK_JUST_CAR_UPDATE_SUCCESS" , payload : {success : null  }}; 
 }
 
 export function setBackCarUpdateSuccess(){
