@@ -18,12 +18,39 @@ class HotelRow extends Component {
                   <div className="hotel-title">
                       Demo Hotel, A luxury Hotel In San Jose, CA, USA
                     </div>
-                  <div className="rating">
+                  <div className="star-rating">
                     <Rater total={5} rating={4} interactive={false}/>
+                  </div>
+                  <div className="ratings-container">
+                    <div className="number-rating-container">
+                      <span className="number-rating"> 9.0 </span>
+                    </div>
+                    <div className="comments-container">
+                      Excellent
+                    </div>
+                    <div className="trophy-container">
+                      <span className="fa fa-trophy fa-2x champion"> </span>
+                    </div>
+                    <div className="trophy-container">
+                      Business Class Hotel
+                    </div>
+                  </div>
+                  <div className="ratings pull-right">
+
+                  </div>
+                  <div className="features-main">
+                     <div className="sub-features">
+                       <span className="fa fa-check-circle blue-color"></span> Feature one
+                     </div>
+                     <div className="sub-features">
+                       <span className="fa fa-check-circle blue-color"></span> Feature two
+                     </div>
+                     <div className="sub-features">
+                       <span className="fa fa-check-circle blue-color"></span> Feature three
+                     </div>
                   </div>
                 </div>
                 <div className="price-section">
-
 
           <p>$983</p>
           <button className="btn btn-primary btn-kayak">Book</button>

@@ -30,6 +30,58 @@
     align-items: center;*/
 }
 
+.hotels-row .number-rating-container {
+	display: inline;
+	width: 100px;
+}
+
+.hotels-row .comments-container {
+	display: inline;
+	width: 100px;
+	margin-left: 20px;
+}
+
+.hotels-row .trophy-container {
+	display: inline;
+	width: 100px;
+	margin-top: 50px;
+}
+
+.hotels-row .champion {
+	margin-left: 100px;
+}
+
+.hotels-row .ratings-container {
+	margin-top: 10px;
+	width: 500px;
+}
+
+.hotels-row .blue-color {
+	color: #4f8ef2;
+}
+
+.hotels-row .sub-features {
+	margin-top: 10px;
+}
+
+.hotels-row .features-main {
+	margin-top: 20px;
+}
+
+.number-rating {
+	background-color: black;
+	width: 15px;
+	height: 24px;
+	color: white;
+	border-radius: 3px;
+	font-size: 12px;
+	padding-left: 5px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-right: 3px;
+	font-weight: 100;
+}
+
 .hotels-row .title-section {
   padding: 15px;
   width: 400px;
