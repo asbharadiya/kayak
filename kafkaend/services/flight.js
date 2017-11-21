@@ -5,9 +5,29 @@ var flightModel = require('../models/flight.js');
 
 function addFlight(msg, callback){
 	var res = {};
-	if(true){
+	if(validator.isNumeric( msg.seats) && validator.isNumeric( msg.price))
+	{
+		msg.createdDate = new Date();
+		msg.updatedDate = new Date() ;
+		msg.seats = parseInt(msg.seats) ;
+		msg.price = parseInt(msg.price) ;
+		msg.is_deleted = false;
+		
+		var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ; 
 
-		msg.is_deleted = false;		
+		var availabilityDateObject = [] ; 
+		for(var i=0 ; i <= serviceDays ; i++){
+			var date = new Date(msg.serviceStartDate) ;
+			date.setDate(date.getDate() + i);
+			availabilityDateObject.push({availabilityDate : date , seats : msg.seats})
+		}
+		
+		msg.availability = availabilityDateObject ;
+		delete msg.serviceEndDate;
+		delete msg.serviceStartDate;
+		
+		msg.deletedDate = new Date();
+		
 		var newFlight = new flightModel(msg);
 		newFlight.save(function (err) {
 			if(err) {
@@ -34,6 +54,8 @@ function addFlight(msg, callback){
 
 function getFlights(msg, callback){
     var res = {};
+    console.log('Requested Flight Data')
+    console.log(msg)
     flightModel.find({ is_deleted : false}, function(err, result){
     	if(err){
 			res.code = 500  ; 
@@ -53,7 +75,7 @@ function getFlights(msg, callback){
 function getFlightById(msg, callback){
     var res = {};
     var idToGet = new ObjectID(msg.id) ;
-    if(!validator.isEmpty(msg.id)){
+    if(true){
     	flightModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result){
         	if(err){
 				res.code = 500 ; 

@@ -1,15 +1,43 @@
 import * as api from '../api/cars';
 
+
+
+
+// Get all Cars
+
+export function getAllCars() {
+	return function(dispatch) {
+		return api.getAllCars(function(error , response){
+			if(error){
+				dispatch({type: "GET_ALL_CAR_FAILURE" });
+			} else {
+				response.then((res) => {
+					if(res.status === 200){
+						dispatch({type: "GET_ALL_CAR_SUCCESS"  , payload :  res.data});
+					}else{
+						dispatch({type: "GET_ALL_CAR_FAILURE" });
+					}
+				})
+			}
+		})
+	};
+}
+
+
+
+// add
+
 function addCarSuccess(data) {
-  	return {type: "ADD_CAR_SUCCESS" , payload : data}
+  	return {type: "ADD_CAR_SUCCESS" , payload : true}
 }
 
 function addCarFailure(){
-    return {type: "ADD_CAR_FAILURE"}
+    return {type: "ADD_CAR_FAILURE" , payload : false}
 }
 
-function deleteCarFailure(){
-    return {type: "DELETE_CAR_FAILURE"}
+
+export function setBackCarAddSuccess(){
+	return {type: "SET_BACK_CAR_ADD_SUCCESS" , payload : null}
 }
 
 
@@ -33,40 +61,27 @@ export function addCar(payload) {
 }
 
 
-export function getAllCars() {
-	return function(dispatch) {
-		return api.getAllCars(function(error , response){
-			if(error){
-				dispatch({type: "GET_ALL_CAR_FAILURE" });
-			} else {
-				response.then((res) => {
-					if(res.status === 200){
-						dispatch({type: "GET_ALL_CAR_SUCCESS"  , payload :  res.data});
-					}else{
-						dispatch({type: "GET_ALL_CAR_FAILURE" });
-					}
-				})
-			}
-		})
-	};
+
+
+
+
+
+
+
+//Delete
+
+function deleteCarSuccess() {
+  	return {type: "DELETE_CAR_SUCCESS" , payload : true}
 }
 
-
-
-export function setBackCarAddSuccess(){
-	return {type: "SET_BACK_CAR_ADD_SUCCESS" , payload : null}
+function deleteCarFailure(){
+    return {type: "DELETE_CAR_FAILURE" , payload : false}
 }
 
-export function setBackCarUpdateSuccess(){
-	return {type: "SET_BACK_CAR_UPDATE_SUCCESS" , payload : null}
+export function setBackCarDeleteSuccess(){
+    return {type: "SET_BACK_CAR_DELETE_SUCCESS"}
 }
 
-
-
-
-function deleteCarSuccess(data) {
-  	return {type: "DELETE_CAR_SUCCESS" , payload : data}
-}
 
 export function deleteCarById(id) {
 	return function(dispatch) {
@@ -76,7 +91,7 @@ export function deleteCarById(id) {
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(deleteCarSuccess(res.data));
+						dispatch(deleteCarSuccess());
 					}else{
 						dispatch( deleteCarFailure()) ;
 					}
@@ -88,21 +103,52 @@ export function deleteCarById(id) {
 
 
 
-function updateCarSuccess(data) {
-	return {type: "UPDATE_CAR_SUCCESS" , payload : data}
+
+// Update
+
+
+var updatePlainObject =  {
+  							carQuantity : 0 ,
+  							carType : '',
+  							carName : '',
+  							occupancy : '',
+  							luggage : "NO" ,
+  							dailyRentalValue : 0,
+			                serviceStartDate : '',
+			                serviceEndDate : ''
+  						}
+
+
+function updateCarSuccess() {
+	return {type: "UPDATE_CAR_SUCCESS" , payload : {success : true , updatePlainObject : updatePlainObject }}
 }
+
+function updateCarFailure() {
+	return {type: "UPDATE_CAR_FAILURE" , payload : {success : false  }}; 
+}
+
+
+export function setBackJustUpdateVariable() {
+	return {type: "SET_BACK_JUST_CAR_UPDATE_SUCCESS" , payload : {success : null  }}; 
+}
+
+export function setBackCarUpdateSuccess(){
+	return {type: "SET_BACK_CAR_UPDATE_SUCCESS" , payload : {success : null , updatePlainObject : updatePlainObject }}
+}
+
+
 
 export function updateCarById(obj) {
 	return function(dispatch) {
 		return api.updateCarById(obj , function(error , response){
 			if(error){
-				dispatch({type: "UPDATE_CAR_FAILURE"})
+				dispatch(updateCarFailure())
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(updateCarSuccess(res.data))
+						dispatch(updateCarSuccess())
 					}else{
-						dispatch({type: "UPDATE_CAR_FAILURE"})
+						dispatch(updateCarFailure())
 					}
 				})
 			}

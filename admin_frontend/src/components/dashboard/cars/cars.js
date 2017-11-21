@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './cars.css';
-import {addCar , setBackCarAddSuccess , getAllCars } from '../../../actions/cars'
+import {addCar , setBackCarAddSuccess , getAllCars , setBackCarDeleteSuccess , setBackCarUpdateSuccess } from '../../../actions/cars'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
@@ -20,7 +20,7 @@ class Cars extends Component {
 			carName : '' ,
 			occupancy : '',
 			luggage : '' ,
-			dailyRentalValue : false,
+			dailyRentalValue : 0,
 			addCarError : "" ,
 			showCarModal: false,
 			carAddLoading : false ,
@@ -40,7 +40,9 @@ class Cars extends Component {
 	}
 
 	componentWillReceiveProps(newProps) {    
-      if(newProps.carAddSuccess != null && newProps.carAddSuccess){
+      if(  (newProps.carAddSuccess != null && newProps.carAddSuccess) ||
+      	   (newProps.carDeleteSuccess != null && newProps.carDeleteSuccess) )
+      {
       	this.setState({carAddLoading : false ,
 			      		showCarModal : false,
 			      		carQuantity : 0 ,
@@ -48,19 +50,31 @@ class Cars extends Component {
 			      		carName : '' ,
 			      		occupancy : '',
 			      		luggage : '' ,
-			      		dailyRentalValue : false,
+			      		dailyRentalValue : 0,
 			      		serviceStartDate : '' ,
-						serviceEndDate : ''
+						serviceEndDate : '',
+						addCarError : ''
 		}) ;
 
+      	this.props.getAllCars()
       	//setBack successfor carAddSuccess
       	this.props.setBackCarAddSuccess();
-      		
+      	this.props.setBackCarDeleteSuccess();
+      	
       }
+
+      if(newProps.carAddSuccess === false){
+      	this.setState({
+      		addCarError : 'Error occured while adding the car' ,
+      		carAddLoading : false
+      	})	
+      }
+
    }
 
 
 	render() {
+		
 		return (
     		<div className="row car-content">
 				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
@@ -199,7 +213,22 @@ class Cars extends Component {
 						      		
 						      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
 						      			<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
-						      				this.setState({showCarModal : false})
+						      				this.setState({
+																carQuantity : 0 ,
+																carType : '' ,
+																carName : '' ,
+																occupancy : '',
+																luggage : '' ,
+																dailyRentalValue : false,
+																addCarError : "" ,
+																showCarModal: false,
+																carAddLoading : false ,
+																serviceStartDate : '' ,
+																serviceEndDate : ''
+															})
+
+											this.props.setBackCarAddSuccess() ; 
+
 						      			}}>Close</button>
 						      		</div>
 						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  divForAddCarConfirm text-right">
@@ -263,8 +292,7 @@ class Cars extends Component {
 						      					this.setState({ addCarError : "Please specify daily rental value for the car"})
 						      					return ;
 						      				}
-						      				console.log(this.state.serviceStartDate) ;
-						      				console.log(this.state.serviceEndDate)
+						      				
 						      				var obj = {
 						      					carQuantity : this.state.carQuantity ,
 												carType : this.state.carType ,
@@ -281,7 +309,7 @@ class Cars extends Component {
       											carAddLoading : true
 						      				})
 
-						      				
+											this.props.setBackCarAddSuccess(); 						      				
 						      				
 											this.props.addCar(obj)
 						      			}} >Submit 
@@ -335,14 +363,18 @@ function mapDispatchToProps(dispatch) {
   return {
     addCar : (params) => dispatch(addCar(params)) ,
     setBackCarAddSuccess : () => dispatch(setBackCarAddSuccess()),
-    getAllCars : () => dispatch(getAllCars()) 
+    getAllCars : () => dispatch(getAllCars()) ,
+    setBackCarDeleteSuccess : () => dispatch(setBackCarDeleteSuccess()),
+    setBackCarUpdateSuccess : () => dispatch(setBackCarUpdateSuccess())
   };
 }
 
 function mapStateToProps(state) {
     return {
         listOfCars : state.carsReducer.allCars , 
-        carAddSuccess : state.carsReducer.carAddSuccess
+        carAddSuccess : state.carsReducer.carAddSuccess,
+        carDeleteSuccess : state.carsReducer.carDeleteSuccess,
+        carUpdateSuccess : state.carsReducer.carUpdateSuccess
     };
 }
 

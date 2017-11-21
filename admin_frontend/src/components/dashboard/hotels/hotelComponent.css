@@ -1,15 +1,15 @@
-.singleFlightComponent .mainRowDiv .dataDiv{
+.singleHotelComponent .mainRowDiv .dataDiv{
 	line-height: 2.5 ;
 }
 
 
-.singleFlightComponent .mainRowDiv{
+.singleHotelComponent .mainRowDiv{
 	border-bottom: 1px solid #F0F0F0;
 	margin: 0px;
 	margin-top: 15px
 }
 
-.flightDeleteBody{
+.hotelDeleteBody{
 	color : red ;
 	text-align:  center;
 	
@@ -20,13 +20,13 @@
 	border-radius: 0
 }
 
-.singleFlightComponent .mainRowDiv  .buttonGroup .updateFontAwesome{
+.singleHotelComponent .mainRowDiv  .buttonGroup .updateFontAwesome{
 	margin-right: 40px;
 	color : mediumblue;
 }
 
 
-.singleFlightComponent .mainRowDiv  .buttonGroup .redIcon{
+.singleHotelComponent .mainRowDiv  .buttonGroup .redIcon{
 	color : red;
 }
 
@@ -43,8 +43,4 @@
  .UpdatedDate{
 	color :red;
 	margin-left: 15px
-}
-
-.outline{
-	 outline: 1px solid orange;
 }

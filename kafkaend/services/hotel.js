@@ -5,7 +5,7 @@ var hotelModel = require('../models/hotel.js');
 
 function addHotel(msg, callback){
 	var res = {};
-	if(!validator.isEmpty(msg.name)){
+	if(true){
 		msg.is_deleted = false;		
 		var newHotel = new hotelModel(msg);
 		newHotel.save(function (err) {
@@ -43,7 +43,7 @@ function getHotels(msg, callback){
 			res.code = 200  ; 
 			res.status  = 200 ; 
 			res.message = "Success"
-			res.data = result
+			res.data = result;
 			callback(null , res) ; 
 		}
     });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './flights.css';
-import {addFlight , setBackFlightAddSuccess , getAllFlights } from '../../../actions/flights'
+import {addFlight , setBackFlightAddSuccess , getAllFlights, setBackFlightDeleteSuccess , setBackFlightUpdateSuccess } from '../../../actions/flights'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
@@ -43,8 +43,10 @@ class Flights extends Component {
 	}
 
 	componentWillReceiveProps(newProps) { 
-		console.log('RECEIVED PROPS')   
-      if(newProps.flightAddSuccess != null && newProps.flightAddSuccess){
+	console.log('RECEIVED PROPS')   
+      if((newProps.flightAddSuccess != null && newProps.flightAddSuccess) ||
+      	 (newProps.flightDeleteSuccess != null && newProps.flightDeleteSuccess))
+      {
       	this.setState({flightAddLoading : false ,
       					showFlightModal : false,
       					flightNumber : '' ,
@@ -58,9 +60,10 @@ class Flights extends Component {
 						class : '',
 						seats : '',
 						price : ''}) ;
-
-      	//setBack successfor carAddSuccess
+	this.props.getAllFlights()
+      	
       	this.props.setBackFlightAddSuccess();
+	this.props.setBackFlightDeleteSuccess();
       }
    }
 
@@ -207,12 +210,31 @@ class Flights extends Component {
 						      		
 						      		<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
 						      			<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
-						      				this.setState({showFlightModal : false})
+						      				this.setState({flightNumber : '' ,
+						airline : '' ,
+						source : '' ,
+						destination : '',
+						arrival : '' ,
+						departure : '',
+						serviceStartDate : '' ,
+						serviceEndDate : '',
+						class : '',
+						seats : '',
+						price : '',
+						showFlightModal : false,
+						FlightAddLoading : false})
+						
+						this.props.setBackFlightAddSuccess() ;
 						      			}}>Close</button>
 						      		</div>
 						      		<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
 
 						      			<button type="button" className="btn btn-info sharpCornerForInfoButton" onClick={() => {
+										var startDate = new Date(this.state.serviceStartDate);
+						      				startDate.setDate(startDate.getDate() + 1);
+						      				var endDate = new Date(this.state.serviceEndDate);
+						      				endDate.setDate(endDate.getDate() + 1);
+						      				console.log("Dates selected " , startDate , endDate) ;
 						      				
 						      				if(this.state.flightNumber === '' ){
 						      					this.setState({ addFlightError : "Please Specify Flight Number"})
@@ -256,6 +278,24 @@ class Flights extends Component {
 						      				}
 						      				if(this.state.price === '' ){
 						      					this.setState({ addFlightError : "Please Specify Price"})
+						      					return ;
+						      				}
+										if(startDate <= new Date())	{
+						      					this.setState({ addFlightError : "Service Start Date should be a future date"})
+						      					return
+						      				}
+						      				if(endDate <= new Date())	{
+						      					this.setState({ addFlightError : "Service End Date should be a future date"})
+						      					return
+						      				}
+
+						      				if(endDate <= startDate){
+
+						      					this.setState({ addFlightError : "Service End Date should be a greater than start date"})
+						      					return	
+						      				}
+						      				if(endDate <= startDate.setDate(startDate.getDate() + 14)){
+						      					this.setState({ addFlightError : "Service provided should not be less than 15 days"})
 						      					return ;
 						      				}
 						      				
@@ -316,9 +356,9 @@ class Flights extends Component {
 
 					
 					{
-						//this.props.listOfFlights.map((flight , key) => {
-							//return <FlightComponent flight={flight}  key={key}> </FlightComponent>
-						//})
+						this.props.listOfFlights.map((flight , key) => {
+							return <FlightComponent flight={flight}  key={key}> </FlightComponent>
+						})
 					}
 				</div>
 			</div>
@@ -332,14 +372,18 @@ function mapDispatchToProps(dispatch) {
   return {
     addFlight : (params) => dispatch(addFlight(params)) ,
     setBackFlightAddSuccess : () => dispatch(setBackFlightAddSuccess()),
-    getAllFlights : () => dispatch(getAllFlights()) 
+    getAllFlights : () => dispatch(getAllFlights()), 
+	setBackFlightDeleteSuccess : () => dispatch(setBackFlightDeleteSuccess()),
+    setBackFlightUpdateSuccess : () => dispatch(setBackFlightUpdateSuccess())	
   };
 }
 
 function mapStateToProps(state) {
     return {
         listOfFlights : state.flightsReducer.allFlights , 
-        flightAddSuccess : state.flightsReducer.flightAddSuccess
+        flightAddSuccess : state.flightsReducer.flightAddSuccess,	
+	flightDeleteSuccess : state.flightsReducer.flightDeleteSuccess,
+        flightUpdateSuccess : state.flightsReducer.flightUpdateSuccess
     };
 }
 

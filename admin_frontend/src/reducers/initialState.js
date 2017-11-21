@@ -1,20 +1,22 @@
-
 export default {
   isLogged: undefined,
   username: "",
-  
-  // Cars Initial Data
+
+  //cars
   allCars : [] ,
   carAddSuccess : null ,
   carUpdateSuccess : null,
+  carDeleteSuccess : null ,
   currentCarToUpdate : {
-  							carQuantity : 0 ,
-  							carType : '',
-  							carName : '',
-  							occupancy : '',
-  							luggage : "NO" ,
-  							dailyRentalValue : 0
-  						},
+                    carQuantity : 0 ,
+                    carType : '',
+                    carName : '',
+                    occupancy : '',
+                    luggage : "NO" ,
+                    dailyRentalValue : 0,
+                    serviceStartDate : '',
+                    serviceEndDate : ''
+  },
   //Cars Initial Data End
 
   //Flights Initial Data
@@ -33,7 +35,24 @@ export default {
                 class : '',
                 price : '',
                 seats : '',
-  }
+  },
 
   //Flights Initial Data End
+
+
+  
+  allHotels : [] ,
+  hotelAddSuccess : null ,
+  hotelUpdateSuccess : null,
+  currentHotelToUpdate : {
+    hotelName : '',
+    hotelAddress : '', 
+    hotelCity : '',
+    hotelState : '', 
+    hotelZip : '',
+    hotelStar : '',
+    hotelRating : '',
+    hotelPhoneNumber : '',
+    hotelEmail : ''
+  }
 }

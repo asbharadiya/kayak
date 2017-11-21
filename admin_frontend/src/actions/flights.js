@@ -57,15 +57,20 @@ export function setBackFlightAddSuccess(){
 	return {type: "SET_BACK_FLIGHT_ADD_SUCCESS" , payload : null}
 }
 
+export function setBackJustUpdateVariable() {
+	return {type: "SET_BACK_JUST_FLIGHT_UPDATE_SUCCESS" , payload : {success : null  }}; 
+}
+
 export function setBackFlightUpdateSuccess(){
 	return {type: "SET_BACK_FLIGHT_UPDATE_SUCCESS" , payload : null}
 }
 
-
-
-
 function deleteFlightSuccess(data) {
   	return {type: "DELETE_FLIGHT_SUCCESS" , payload : data}
+}
+
+export function setBackFlightDeleteSuccess(){
+    return {type: "SET_BACK_FLIGHT_DELETE_SUCCESS"}
 }
 
 export function deleteFlightById(id) {
