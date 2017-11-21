@@ -3,6 +3,8 @@ var mysql = require('./mysql');
 var validator = require('validator');
 var bcrypt = require('bcrypt');
 var crypto = require('crypto');
+var userModel = require('../models/authUsers.js');
+
 const saltRounds = 10;
 
 function signin(msg, callback){
@@ -22,6 +24,7 @@ function signin(msg, callback){
           }
           bcrypt.compare(msg.password, user.password, function(err,result) {
             if(result) {
+
               res.code = 200;
               res.message = "Success";
               res.data = {_id:user.id,username:user.username,role:user.role};
@@ -67,10 +70,24 @@ function signup(msg, callback){
                       res.message = "Internal server error";
                       callback(null, res);
                     } else {
-                      res.code = 200;
-                      res.message = "Success";
-                      res.data = {id: id ,username:msg.email, role: 'USER'};
-                      callback(null, res);
+                      console.log(msg);
+                      var newUser = new userModel(msg);
+                      newUser.save(function (err) {
+                        if(err) {
+                          console.log(err);
+                          res.code = 500 ;
+                          res.status  = 500 ;
+                          res.message = "Error occured while registering a hotel with server"
+                          callback(null , res);
+                        } else {
+                          res.code = 200  ;
+                          res.status  = 200 ;
+                          res.message = "Success";
+                          res.data = {_id: newUser._id ,username:msg.email, role: 'USER'};
+                          console.log(res);
+                          callback(null , res) ;
+                        }
+                      });
                     }
                   })
                 })
