@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './carComponent.css'
 import { Modal } from 'react-bootstrap';
-import { deleteCarById , updateCarById , setBackCarUpdateSuccess , getCarById } from '../../../actions/cars'
+import { deleteCarById , updateCarById , setBackCarUpdateSuccess , getCarById  , getAllCars} from '../../../actions/cars'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
@@ -25,14 +25,15 @@ class CarComponent extends Component {
 			serviceStartDate : '' ,
 			serviceEndDate : '',
 			createdDate : '' ,
-			updatedDate : ''
+			updatedDate : '',
+			deletedDate : ''
 		}
 	}
 
 
 	componentWillReceiveProps(newProps) { 
 	
-	  this.setState({
+	  	this.setState({
 	  	    carQuantity : newProps.currentCarToUpdate.carQuantity ,
 			carType : newProps.currentCarToUpdate.carType,
 			carName : newProps.currentCarToUpdate.carName ,
@@ -43,21 +44,22 @@ class CarComponent extends Component {
 			serviceStartDate : newProps.currentCarToUpdate.serviceStartDate ,
 			serviceEndDate : newProps.currentCarToUpdate.serviceEndDate ,
 			createdDate : newProps.currentCarToUpdate.createdDate ,
-			updatedDate : newProps.currentCarToUpdate.updatedDate 
+			updatedDate : newProps.currentCarToUpdate.updatedDate ,
+			deletedDate : newProps.currentCarToUpdate.deletedDate
 	  })
 
-
+		console.log("New props " , newProps.carUpdateSuccess)
       if(newProps.carUpdateSuccess != null && newProps.carUpdateSuccess){
-      	
       	this.setState({carUpdateLoading : false , showCarUpdateModal : false}) ;
 
+      	this.props.getAllCars()
       	//setBack success for carAddSuccess
       	this.props.setBackCarUpdateSuccess();
       }
    }
 
 	render() {
-		console.log("Plash " , this.state) ; 
+		
 		return (
     		<div className="singleCarComponent">
 				<div className="row mainRowDiv">
@@ -332,7 +334,8 @@ class CarComponent extends Component {
 												serviceStartDate : this.state.serviceStartDate  ,
 												serviceEndDate : this.state.serviceEndDate ,
 												createdDate : this.state.createdDate ,
-												updatedDate : this.state.updatedDate
+												updatedDate : this.state.updatedDate,
+												deletedDate : this.state.deletedDate
 											}
 											this.setState({ updateCarError : '' , carUpdateLoading : true})
 
@@ -362,7 +365,8 @@ function mapDispatchToProps(dispatch) {
     deleteCarById : (id) => dispatch(deleteCarById(id)) ,
    	updateCarById: (obj) => dispatch(updateCarById(obj)) ,
    	setBackCarUpdateSuccess : () => dispatch(setBackCarUpdateSuccess()) ,
-   	getCarById : (id) => dispatch(getCarById(id))
+   	getCarById : (id) => dispatch(getCarById(id)),
+   	getAllCars : () => dispatch(getAllCars())
   };
 }
 

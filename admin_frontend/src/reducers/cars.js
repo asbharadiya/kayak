@@ -5,7 +5,6 @@ const reducer = (state = initialState, action) => {
 	    case "ADD_CAR_SUCCESS" :
 	    	return {
 	      		...state,
-	        	allCars : action.payload,
 	        	carAddSuccess : true
 	    	};
 	     case "SET_BACK_CAR_ADD_SUCCESS" :
@@ -27,25 +26,37 @@ const reducer = (state = initialState, action) => {
 	    case "DELETE_CAR_SUCCESS" :  
 	      	return {
 	      		...state,
-	        	allCars : action.payload
+	        	carDeleteSuccess : action.payload
 	    	};
 
 	    	
 	    case "DELETE_CAR_FAILURE" :  
 	      	return {
-	      		...state
+	      		...state,
+	      		carDeleteSuccess : action.payload
 	    	};
-	    	
+	     case "SET_BACK_CAR_DELETE_SUCCESS" :  
+	      	return {
+	      		...state,
+	      		carDeleteSuccess : null
+	    	};
 	    case "UPDATE_CAR_SUCCESS" :  
 	      	return {
 	      		...state,
-	      		allCars : action.payload ,
-	      		carUpdateSuccess : true
+	      		carUpdateSuccess : action.payload.success,
+	      		currentCarToUpdate : action.payload.updatePlainObject
+	    	};
+	    case "UPDATE_CAR_FAILURE" :  
+	      	return {
+	      		...state,
+	      		carUpdateSuccess : action.payload.success,
+	      		currentCarToUpdate : action.payload.updatePlainObject
 	    	};
 	    case "SET_BACK_CAR_UPDATE_SUCCESS" :  
 	      	return {
 	      		...state,
-	      		carUpdateSuccess : null
+	      		carUpdateSuccess : action.payload.success,
+	      		currentCarToUpdate : action.payload.updatePlainObject
 	    	};
 	     case "GET_CAR_TO_UPDATE_SUCCESS" :  
 	      	return {
