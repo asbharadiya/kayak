@@ -43,7 +43,7 @@ class App extends Component {
                   )
                 )}/>
                 <Route path='/cars' render={() => (
-                  !isLogged ? (
+                  isLogged ? (
                     <Redirect to="/"/>
                   ) : (
                     <Cars/>
