@@ -8,16 +8,37 @@ export default {
   carUpdateSuccess : null,
   carDeleteSuccess : null ,
   currentCarToUpdate : {
-    carQuantity : 0 ,
-    carType : '',
-    carName : '',
-    occupancy : '',
-    luggage : "NO" ,
-    dailyRentalValue : 0,
-    serviceStartDate : '',
-    serviceEndDate : ''
+                    carQuantity : 0 ,
+                    carType : '',
+                    carName : '',
+                    occupancy : '',
+                    luggage : "NO" ,
+                    dailyRentalValue : 0,
+                    serviceStartDate : '',
+                    serviceEndDate : ''
   },
   //Cars Initial Data End
+
+  //Flights Initial Data
+  allFlights : [],
+  flightAddSuccess : null ,
+  flightUpdateSuccess : null,
+  currentFlightToUpdate : {
+                lightNumber : '' ,
+                airline : '' ,
+                source : '' ,
+                destination : '',
+                arrival : '' ,
+                departure : '',
+                serviceStartDate : '',
+                serviceEndDate : '',
+                class : '',
+                price : '',
+                seats : '',
+  },
+
+  //Flights Initial Data End
+
 
   
   allHotels : [] ,

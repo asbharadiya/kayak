@@ -41,7 +41,7 @@ function addCar(msg, callback){
 				console.log(err);
 				res.code = 500 ; 
 				res.status  = 500 ; 
-				res.message = "Error occured while registering a hotel with server"
+				res.message = "Error occured while registering a car with server"
 				callback(null , res); 
 			} else {
 				res.code = 200  ; 

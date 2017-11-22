@@ -1,0 +1,50 @@
+.singleFlightComponent .mainRowDiv .dataDiv{
+	line-height: 2.5 ;
+}
+
+
+.singleFlightComponent .mainRowDiv{
+	border-bottom: 1px solid #F0F0F0;
+	margin: 0px;
+	margin-top: 15px
+}
+
+.flightDeleteBody{
+	color : red ;
+	text-align:  center;
+	
+}
+
+
+.sharpButton{
+	border-radius: 0
+}
+
+.singleFlightComponent .mainRowDiv  .buttonGroup .updateFontAwesome{
+	margin-right: 40px;
+	color : mediumblue;
+}
+
+
+.singleFlightComponent .mainRowDiv  .buttonGroup .redIcon{
+	color : red;
+}
+
+ .scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+	margin-top: 20px
+}
+
+.sharpCornerForInfoButton{
+		border-radius : 0 ;
+}
+
+ .UpdatedDate{
+	color :red;
+	margin-left: 15px
+}
+
+.outline{
+	 outline: 1px solid orange;
+}
