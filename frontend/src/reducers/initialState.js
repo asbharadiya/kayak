@@ -4,5 +4,7 @@ export default {
     listings: [{}],
 
     //Cars
-    allCars : []
+    allCars : [],
+    filteredCars : [] ,
+    getUpdatedFileSuccess : null 
 }

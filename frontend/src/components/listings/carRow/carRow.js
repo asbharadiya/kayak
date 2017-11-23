@@ -14,11 +14,14 @@ class CarRow extends Component {
 	}
 
     render() {
-    	console.log("All cars " , this.props.allCars)
-        return (
+    	return (
            <div>
-           		
+           		 
            		{
+           			this.props.allCars.length === 0 ? 
+           			<h3>No Cars To Display</h3>
+           			:
+
            			this.props.allCars.map((car , key) => {
            				return <CarRowComponent car={car} key={key} />
            			})

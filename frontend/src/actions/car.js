@@ -21,3 +21,15 @@ export function getAllCars() {
 		})
 	};
 }
+
+
+
+
+
+
+export function applyCarFilter(){
+	return {type : 'APPLY_CAR_FILTERS' , payload : false }
+}
+
+
+
