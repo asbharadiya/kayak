@@ -8,6 +8,7 @@ import Sorts from './sorts/sorts';
 import FlightRow from './flightRow/flightRow';
 import HotelRow from './hotelRow/hotelRow';
 import CarRow from './carRow/carRow';
+import CarFilters from './filters/carFilters/carFilters'
 
 class Listings extends Component {
 
@@ -20,7 +21,12 @@ class Listings extends Component {
       			</div>
       			<div className="page-container">
       				<div className="filters-container">
-      					<Filters/>
+      				  {
+                   category === "cars" ? 
+                   <CarFilters /> : <Filters />
+                }
+
+              	
       				</div>
       				<div className="center-container">
       					<div className="sorting-container">
