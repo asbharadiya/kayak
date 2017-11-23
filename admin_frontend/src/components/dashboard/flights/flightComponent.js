@@ -158,7 +158,7 @@ class FlightComponent extends Component {
 								<div className="scrollDiv">
 										<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 								      		<label htmlFor="flightid">Flight Number</label>
-								      		<input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="number"  onChange={(e) => {
+								      		<input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="text"  onChange={(e) => {
 								      			this.setState({
 								      				flightNumber : e.target.value
 								      			})
@@ -167,7 +167,7 @@ class FlightComponent extends Component {
 						      	
 								      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 								      		<label htmlFor="airline">Airline Name</label>
-								      		<input value={this.state.airline} className="form-control sharpCorner" id="airline" type="number"  onChange={(e) => {
+								      		<input value={this.state.airline} className="form-control sharpCorner" id="airline" type="text"  onChange={(e) => {
 								      			this.setState({
 								      				airline : e.target.value
 								      			})
@@ -366,6 +366,7 @@ class FlightComponent extends Component {
 								      				
 												this.props.setBackJustUpdateVariable() ;
 								      				var obj = {
+								      					_id  : this.state._id,
 								      					flightNumber : this.state.flightNumber ,
 														airline : this.state.airline ,
 														source : this.state.source ,

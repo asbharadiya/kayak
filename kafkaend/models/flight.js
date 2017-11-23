@@ -11,6 +11,7 @@ var flightSchema = new mongoose.Schema({
 	departure : String ,
 	class : String ,
 	price : Number ,
+	seats : Number ,
 	createdDate: Date,
     updatedDate : Date,
     is_deleted : Boolean,

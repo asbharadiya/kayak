@@ -32,10 +32,11 @@ function getFlightById(req,res){
 	kafka.make_request(topic_name,'getFlightById',{
 		id
 	},function(err,result){
+		console.log("result.data " , result.data)
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+        	return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
