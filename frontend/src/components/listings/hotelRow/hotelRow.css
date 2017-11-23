@@ -7,8 +7,7 @@
 }
 
 .hotels-row .price-section {
-    width: 150px;
-    padding: 15px;
+    padding-top: 15px;
     border-left: 1px solid #e4e5ea;
 }
 
@@ -32,19 +31,15 @@
 
 .hotels-row .number-rating-container {
 	display: inline;
-	width: 100px;
 }
 
 .hotels-row .comments-container {
 	display: inline;
-	width: 100px;
 	margin-left: 20px;
 }
 
 .hotels-row .trophy-container {
-	display: inline;
-	width: 100px;
-	margin-top: 50px;
+		margin-top: 50px;
 }
 
 .hotels-row .champion {
@@ -52,12 +47,15 @@
 }
 
 .hotels-row .ratings-container {
-	margin-top: 10px;
-	width: 500px;
+	margin-top: 25px;
 }
 
 .hotels-row .blue-color {
 	color: #4f8ef2;
+}
+
+.hotels-row .rating-type {
+	padding-left: 10px;
 }
 
 .hotels-row .sub-features {
@@ -84,7 +82,6 @@
 
 .hotels-row .title-section {
   padding: 15px;
-  width: 400px;
   text-align: left;
 }
 
