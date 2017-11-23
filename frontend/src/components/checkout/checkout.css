@@ -1,0 +1,41 @@
+.checkout-page-wrapper {
+    min-height: 100vh;
+}
+
+.checkout-page-wrapper .page-container {
+    width: 90%;
+    margin: 0px auto;
+    padding: 15px 0px;
+    position: relative;
+}
+
+.checkout-page-wrapper .page-container .steps-container {
+    padding-right: 350px;
+    width: 100%;
+}
+
+.checkout-page-wrapper .page-container .summary-container {
+    width: 320px;
+    position: absolute;
+    right: 0px;
+    top: 15px;
+}
+
+.checkout-page-wrapper .checkout-panel {
+    background: #fff;
+    margin-bottom: 15px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-title {
+    padding: 15px;
+    border-bottom: 1px solid #e4e5ea;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-title p {
+    margin: 0px;
+    font-size: 16px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body {
+    padding: 15px;
+}

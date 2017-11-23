@@ -2,7 +2,7 @@
 
 body {
   font-size: 13px;
-  background-color: #fff;
+  background: #e4e5ea;
   min-height: 100%;
   margin: 0;
   padding: 0;
@@ -19,7 +19,7 @@ body {
 }
 
 .btn-kayak {
-	color: #fff;
+    color: #fff;
   background: #ff690f;
   background-image: linear-gradient(135deg,#ff690f 0%,#ff4f3a 100%);
   border: none;

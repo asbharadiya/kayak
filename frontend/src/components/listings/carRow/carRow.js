@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './carRow.css';
-import Rater from 'react-rater'
-import 'react-rater/lib/react-rater.css'
-import CarRowComponent from './carRowComponent/carRowComponent'
+import 'react-rater/lib/react-rater.css';
+import CarRowComponent from './carRowComponent/carRowComponent';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { getAllCars } from '../../../actions/car'
+import { getAllCars } from '../../../actions/car';
 
 class CarRow extends Component {
 

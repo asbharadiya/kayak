@@ -21,12 +21,10 @@ class Listings extends Component {
       			</div>
       			<div className="page-container">
       				<div className="filters-container">
-      				  {
-                   category === "cars" ? 
-                   <CarFilters /> : <Filters />
-                }
-
-              	
+      				    {
+					        category === "cars" ?
+					            <CarFilters /> : <Filters />
+                        }
       				</div>
       				<div className="center-container">
       					<div className="sorting-container">
@@ -46,6 +44,7 @@ class Listings extends Component {
                             }
       					</div>
       				</div>
+                    <div className="clearfix"></div>
       			</div>
       		</div>
     	);

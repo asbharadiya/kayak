@@ -8,6 +8,8 @@ import Header from './components/header/header';
 import Landing from './components/landing/landing';
 import Listings from './components/listings/listings';
 import Profile from "./components/profile/profile";
+import Checkout from "./components/checkout/checkout";
+import Bookings from "./components/bookings/bookings";
 
 class App extends Component {
 
@@ -31,13 +33,27 @@ class App extends Component {
                       <Redirect to="/hotels"/>
                     )}/>
                     <Route exact path='/:category' component={Landing}/>
-                    <Route path='/:category/listings' component={Listings}/>
+                    <Route exact path='/:category/listings' component={Listings}/>
+                    <Route exact path='/:category/:id/checkout' render={() => (
+                      !isLogged ? (
+                          <Redirect to="/"/>
+                      ) : (
+                          <Checkout/>
+                      )
+                    )}/>
                     <Route exact path='/user/profile' render={() => (
                       !isLogged ? (
                           <Redirect to="/"/>
                       ) : (
                           <Profile/>
                       )
+                    )}/>
+                    <Route exact path='/user/bookings' render={() => (
+                        !isLogged ? (
+                            <Redirect to="/"/>
+                        ) : (
+                            <Bookings/>
+                        )
                     )}/>
               </Switch>
             </div>

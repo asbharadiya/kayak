@@ -23,7 +23,7 @@ class CarRowComponent extends Component {
 			                	</div>
 		                		<div>{this.props.car.carName} or Similar</div>
 		                		<div className="excess-info-text">
-		                			<span className="occupancy"><a><i className="fa fa-user fa-lg userFont" aria-hidden="true"></i></a>{this.props.car.occupancy}</span>
+		                			<span className="occupancy"><i className="fa fa-user fa-lg userFont" aria-hidden="true"></i>{this.props.car.occupancy}</span>
 		                			<span className="luggage"><i className="fa fa-suitcase fa-lg suitcaseFont" aria-hidden="true"></i>{this.props.car.luggage}</span>
                 					<span className="availableCars"><i className="fa fa-car fa-lg carFont" aria-hidden="true"></i>{this.props.car.carQuantity}</span>
 		                		</div>

@@ -11,7 +11,7 @@ class HotelRow extends Component {
           <div className="hotels-row">
                 <div className="info-section">
                     <div className="info-child carrier">
-                        <img class="placeholder-image" src="/assets/images/hotel_placeholder.png"></img>
+                        <img className="placeholder-image" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
                     </div>
                 </div>
                 <div className="title-section">
