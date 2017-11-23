@@ -40,17 +40,17 @@ class FlightComponent extends Component {
 	componentWillReceiveProps(newProps) { 
 	
 	  this.setState({
-	  		flightNumber : this.newProps.currentFlightToUpdate.flightNumber ,
-	  	    airline : this.newProps.currentFlightToUpdate.airline ,
-	  	    source : this.newProps.currentFlightToUpdate.source ,
-	  	    destination : this.newProps.currentFlightToUpdate.destination ,
-	  	    arrival : this.newProps.currentFlightToUpdate.arrival ,
-	  	    departure : this.newProps.currentFlightToUpdate.departure ,
-	  	    serviceStartDate : this.newProps.currentFlightToUpdate.serviceStartDate ,
-	  	    serviceEndDate : this.newProps.currentFlightToUpdate.serviceEndDate ,
-	  	    class : this.newProps.currentFlightToUpdate.class ,
-	  	    price : this.newProps.currentFlightToUpdate.price ,
-	  	    seats : this.newProps.currentFlightToUpdate.seats ,
+	  		flightNumber : newProps.currentFlightToUpdate.flightNumber ,
+	  	    airline : newProps.currentFlightToUpdate.airline ,
+	  	    source : newProps.currentFlightToUpdate.source ,
+	  	    destination : newProps.currentFlightToUpdate.destination ,
+	  	    arrival : newProps.currentFlightToUpdate.arrival ,
+	  	    departure : newProps.currentFlightToUpdate.departure ,
+	  	    serviceStartDate : newProps.currentFlightToUpdate.serviceStartDate ,
+	  	    serviceEndDate : newProps.currentFlightToUpdate.serviceEndDate ,
+	  	    class : newProps.currentFlightToUpdate.class ,
+	  	    price : newProps.currentFlightToUpdate.price ,
+	  	    seats : newProps.currentFlightToUpdate.seats ,
 			_id : newProps.currentFlightToUpdate._id,
 			createdDate : newProps.currentFlightToUpdate.createdDate ,
 			updatedDate : newProps.currentFlightToUpdate.updatedDate ,
@@ -311,7 +311,7 @@ class FlightComponent extends Component {
 								      					return ;
 								      				}
 								      				if(this.state.source === '' ){
-								      					this.setState({ updateFlightError : "Please Specify Source Location"})
+								      					this.setState({ updateFlightError : "Please Specify Sourtion"})
 								      					return ;
 								      				}
 								      				if(this.state.destination === '' ){

@@ -73,76 +73,108 @@ function getFlights(msg, callback){
 }
 
 function getFlightById(msg, callback){
-    var res = {};
-    var idToGet = new ObjectID(msg.id) ;
-    if(true){
-    	flightModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result){
-        	if(err){
-				res.code = 500 ; 
-				res.status  = 500; 
-				res.message = "Fail to get flight from the server";
-				callback(null , res); 
-			}else{
-				res.code = 200 ; 
-				res.status  = 200; 
-				res.message = "Success";
-				res.data = result;
-				callback(null , res);
-			}
-        });
-	}else{
-		res.code = 400;
-		res.status  = 400 ; 
-		res.data = []
-		res.message = "Please pass the correct Parameteres";
-		callback(null, res);
-   }
+	var res = {};
+	console.log(msg);
+	idToGet = new ObjectID(msg.id) ;
+
+	
+
+	flightModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
+		if(err){
+			res.code = 500  ; 
+			res.status  = 500 ; 
+			res.message = "Fail to get all flights from the server"
+			callback(null , res) ; 
+		}else{
+
+			var startDate =  result[0].availability[0].availabilityDate ;
+			startDate.setDate(startDate.getDate() + 1);
+			var endDate =  result[0].availability[result[0].availability.length-1].availabilityDate;
+			endDate.setDate(endDate.getDate() + 1);
+
+			var mmS = startDate.getMonth().toString().length > 1 ? startDate.getMonth()+1 : '0' + startDate.getMonth().toString()+1;
+			var ddS  = startDate.getDate().toString().length > 1 ? startDate.getDate() : '0' + startDate.getDate().toString() ; 
+
+			var mmE = endDate.getMonth().toString().length > 1 ? endDate.getMonth()+1 : '0' + endDate.getMonth().toString()+1;
+			var ddE  = endDate.getDate().toString().length > 1 ? endDate.getDate() : '0' + endDate.getDate().toString() ; 
+
+			startDate = startDate.getFullYear() +  "-" + mmS + "-" + ddS 
+			endDate = endDate.getFullYear() +  "-" + mmE + "-" + ddE 
+
+			delete result[0].availability;
+			result[0].serviceStartDate = startDate ;
+			result[0].serviceEndDate = endDate ; 
+
+			console.log("Result check ", result[0]) ; 
+
+			res.code = 200  ; 
+			res.status  = 200 ; 
+			res.message = "Success"
+			res.data = result
+			callback(null , res) ; 
+		}
+	})	
+	
 }
 
 function updateFlightById(msg, callback){
-    var res = {};
-    var idToUpdate = new ObjectID(msg.idToUpdate) ;
-    msg.is_deleted = false;
-    if(!validator.isEmpty(msg.idToUpdate)){
-    	flightModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
-    		if(err){
-	    		console.log(err);
-				res.code = 500 ; 
-				res.status  = 500 ; 
-				res.message = "Error occured while updating a flight"
-				callback(null , res); 
-			} else {
-				res.code = 200  ; 
-				res.status  = 200 ; 
-				res.message = "Hotel successfully updated";
-				callback(null , res) ; 
-			}
-		})
-	}else{
-		res.code = 400;
-		res.status  = 400 ; 
-		res.data = []
-		res.message = "Please pass the correct Parameteres";
-		callback(null, res);
-	}
-}
+	var res = {};
+	idToUpdate = new ObjectID(msg._id) ;
+	msg._id = idToUpdate ; 
+	msg.updatedDate = new Date() ; 
+	
+	var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ; 
 
-function deleteFlightById(msg, callback){
-    var res = {};
-    var idToDelete = new ObjectID(msg.idToDelete) ;
-    if(!validator.isEmpty(msg.idToDelete)){
-    	flightModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true }}, { multi: false }, function(err , response){
-    		if(err){
+	var availabilityDateObject = [] ; 
+	for(var i=0 ; i <= serviceDays ; i++){
+		var date = new Date(msg.serviceStartDate) ;
+		date.setDate(date.getDate() + i);
+		availabilityDateObject.push({availabilityDate : date , seats : msg.seats})
+	}
+
+
+	msg.availability = availabilityDateObject ;
+	delete msg.serviceEndDate;
+	delete msg.serviceStartDate;
+
+
+	
+
+
+	flightModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
+			if(err){
 				console.log(err);
 				res.code = 500 ; 
 				res.status  = 500 ; 
-				res.message = "Error occured while deleting a flight"
+				res.message = "Error occured while updating  a flight"
 				callback(null , res); 
 			}else{
 				res.code = 200  ; 
 				res.status  = 200 ; 
-				res.message = "Hotel successfully deleted";
-				callback(null , res) ; 
+				res.message = "Success"
+				callback(null , res) ; 	
+			}
+		})
+	
+}
+
+function deleteFlightById(msg, callback){
+	var res = {};
+	
+	var idToDelete = new ObjectID(msg.idToDelete) ;
+	if(!validator.isEmpty(msg.idToDelete)){
+		flightModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true }}, { multi: false }, function(err , response){
+			if(err){
+				console.log(err);
+				res.code = 500 ; 
+				res.status  = 500 ; 
+				res.message = "Error occured while deleting a hotel"
+				callback(null , res); 
+			}else{
+				res.code = 200  ; 
+				res.status  = 200 ; 
+				res.message = "Success"
+				callback(null , res) ; 	
 			}
 		})
 	}else{
@@ -152,6 +184,7 @@ function deleteFlightById(msg, callback){
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
 	}
+
 }
 
 function getFlightsForCustomer(msg, callback){

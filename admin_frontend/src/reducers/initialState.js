@@ -24,7 +24,7 @@ export default {
   flightAddSuccess : null ,
   flightUpdateSuccess : null,
   currentFlightToUpdate : {
-                lightNumber : '' ,
+                flightNumber : '' ,
                 airline : '' ,
                 source : '' ,
                 destination : '',
@@ -33,8 +33,8 @@ export default {
                 serviceStartDate : '',
                 serviceEndDate : '',
                 class : '',
-                price : '',
-                seats : '',
+                price : 0,
+                seats : 0,
   },
 
   //Flights Initial Data End
