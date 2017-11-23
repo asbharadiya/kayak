@@ -66,7 +66,7 @@ const reducer = (state = initialState, action) => {
 	     case "GET_FLIGHT_TO_UPDATE_SUCCESS" :  
 	      	return {
 	      		...state,
-	      		flightrentFlightToUpdate : action.payload
+	      		currentFlightToUpdate : action.payload
 	    	};
 	    	
 
