@@ -20,13 +20,13 @@ class HotelRow extends Component {
                   <Rater total={5} rating={4} interactive={false}/>
                 </div>
                 <div className="ratings-container col-md-12 no-padding">
-                  <div className="number-rating-container col-md-6">
+                  <div className="number-rating-container col-xs-6">
                     <span className="number-rating"> 9.0 </span>
                       <span className="rating-type"> Excellent </span>
                   </div>
-                  <div className="number-rating-container col-md-6">
-                      <div className="location"> Location </div>
-                      <div className=""> Silicon Valley </div>
+                  <div className="location-container col-xs-6">
+                    <div className="hotel-location-label col-xs-12"> Location </div>
+                      <div className="hotel-location-name col-xs-12"> Silicon Valley </div>
                   </div>
                 </div>
               </div>

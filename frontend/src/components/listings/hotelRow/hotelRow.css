@@ -66,6 +66,19 @@
 	margin-top: 20px;
 }
 
+.hotels-row .hotel-location-label {
+	font-size: 16px;
+}
+
+.hotels-row .hotel-location-name {
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.location-container {
+	margin-top: -10px;
+}
+
 .number-rating {
 	background-color: black;
 	width: 15px;
