@@ -9,11 +9,27 @@ import FlightRow from './flightRow/flightRow';
 import HotelRow from './hotelRow/hotelRow';
 import CarRow from './carRow/carRow';
 import CarFilters from './filters/carFilters/carFilters'
+import { getAllCars } from '../../actions/car'
+
 
 class Listings extends Component {
 
+  constructor(props){
+    super(props) ;
+
+    this.state = {
+      category : this.props.match.params.category
+    }
+  }
+
+  componentWillMount(){
+    if(this.state.category === 'cars'){
+      this.props.getAllCars() ; 
+    }
+  }
+
   	render() {
-        const category = this.props.match.params.category;
+      
     	return (
       		<div className="listings-page-wrapper">
       			<div className="inline-search-container">
@@ -21,10 +37,13 @@ class Listings extends Component {
       			</div>
       			<div className="page-container">
       				<div className="filters-container">
-      				    {
-					        category === "cars" ?
-					            <CarFilters /> : <Filters />
-                        }
+
+      				  {
+                   this.state.category === "cars" ? 
+                   <CarFilters /> : <Filters />
+                }
+
+              
       				</div>
       				<div className="center-container">
       					<div className="sorting-container">
@@ -33,9 +52,9 @@ class Listings extends Component {
       					<div className="data-container">
                             {
                                 this.props.listings.map((listing , key) => {
-                                    if(category === 'hotels') {
+                                    if(this.state.category === 'hotels') {
                                         return <HotelRow data={listing} key={key}/>
-                                    } else if (category === 'flights') {
+                                    } else if (this.state.category === 'flights') {
                                         return <FlightRow data={listing} key={key}/>
                                     } else {
                                         return <CarRow data={listing} key={key}/>
@@ -51,8 +70,15 @@ class Listings extends Component {
   	}
 }
 
+
+function mapDispatchToProps(dispatch) {
+  return {
+   getAllCars : () => dispatch(getAllCars())
+  }
+}
+
 function mapStateToProps(state) {
     return {listings:state.listingsReducer.listings};
 }
 
-export default withRouter(connect(mapStateToProps)(props => <Listings {...props}/>));
+export default withRouter(connect(mapStateToProps , mapDispatchToProps )(props => <Listings {...props}/>));
