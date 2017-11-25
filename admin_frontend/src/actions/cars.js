@@ -1,5 +1,5 @@
 import * as api from '../api/cars';
-
+import axios from 'axios' ;
 
 
 
@@ -42,9 +42,39 @@ export function setBackCarAddSuccess(){
 
 
 
-export function addCar(payload) {
-	return function(dispatch) {
-		return api.addCar(payload , function(error , response){
+export function addCar(payload , file ) {
+	console.log("Payload file " , file  )  ; 
+
+
+	let data = new FormData();
+	
+  	data.append('file', file);
+  	data.append('carQuantity' , payload.carQuantity) ; 
+  	data.append('carType' , payload.carType) ; 
+  	data.append('carName' , payload.carName) ; 
+  	data.append('occupancy' , payload.occupancy) ; 
+  	data.append('luggage' , payload.luggage) ; 
+  	data.append('dailyRentalValue' , payload.dailyRentalValue) ; 
+  	data.append('serviceStartDate' , payload.serviceStartDate) ; 
+  	data.append('serviceEndDate' , payload.serviceEndDate) ; 
+
+  	console.log("Data " , data ) ;
+
+  	return  function(dispatch){
+		 axios.post('http://localhost:3002/api/v1/a/cars' , data  )
+	  .then(function (response) {
+	  	console.log("Response after upload " , response.data)
+	  	//dispatch({type : 'FILE_UPLOAD_SUCCESS' , payload : response.data})
+	  })
+	  .catch(function (error) {
+	  	console.log(error) ; 
+	    //dispatch({type : 'FILE_UPLOAD_FALIURE' , payload : error})
+	  })
+	}
+
+
+	/*return function(dispatch) {
+		return api.addCar(data , function(error , response){
 			if(error){
 				dispatch(addCarFailure());
 			} else {
@@ -57,7 +87,7 @@ export function addCar(payload) {
 				})
 			}
 		})
-	};
+	};*/
 }
 
 

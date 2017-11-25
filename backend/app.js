@@ -4,7 +4,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
-
+var upload = require('express-fileupload');
 var MongoClient = require('mongodb').MongoClient;
 
 var config = require('config');
@@ -29,6 +29,8 @@ var options = {
 var sessionStore = new MySQLStore(options);
 
 var cors = require('cors');
+
+app.use(upload()) ; 
 
 var router = express.Router();
 require('./routes/router')(router,passport);
