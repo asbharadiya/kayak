@@ -39,11 +39,17 @@ setInterval(function(){
 var getConnection = function(callback){
   if(cntnStack.length > 0){
     db = cntnStack.pop();
+    console.log("Mongo DB " , db)
     callback(null, db);
   } else {
     cntnQueue.push(callback);
   }
 }
+
+var releaseConnection = function(db){
+   cntnStack.push(db);
+}
+
 
 var getCollection = function(name,callback){
   if (!connected) {
@@ -108,8 +114,11 @@ var readGridFS = function(fileId,mode,options,callback){
   });                                                  
 }
 
+
+
 exports.createConnectionPool = createConnectionPool;
 exports.getCollection = getCollection;
 exports.createGridStore = createGridStore;
 exports.readGridFS = readGridFS;
 exports.getConnection = getConnection;
+exports.releaseConnection = releaseConnection;

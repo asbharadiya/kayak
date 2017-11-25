@@ -1,4 +1,5 @@
 
+
 module.exports = function(router,passport) {
 
 	var auth = require('./auth')(passport);
@@ -29,7 +30,7 @@ module.exports = function(router,passport) {
 	router.get('/a/flights/:id', isAdminAuthenticated, flight.getFlightById);
 	router.put('/a/flights/:id', isAdminAuthenticated, flight.updateFlightById);
 	router.delete('/a/flights/:id', isAdminAuthenticated, flight.deleteFlightById);
-	router.post('/a/cars' , car.addCar);
+	router.post('/a/cars'  , car.addCar);
 	router.get('/a/cars' , car.getCars);
 	router.get('/a/cars/:id', car.getCarById);
 	router.put('/a/cars/:id', car.updateCarById);

@@ -25,7 +25,9 @@ class Cars extends Component {
 			showCarModal: false,
 			carAddLoading : false ,
 			serviceStartDate : '' ,
-			serviceEndDate : ''
+			serviceEndDate : '' ,
+			carFile : '' ,
+			filename : ''
 		}
 	}
 
@@ -53,7 +55,9 @@ class Cars extends Component {
 			      		dailyRentalValue : 0,
 			      		serviceStartDate : '' ,
 						serviceEndDate : '',
-						addCarError : ''
+						addCarError : '' , 
+						carFile : '' ,
+						filename : ''
 		}) ;
 
       	this.props.getAllCars()
@@ -121,6 +125,53 @@ class Cars extends Component {
 					      			})
 					      		}} id="carname" type="text"  aria-describedby="basic-addon1"   />
 					      	</div>
+
+
+					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		 <label htmlFor="carname">Upload</label>
+					      		<div className="input-group image-preview">
+						               
+						                <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" /> 
+						                <span className="input-group-btn">
+						                    
+						                   
+						                	{
+						                		this.state.carFile === '' ? 
+						                		 <span></span>
+							                    :
+							                     <button type="button"  onClick={() => {
+							                     	this.setState({carFile : '' , filename : ''})
+							                     }} className="btn btn-default image-preview-clear" >
+							                        <span className="glyphicon glyphicon-remove"></span> Clear
+							                    </button> 
+						                	}
+
+						                  
+						                 	
+						                 	<div className="btn btn-default image-preview-input">
+						                        <span className="glyphicon glyphicon-folder-open"></span>
+						                        <span className="image-preview-input-title"></span> Browse
+						                        <input type="file" onChange={(e) => {
+											    	var file = e.target.files[0];
+											    	
+
+											    	if(file === undefined){
+											    		return ; 
+											    	}
+											    	
+											    	this.setState({ carFile : file , filename : file.name})
+
+											    }}accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> 
+						                    </div>
+						                    
+						                </span>
+						           
+						        </div>
+					      	</div>
+
+
+					      	
+
 					      	
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="maxpeople">Occupancy</label>
@@ -224,7 +275,9 @@ class Cars extends Component {
 																showCarModal: false,
 																carAddLoading : false ,
 																serviceStartDate : '' ,
-																serviceEndDate : ''
+																serviceEndDate : '' ,
+																carFile : '' ,
+																filename : ''
 															})
 
 											this.props.setBackCarAddSuccess() ; 
@@ -301,17 +354,22 @@ class Cars extends Component {
 												luggage : this.state.luggage ,
 												dailyRentalValue : this.state.dailyRentalValue,
 												serviceStartDate : this.state.serviceStartDate,
-												serviceEndDate : this.state.serviceEndDate
+												serviceEndDate : this.state.serviceEndDate ,
+												
 						      				}
+
+						      				
 
 						      				this.setState({
 						      					addCarError : '' , 
       											carAddLoading : true
 						      				})
 
-											this.props.setBackCarAddSuccess(); 						      				
+											this.props.setBackCarAddSuccess(); 	
+
+
 						      				
-											this.props.addCar(obj)
+											this.props.addCar(obj , this.state.carFile )
 						      			}} >Submit 
 						      			</button>
 						      			
@@ -361,7 +419,7 @@ class Cars extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addCar : (params) => dispatch(addCar(params)) ,
+    addCar : (params , file ) => dispatch(addCar(params , file)) ,
     setBackCarAddSuccess : () => dispatch(setBackCarAddSuccess()),
     getAllCars : () => dispatch(getAllCars()) ,
     setBackCarDeleteSuccess : () => dispatch(setBackCarDeleteSuccess()),
