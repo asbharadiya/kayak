@@ -4,7 +4,7 @@ const headers = {
     'Accept': 'application/json'
 };
 
-export const addCar = (payload , callback) => {
+export const addCar = (data , callback) => {
     fetch(api+'/a/cars', {
         method: 'POST',
         credentials: 'include',
@@ -12,7 +12,7 @@ export const addCar = (payload , callback) => {
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(payload : payload)
+        body: data
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {

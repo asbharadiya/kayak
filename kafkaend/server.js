@@ -23,8 +23,51 @@ console.log('server is running');
 var producer = connection.getProducer();
 var consumer = connection.getConsumer(topic_name);
 
+
+
+
+var chunk_requests = {};
+
+
 consumer.on('message', function (message) {
     var data = JSON.parse(message.value)
+    
+    if(data.is_chunk_data){
+        var chunk_request = chunk_requests[data.correlationId]
+        if(chunk_request){
+            chunk_request.chunks.push({
+                data:data.chunk,
+                order:data.chunk_no  
+            })
+        } else {
+            chunk_request = {
+                chunks:[
+                    {
+                        data:data.chunk,
+                        order:data.chunk_no
+                    }
+                ],
+                total_chunks:data.total_chunks
+            }
+            chunk_requests[data.correlationId] = chunk_request;
+        }
+        if(chunk_request.chunks.length === chunk_request.total_chunks){
+            chunk_request.chunks.sort(function(a,b) {return (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0);});
+            var combined_chunks_data = "";
+            for (var i=0;i<chunk_request.chunks.length;i++) {
+                combined_chunks_data += chunk_request.chunks[i].data;
+            }
+            data.data.buffer = Buffer.from(combined_chunks_data,'base64');
+            makeServiceCall(data);
+        }
+    } else {
+        makeServiceCall(data);
+    }
+    
+})
+
+
+function makeServiceCall(data){
     switch (data.km.value) {
         //auth
         case 'signin':
@@ -627,4 +670,4 @@ consumer.on('message', function (message) {
         default:
             return;
     }
-})
+}

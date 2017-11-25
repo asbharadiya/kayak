@@ -2,11 +2,111 @@ var mongo = require('./mongo');
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID
 var carModel = require('../models/car.js');
-
+var ObjectIDCreate = require('mongodb') ; 
 
 function addCar(msg, callback){
 	var res = {};
 	
+
+	var fileId = new ObjectID();
+
+	if(validator.isNumeric( msg.carQuantity) && validator.isNumeric( msg.dailyRentalValue) && validator.isNumeric( msg.occupancy) )
+	{
+		
+		var fileData =  new Buffer(msg.buffer);
+    	var filename  = msg.filename;
+
+		mongo.getConnection(function(err , db){
+
+			console.log("Database " , db) ; 
+
+			mongo.createGridStore( fileId, msg.filename, 'w', 
+					{root:'assets',
+					content_type:msg.file.mimetype,
+					chunk_size:msg.file.size
+					} , function(err , gridStore  ){
+
+					gridStore.open(function(err, gridStore) {
+						gridStore.write(fileData, function(err, gridResult) {
+							if (err) {
+                                gridStore.close(function(err, gridResult) {
+                                    res.code = 500;
+                                    res.message = "Error saving file to database";
+                                    callback(null, res);
+                                });
+                            }else{
+                            	gridStore.close(function(err, gridResult) {
+
+
+									msg.createdDate = new Date();
+									msg.updatedDate = new Date() ; 
+									msg.carQuantity = parseInt(msg.carQuantity) ; 
+									msg.dailyRentalValue = parseInt(msg.dailyRentalValue) ; 
+									msg.occupancy = parseInt(msg.occupancy) ;
+									msg.is_deleted = false ; 
+
+									var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ; 
+
+									var availabilityDateObject = [] ; 
+									for(var i=0 ; i <= serviceDays ; i++){
+										var date = new Date(msg.serviceStartDate) ;
+										date.setDate(date.getDate() + i);
+										availabilityDateObject.push({availabilityDate : date , availableCars : msg.carQuantity})
+									}
+
+									var carImageId = [];
+									carImageId.push(fileId)
+									
+									msg.availability = availabilityDateObject ;
+									delete msg.serviceEndDate;
+									delete msg.serviceStartDate;
+									
+									msg.deletedDate = new Date();
+									msg.carImageId = carImageId ; 
+
+									var newCar = new carModel(msg);
+									
+									newCar.save(function (err) {
+										if(err) {
+											console.log(err);
+											res.code = 500 ; 
+											res.status  = 500 ; 
+											res.message = "Error occured while registering a car with server"
+											callback(null , res); 
+										} else {
+											res.code = 200  ; 
+											res.status  = 200 ; 
+											res.message = "Success"
+											callback(null , res) ; 
+										}
+									});
+
+								
+								})
+                            }
+						})
+					})
+
+				});
+
+
+		})
+	}else{
+		res.code = 400;
+		res.status  = 400 ; 
+		res.data = []
+		res.message = "Please pass the correct Parameteres";
+		callback(null, res);
+	}
+
+
+	
+
+
+
+/*
+	
+
 	if(validator.isNumeric( msg.carQuantity) && validator.isNumeric( msg.dailyRentalValue) && validator.isNumeric( msg.occupancy) )
 	{
 		
@@ -58,7 +158,7 @@ function addCar(msg, callback){
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
 	}
-
+	*/
 	
 }
 
@@ -157,19 +257,19 @@ function updateCarById(msg, callback){
 
 
 	carModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
-			if(err){
-				console.log(err);
-				res.code = 500 ; 
-				res.status  = 500 ; 
-				res.message = "Error occured while updating  a car"
-				callback(null , res); 
-			}else{
-				res.code = 200  ; 
-				res.status  = 200 ; 
-				res.message = "Success"
-				callback(null , res) ; 	
-			}
-		})
+		if(err){
+			console.log(err);
+			res.code = 500 ; 
+			res.status  = 500 ; 
+			res.message = "Error occured while updating  a car"
+			callback(null , res); 
+		}else{
+			res.code = 200  ; 
+			res.status  = 200 ; 
+			res.message = "Success"
+			callback(null , res) ; 	
+		}
+	})
 	
 }
 

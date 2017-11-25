@@ -3,9 +3,51 @@ var kafka = require('./kafka/client');
 var config = require('config');
 var topic_name = config.kafkaTopic;
 
+
+
+var CHUNK_SIZE = 1024 * 50 ;
+
+function SplitFileIntoArray(fileString){
+    var parts = [];
+    while(fileString !== ''){
+        if(fileString.length > CHUNK_SIZE){
+            parts.push(fileString.slice(0, CHUNK_SIZE));
+            fileString = fileString.slice(CHUNK_SIZE);
+        } else {
+            parts.push(fileString);
+            break;
+        }
+    }
+    return parts;
+}
+
+
+
 function addCar(req,res){
-    console.log("Server called " , req.body)
-	kafka.make_request(topic_name,'addCar',req.body,function(err,result){
+    
+
+     var obj = {
+      carQuantity : req.body.carQuantity , 
+      carType : req.body.carType    ,   
+      carName : req.body.carName    , 
+      occupancy :  req.body.occupancy    , 
+      luggage :  req.body.luggage    ,
+      dailyRentalValue :  req.body.dailyRentalValue   ,
+      serviceStartDate :  req.body.serviceStartDate    , 
+      serviceEndDate :  req.body.serviceEndDate  ,
+       filename : req.files.file.name,  
+     } 
+
+      
+    
+
+    var file = req.files.file ;
+
+
+    var fileBuffer = new Buffer(file.data).toString('base64') ;
+    var chunks = SplitFileIntoArray(fileBuffer) ;
+    
+    kafka.make_chunked_request(topic_name,'addCar',obj , chunks ,function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
