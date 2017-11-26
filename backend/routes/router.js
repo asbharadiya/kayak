@@ -51,8 +51,8 @@ module.exports = function(router,passport) {
 	router.post('/c/credit_cards', isAuthenticated, profile.addCreditCard);
 	router.get('/c/credit_cards', isAuthenticated, profile.getCreditCards);
 	router.delete('/c/credit_cards/:id', isAuthenticated, profile.deleteCreditCardById);
-	router.get('/c/hotels', isAuthenticated, hotel.getHotelsForCustomer);
-	router.get('/c/flights', isAuthenticated, flight.getFlightsForCustomer);
+	router.get('/c/hotels', hotel.getHotelsForCustomer);
+	router.get('/c/flights', flight.getFlightsForCustomer);
 	router.get('/c/cars', car.getCarsForCustomer);
 	router.post('/c/bookings', isAuthenticated, booking.makeBooking);
 	router.get('/c/bookings', isAuthenticated, booking.getBookings);

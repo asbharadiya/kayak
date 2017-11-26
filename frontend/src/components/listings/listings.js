@@ -9,6 +9,8 @@ import FlightRow from './flightRow/flightRow';
 import HotelRow from './hotelRow/hotelRow';
 import CarRow from './carRow/carRow';
 import * as carActions from '../../actions/car';
+import * as flightActions from '../../actions/flight';
+import * as hotelActions from '../../actions/hotel';
 
 
 class Listings extends Component {
@@ -28,6 +30,10 @@ class Listings extends Component {
     loadPage(){
         if(this.state.category === 'cars'){
             this.props.getAllCars() ;
+        } else if(this.state.category === 'flights') {
+            this.props.getAllFlights();
+        } else {
+            this.props.getAllHotels();
         }
     }
 
@@ -59,7 +65,7 @@ class Listings extends Component {
                                         }
                                     })
                                 ) : (
-                                    <h3>No results to display</h3>
+                                    <h3 className="empty-message">No results to display</h3>
                                 )
                             }
 						</div>
@@ -74,7 +80,9 @@ class Listings extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllCars : () => dispatch(carActions.getAllCars())
+        getAllCars : () => dispatch(carActions.getAllCars()),
+        getAllFlights : () => dispatch(flightActions.getAllFlights()),
+        getAllHotels : () => dispatch(hotelActions.getAllHotels())
     }
 }
 

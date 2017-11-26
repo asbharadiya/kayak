@@ -30,3 +30,8 @@
 .listings-page-wrapper .page-container .center-container .data-container {
 
 }
+
+.listings-page-wrapper .page-container .center-container .data-container .empty-message {
+	text-align: center;
+	margin: 0px;
+}

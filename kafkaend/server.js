@@ -534,7 +534,7 @@ consumer.on('message', function (message) {
             });
             break;
         case 'getFlightsForCustomer':
-            hotel.getFlightsForCustomer(data.data, function(err,res){
+            flight.getFlightsForCustomer(data.data, function(err,res){
                 var payloads = [
                     {
                         topic: data.replyTo,
