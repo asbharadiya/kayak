@@ -134,16 +134,13 @@ function deleteCarById(msg, callback){
 
 function getCarsForCustomer(msg, callback){
     var res = {};
-
     carModel.find({ is_deleted : false}, function(err, result){
         if(err){
             res.code = 500  ;
-            res.status  = 500 ;
             res.message = "Fail to get all hotels from the server"
             callback(null , res) ;
         }else{
             res.code = 200  ;
-            res.status  = 200 ;
             res.message = "Success"
             res.data = result
             callback(null , res) ;
