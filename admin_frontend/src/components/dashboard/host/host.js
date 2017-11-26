@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, Brush, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
-import './console.css';
+import './host.css';
 
-class Console extends Component {
+class Host extends Component {
 	
 	constructor(props){
 		super(props);
@@ -35,7 +35,7 @@ class Console extends Component {
 	
 	render() {
 		return (
-    		<div className="consolepage">
+    		<div className="hostpage">
     		<div>
 	            <div class="col-lg-3 col-md-6">
 	                <div class="card">
@@ -139,4 +139,4 @@ class Console extends Component {
 	}
 }
 
-export default Console;
+export default Host;
