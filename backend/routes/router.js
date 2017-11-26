@@ -1,5 +1,4 @@
 
-
 module.exports = function(router,passport) {
 
 	var auth = require('./auth')(passport);

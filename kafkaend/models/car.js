@@ -14,7 +14,7 @@ var carSchema = new mongoose.Schema({
     updatedDate : Date,
     is_deleted : Boolean,
     availability : [{ availabilityDate : Date, availableCars : Number }],
-    carImageId : [String]
+    images : [String]
 })
     
 module.exports = mongoose.model('car', carSchema);

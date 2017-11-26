@@ -60,8 +60,7 @@ export const updateCarById = ( obj , callback) => {
         method: 'PUT',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
         },
         body: JSON.stringify(obj)
     }).then(res => {

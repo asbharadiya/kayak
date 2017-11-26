@@ -50,43 +50,40 @@ function signin(msg, callback){
 function signup(msg, callback){
     var res = {};
     if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5}) && validator.isByteLength(msg.firstName, {min: 1}) && validator.isByteLength(msg.lastName, {min: 1})) {
-        var connection = mysql.getConnection(function(err) {
+        mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
             if (err) throw err;
-            mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
-                if (err) throw err;
-                if(result[0]) {
-                    res.code = 409;
-                    res.message = "User already exists";
-                    callback(null, res);
-                } else {
-                    bcrypt.hash(msg.password, saltRounds, function(err, hash) {
-                        var id = crypto.randomBytes(20).toString('hex');
-                        mysql.query("INSERT INTO auth_user (id, email, password, username, role)  VALUES ('" + id + "'" + "," + "'" + msg.email + "'" + " , " + "'" + hash + "'" + " , " + "'" + msg.email + "'" + " , " + "'USER'" + ");", function(err, result) {
-                            if(err) {
-                                res.code = 500;
-                                res.message = "Internal server error";
-                                callback(null, res);
-                            } else {
-                                //TODO: save auth user id in user model
-                                var newUser = new userModel(msg);
-                                newUser.save(function (err) {
-                                    if(err) {
-                                        res.code = 500 ;
-                                        res.message = "Error occured while registering a hotel with server"
-                                        callback(null , res);
-                                    } else {
-                                        res.code = 200  ;
-                                        res.message = "Success";
-                                        //TODO: should we send mysql auth user id or mongo user id???
-                                        res.data = {_id: newUser._id ,username:msg.email, role: 'USER'};
-                                        callback(null , res) ;
-                                    }
-                                });
-                            }
-                        })
+            if(result[0]) {
+                res.code = 409;
+                res.message = "User already exists";
+                callback(null, res);
+            } else {
+                bcrypt.hash(msg.password, saltRounds, function(err, hash) {
+                    var id = crypto.randomBytes(20).toString('hex');
+                    mysql.query("INSERT INTO auth_user (id, email, password, username, role)  VALUES ('" + id + "'" + "," + "'" + msg.email + "'" + " , " + "'" + hash + "'" + " , " + "'" + msg.email + "'" + " , " + "'USER'" + ");", function(err, result) {
+                        if(err) {
+                            res.code = 500;
+                            res.message = "Internal server error";
+                            callback(null, res);
+                        } else {
+                            //TODO: save auth user id in user model
+                            var newUser = new userModel(msg);
+                            newUser.save(function (err) {
+                                if(err) {
+                                    res.code = 500 ;
+                                    res.message = "Error occured while registering a hotel with server"
+                                    callback(null , res);
+                                } else {
+                                    res.code = 200  ;
+                                    res.message = "Success";
+                                    //TODO: should we send mysql auth user id or mongo user id???
+                                    res.data = {_id: newUser._id ,username:msg.email, role: 'USER'};
+                                    callback(null , res) ;
+                                }
+                            });
+                        }
                     })
-                }
-            })
+                })
+            }
         })
     } else {
         res.code = 400;

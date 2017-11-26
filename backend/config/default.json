@@ -6,5 +6,10 @@
 	"mySqlPassword" : "root",
 	"mySqlDb" : "kayak",
 	"kafkaTopic" : "kayak",
-	"kafkaResponseTopic" : "response_topic"
+	"kafkaResponseTopic" : "response_topic",
+	//AWS S3
+	"accessKeyId" : "AKIAINMXDTKPNZH6M6JA",
+	"secretAccessKey" : "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",
+	"region" : "us-west-2",
+	"bucketName" : "kayak-assets"
 }

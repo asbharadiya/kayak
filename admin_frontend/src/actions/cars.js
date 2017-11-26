@@ -34,17 +34,6 @@ export function addCar(payload , file ) {
     data.append('serviceStartDate' , payload.serviceStartDate) ;
     data.append('serviceEndDate' , payload.serviceEndDate) ;
 
-    // return function(dispatch){
-    //     axios.post('http://localhost:3002/api/v1/a/cars' , data  )
-    //         .then(function (response) {
-    //             dispatch({type : 'ADD_CAR_SUCCESS'})
-    //         })
-    //         .catch(function (error) {
-    //             dispatch({type : 'ADD_CAR_FAILURE'})
-    //         })
-    // }
-
-
     return function(dispatch) {
         return api.addCar(data , function(error , response){
             if(error){

@@ -253,7 +253,7 @@ class Cars extends Component {
 
                                                     this.setState({ carFile : file , filename : file.name})
 
-                                                }}accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+                                                }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
 						                    </div>
 
 						                </span>
