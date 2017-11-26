@@ -22,6 +22,10 @@
     flex: none;
 }
 
+.deleteCarModal .modal-dialog {
+    position: relative;
+}
+
 .foo {
 	outline: 1px solid orange;
 

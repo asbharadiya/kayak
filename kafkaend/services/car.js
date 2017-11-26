@@ -91,8 +91,9 @@ function addCar(msg, callback){
         //
         //
         // })
-        msg.createdDate = new Date();
-        msg.updatedDate = new Date() ;
+        var _date = new Date();
+        msg.createdDate = _date;
+        msg.updatedDate = _date ;
         msg.carQuantity = parseInt(msg.carQuantity) ;
         msg.dailyRentalValue = parseInt(msg.dailyRentalValue) ;
         msg.occupancy = parseInt(msg.occupancy) ;
@@ -108,10 +109,8 @@ function addCar(msg, callback){
         }
 
         msg.availability = availabilityDateObject ;
-        delete msg.serviceEndDate;
-        delete msg.serviceStartDate;
-
-        msg.deletedDate = new Date();
+        //delete msg.serviceEndDate;
+        //delete msg.serviceStartDate;
 
         var newCar = new carModel(msg);
 
@@ -220,27 +219,27 @@ function getCarById(msg, callback){
             res.message = "Fail to get all cars from the server"
             callback(null , res) ;
         }else{
-            var startDate =  result[0].availability[0].availabilityDate ;
-            startDate.setDate(startDate.getDate() + 1);
-            var endDate =  result[0].availability[result[0].availability.length-1].availabilityDate;
-            endDate.setDate(endDate.getDate() + 1);
-
-            var mmS = startDate.getMonth().toString().length > 1 ? startDate.getMonth()+1 : '0' + startDate.getMonth().toString()+1;
-            var ddS  = startDate.getDate().toString().length > 1 ? startDate.getDate() : '0' + startDate.getDate().toString() ;
-
-            var mmE = endDate.getMonth().toString().length > 1 ? endDate.getMonth()+1 : '0' + endDate.getMonth().toString()+1;
-            var ddE  = endDate.getDate().toString().length > 1 ? endDate.getDate() : '0' + endDate.getDate().toString() ;
-
-            startDate = startDate.getFullYear() +  "-" + mmS + "-" + ddS
-            endDate = endDate.getFullYear() +  "-" + mmE + "-" + ddE
+            // var startDate =  result[0].availability[0].availabilityDate ;
+            // startDate.setDate(startDate.getDate() + 1);
+            // var endDate =  result[0].availability[result[0].availability.length-1].availabilityDate;
+            // endDate.setDate(endDate.getDate() + 1);
+            //
+            // var mmS = startDate.getMonth().toString().length > 1 ? startDate.getMonth()+1 : '0' + startDate.getMonth().toString()+1;
+            // var ddS  = startDate.getDate().toString().length > 1 ? startDate.getDate() : '0' + startDate.getDate().toString() ;
+            //
+            // var mmE = endDate.getMonth().toString().length > 1 ? endDate.getMonth()+1 : '0' + endDate.getMonth().toString()+1;
+            // var ddE  = endDate.getDate().toString().length > 1 ? endDate.getDate() : '0' + endDate.getDate().toString() ;
+            //
+            // startDate = startDate.getFullYear() +  "-" + mmS + "-" + ddS
+            // endDate = endDate.getFullYear() +  "-" + mmE + "-" + ddE
 
             delete result[0].availability;
-            result[0].serviceStartDate = startDate ;
-            result[0].serviceEndDate = endDate ;
+            //result[0].serviceStartDate = startDate ;
+            //result[0].serviceEndDate = endDate ;
 
             res.code = 200  ;
-            res.message = "Success"
-            res.data = result
+            res.message = "Success";
+            res.data = result;
             callback(null , res) ;
         }
     })
@@ -279,9 +278,9 @@ function updateCarById(msg, callback){
 
 function deleteCarById(msg, callback){
     var res = {};
-    var idToDelete = new ObjectID(msg.idToDelete) ;
     if(!validator.isEmpty(msg.idToDelete)){
-        carModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true }}, { multi: false }, function(err , response){
+        var idToDelete = new ObjectID(msg.idToDelete) ;
+        carModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true, updatedDate: new Date() }}, { multi: false }, function(err , response){
             if(err){
                 res.code = 500 ;
                 res.message = "Error occured while deleting a hotel"

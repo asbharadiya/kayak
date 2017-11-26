@@ -1,6 +1,4 @@
 import * as api from '../api/cars';
-import axios from 'axios' ;
-
 
 
 // Get all Cars
@@ -140,22 +138,18 @@ export function updateCarById(obj) {
 }
 
 
-function getCarByIDSuccess(data){
-
-    return {type: "GET_CAR_TO_UPDATE_SUCCESS" , payload : data}
-}
-
+//get car by id
 export function getCarById(id) {
     return function(dispatch) {
         return api.getCarById(id , function(error , response){
             if(error){
-                dispatch({type: "GET_CAR_TO_UPDATE_FAILURE" , payload : null})
+                dispatch({type: "GET_CAR_BY_ID_FAILURE" })
             } else {
                 response.then((res) => {
                     if(res.status === 200){
-                        dispatch(getCarByIDSuccess(res.data[0]))
+                        dispatch({type: "GET_CAR_BY_ID_SUCCESS" , payload : res.data[0]})
                     }else{
-                        dispatch({type: "GET_CAR_TO_UPDATE_FAILURE" , payload : null})
+                        dispatch({type: "GET_CAR_BY_ID_FAILURE"} )
                     }
                 })
             }

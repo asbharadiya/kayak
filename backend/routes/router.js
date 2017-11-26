@@ -68,11 +68,9 @@ module.exports = function(router,passport) {
 	}
 
 	function isAdminAuthenticated(req, res, next) {
-	    console.log(req.session);
-		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'ADMIN') {
+	    if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'ADMIN') {
 			next();
 	  	} else {
-		    console.log("not auth...");
 			res.status(401).send();
 		}
 	}
