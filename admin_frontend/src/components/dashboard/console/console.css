@@ -1,0 +1,58 @@
+.recharts-wrapper{
+    display: inline-block !important;
+}
+.consolepage{
+	background:#F7F9FA !important;
+}
+.card{
+	    position: relative;
+    display: -ms-flexbox;
+    margin-top: 10px;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    border-color: #d7dfe3;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+}
+.card-body{
+	flex: 1 1 auto;
+    padding: 1.25rem;
+}
+.flex-row{
+    flex-direction: row!important;
+}
+.d-flex{
+	display: flex!important;
+}
+.round.round-info{
+	background: #1e88e5;
+}
+.round-lg{
+	line-height: 65px;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+}
+.round{
+	line-height: 48px;
+    color: #ffffff;
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    border-radius: 100%;
+    background: #1e88e5;
+    margin-top: 18px;
+}
+.m-l-10{
+	margin-left: 10px;
+}

@@ -1,0 +1,61 @@
+.checkout-page-wrapper .page-container .summary-container {
+    width: 320px;
+    position: absolute;
+    right: 0px;
+    top: 15px;
+}
+
+
+.checkout-panel .checkout-panel-body .single-price-component{
+	font-size: 10px ; 
+	color : darkgrey ;
+	margin-top: 15px ;
+}
+
+
+.checkout-panel .checkout-panel-body .panel-body-content{
+	padding-bottom: 20px
+}
+
+.checkout-panel .checkout-panel-body .single-price-component .fair-type-div .fair-type{
+	
+	border-bottom: 1px solid #e4e5ea;
+	padding-bottom: 4px
+}
+
+
+.checkout-panel .checkout-panel-body .single-price-component .buy{
+	padding-top: 16px ;
+	padding-left: 16px ; 
+	padding-right: 16px
+}
+
+.checkout-panel .checkout-panel-body .single-price-component .buy button{
+	width : 100%;
+}
+
+
+
+
+.checkout-panel .checkout-panel-body .single-price-component .fair-type-price .fair-type{
+	
+	border-bottom: 2px solid #747474 ; 
+	padding-bottom: 4px
+}
+
+
+.checkout-panel .checkout-panel-body .single-price-component .fair-type-price{
+	padding: 0px ;
+	padding-right: 15px ;
+	text-align: right
+}
+
+.checkout-panel .checkout-panel-body .single-price-component .fair-type-price .price{
+	margin-left: 15px
+}
+
+
+.checkout-panel .checkout-panel-body .single-price-component .fair-type-div {
+	
+padding-right: 0
+}

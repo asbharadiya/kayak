@@ -1,0 +1,110 @@
+
+
+ .checkout-panel {
+    background: #fff;
+    margin-bottom: 15px;
+
+}
+
+ .checkout-panel .checkout-panel-title1 {
+    padding: 15px;
+    border-bottom: 1px solid #e4e5ea;
+    margin-bottom: 20px
+}
+
+.checkout-panel .checkout-panel-title1 p {
+    margin: 0px;
+    font-size: 16px;
+}
+
+.checkout-panel .checkout-panel-body {
+    padding: 15px;
+    border-bottom: 1px solid #e4e5ea;
+}
+
+
+
+
+.checkout-panel .checkout-panel-body .checkout-panel-body-content .checkout-panel-body-content-data{
+    text-align: center;
+    padding-top: 10px ;
+}
+
+
+.checkout-panel .checkout-panel-body .checkout-panel-body-content .body-single-data-content .data-div .input-field{
+   border: 0px;
+    border-bottom: 1px solid #d8d8d8;
+    
+    line-height: 18px;
+    padding-bottom: 3px;
+    outline: none;
+    font-size: 14px ;
+    color : darkcyan;
+    font-weight: normal
+}
+
+
+.checkout-panel .checkout-panel-body .checkout-panel-body-content .body-single-data-content .data-div {
+   padding-left: 0px
+}
+
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .body-single-data-content .data-div p{
+    font-size: 10px ;
+    margin-bottom: 5px ;
+}
+
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .body-single-data-content{
+    margin-bottom: 15px ;
+
+}
+
+
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .body-single-data-content .body-single-data-content-glyph{
+   height: 40px;
+   padding-top: 20px
+}
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .body-single-data-content .body-single-data-content-glyph a {
+   font-size: 15px
+}
+
+
+
+
+
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .checkout-panel-body-content-data .map-content .line-map{
+    width: 130px ; 
+    border-top: dashed 1px #cacaca;
+    margin-top: 4px ; 
+    float: left
+}
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .checkout-panel-body-content-data .map-content p{
+    margin-top: 10px ; 
+    
+}
+
+
+
+
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .checkout-panel-body-content-data .from-date{
+    color: darkgray;
+    font-size: 11px;
+}
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .checkout-panel-body-content-data .from-city{
+    color: darkcyan;
+    font-size: 17px;
+}
+
+ .checkout-panel .checkout-panel-body .checkout-panel-body-content .checkout-panel-body-content-image .carImage{
+    max-height:  52px ;
+    max-width:  135px
+}
+
+

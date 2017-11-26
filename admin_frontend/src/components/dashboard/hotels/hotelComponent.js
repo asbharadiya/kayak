@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './hotelComponent.css'
 import { Modal } from 'react-bootstrap';
-import { deleteHotelById , updateHotelById , setBackHotelUpdateSuccess , getHotelById } from '../../../actions/hotels'
+import { deleteHotelById , updateHotelById , setBackHotelUpdateSuccess , getHotelById, getAllHotels } from '../../../actions/hotels'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
@@ -22,11 +22,12 @@ class HotelComponent extends Component {
 			hotelRating : this.props.currentHotelToUpdate.hotelRating,
 			hotelPhoneNumber : this.props.currentHotelToUpdate.hotelPhoneNumber,
 			hotelEmail : this.props.currentHotelToUpdate.hotelEmail,
-			_id : '' ,
+			serviceStartDate : this.props.currentHotelToUpdate.serviceStartDate,
+			serviceEndDate : this.props.currentHotelToUpdate.serviceEndDate,
+			hotelRooms: this.props.currentHotelToUpdate.hotelRooms,
+			_id : this.props.currentHotelToUpdate._id,
 			updateHotelError : '' ,
 			hotelUpdateLoading : false , 
-			serviceStartDate : '' ,
-			serviceEndDate : '',
 			createdDate : '' ,
 			updatedDate : ''
 		}
@@ -46,15 +47,14 @@ class HotelComponent extends Component {
 			hotelEmail : newProps.currentHotelToUpdate.hotelEmail,
 			serviceStartDate : newProps.currentHotelToUpdate.serviceStartDate ,
 			serviceEndDate : newProps.currentHotelToUpdate.serviceEndDate ,
+			hotelRooms: newProps.currentHotelToUpdate.hotelRooms,
 			_id : newProps.currentHotelToUpdate._id,
 			createdDate : newProps.currentHotelToUpdate.createdDate ,
 			updatedDate : newProps.currentHotelToUpdate.updatedDate 
-	  })
+	  });
 
       if(newProps.hotelUpdateSuccess != null && newProps.hotelUpdateSuccess){
-      	
       	this.setState({hotelUpdateLoading : false , showHotelUpdateModal : false}) ;
-
       	//setBack success for hotelAddSuccess
       	this.props.setBackHotelUpdateSuccess();
       }
@@ -85,7 +85,7 @@ class HotelComponent extends Component {
 					</div>
 					<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 buttonGroup ">						
 						<a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={() => {
-							this.props.getHotelById(this.props.hotel._id)
+							this.props.getHotelById(this.props.hotel._id);
 							this.setState({
 								showHotelUpdateModal : true
 							})
@@ -125,103 +125,179 @@ class HotelComponent extends Component {
 
 				<Modal show={this.state.showHotelUpdateModal}  id="hotelModal" className="hotelModal">
 					<Modal.Body className="hotelModalBody">
-
 						<div className="scrollDiv">
-
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-								<label htmlFor="hotelname">Hotel Name</label>
-								<input value={this.state.hotelName}  className="form-control sharpCorner" onChange={(e) => {
-									this.setState({
-										hotelName : e.target.value
-									})
-								}} id="hotelname" type="text"  aria-describedby="basic-addon1"   />
-							</div>
-
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-								<label htmlFor="hotelAddress">Address</label>
-								<input value={this.state.hotelAddress}  className="form-control sharpCorner" onChange={(e) => {
-									this.setState({
-										hotelAddress : e.target.value
-									})
-								}} id="hotelAddress" type="text"  aria-describedby="basic-addon1"   />
-							</div>
-
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-								<label htmlFor="hotelCity">City</label>
-								<input value={this.state.hotelCity}  className="form-control sharpCorner" onChange={(e) => {
-									this.setState({
-										hotelCity : e.target.value
-									})
-								}} id="hotelCity" type="text"  aria-describedby="basic-addon1"   />
-							</div>
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="hotelState">State</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelState : e.target.value
-					      			})
-					      		}} id="hotelState" type="text"  aria-describedby="basic-addon1"   />
-					      	</div>
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="hotelZip">Zip</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelZip : e.target.value
-					      			})
-					      		}} id="hotelZip" type="text"  aria-describedby="basic-addon1"   />
-					      	</div>
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="hotelPhoneNumber">Phone Number</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelPhoneNumber : e.target.value
-					      			})
-					      		}} id="hotelPhoneNumber" type="text"  aria-describedby="basic-addon1"   />
-					      	</div>
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="hotelEmail">Email</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelEmail : e.target.value
-					      			})
-					      		}} id="hotelEmail" type="text"  aria-describedby="basic-addon1"   />
-					      	</div>
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="hotelStar">Star</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelStar : e.target.value
-					      			})
-					      		}} id="hotelStar" type="text"  aria-describedby="basic-addon1"   />
-					      	</div>
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="hotelRating">Overall rating</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelRating : e.target.value
-					      			})
-					      		}} id="hotelRating" type="text"  aria-describedby="basic-addon1"   />
-					      	</div>
-
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="serviceAvailable">Service Start Date</label>
-					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
-					      				this.setState({
-					      					serviceStartDate : e.target.value
-					      				})
-					      		}} aria-describedby="basic-addon1"   />
-					      		<div className="UpdatedDate">{this.state.serviceStartDate}</div>
-					      	</div>
-
-					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-					      		<label htmlFor="serviceAvailable">Service End Date</label>
-					      		<input  className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
-					      				this.setState({
-					      					serviceEndDate : e.target.value
-					      				})
-					      		}} aria-describedby="basic-addon1"   />
-					      		<div className="UpdatedDate">{this.state.serviceEndDate}</div>
-					      	</div>
+						<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="hotelname">Hotel Name</label>
+			      		<input value={this.state.hotelName} className="form-control sharpCorner" onChange={(e) => {
+			      			this.setState({
+			      				hotelName : e.target.value
+			      			})
+			      		}} id="hotelname" type="text"  aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="hoteladdress">Address</label>
+			      		<input value={this.state.hotelAddress} className="form-control sharpCorner" onChange={(e) => {
+			      			this.setState({
+			      				hotelAddress : e.target.value
+			      			})
+			      		}} id="hoteladdress" type="text"  aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="hotelCity">City</label>
+			      		<input value={this.state.hotelCity} className="form-control sharpCorner" onChange={(e) => {
+			      			this.setState({
+			      				hotelCity : e.target.value
+			      			})
+			      		}} id="hotelCity" type="text"  aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<div className="col-md-6 nopadding">
+					      	<label htmlFor="hotelState">State</label>
+				      		<input value={this.state.hotelState} className="form-control sharpCorner" onChange={(e) => {
+				      			this.setState({
+				      				hotelState : e.target.value
+				      			})
+				      		}} id="hotelState" type="text"  aria-describedby="basic-addon1"   />
+				        </div>
+				      	<div className="col-md-6 nopadding">	
+			      			<label htmlFor="hotelZip">Zip</label>
+				      		<input value={this.state.hotelZip} className="form-control sharpCorner" onChange={(e) => {
+				      			this.setState({
+				      				hotelZip : e.target.value
+				      			})
+				      		}} id="hotelZip" type="text"  aria-describedby="basic-addon1"   />
+				      	</div>
+				    </div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="hotelPhoneNumber">Phone Number</label>
+			      		<input value={this.state.hotelPhoneNumber} className="form-control sharpCorner" onChange={(e) => {
+			      			this.setState({
+			      				hotelPhoneNumber : e.target.value
+			      			})
+			      		}} id="hotelPhoneNumber" type="text"  aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="hotelEmail">Email</label>
+			      		<input value={this.state.hotelEmail} className="form-control sharpCorner" onChange={(e) => {
+			      			this.setState({
+			      				hotelEmail : e.target.value
+			      			})
+			      		}} id="hotelEmail" type="text"  aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="col-md-6 nopadding">
+			      		<label htmlFor="hotelStar">Star</label>
+			      		<select value={this.state.hotelStar} value={this.state.hotelStar}  onChange={(e) => {
+				      			this.setState({
+				      				hotelStar : e.target.value
+				      			})
+							}} className="form-control selectpicker" id="hotelStar">
+							    <option className="selected disabled hidden">Select</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+						  </select>
+						  </div>
+						  <div className="col-md-6 nopadding">
+				      		<label htmlFor="hotelRating">Overall rating</label>
+				      		<select value={this.state.hotelRating}  onChange={(e) => {
+				      			this.setState({
+				      				hotelRating : e.target.value
+				      			})
+							}} className="form-control selectpicker" id="hotelStar">
+							    <option className="selected disabled hidden">Select</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+						   </select>
+						   </div>
+				    </div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="serviceAvailable">Service Start Date</label>
+			      		<input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+			      				this.setState({
+			      					serviceStartDate : e.target.value
+			      				})
+			      		}} aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="serviceAvailable">Service End Date</label>
+			      		<input value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+			      				this.setState({
+			      					serviceEndDate : e.target.value
+			      				})
+			      		}} aria-describedby="basic-addon1"   />
+			      	</div>
+			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      		<label htmlFor="serviceAvailable">Rooms</label>
+			      		<button type="button" className="btn btn-info btn-default sharpCornerForInfoButton pull-right" onClick={() => {
+			      			var tempRooms = this.state.hotelRooms;
+			      			tempRooms.push({ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0});
+		      				this.setState({hotelRooms : tempRooms})
+		      			}}>Add Room category</button>
+			      	</div>
+			      	{(this.state.hotelRooms && this.state.hotelRooms.length > 0) ? this.state.hotelRooms.map((eachHotel, index) => 
+					    <div className="clearBoth">  	
+			      			<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<div className="col-md-6 nopadding">
+							      	<label htmlFor="roomType">Room Type</label>
+							      	<select value={eachHotel.roomType}  onChange={(e) => {
+							      		var tempRooms = this.state.hotelRooms;
+							      		tempRooms[index].roomType = e.target.value;
+					      				this.setState({hotelRooms : tempRooms});
+										}} className="form-control selectpicker" id="roomType">
+									    <option className="selected disabled hidden">Select</option>
+										<option>Standard</option>
+										<option>Premium</option>
+										<option>Conference room</option>
+										<option>Honeymoon suit</option>
+								  </select>
+						        </div>
+						      	<div className="col-md-6 nopadding">	
+					      			<label htmlFor="personPerRoom">Max person per room</label>
+					      			<select value={eachHotel.personPerRoom}  onChange={(e) => {
+					      				var tempRooms = this.state.hotelRooms;
+							      		tempRooms[index].personPerRoom = e.target.value;
+					      				this.setState({hotelRooms : tempRooms});
+										}} className="form-control selectpicker" id="personPerRoom">
+									    <option className="selected disabled hidden">Select</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+										<option>6</option>
+										<option>7</option>
+										<option>8</option>
+										<option>9</option>
+										<option>10</option>
+								  </select>
+						      	</div>
+						    </div>
+						    <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<div className="col-md-6 nopadding">
+							      	<label htmlFor="priceTotal">Rent for one day</label>
+						      		<input value={eachHotel.priceTotal} className="form-control sharpCorner" onChange={(e) => {
+					      				var tempRooms = this.state.hotelRooms;
+							      		tempRooms[index].priceTotal = e.target.value;
+					      				this.setState({hotelRooms : tempRooms});
+						      		}} id="priceTotal" type="text"  aria-describedby="basic-addon1"   />
+						        </div>
+						      	<div className="col-md-6 nopadding">	
+					      			<label htmlFor="totalAvailable">Total Room Available</label>
+						      		<input value={eachHotel.totalAvailable} className="form-control sharpCorner" onChange={(e) => {
+					      				var tempRooms = this.state.hotelRooms;
+							      		tempRooms[index].totalAvailable = e.target.value;
+					      				this.setState({hotelRooms : tempRooms});
+						      		}} id="totalAvailable" type="text"  aria-describedby="basic-addon1"   />
+						      	</div>
+						    </div>
+						</div>)
+			      	: null }
 						</div>
 
 					   </Modal.Body>
@@ -254,51 +330,68 @@ class HotelComponent extends Component {
 						      				startDate.setDate(startDate.getDate() + 1);
 						      				var endDate = new Date(this.state.serviceEndDate);
 						      				endDate.setDate(endDate.getDate() + 1);	
-											if(this.state.hotelName === '' ){
-						      					this.setState({ updateHotelError : "Please enter Hotel Name"})
+						      				if(this.state.hotelName === '' ){
+						      					this.setState({ updateHotelError : "Please enter hotel Name"})
 						      					return ;
 						      				}
 						      				if(this.state.hotelAddress === '' ){
-						      					this.setState({ updateHotelError : "Please enter Hotel Address"})
+						      					this.setState({ updateHotelError : "Please enter hotel Address"})
 						      					return ;
 						      				}
 						      				if(this.state.hotelCity === '' ){
-						      					this.setState({ updateHotelError : "Please enter Hotel City"})
+						      					this.setState({ updateHotelError : "Please enter hotel City"})
 						      					return ;
 						      				}
 						      				if(this.state.hotelState === '' ){
-						      					this.setState({ updAtehoTelerror : "Please enter Hotel Name"})
+						      					this.setState({ updateHotelError : "Please enter hotel state"})
 						      					return ;
 						      				}
-						      				if(this.state.hotelZip === '' ){
-						      					this.setState({ updAtehoTelerror : "Please enter Hotel Name"})
+						      				if(this.state.hotelZip === '' || isNaN(this.state.hotelZip)){
+						      					this.setState({ updateHotelError : "Please enter valid hotel zip"})
 						      					return ;
 						      				}
-						      				if(this.state.hotelPhoneNumber === '' ){
-						      					this.setState({ updAtehoTelerror : "Please enter Hotel Name"})
+						      				if(this.state.hotelPhoneNumber === '' || isNaN(this.state.hotelPhoneNumber) || this.state.hotelPhoneNumber < 999999999){
+						      					this.setState({ updateHotelError : "Please enter valid hotel phone number"})
 						      					return ;
 						      				}
-						      				if(this.state.hotelEmail === '' ){
-						      					this.setState({ updAtehoTelerror : "Please enter Hotel Name"})
+						      				if(this.state.hotelEmail === '' || !(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/).test(this.state.hotelEmail)){
+						      					this.setState({ updateHotelError : "Please enter valid hotel email"})
 						      					return ;
 						      				}
 						      				if(this.state.hotelStar === '' ){
-						      					this.setState({ updAtehoTelerror : "Please enter Hotel Name"})
+						      					this.setState({ updateHotelError : "Please enter hotel star"})
 						      					return ;
 						      				}
 						      				if(this.state.hotelRating === '' ){
-						      					this.setState({ updAtehoTelerror : "Please enter Hotel Name"})
+						      					this.setState({ updateHotelError : "Please enter hotel rating"})
 						      					return ;
 						      				}
 						      				if(this.state.serviceStartDate === ''){
-						      					this.setState({ updAtehoTelerror : "Please enter service start date"})
+						      					this.setState({ updateHotelError : "Please enter service start date"})
 						      					return
 						      				}						      				
 						      				if(this.state.serviceEndDate === ''){
-						      					this.setState({ updAtehoTelerror : "Please enter service end date"})
+						      					this.setState({ updateHotelError : "Please enter service end date"})
+						      					return
+						      				}						      				
+						      				if(!this.state.hotelRooms || this.state.hotelRooms.length===0 || this.state.hotelRooms[0].roomType===''){
+						      					this.setState({ updateHotelError : "Please enter hotelRooms details correctly"})
 						      					return
 						      				}
-											var obj = {
+						      				if(startDate <= new Date())	{
+						      					this.setState({ updateHotelError : "Service Start Date should be a future date"})
+						      					return
+						      				}
+						      				if(endDate <= new Date())	{
+						      					this.setState({ updateHotelError : "Service End Date should be a future date"})
+						      					return
+						      				}
+						      				if(endDate <= startDate){
+						      					this.setState({ updateHotelError : "Service End Date should be a greater than start date"})
+						      					return	
+						      				}
+						      				var obj = {
+						      					_id : this.state._id,
 												hotelName : this.state.hotelName ,
 												hotelAddress : this.state.hotelAddress,
 												hotelCity : this.state.hotelCity,
@@ -310,14 +403,11 @@ class HotelComponent extends Component {
 												hotelEmail : this.state.hotelEmail,
 												serviceStartDate : this.state.serviceStartDate,
 												serviceEndDate : this.state.serviceEndDate,
-												is_deleted : false,
-												_id  : this.state._id,
-												createdDate : this.state.createdDate ,
-												updatedDate : this.state.updatedDate
-											}
+												hotelRooms : this.state.hotelRooms
+						      				}
 											this.setState({ updateHotelError : '' , hotelUpdateLoading : true})
 
-											this.props.updateHotelById(obj)
+											this.props.updateHotelById(obj);
 										}} >Update
 										</button>
 
@@ -343,7 +433,8 @@ function mapDispatchToProps(dispatch) {
     deleteHotelById : (id) => dispatch(deleteHotelById(id)) ,
    	updateHotelById: (obj) => dispatch(updateHotelById(obj)) ,
    	setBackHotelUpdateSuccess : () => dispatch(setBackHotelUpdateSuccess()) ,
-   	getHotelById : (id) => dispatch(getHotelById(id))
+   	getHotelById : (id) => dispatch(getHotelById(id)) ,
+   	getAllHotels : () => dispatch(getAllHotels())
   };
 }
 

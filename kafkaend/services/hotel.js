@@ -6,7 +6,15 @@ var hotelModel = require('../models/hotel.js');
 function addHotel(msg, callback){
 	var res = {};
 	if(true){
-		msg.is_deleted = false;		
+		msg.is_deleted = false;
+		var now = msg.serviceStartDate;
+		msg.availability = [];
+		var availabilityObj = {};
+		for (var d = new Date(msg.serviceStartDate); d <= new Date(msg.serviceEndDate); d.setDate(d.getDate() + 1)) {
+			availabilityObj.availableDate = new Date(d);
+			availabilityObj.hotelRooms = msg.hotelRooms;
+			msg.availability.push(availabilityObj);
+		}
 		var newHotel = new hotelModel(msg);
 		newHotel.save(function (err) {
 			if(err) {
@@ -80,6 +88,14 @@ function updateHotelById(msg, callback){
     var res = {};
     var idToUpdate = new ObjectID(msg.idToUpdate) ;
     msg.is_deleted = false;
+    var now = msg.serviceStartDate;
+	msg.availability = [];
+	var availabilityObj = {};
+	for (var d = new Date(msg.serviceStartDate); d <= new Date(msg.serviceEndDate); d.setDate(d.getDate() + 1)) {
+		availabilityObj.availableDate = new Date(d);
+		availabilityObj.hotelRooms = msg.hotelRooms;
+		msg.availability.push(availabilityObj);
+	}
     if(!validator.isEmpty(msg.idToUpdate)){
     	hotelModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
     		if(err){

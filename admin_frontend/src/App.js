@@ -10,6 +10,8 @@ import Home from './components/dashboard/home/home';
 import Cars from './components/dashboard/cars/cars';
 import Flights from './components/dashboard/flights/flights';
 import Hotels from './components/dashboard/hotels/hotels';
+import Console from './components/dashboard/console/console';
+import Host from './components/dashboard/host/host';
 
 class App extends Component {
 
@@ -63,6 +65,20 @@ class App extends Component {
                     <Hotels/>
                   )
                 )}/>
+                <Route path='/console' render={() => (
+                    !isLogged ? (
+                      <Redirect to="/"/>
+                    ) : (
+                      <Console/>
+                    )
+                  )}/>
+                  <Route path='/host' render={() => (
+                      !isLogged ? (
+                        <Redirect to="/"/>
+                      ) : (
+                        <Host/>
+                      )
+                    )}/>
               </Dashboard>
             </Switch>
           </BrowserRouter>

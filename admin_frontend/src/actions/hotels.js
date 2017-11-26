@@ -12,8 +12,6 @@ function deleteHotelFailure(){
     return {type: "DELETE_HOTEL_FAILURE"}
 }
 
-
-
 export function addHotel(payload) {
 	return function(dispatch) {
 		return api.addHotel(payload , function(error , response){
@@ -31,7 +29,6 @@ export function addHotel(payload) {
 		})
 	};
 }
-
 
 export function getAllHotels() {
 	return function(dispatch) {
@@ -51,8 +48,6 @@ export function getAllHotels() {
 	};
 }
 
-
-
 export function setBackHotelAddSuccess(){
 	return {type: "SET_BACK_HOTEL_ADD_SUCCESS" , payload : null}
 }
@@ -60,9 +55,6 @@ export function setBackHotelAddSuccess(){
 export function setBackHotelUpdateSuccess(){
 	return {type: "SET_BACK_HOTEL_UPDATE_SUCCESS" , payload : null}
 }
-
-
-
 
 function deleteHotelSuccess(data) {
   	return {type: "DELETE_HOTEL_SUCCESS" , payload : data}
@@ -86,8 +78,6 @@ export function deleteHotelById(id) {
 	};
 }
 
-
-
 function updateHotelSuccess(data) {
 	return {type: "UPDATE_HOTEL_SUCCESS" , payload : data}
 }
@@ -110,7 +100,6 @@ export function updateHotelById(obj) {
 	};
 }
 
-
 function getHotelByIDSuccess(data){
 	
 	return {type: "GET_HOTEL_TO_UPDATE_SUCCESS" , payload : data}
@@ -124,7 +113,7 @@ export function getHotelById(id) {
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(getHotelByIDSuccess(res.data[0]))
+						dispatch(getHotelByIDSuccess(res.data))
 					}else{
 						dispatch({type: "GET_HOTEL_TO_UPDATE_FAILURE" , payload : null})
 					}
@@ -133,6 +122,3 @@ export function getHotelById(id) {
 		})
 	};
 }
-
-
-

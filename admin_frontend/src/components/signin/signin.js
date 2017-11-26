@@ -62,11 +62,12 @@ class Signin extends Component {
 						<div className="form-body">
 							<div className="form-group">
 								<span className="error">{this.state.emailError}</span>
-								<input type="email" className="form-control" placeholder="Email" ref={(email) => this.email = email}/>
+								<input type="email" className="form-control" placeholder="Email" ref={(email) => this.email = email} value="admin@gmail.com"/>
 							</div>
 							<div className="form-group">
 								<span className="error">{this.state.passwordError}</span>
 								<input type="password" className="form-control" placeholder="Password" ref={(password) => this.password = password}/>
+
 							</div>
 							<div className="form-group btn-container">
 								<span className="error">{this.state.formError}</span>

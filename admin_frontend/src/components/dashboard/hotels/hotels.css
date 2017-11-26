@@ -87,3 +87,12 @@
 	.lable-margin{
 		margin-right: 15px
 	}
+.nopadding:first-child{
+	padding-left: 0 !important;
+}
+.nopadding:first{
+	padding-right: 0 !important;
+}	
+.clearBoth{
+	clear: both;
+}

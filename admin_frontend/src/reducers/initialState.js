@@ -43,6 +43,7 @@ export default {
     hotelStar : '',
     hotelRating : '',
     hotelPhoneNumber : '',
-    hotelEmail : ''
+    hotelEmail : '',
+    hotelRooms : []
   }
 }
