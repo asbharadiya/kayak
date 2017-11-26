@@ -46,6 +46,11 @@ class Sidebar extends Component {
                   Billings
                 </NavLink>
               </li>
+              <li>
+	              <NavLink to="/console">
+	                Console
+	              </NavLink>
+	            </li>
   					</ul>
   				</div>
   			</div>

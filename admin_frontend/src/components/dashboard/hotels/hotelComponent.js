@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './hotelComponent.css'
 import { Modal } from 'react-bootstrap';
-import { deleteHotelById , updateHotelById , setBackHotelUpdateSuccess , getHotelById } from '../../../actions/hotels'
+import { deleteHotelById , updateHotelById , setBackHotelUpdateSuccess , getHotelById, getAllHotels } from '../../../actions/hotels'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
@@ -51,12 +51,10 @@ class HotelComponent extends Component {
 			_id : newProps.currentHotelToUpdate._id,
 			createdDate : newProps.currentHotelToUpdate.createdDate ,
 			updatedDate : newProps.currentHotelToUpdate.updatedDate 
-	  })
+	  });
 
       if(newProps.hotelUpdateSuccess != null && newProps.hotelUpdateSuccess){
-      	
       	this.setState({hotelUpdateLoading : false , showHotelUpdateModal : false}) ;
-
       	//setBack success for hotelAddSuccess
       	this.props.setBackHotelUpdateSuccess();
       }
@@ -409,7 +407,7 @@ class HotelComponent extends Component {
 						      				}
 											this.setState({ updateHotelError : '' , hotelUpdateLoading : true})
 
-											this.props.updateHotelById(obj)
+											this.props.updateHotelById(obj);
 										}} >Update
 										</button>
 
@@ -435,7 +433,8 @@ function mapDispatchToProps(dispatch) {
     deleteHotelById : (id) => dispatch(deleteHotelById(id)) ,
    	updateHotelById: (obj) => dispatch(updateHotelById(obj)) ,
    	setBackHotelUpdateSuccess : () => dispatch(setBackHotelUpdateSuccess()) ,
-   	getHotelById : (id) => dispatch(getHotelById(id))
+   	getHotelById : (id) => dispatch(getHotelById(id)) ,
+   	getAllHotels : () => dispatch(getAllHotels())
   };
 }
 
