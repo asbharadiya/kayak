@@ -20,21 +20,25 @@ module.exports = function(router,passport) {
 	router.get('/a/customers', isAdminAuthenticated, customer.getCustomers);
 	router.get('/a/customers/:id', isAdminAuthenticated, customer.getCustomerById);
 	router.put('/a/customers/:id', isAdminAuthenticated, customer.updateCustomerById);
+
 	router.post('/a/hotels', hotel.addHotel);
 	router.get('/a/hotels', hotel.getHotels);
 	router.get('/a/hotels/:id', hotel.getHotelById);
 	router.put('/a/hotels/:id', hotel.updateHotelById);
 	router.delete('/a/hotels/:id', hotel.deleteHotelById);
+
 	router.post('/a/flights', isAdminAuthenticated, flight.addFlight);
 	router.get('/a/flights', isAdminAuthenticated, flight.getFlights);
 	router.get('/a/flights/:id', isAdminAuthenticated, flight.getFlightById);
 	router.put('/a/flights/:id', isAdminAuthenticated, flight.updateFlightById);
 	router.delete('/a/flights/:id', isAdminAuthenticated, flight.deleteFlightById);
-	router.post('/a/cars'  , car.addCar);
-	router.get('/a/cars' , car.getCars);
-	router.get('/a/cars/:id', car.getCarById);
-	router.put('/a/cars/:id', car.updateCarById);
-	router.delete('/a/cars/:id' ,  car.deleteCarById);
+
+	router.post('/a/cars', isAdminAuthenticated, car.addCar);
+	router.get('/a/cars', isAdminAuthenticated, car.getCars);
+	router.get('/a/cars/:id', isAdminAuthenticated, car.getCarById);
+	router.put('/a/cars/:id', isAdminAuthenticated, car.updateCarById);
+	router.delete('/a/cars/:id', isAdminAuthenticated, car.deleteCarById);
+
 	router.get('/a/billings', isAdminAuthenticated, booking.getBills);
 	router.get('/a/billings/:id', isAdminAuthenticated, booking.getBillById);
 
@@ -43,7 +47,7 @@ module.exports = function(router,passport) {
     router.post('/c/signup', auth.signup);
     router.get('/c/check_session', isAuthenticated, auth.checkSession);
 
-	router.get('/c/customers/:id', isAuthenticated, profile.getProfile);
+	router.get('/c/profile', isAuthenticated, profile.getProfile);
 	router.put('/c/profile', isAuthenticated, profile.updateProfile);
 	router.post('/c/credit_cards', isAuthenticated, profile.addCreditCard);
 	router.get('/c/credit_cards', isAuthenticated, profile.getCreditCards);
@@ -64,9 +68,11 @@ module.exports = function(router,passport) {
 	}
 
 	function isAdminAuthenticated(req, res, next) {
+	    console.log(req.session);
 		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'ADMIN') {
 			next();
 	  	} else {
+		    console.log("not auth...");
 			res.status(401).send();
 		}
 	}

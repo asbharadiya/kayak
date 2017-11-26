@@ -5,14 +5,6 @@ const headers = {
 };
 
 export const signin = (payload) =>
-	// axios.post(api+'/a/signin', {
- //      payload : payload,
- //    }).then(function (response) {
- //       console.log('getting here');
- //    })
- //    .catch(function (error) {
- //      //
- //    });
 	fetch(api+'/a/signin', {
 	    method: 'POST',
 	    headers: {

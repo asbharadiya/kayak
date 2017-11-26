@@ -39,7 +39,6 @@ setInterval(function(){
 var getConnection = function(callback){
   if(cntnStack.length > 0){
     db = cntnStack.pop();
-    console.log("Mongo DB " , db)
     callback(null, db);
   } else {
     cntnQueue.push(callback);

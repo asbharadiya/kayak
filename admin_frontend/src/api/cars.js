@@ -9,8 +9,7 @@ export const addCar = (data , callback) => {
         method: 'POST',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
         },
         body: data
     }).then(res => {

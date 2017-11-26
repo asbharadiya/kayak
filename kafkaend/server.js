@@ -23,11 +23,7 @@ console.log('server is running');
 var producer = connection.getProducer();
 var consumer = connection.getConsumer(topic_name);
 
-
-
-
 var chunk_requests = {};
-
 
 consumer.on('message', function (message) {
     var data = JSON.parse(message.value)
@@ -89,7 +85,6 @@ function makeServiceCall(data){
             });
             break;
         case 'signup':
-            console.log('getto');
             auth.signup(data.data, function(err,res){
                 var payloads = [
                     {
