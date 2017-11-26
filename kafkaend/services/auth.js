@@ -8,91 +8,82 @@ var userModel = require('../models/authUsers.js');
 const saltRounds = 10;
 
 function signin(msg, callback){
-  var res = {};
-  if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5})) {
-    var connection = mysql.getConnection(function(err) {
-      if (err) throw err;
-      console.log("Connected!");
-        mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
-        if (err) throw err;
-        if(result[0]) {
-          var user = result[0];
-          if(user.role== 'USER' && user.role != msg.role) {
-            res.code = 401;
-            res.message = "Unauthorized user";
-            callback(null, res);
-          }
-          bcrypt.compare(msg.password, user.password, function(err,result) {
-            if(result) {
-
-              res.code = 200;
-              res.message = "Success";
-              res.data = {_id:user.id,username:user.username,role:user.role};
-              console.log(res);
-            } else {
-              res.code = 401;
-              res.message = "Invalid password";
-            }
-            callback(null, res);
-          });
-        } else {
-          res.code = 401;
-          res.message = "Invalid email";
-          callback(null, res);
-        }
-      });
-    });
-  } else {
-    res.code = 400;
-    res.message = "Fields did not pass the validation";
-    callback(null, res);
-  }
+    var res = {};
+    if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5})) {
+        var connection = mysql.getConnection(function(err) {
+            if (err) throw err;
+            //TODO: SQL injection ???
+            mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
+                if (err) throw err;
+                if(result[0]) {
+                    var user = result[0];
+                    if(user.role== 'USER' && user.role != msg.role) {
+                        res.code = 401;
+                        res.message = "Unauthorized user";
+                        callback(null, res);
+                    }
+                    bcrypt.compare(msg.password, user.password, function(err,result) {
+                        if(result) {
+                            res.code = 200;
+                            res.message = "Success";
+                            res.data = {_id:user.id,username:user.email,role:user.role};
+                        } else {
+                            res.code = 401;
+                            res.message = "Invalid password";
+                        }
+                        callback(null, res);
+                    });
+                } else {
+                    res.code = 401;
+                    res.message = "Invalid email";
+                    callback(null, res);
+                }
+            });
+        });
+    } else {
+        res.code = 400;
+        res.message = "Fields did not pass the validation";
+        callback(null, res);
+    }
 }
 
 function signup(msg, callback){
     var res = {};
     if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5}) && validator.isByteLength(msg.firstName, {min: 1}) && validator.isByteLength(msg.lastName, {min: 1})) {
-        //TODO: change to MySQL
-        var connection = mysql.getConnection(function(err) {
-          if (err) throw err;
-            mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
+        mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
             if (err) throw err;
             if(result[0]) {
-              res.code = 409;
-              res.message = "User already exists";
-              callback(null, res);
+                res.code = 409;
+                res.message = "User already exists";
+                callback(null, res);
             } else {
                 bcrypt.hash(msg.password, saltRounds, function(err, hash) {
-                  var id = crypto.randomBytes(20).toString('hex');
-                  mysql.query("INSERT INTO auth_user (id, email, password, username, role)  VALUES ('" + id + "'" + "," + "'" + msg.email + "'" + " , " + "'" + hash + "'" + " , " + "'" + msg.email + "'" + " , " + "'USER'" + ");", function(err, result) {
-                    if(err) {
-                      res.code = 500;
-                      res.message = "Internal server error";
-                      callback(null, res);
-                    } else {
-                      console.log(msg);
-                      var newUser = new userModel(msg);
-                      newUser.save(function (err) {
+                    var id = crypto.randomBytes(20).toString('hex');
+                    mysql.query("INSERT INTO auth_user (id, email, password, username, role)  VALUES ('" + id + "'" + "," + "'" + msg.email + "'" + " , " + "'" + hash + "'" + " , " + "'" + msg.email + "'" + " , " + "'USER'" + ");", function(err, result) {
                         if(err) {
-                          console.log(err);
-                          res.code = 500 ;
-                          res.status  = 500 ;
-                          res.message = "Error occured while registering a hotel with server"
-                          callback(null , res);
+                            res.code = 500;
+                            res.message = "Internal server error";
+                            callback(null, res);
                         } else {
-                          res.code = 200  ;
-                          res.status  = 200 ;
-                          res.message = "Success";
-                          res.data = {_id: newUser._id ,username:msg.email, role: 'USER'};
-                          console.log(res);
-                          callback(null , res) ;
+                            //TODO: save auth user id in user model
+                            var newUser = new userModel(msg);
+                            newUser.save(function (err) {
+                                if(err) {
+                                    res.code = 500 ;
+                                    res.message = "Error occured while registering a hotel with server"
+                                    callback(null , res);
+                                } else {
+                                    res.code = 200  ;
+                                    res.message = "Success";
+                                    //TODO: should we send mysql auth user id or mongo user id???
+                                    res.data = {_id: newUser._id ,username:msg.email, role: 'USER'};
+                                    callback(null , res) ;
+                                }
+                            });
                         }
-                      });
-                    }
-                  })
+                    })
                 })
-              }
-          })
+            }
         })
     } else {
         res.code = 400;

@@ -6,5 +6,10 @@
 	"mySqlPassword" : "root",
 	"mySqlDb" : "kayak_test",
 	"kafkaTopic" : "kayak",
-	"kafkaResponseTopic" : "response_topic"
+	"kafkaResponseTopic" : "response_topic",
+	//AWS S3
+	"accessKeyId" : "accessKeyId",
+	"secretAccessKey" : "secretAccessKey",
+	"region" : "region",
+	"bucketName" : "bucketName"
 }

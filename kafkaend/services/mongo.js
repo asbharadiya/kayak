@@ -1,5 +1,4 @@
 //var MongoClient = require('mongodb').MongoClient;
-var GridStore = require('mongodb').GridStore;
 var mongoose = require("mongoose");
 var config = require('config');
 var mongoURL = config.dbUrl;
@@ -34,22 +33,7 @@ setInterval(function(){
       callback(null, db);
     }
   }
-}, 1000)
-
-var getConnection = function(callback){
-  if(cntnStack.length > 0){
-    db = cntnStack.pop();
-    console.log("Mongo DB " , db)
-    callback(null, db);
-  } else {
-    cntnQueue.push(callback);
-  }
-}
-
-var releaseConnection = function(db){
-   cntnStack.push(db);
-}
-
+}, 1000);
 
 var getCollection = function(name,callback){
   if (!connected) {
@@ -64,61 +48,6 @@ var getCollection = function(name,callback){
   });
 };
 
-var getDb = function(){
-  return db;
-}
-
-var createGridStore = function(fileId,filename,mode,options,callback){
-  if (!connected) {
-    throw new Error('Must connect to Mongo before calling "collection"');
-  }
-  getConnection(function(err,db){
-    if (err) {
-      throw new Error('Could not connect to database');
-    }
-    var gridStore = new GridStore(db,fileId,filename,mode,options); 
-    callback(null,gridStore);
-    cntnStack.push(db);
-  });                                                  
-}
-
-var readGridFS = function(fileId,mode,options,callback){
-  if (!connected) {
-    throw new Error('Must connect to Mongo before calling "collection"');
-  }
-  getConnection(function(err,db){
-    if (err) {
-      throw new Error('Could not connect to database');
-    }
-    var gridStore = new GridStore(db,fileId,mode,options); 
-    gridStore.open(function(err, gridStore) {
-      gridStore.read(function(err, gridResult) {
-        if (err) {
-          gridStore.close(function(error, result) {
-            callback(err);
-            cntnStack.push(db);
-          });
-        } else {
-          gridStore.close(function(error, result) {
-            var data = {
-              filename:gridStore.filename,
-              contentType:gridStore.contentType,
-              buffer:gridResult
-            }
-            callback(null,data);
-            cntnStack.push(db);
-          });
-        }
-      })
-    })
-  });                                                  
-}
-
-
 
 exports.createConnectionPool = createConnectionPool;
 exports.getCollection = getCollection;
-exports.createGridStore = createGridStore;
-exports.readGridFS = readGridFS;
-exports.getConnection = getConnection;
-exports.releaseConnection = releaseConnection;
