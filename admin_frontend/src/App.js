@@ -12,6 +12,7 @@ import Flights from './components/dashboard/flights/flights';
 import Hotels from './components/dashboard/hotels/hotels';
 import Test from './components/dashboard/test/Test';
 import Console from './components/dashboard/console/console';
+import Host from './components/dashboard/host/host';
 
 class App extends Component {
 
@@ -72,6 +73,13 @@ class App extends Component {
                       <Console/>
                     )
                   )}/>
+                  <Route path='/host' render={() => (
+                      !isLogged ? (
+                        <Redirect to="/"/>
+                      ) : (
+                        <Host/>
+                      )
+                    )}/>
                 <Route path='/test' render={() => (
                   !isLogged ? (
                     <Redirect to="/test"/>

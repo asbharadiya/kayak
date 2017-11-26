@@ -48,7 +48,12 @@ class Sidebar extends Component {
               </li>
               <li>
 	              <NavLink to="/console">
-	                Console
+	                Admin Console
+	              </NavLink>
+	            </li>
+              <li>
+	              <NavLink to="/host">
+	                Host Console
 	              </NavLink>
 	            </li>
   					</ul>
