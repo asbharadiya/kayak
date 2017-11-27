@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './filters.css'
 import CarFilters from './carFilters/carFilters';
+import HotelFilters from './hotelFilters/hotelFilters';
 
 class Filters extends Component {
 
@@ -15,7 +16,7 @@ class Filters extends Component {
     render() {
         return (
       		<div className="filters-content">
-                <div className="title-section">
+              <div className="title-section">
       				<span className="title">Filters</span>
       			</div>
                 {
@@ -24,7 +25,7 @@ class Filters extends Component {
                     ) : this.state.category === "flights" ? (
                         <div></div>
                     ) : (
-                        <div></div>
+                        <HotelFilters></HotelFilters>
                     )
                 }
       		</div>

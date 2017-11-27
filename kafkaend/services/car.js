@@ -86,11 +86,6 @@ function updateCarById(msg, callback){
 
     msg.updatedDate = new Date() ;
 
-
-
-   console.log("New update ")
-    
-
     var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
 
     var availabilityDateObject = [] ;
@@ -102,8 +97,7 @@ function updateCarById(msg, callback){
 
     msg.availability = availabilityDateObject ;
 
-    console.log("Msg to update " ,msg)
-
+    
 
     carModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
         if(err){
@@ -142,15 +136,39 @@ function deleteCarById(msg, callback){
 
 function getCarsForCustomer(msg, callback){
     var res = {};
-    carModel.find({ is_deleted : false}, function(err, result){
+    var parts = msg.queryParams.startDate.split("-");
+    var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+    parts = msg.queryParams.endDate.split("-");
+    var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+    var query = {
+        is_deleted : false,
+        availability: {
+            $elemMatch: {
+                availableCars: {
+                    $gte: 1
+                },
+                availabilityDate: {
+                    $gte: startDate,
+                    $lte: endDate
+                }
+            }
+        }
+    };
+    var options = {
+        select: 'carType carName occupancy luggage dailyRentalValue images',
+        lean: true,
+        page: msg.pageNo || 1,
+        limit: 20
+    };
+    carModel.paginate(query,options, function(err, result){
         if(err){
             res.code = 500  ;
-            res.message = "Fail to get all hotels from the server"
+            res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
             res.code = 200  ;
-            res.message = "Success"
-            res.data = result
+            res.message = "Success";
+            res.data = result;
             callback(null , res) ;
         }
     });

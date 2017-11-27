@@ -13,6 +13,7 @@ export default {
   allFlights : [],
   flightAddSuccess : null ,
   flightUpdateSuccess : null,
+  flightDeleteSuccess  : null , 
   currentFlightToUpdate : {
                 flightNumber : '' ,
                 airline : '' ,

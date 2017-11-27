@@ -1,5 +1,8 @@
 export default {
     isLogged: undefined,
     uname: "",
-    listings: []
+    listings: {
+        total: 0,
+        docs: []
+    }
 }

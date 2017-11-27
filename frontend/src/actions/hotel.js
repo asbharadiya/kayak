@@ -3,11 +3,13 @@ import * as util from './util';
 
 // Get all hotels
 export function getAllHotels(queryParams, filters) {
+    console.log(queryParams);
     var params = "?";
     if(queryParams){
         params += util.toQueryString(queryParams);
     }
     if(filters){
+        params += "&";
         params += util.toQueryString(filters);
     }
     return function(dispatch) {
@@ -27,4 +29,9 @@ export function getAllHotels(queryParams, filters) {
     };
 }
 
-
+export function updateStarFilter(value) {
+  return {
+    type: 'UPDATE_STAR_HOTEL_FILTER',
+    payload: value
+  }
+}
