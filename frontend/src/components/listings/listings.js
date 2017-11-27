@@ -61,8 +61,8 @@ class Listings extends Component {
 						</div>
 						<div className="data-container">
                             {
-                                this.props.listings.length > 0 ? (
-                                    this.props.listings.map((listing , key) => {
+                                this.props.listings.total > 0 ? (
+                                    this.props.listings.docs.map((listing , key) => {
                                         if(this.state.category === 'hotels') {
                                             return <HotelRow data={listing} key={key}/>
                                         } else if (this.state.category === 'flights') {

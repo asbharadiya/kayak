@@ -17,6 +17,11 @@ class Checkout extends Component {
         }
     }
 
+
+    componentDidMount(){
+        
+    }
+
     render() {
         
 
