@@ -71,10 +71,6 @@ function updateCarById(req,res){
         _id : req.body._id
     }
 
-    
-
-    
-
     if(req.files == null){
         kafka.make_request(topic_name,'updateCarById',obj, function(err,result){
                     if(err) {

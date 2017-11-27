@@ -5,15 +5,14 @@ const headers = {
 };
 
 export const addFlight = (payload , callback) => {
-
+    
     fetch(api+'/a/flights', {
         method: 'POST',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
         },
-        body: JSON.stringify(payload : payload)
+        body: payload
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
@@ -57,15 +56,14 @@ export const deleteFlightById = ( id , callback) => {
 } 
 
 
-export const updateFlightById = ( obj , callback) => {
-    fetch(api+'/a/flights/'+obj._id, {
+export const updateFlightById = ( obj  , id , callback) => {
+    fetch(api+'/a/flights/'+ id , {
         method: 'PUT',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
         },
-        body: JSON.stringify(obj)
+        body: obj
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {

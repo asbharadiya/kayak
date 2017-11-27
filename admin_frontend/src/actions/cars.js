@@ -34,6 +34,7 @@ export function addCar(payload , file ) {
     data.append('serviceStartDate' , payload.serviceStartDate) ;
     data.append('serviceEndDate' , payload.serviceEndDate) ;
 
+
     return function(dispatch) {
         return api.addCar(data , function(error , response){
             if(error){

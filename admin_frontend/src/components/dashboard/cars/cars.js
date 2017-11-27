@@ -63,6 +63,7 @@ class Cars extends Component {
 
             this.props.getAllCars();
         }
+        
         if(newProps.carAddSuccess === false){
             this.setState({
                 addCarError : 'Error occured while adding the car' ,
@@ -170,13 +171,13 @@ class Cars extends Component {
             addCarError : '' ,
             carAddLoading : true
         })
-
+        
         this.props.addCar(obj , this.state.carFile )
     }
 
 
     render() {
-
+        console.log("Loading " , this.state.carAddLoading) ; 
         return (
 			<div className="row car-content">
 				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
@@ -334,7 +335,7 @@ class Cars extends Component {
 					</Modal.Body>
 					<Modal.Footer className="carModalFooter">
 						<div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right">
-                            <Loading isLoading={this.state.carAddLoading} ></Loading>
+                           <Loading isLoading={this.state.carAddLoading} ></Loading>
 						</div>
 
 

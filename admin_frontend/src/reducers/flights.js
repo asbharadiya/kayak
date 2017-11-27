@@ -2,56 +2,75 @@ import initialState from './initialState';
 
 const reducer = (state = initialState, action) => {
   	switch (action.type) {
+	    
+  		//Add
 	    case "ADD_FLIGHT_SUCCESS" :
 	    	return {
 	      		...state,
-	        	flightAddSuccess : true
-	    	};
-	     case "SET_BACK_FLIGHT_ADD_SUCCESS" :
-	    	return {
-	      		...state,
-	        	flightAddSuccess : action.payload
+	        	flightAddSuccess : true,
+                flightDeleteSuccess : null,
+                flightUpdateSuccess : null
 	    	};
 	    case "ADD_FLIGHT_FAILURE" :  
-	    console.log("Flight add failure " , action.payload)
-	      	return {
+	   		return {
 	      		...state,
-	        	flightAddSuccess: action.payload
+	        	flightAddSuccess : false,
+                flightDeleteSuccess : null,
+                flightUpdateSuccess : null
 	    	};
 
+	   	//Get Flights
 	    case "GET_ALL_FLIGHT_SUCCESS" :  
 	      	return {
 	      		...state,
-	        	allFlights : action.payload
+	        	allFlights : action.payload , 
+	        	flightAddSuccess : null,
+                flightDeleteSuccess : null,
+                flightUpdateSuccess : null
 	    	};
+	    case "GET_ALL_FLIGHT_FAILURE" :  
+	      	return {
+	      		...state,
+	        	flightAddSuccess : null,
+                flightDeleteSuccess : null,
+                flightUpdateSuccess : null
+	    	};
+
+	    // Delete
 	    case "DELETE_FLIGHT_SUCCESS" :  
 	      	return {
 	      		...state,
-	        	flightDeleteSuccess : action.payload
+	        	flightAddSuccess : null,
+                flightDeleteSuccess : true,
+                flightUpdateSuccess : null
 	    	};
 
-	    	
 	    case "DELETE_FLIGHT_FAILURE" :  
 	      	return {
 	      		...state,
-	      		flightDeleteSuccess : action.payload
+	      		flightAddSuccess : null,
+                flightDeleteSuccess : false,
+                flightUpdateSuccess : null
 	    	};
-	     case "SET_BACK_FLIGHT_DELETE_SUCCESS" :  
-	      	return {
-	      		...state,
-	      		flightDeleteSuccess : null
-	    	};
+
+	    //Update
 	    case "UPDATE_FLIGHT_SUCCESS" :  
 	      	return {
 	      		...state,
-	      		flightUpdateSuccess : action.payload.success,
-	      		currentFlightToUpdate : action.payload.updatePlainObject
+	      		flightAddSuccess : null,
+                flightDeleteSuccess : null,
+                flightUpdateSuccess : true
 	    	};
 	    case "UPDATE_FLIGHT_FAILURE" :  
 	      	return {
 	      		...state,
-	      		flightUpdateSuccess : action.payload.success
+	      		flightAddSuccess : null,
+                flightDeleteSuccess : null,
+                flightUpdateSuccess : false
 	    	};
+
+
+	    //additional	
 	    case "SET_BACK_FLIGHT_UPDATE_SUCCESS" :  
 	      	return {
 	      		...state,
