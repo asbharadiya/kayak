@@ -1,32 +1,32 @@
 .hotels-row {
 	background: #fff;
 	margin-bottom: 15px;
-    display: flex;
-    width: 100%;
-    text-align: center;
+	display: flex;
+	width: 100%;
+	text-align: center;
 }
 
 .hotels-row .price-section {
-    padding-top: 15px;
-    border-left: 1px solid #e4e5ea;
+	border-left: 1px solid #e4e5ea;
 }
 
 .hotels-row .placeholder-image {
-  width: 250px;
-  height: 250px;
+	width: 250px;
+	height: 250px;
 }
 
 .hotels-row .price-section p {
-    font-size: 21px;
+	font-size: 20px;
+	margin-top: 50%;
 }
 
 .hotels-row .info-section {
-    padding: 15px;
-    display: block;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    /*align-content: center;
-    align-items: center;*/
+	padding: 15px;
+	display: block;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	/*align-content: center;
+	align-items: center;*/
 }
 
 .hotels-row .number-rating-container {
@@ -39,7 +39,7 @@
 }
 
 .hotels-row .trophy-container {
-		margin-top: 50px;
+	margin-top: 50px;
 }
 
 .hotels-row .champion {
@@ -94,8 +94,8 @@
 }
 
 .hotels-row .title-section {
-  padding: 15px;
-  text-align: left;
+	padding: 15px;
+	text-align: left;
 }
 
 .hotels-row .title {
@@ -106,51 +106,52 @@
 }
 
 .hotels-row .hotel-title {
-  font-size: 18px;
+	font-size: 30px;
 	font-family: "Helvetica";
+	font-weight: 400;
 }
 
 .hotels-row .info-section .info-child {
-    display: inline-block;
-    width: auto;
+	display: inline-block;
+	width: auto;
 }
 
 .hotels-row .info-section .info-child.carrier {
-    font-weight: normal;
+	font-weight: normal;
 }
 
 .hotels-row .info-section .info-child.carrier p {
-    margin: 0px;
+	margin: 0px;
 }
 
 .hotels-row .info-section .info-child.duration {
-    width: 100px;
-    font-weight: normal;
+	width: 100px;
+	font-weight: normal;
 }
 
 .hotels-row .info-section .info-child.duration p {
-    margin: 0px;
+	margin: 0px;
 }
 
 .hotels-row .info-section .info-child.time {
-    display: flex;
+	display: flex;
 }
 
 .hotels-row .info-section .info-child.time .divider {
-    width: 70px;
-    height: 18px;
-    position: relative;
-    margin: 0px 15px;
+	width: 70px;
+	height: 18px;
+	position: relative;
+	margin: 0px 15px;
 }
 
 .hotels-row .info-section .info-child.time .divider:after {
-    content: "";
-    height: 2px;
-    background: #717585;
-    position: absolute;
-    top: 8px;
-    left: 0px;
-    right: 0px;
+	content: "";
+	height: 2px;
+	background: #717585;
+	position: absolute;
+	top: 8px;
+	left: 0px;
+	right: 0px;
 }
 
 .hotels-row .info-section .info-child.time p {
@@ -158,5 +159,5 @@
 }
 
 .hotels-row .info-section .info-child.time span {
-    font-weight: normal;
+	font-weight: normal;
 }
