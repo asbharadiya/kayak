@@ -5,15 +5,14 @@ const headers = {
 };
 
 
-export const getAllHotels = (callback) => {
-    fetch(api+'/c/hotels', {
+export const getAllHotels = (params, callback) => {
+    fetch(api+'/c/hotels'+params, {
         method: 'GET',
         credentials: 'include',
         headers: {
             ...headers,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify()
+        }
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {

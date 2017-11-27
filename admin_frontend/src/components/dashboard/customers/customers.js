@@ -24,7 +24,7 @@ class Customers extends Component {
 		}
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		this.props.getAllCustomers();
 	}
 

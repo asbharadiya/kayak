@@ -39,8 +39,8 @@ class Hotels extends Component {
 		})
 	}
 
-	componentWillMount(){
-		this.props.getAllHotels()
+	componentDidMount(){
+		this.props.getAllHotels();
 	}
 
 	componentWillReceiveProps(newProps) {    
