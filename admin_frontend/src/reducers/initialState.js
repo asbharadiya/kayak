@@ -31,6 +31,7 @@ export default {
   allHotels : [] ,
   hotelAddSuccess : null ,
   hotelUpdateSuccess : null,
+  hotelDeleteSuccess : null,
   currentHotelToUpdate : {
     hotelName : '',
     hotelAddress : '', 

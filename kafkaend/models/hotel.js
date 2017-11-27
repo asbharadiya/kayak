@@ -19,6 +19,7 @@ var hotelSchema = new mongoose.Schema({
     is_deleted : Boolean,
     serviceStartDate : Date,
     serviceEndDate : Date,
-    availability : [{ availableDate: Date, hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}] } ]
+    availability : [{ availableDate: Date, hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}] } ],
+    images : [String]
 });
 module.exports = mongoose.model('hotel', hotelSchema);

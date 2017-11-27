@@ -4,22 +4,20 @@ const headers = {
     'Accept': 'application/json'
 };
 
-export const addHotel = (payload , callback) => {
+export const addHotel = (data , callback) => {
     fetch(api+'/a/hotels', {
         method: 'POST',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
         },
-        body: JSON.stringify(payload : payload)
+        body: data
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
         callback( error , {});
     });    
 } 
-    
 
 export const getAllHotels = (callback) => {
     fetch(api+'/a/hotels', {
@@ -37,8 +35,6 @@ export const getAllHotels = (callback) => {
     });    
 } 
 
-
-
 export const deleteHotelById = ( id , callback) => {
     fetch(api+'/a/hotels/'+id, {
         method: 'DELETE',
@@ -55,23 +51,20 @@ export const deleteHotelById = ( id , callback) => {
     });    
 } 
 
-
-export const updateHotelById = ( obj , callback) => {
-    fetch(api+'/a/hotels/'+obj._id, {
+export const updateHotelById = ( obj , id , callback) => {
+    fetch(api+'/a/hotels/'+id, {
         method: 'PUT',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
         },
-        body: JSON.stringify(obj)
+        body: obj
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
         callback( error , {});
     });    
 } 
-
 
 export const getHotelById = ( id , callback) => {
     fetch(api+'/a/hotels/'+id, {
@@ -87,4 +80,4 @@ export const getHotelById = ( id , callback) => {
     }).catch(error => {
         callback( error , {});
     });    
-} 
+}

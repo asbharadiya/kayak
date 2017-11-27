@@ -96,7 +96,7 @@ function updateHotelById(msg, callback){
 		availabilityObj.hotelRooms = msg.hotelRooms;
 		msg.availability.push(availabilityObj);
 	}
-    if(!validator.isEmpty(msg.idToUpdate)){
+    if(true){
     	hotelModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
     		if(err){
 	    		console.log(err);

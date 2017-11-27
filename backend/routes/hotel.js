@@ -1,18 +1,53 @@
 var kafka = require('./kafka/client');
-
+var s3 = require('./s3');
 var config = require('config');
 var topic_name = config.kafkaTopic;
 
 function addHotel(req,res){
-    console.log("Server called " , req.body)
-	kafka.make_request(topic_name,'addHotel',req.body,function(err,result){
-        if(err) {
-            return res.status(500).json({status:500,statusText:"Internal server error"});
-        } else {
-            console.log("Result " , result)
-            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
-        }		
-	});
+	var tempHotelRooms = JSON.parse(req.body.hotelRooms);
+	for(var i=0; i<tempHotelRooms.length; i++){
+		tempHotelRooms[i].priceTotal = parseInt(tempHotelRooms[i].priceTotal);
+		tempHotelRooms[i].totalAvailable = parseInt(tempHotelRooms[i].totalAvailable);
+		tempHotelRooms[i].personPerRoom = parseInt(tempHotelRooms[i].personPerRoom);
+	}
+	var obj = {
+		hotelName : req.body.hotelName ,
+		hotelAddress : req.body.hotelAddress,
+		hotelCity : req.body.hotelCity,
+		hotelState : req.body.hotelState,
+		hotelZip : req.body.hotelZip,
+		hotelStar : req.body.hotelStar,
+		hotelPhoneNumber : req.body.hotelPhoneNumber,
+		hotelEmail : req.body.hotelEmail,
+		hotelRating : req.body.hotelRating,
+		serviceStartDate : req.body.serviceStartDate,
+		serviceEndDate : req.body.serviceEndDate,
+		hotelRooms: tempHotelRooms
+    }
+	if(req.files == null){
+        kafka.make_request(topic_name,'addHotel',obj, function(err,result){
+            if(err) {
+                return res.status(500).json({status:500,statusText:"Internal server error"});
+            } else {
+                return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+            }
+        });
+    }else{
+	    s3.upload(req.files, function(err, result){
+	        if(err) {
+	            return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
+	        } else {
+	            obj.images = result;
+	            kafka.make_request(topic_name,'addHotel',obj,function(err,result){
+	                if(err) {
+	                    return res.status(500).json({status:500,statusText:"Internal server error"});
+	                } else {
+	                    return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+	                }		
+	        	});
+	        }
+	    });
+    }
 }
 
 function getHotels(req,res){
@@ -27,7 +62,6 @@ function getHotels(req,res){
 
 function getHotelById(req,res){
 	kafka.make_request(topic_name,'getHotelById',{ id : req.params.id }, function(err,result){
-        console.log("result.data " , result.data)
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
@@ -37,24 +71,60 @@ function getHotelById(req,res){
 }
 
 function updateHotelById(req,res){
-	req.body.idToUpdate = req.params.id;
-	kafka.make_request(topic_name,'updateHotelById',req.body,function(err,result){
-        if(err) {
-            return res.status(500).json({status:500,statusText:"Internal server error"});
-        } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
-        }
-    });
+	var tempHotelRooms = JSON.parse(req.body.hotelRooms);
+	for(var i=0; i<tempHotelRooms.length; i++){
+		tempHotelRooms[i].priceTotal = parseInt(tempHotelRooms[i].priceTotal);
+		tempHotelRooms[i].totalAvailable = parseInt(tempHotelRooms[i].totalAvailable);
+		tempHotelRooms[i].personPerRoom = parseInt(tempHotelRooms[i].personPerRoom);
+	}
+	var obj = {
+		hotelName : req.body.hotelName ,
+		hotelAddress : req.body.hotelAddress,
+		hotelCity : req.body.hotelCity,
+		hotelState : req.body.hotelState,
+		hotelZip : req.body.hotelZip,
+		hotelStar : req.body.hotelStar,
+		hotelPhoneNumber : req.body.hotelPhoneNumber,
+		hotelEmail : req.body.hotelEmail,
+		hotelRating : req.body.hotelRating,
+		serviceStartDate : req.body.serviceStartDate,
+		serviceEndDate : req.body.serviceEndDate,
+		hotelRooms: tempHotelRooms,
+        _id : req.body._id,
+        idToUpdate : req.params.id
+    }
+    if(req.files == null){
+        kafka.make_request(topic_name,'updateHotelById',obj, function(err,result){
+            if(err) {
+                return res.status(500).json({status:500,statusText:"Internal server error"});
+            } else {
+                return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+            }
+        });
+    }else{
+        s3.upload(req.files, function(err, result){
+            if(err) {
+                return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
+            } else {
+                obj.images = result;
+                kafka.make_request(topic_name,'updateHotelById',obj, function(err,result){
+                    if(err) {
+                        return res.status(500).json({status:500,statusText:"Internal server error"});
+                    } else {
+                        return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+                    }
+                });
+            }
+        });
+    }
 }
 
 function deleteHotelById(req,res){
-    console.log("To Delete is " , req.params.id) ;
     var idToDelete = req.params.id ; 
 	kafka.make_request(topic_name,'deleteHotelById',{ idToDelete : idToDelete },function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-           console.log(result) ; 
            return res.status(result.code).json({status:result.code,statusText:result.message, data:result.data});
         }
     });

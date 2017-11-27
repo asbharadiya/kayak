@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './hotels.css';
-import {addHotel , setBackHotelAddSuccess , getAllHotels } from '../../../actions/hotels'
+import {addHotel , getAllHotels } from '../../../actions/hotels'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
@@ -29,14 +29,10 @@ class Hotels extends Component {
 			addHotelError : "" ,
 			showHotelModal: false,
 			hotelAddLoading : false ,
-			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}]
+			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}],
+	        hotelFile : '' ,
+	        filename : ''
 		}
-	}
-
-	onChangeLuggage(e){
-		this.setState({
-			luggage : e.target.value
-		})
 	}
 
 	componentDidMount(){
@@ -44,7 +40,9 @@ class Hotels extends Component {
 	}
 
 	componentWillReceiveProps(newProps) {    
-      if(newProps.hotelAddSuccess != null && newProps.hotelAddSuccess){
+      if((newProps.hotelAddSuccess != null && newProps.hotelAddSuccess) ||
+              (newProps.hotelDeleteSuccess != null && newProps.hotelDeleteSuccess) ||
+              (newProps.hotelUpdateSuccess != null && newProps.hotelUpdateSuccess) ){
       	this.setState({hotelAddLoading : false ,
       		showHotelModal : false,
       		hotelName : '' ,
@@ -58,14 +56,13 @@ class Hotels extends Component {
 			hotelRating : '',
 			serviceStartDate : '' ,
 			serviceEndDate : '',
-			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}]
+			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}],
+            hotelFile : '' ,
+            filename : ''
 		});
-      	//setBack successfor hotelAddSuccess
-      	this.props.setBackHotelAddSuccess(); 
       	this.props.getAllHotels();
       }
    }
-
 
 	render() {
 		return (
@@ -75,7 +72,6 @@ class Hotels extends Component {
                         this.setState({showHotelModal : true})
                     }}>Add Hotel</button>
 				</div>
-				
 				 <Modal show={this.state.showHotelModal} onHide={this.closeHotelModal} id="hotelModal" className="hotelModal">	
 					<Modal.Body className="hotelModalBody">
 					    <div className="scrollDiv">
@@ -169,6 +165,35 @@ class Hotels extends Component {
 								   </select>
 								   </div>
 						    </div>
+						    <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+	                            <label htmlFor="hotelname">Upload</label>
+	                            <div className="input-group image-preview">
+	                                <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
+	                                <span className="input-group-btn">
+							                	{
+	                                                this.state.hotelFile === '' ?
+	                                                    <span></span>
+	                                                    :
+	                                                    <button type="button"  onClick={() => {
+	                                                        this.setState({hotelFile : '' , filename : ''})
+	                                                    }} className="btn btn-default image-preview-clear" >
+	                                                        <span className="glyphicon glyphicon-remove"></span> Clear
+	                                                    </button>
+	                                            }
+	                                    <div className="btn btn-default image-preview-input">
+						                        <span className="glyphicon glyphicon-folder-open"></span>
+						                        <span className="image-preview-input-title"></span> Browse
+						                        <input type="file" onChange={(e) => {
+                                                    var file = e.target.files[0];
+                                                    if(file === undefined){
+                                                        return ;
+                                                    }
+                                                    this.setState({ hotelFile : file , filename : file.name})
+                                                }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+						               </div>
+						            </span>
+	                            </div>
+	                        </div>
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="serviceAvailable">Service Start Date</label>
 					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
@@ -352,7 +377,7 @@ class Hotels extends Component {
 						      					addHotelError : '' , 
       											hotelAddLoading : true
 						      				})
-											this.props.addHotel(obj)
+											this.props.addHotel(obj, this.state.hotelFile)
 						      			}} >Submit 
 						      			</button>						      			
 						      		</div>
@@ -377,13 +402,12 @@ class Hotels extends Component {
 						 </div>
 					 </div>
 					{
-						this.props.listOfHotels ? this.props.listOfHotels.map((hotel , key) => {
+						(this.props.listOfHotels && this.props.listOfHotels.length>0) ? this.props.listOfHotels.map((hotel , key) => {
 							return <HotelComponent hotel={hotel}  key={key}> </HotelComponent>
 						}) : null
 					}
 				</div>
 			</div>
-		
   	    );
 	}
 }
@@ -391,8 +415,7 @@ class Hotels extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addHotel : (params) => dispatch(addHotel(params)) ,
-    setBackHotelAddSuccess : () => dispatch(setBackHotelAddSuccess()),
+    addHotel : (params, file) => dispatch(addHotel(params, file)) ,
     getAllHotels : () => dispatch(getAllHotels()) 
   };
 }
@@ -400,7 +423,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         listOfHotels : state.hotelsReducer ? state.hotelsReducer.allHotels : null, 
-        hotelAddSuccess : state.hotelsReducer ? state.hotelsReducer.hotelAddSuccess : null
+        hotelAddSuccess : state.hotelsReducer ? state.hotelsReducer.hotelAddSuccess : null,
+		  hotelUpdateSuccess : state.hotelsReducer ? state.hotelsReducer.hotelUpdateSuccess : null,
+		  hotelDeleteSuccess : state.hotelsReducer ? state.hotelsReducer.hotelDeleteSuccess : null
     };
 }
 

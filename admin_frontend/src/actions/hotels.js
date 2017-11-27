@@ -1,28 +1,31 @@
 import * as api from '../api/hotels';
 
-function addHotelSuccess(data) {
-  	return {type: "ADD_HOTEL_SUCCESS" , payload : data}
-}
-
-function addHotelFailure(){
-    return {type: "ADD_HOTEL_FAILURE"}
-}
-
-function deleteHotelFailure(){
-    return {type: "DELETE_HOTEL_FAILURE"}
-}
-
-export function addHotel(payload) {
+export function addHotel(payload, file) {
+	let data = new FormData();
+    data.append('file', file);
+    data.append('hotelName' , payload.hotelName) ;
+    data.append('hotelAddress' , payload.hotelAddress) ;
+    data.append('hotelCity' , payload.hotelCity) ;
+    data.append('hotelState' , payload.hotelState) ;
+    data.append('hotelZip' , payload.hotelZip) ;
+    data.append('hotelStar' , payload.hotelStar) ;
+    data.append('hotelPhoneNumber' , payload.hotelPhoneNumber) ;
+    data.append('hotelEmail' , payload.hotelEmail) ;
+    data.append('hotelRating' , payload.hotelRating) ;
+    data.append('hotelRooms' , JSON.stringify(payload.hotelRooms)) ;
+    data.append('serviceStartDate' , payload.serviceStartDate) ;
+    data.append('serviceEndDate' , payload.serviceEndDate) ;
+    
 	return function(dispatch) {
-		return api.addHotel(payload , function(error , response){
+		return api.addHotel(data , function(error , response){
 			if(error){
-				dispatch(addHotelFailure());
+				dispatch({type: "ADD_HOTEL_FAILURE"});
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(addHotelSuccess(res.data));
+						dispatch({type: "ADD_HOTEL_SUCCESS" , payload : res.data})
 					}else{
-						dispatch(addHotelFailure());
+						dispatch({type: "ADD_HOTEL_FAILURE"})
 					}
 				})
 			}
@@ -48,61 +51,77 @@ export function getAllHotels() {
 	};
 }
 
-export function setBackHotelAddSuccess(){
-	return {type: "SET_BACK_HOTEL_ADD_SUCCESS" , payload : null}
-}
-
-export function setBackHotelUpdateSuccess(){
-	return {type: "SET_BACK_HOTEL_UPDATE_SUCCESS" , payload : null}
-}
-
-function deleteHotelSuccess(data) {
-  	return {type: "DELETE_HOTEL_SUCCESS" , payload : data}
-}
-
 export function deleteHotelById(id) {
 	return function(dispatch) {
 		return api.deleteHotelById(id , function(error , response){
 			if(error){
-				dispatch( deleteHotelFailure()) ;
+				dispatch({type : 'DELETE_HOTEL_FAILURE'})
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(deleteHotelSuccess(res.data));
-					}else{
-						dispatch( deleteHotelFailure()) ;
-					}
+                        dispatch({type : 'DELETE_HOTEL_SUCCESS'})
+                    }else{
+                        dispatch({type : 'DELETE_HOTEL_FAILURE'})
+                    }
 				})
 			}
 		})
 	};
 }
 
-function updateHotelSuccess(data) {
-	return {type: "UPDATE_HOTEL_SUCCESS" , payload : data}
+var updatePlainObject =  {
+	hotelName : '' ,
+	hotelAddress : '',
+	hotelCity : '',
+	hotelState : '',
+	hotelZip : '',
+	hotelStar : '',
+	hotelPhoneNumber : '',
+	hotelEmail : '',
+	hotelRating : '',
+	serviceStartDate : '' ,
+	serviceEndDate : '',
+	addHotelError : "" ,
+	showHotelModal: false,
+	hotelAddLoading : false ,
+	hotelRooms:[],
+    hotelFile : '' ,
+    filename : ''
 }
 
-export function updateHotelById(obj) {
+export function updateHotelById(payload, id , file) {
+	let data = new FormData();
+
+	data.append('file', file);
+    data.append('hotelName' , payload.hotelName) ;
+    data.append('hotelAddress' , payload.hotelAddress) ;
+    data.append('hotelCity' , payload.hotelCity) ;
+    data.append('hotelState' , payload.hotelState) ;
+    data.append('hotelZip' , payload.hotelZip) ;
+    data.append('hotelStar' , payload.hotelStar) ;
+    data.append('hotelPhoneNumber' , payload.hotelPhoneNumber) ;
+    data.append('hotelEmail' , payload.hotelEmail) ;
+    data.append('hotelRating' , payload.hotelRating) ;
+    data.append('hotelRooms' , JSON.stringify(payload.hotelRooms)) ;
+    data.append('serviceStartDate' , payload.serviceStartDate) ;
+    data.append('serviceEndDate' , payload.serviceEndDate) ;
+    data.append('_id' , id) ;
+    
 	return function(dispatch) {
-		return api.updateHotelById(obj , function(error , response){
+		return api.updateHotelById(data , id , function(error , response){
 			if(error){
 				dispatch({type: "UPDATE_HOTEL_FAILURE"})
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(updateHotelSuccess(res.data))
+						dispatch({type: "UPDATE_HOTEL_SUCCESS" , payload : {success : true , updatePlainObject : updatePlainObject }})
 					}else{
-						dispatch({type: "UPDATE_HOTEL_FAILURE"})
+						dispatch({type: "UPDATE_HOTEL_FAILURE", payload : {success : false  }})
 					}
 				})
 			}
 		})
 	};
-}
-
-function getHotelByIDSuccess(data){
-	
-	return {type: "GET_HOTEL_TO_UPDATE_SUCCESS" , payload : data}
 }
 
 export function getHotelById(id) {
@@ -113,7 +132,7 @@ export function getHotelById(id) {
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(getHotelByIDSuccess(res.data))
+						dispatch({type: "GET_HOTEL_TO_UPDATE_SUCCESS" , payload : res.data})
 					}else{
 						dispatch({type: "GET_HOTEL_TO_UPDATE_FAILURE" , payload : null})
 					}

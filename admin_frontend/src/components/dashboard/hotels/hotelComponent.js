@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './hotelComponent.css'
 import { Modal } from 'react-bootstrap';
-import { deleteHotelById , updateHotelById , setBackHotelUpdateSuccess , getHotelById, getAllHotels } from '../../../actions/hotels'
+import { deleteHotelById , updateHotelById , getHotelById } from '../../../actions/hotels'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
@@ -29,12 +29,13 @@ class HotelComponent extends Component {
 			updateHotelError : '' ,
 			hotelUpdateLoading : false , 
 			createdDate : '' ,
-			updatedDate : ''
+			updatedDate : '',
+            filename : '' , 
+            hotelFile : ''
 		}
 	}
 
 	componentWillReceiveProps(newProps) { 
-	
 	  this.setState({
 			hotelName : newProps.currentHotelToUpdate.hotelName ,
 			hotelAddress : newProps.currentHotelToUpdate.hotelAddress , 
@@ -52,16 +53,28 @@ class HotelComponent extends Component {
 			createdDate : newProps.currentHotelToUpdate.createdDate ,
 			updatedDate : newProps.currentHotelToUpdate.updatedDate 
 	  });
-
-      if(newProps.hotelUpdateSuccess != null && newProps.hotelUpdateSuccess){
-      	this.setState({hotelUpdateLoading : false , showHotelUpdateModal : false}) ;
-      	//setBack success for hotelAddSuccess
-      	this.props.setBackHotelUpdateSuccess();
-      }
+	  if( (newProps.hotelDeleteSuccess != null && newProps.hotelDeleteSuccess) ) {
+     	 this.setState({
+              showHotelUpdateModal : false , 
+              updateHotelError : ''
+          })
+     }
+     if(newProps.hotelUpdateSuccess != null && newProps.hotelUpdateSuccess){
+         this.setState({
+             hotelUpdateLoading : false ,
+             showHotelUpdateModal : false ,
+             updateHotelError : ''
+         }) ;
+     }
+     if(newProps.hotelUpdateSuccess === false){
+         this.setState({
+             hotelUpdateLoading : false ,
+             updateHotelError : 'Error occured while updating the hotel record'
+         }) ;
+     }
    }
 
 	render() {
-		console.log("Plash " , this.state) ; 
 		return (
     		<div className="singleHotelComponent">
 				<div className="row mainRowDiv">
@@ -216,6 +229,35 @@ class HotelComponent extends Component {
 						   </select>
 						   </div>
 				    </div>
+				    <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+	                    <label htmlFor="carname">Upload</label>
+	                    <div className="input-group image-preview">
+	                        <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
+	                        <span className="input-group-btn">
+                                {
+                                    this.state.hotelFile === '' ?
+                                        <span></span>
+                                        :
+                                        <button type="button"  onClick={() => {
+                                            this.setState({hotelFile : '' , filename : ''})
+                                        }} className="btn btn-default image-preview-clear" >
+                                            <span className="glyphicon glyphicon-remove"></span> Clear
+                                        </button>
+                                }
+	                            <div className="btn btn-default image-preview-input">
+                                    <span className="glyphicon glyphicon-folder-open"></span>
+                                    <span className="image-preview-input-title"></span> Browse
+                                    <input type="file" onChange={(e) => {
+                                        var file = e.target.files[0];
+                                        if(file === undefined){
+                                            return ;
+                                        }
+                                        this.setState({ hotelFile : file , filename : file.name})
+                                    }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+	                            </div>
+	                       </span>
+	                    </div>
+	                </div>
 			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 			      		<label htmlFor="serviceAvailable">Service Start Date</label>
 			      		<input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
@@ -407,41 +449,28 @@ class HotelComponent extends Component {
 						      				}
 											this.setState({ updateHotelError : '' , hotelUpdateLoading : true})
 
-											this.props.updateHotelById(obj);
+											this.props.updateHotelById(obj, this.props.hotel._id  , this.state.hotelFile);
 										}} >Update
 										</button>
-
 									</div>
 								</div>
-
-
-
-
 						  </Modal.Footer>
 					 </Modal>
-
-
 			</div>
   	    );
 	}
 }
 
-
-
 function mapDispatchToProps(dispatch) {
   return {
     deleteHotelById : (id) => dispatch(deleteHotelById(id)) ,
-   	updateHotelById: (obj) => dispatch(updateHotelById(obj)) ,
-   	setBackHotelUpdateSuccess : () => dispatch(setBackHotelUpdateSuccess()) ,
-   	getHotelById : (id) => dispatch(getHotelById(id)) ,
-   	getAllHotels : () => dispatch(getAllHotels())
+   	updateHotelById: (obj, id , file) => dispatch(updateHotelById(obj , id , file )) ,
+   	getHotelById : (id) => dispatch(getHotelById(id))
   };
 }
 
 function mapStateToProps(state) {
     return {
-        listOfHotels : state.hotelsReducer.allHotels , 
-        hotelAddSuccess : state.hotelsReducer.hotelAddSuccess,
         hotelUpdateSuccess : state.hotelsReducer.hotelUpdateSuccess,
         currentHotelToUpdate : state.hotelsReducer.currentHotelToUpdate
     };
