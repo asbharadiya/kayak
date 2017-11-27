@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
+import queryString from 'query-string';
 import './listings.css';
 import Search from './search/search';
 import Filters from './filters/filters';
@@ -18,23 +19,29 @@ class Listings extends Component {
     constructor(props){
         super(props) ;
         this.state = {
-            category : this.props.match.params.category
+            category : this.props.match.params.category,
+            queryParams : queryString.parse(this.props.location.search)
         }
         this.loadPage = this.loadPage.bind(this);
+        this.applyFilters = this.applyFilters.bind(this);
     }
 
     componentDidMount(){
-        this.loadPage();
+        this.loadPage(this.state.queryParams);
     }
 
-    loadPage(){
+    loadPage(queryParams,filters){
         if(this.state.category === 'cars'){
-            this.props.getAllCars() ;
+            this.props.getAllCars(queryParams,filters) ;
         } else if(this.state.category === 'flights') {
-            this.props.getAllFlights();
+            this.props.getAllFlights(queryParams,filters);
         } else {
-            this.props.getAllHotels();
+            this.props.getAllHotels(queryParams,filters);
         }
+    }
+
+    applyFilters(filters){
+        this.loadPage(this.state.queryParams,filters);
     }
 
     render() {
@@ -46,7 +53,7 @@ class Listings extends Component {
 				</div>
 				<div className="page-container">
 					<div className="filters-container">
-                        <Filters/>
+                        <Filters applyFilters={this.applyFilters}/>
 					</div>
 					<div className="center-container">
 						<div className="sorting-container">
@@ -80,9 +87,9 @@ class Listings extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllCars : () => dispatch(carActions.getAllCars()),
-        getAllFlights : () => dispatch(flightActions.getAllFlights()),
-        getAllHotels : () => dispatch(hotelActions.getAllHotels())
+        getAllCars : (queryParams,filters) => dispatch(carActions.getAllCars(queryParams,filters)),
+        getAllFlights : (queryParams,filters) => dispatch(flightActions.getAllFlights(queryParams,filters)),
+        getAllHotels : (queryParams,filters) => dispatch(hotelActions.getAllHotels(queryParams,filters))
     }
 }
 

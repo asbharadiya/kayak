@@ -10,7 +10,8 @@ class CarsSearchForm extends Component {
   	}
 
 	search() {
-		this.props.history.push('/cars/listings');
+		//TODO: take these value from input
+		this.props.history.push('/cars/listings?loc=San Jose&startDate=12-10-2017&endDate=12-10-2017');
 	}
 
   	render() {

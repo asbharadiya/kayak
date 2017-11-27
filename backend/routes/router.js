@@ -16,15 +16,9 @@ module.exports = function(router,passport) {
 	router.post('/a/signin', auth.adminSignIn);
 	router.get('/a/check_session', isAdminAuthenticated, auth.checkSession);
 
-
 	router.get('/a/customers', customer.getCustomers);
 	router.get('/a/customers/:id', customer.getCustomerById);
 	router.delete('/a/customers/:id', customer.deleteCustomersById);
-
-
-
-
-
 
 	router.post('/a/hotels', hotel.addHotel);
 	router.get('/a/hotels', hotel.getHotels);

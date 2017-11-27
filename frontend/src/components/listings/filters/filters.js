@@ -20,7 +20,7 @@ class Filters extends Component {
       			</div>
                 {
                     this.state.category === "cars" ? (
-                        <CarFilters />
+                        <CarFilters applyFilters={this.props.applyFilters}/>
                     ) : this.state.category === "flights" ? (
                         <div></div>
                     ) : (

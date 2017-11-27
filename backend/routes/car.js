@@ -127,7 +127,7 @@ function deleteCarById(req,res){
 
 function getCarsForCustomer(req,res){
     kafka.make_request(topic_name,'getCarsForCustomer',{
-
+        queryParams : req.query
     },function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
