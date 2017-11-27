@@ -29,7 +29,7 @@ class HotelRow extends Component {
             <Rater total={5} rating={this.props.data.hotelStar} interactive={false}/>
           </div>
           <div className="ratings-container col-md-12 no-padding">
-            <div className="number-rating-container col-xs-3">
+            <div className="number-rating-container col-xs-3 no-padding">
               <span className="number-rating"> {(this.props.data.hotelRating).toFixed(1)} </span>
               <span className="rating-type">
                 {this.props.data.hotelRating == 5 ? "Excellent" : ""}
@@ -39,16 +39,16 @@ class HotelRow extends Component {
                 {this.props.data.hotelRating == 1 ? "Poor" : ""}
               </span>
             </div>
-            <div className="location-container col-xs-5">
+            <div className="location-container col-xs-6 no-padding text-center">
               <div className="hotel-location-label col-xs-12"> Location </div>
               <div className="hotel-location-name col-xs-12"> {this.props.data.hotelCity}, {this.props.data.hotelState} </div>
             </div>
-            <div className="location-container col-xs-3">
+            <div className="location-container col-xs-3 no-padding pull-right text-center">
               <div className="hotel-location-label col-xs-12"> Contact </div>
               <div className="hotel-location-name col-xs-12"> {this.props.data.hotelPhoneNumber} </div>
             </div>
           </div>
-          <div>
+          <div className="col-xs-12 no-padding">
             {this.props.data.hotelRooms.map((room, key) => {
               return <RoomType data={room}></RoomType>
             })}

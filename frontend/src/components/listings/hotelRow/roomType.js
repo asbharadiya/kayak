@@ -6,12 +6,9 @@ class RoomType extends Component {
 
   render() {
     return (
-      <div className="col-xs-3 roomType-container">
+      <div className="col-xs-6 roomType-container no-padding text-center">
         <div className="roomType-label">
-          {this.props.data.roomType}
-          </div>
-          <div className="roomType-price">
-            ${this.props.data.priceTotal}
+          {this.props.data.roomType} - ${this.props.data.priceTotal}
           </div>
       </div>
     );
