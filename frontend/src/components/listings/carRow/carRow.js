@@ -7,7 +7,9 @@ class CarRow extends Component {
 
 
     render() {
+        
         return (
+
             <div className="cars-row">
                 <div className="info-section">
                     <div className="divForImageAndName row">
@@ -30,7 +32,7 @@ class CarRow extends Component {
                             </div>
                         </div>
                         <div className="carImageDiv col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                            <img className="carImage" src="/assets/images/hyundai.png"
+                            <img className="carImage" src="/assets/images/hyundai.png"   /*src={this.props.data.images[0]}*/ 
                                  alt="Vehicle type: Economy - Hyundai Accent or similar"/>
                         </div>
 

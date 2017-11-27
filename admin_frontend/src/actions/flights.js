@@ -35,16 +35,31 @@ function addFlightFailure(){
     return {type: "ADD_FLIGHT_FAILURE" , payload : false}
 }
 
+export function addFlight(payload, file ) {
 
-export function setBackFlightAddSuccess(){
-	return {type: "SET_BACK_FLIGHT_ADD_SUCCESS" , payload : null}
-}
-
+	 let data = new FormData();
 
 
-export function addFlight(payload) {
+    data.append('file', file);
+
+	data.append('flightNumber' , payload.flightNumber) ;
+    data.append('airline' , payload.airline) ;
+    data.append('source' , payload.source) ;
+    data.append('destination' , payload.destination) ;
+    data.append('arrival' , payload.arrival) ;
+    data.append('departure' , payload.departure) ;
+    data.append('serviceStartDate' , payload.serviceStartDate) ;
+    data.append('serviceEndDate' , payload.serviceEndDate) ;
+	data.append('firstClassPrice' , payload.firstClassPrice) ;
+    data.append('firstClassSeats' , payload.firstClassSeats) ;
+    data.append('economyClassPrice' , payload.economyClassPrice) ;
+    data.append('economyClassSeats' , payload.economyClassSeats) ;
+    data.append('businessClassPrice' , payload.businessClassPrice) ;
+    data.append('businessClassSeats' , payload.businessClassSeats) ;
+    
+	
 	return function(dispatch) {
-		return api.addFlight(payload , function(error , response){
+		return api.addFlight(data , function(error , response){
 			if(error){
 				dispatch(addFlightFailure());
 			} else {
@@ -58,6 +73,8 @@ export function addFlight(payload) {
 			}
 		})
 	};
+
+
 }
 
 
@@ -71,15 +88,11 @@ export function addFlight(payload) {
 //Delete
 
 function deleteFlightSuccess() {
-  	return {type: "DELETE_FLIGHT_SUCCESS" , payload : true}
+  	return {type: "DELETE_FLIGHT_SUCCESS"}
 }
 
 function deleteFlightFailure(){
-    return {type: "DELETE_FLIGHT_FAILURE" , payload : false}
-}
-
-export function setBackFlightDeleteSuccess(){
-    return {type: "SET_BACK_FLIGHT_DELETE_SUCCESS"}
+    return {type: "DELETE_FLIGHT_FAILURE"}
 }
 
 
@@ -106,44 +119,38 @@ export function deleteFlightById(id) {
 
 // Update
 
-
-var updatePlainObject =  {
-  							flightNumber : '' ,
-			                airline : '' ,
-			                source : '' ,
-			                destination : '',
-			                arrival : '' ,
-			                departure : '',
-			                serviceStartDate : '',
-			                serviceEndDate : '',
-			                class : '',
-			                price : 0,
-			                seats : 0,
-  						}
-
-
 function updateFlightSuccess() {
-	return {type: "UPDATE_FLIGHT_SUCCESS" , payload : {success : true , updatePlainObject : updatePlainObject }}
+	return {type: "UPDATE_FLIGHT_SUCCESS" }
 }
 
 function updateFlightFailure() {
-	return {type: "UPDATE_FLIGHT_FAILURE" , payload : {success : false  }}; 
+	return {type: "UPDATE_FLIGHT_FAILURE" }; 
 }
 
 
-export function setBackJustUpdateVariable() {
-	return {type: "SET_BACK_JUST_FLIGHT_UPDATE_SUCCESS" , payload : {success : null  }}; 
-}
+export function updateFlightById(payload , id , file ) {
 
-export function setBackFlightUpdateSuccess(){
-	return {type: "SET_BACK_FLIGHT_UPDATE_SUCCESS" , payload : {success : null , updatePlainObject : updatePlainObject }}
-}
+	let data = new FormData();
 
-
-
-export function updateFlightById(obj) {
-	return function(dispatch) {
-		return api.updateFlightById(obj , function(error , response){
+	data.append('file', file);
+    data.append('_id' , payload._id) ;
+	data.append('flightNumber' , payload.flightNumber) ;
+    data.append('airline' , payload.airline) ;
+    data.append('source' , payload.source) ;
+    data.append('destination' , payload.destination) ;
+    data.append('arrival' , payload.arrival) ;
+    data.append('departure' , payload.departure) ;
+    data.append('serviceStartDate' , payload.serviceStartDate) ;
+    data.append('serviceEndDate' , payload.serviceEndDate) ;
+	data.append('firstClassPrice' , payload.firstClassPrice) ;
+    data.append('firstClassSeats' , payload.firstClassSeats) ;
+    data.append('economyClassPrice' , payload.economyClassPrice) ;
+    data.append('economyClassSeats' , payload.economyClassSeats) ;
+    data.append('businessClassPrice' , payload.businessClassPrice) ;
+    data.append('businessClassSeats' , payload.businessClassSeats) ;
+    
+    return function(dispatch) {
+		return api.updateFlightById(data , id , function(error , response){
 			if(error){
 				dispatch(updateFlightFailure())
 			} else {
@@ -160,22 +167,29 @@ export function updateFlightById(obj) {
 }
 
 
+
+// get Single Flight
+
 function getFlightByIDSuccess(data){
-	
 	return {type: "GET_FLIGHT_TO_UPDATE_SUCCESS" , payload : data}
 }
+
+function getFlightByIDFailure(){
+	return {type: "GET_FLIGHT_TO_UPDATE_FAILURE" }
+}
+
 
 export function getFlightById(id) {
 	return function(dispatch) {
 		return api.getFlightById(id , function(error , response){
 			if(error){
-				dispatch({type: "GET_FLIGHT_TO_UPDATE_FAILURE" , payload : null})
+				dispatch(getFlightByIDFailure())
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
 						dispatch(getFlightByIDSuccess(res.data[0]))
 					}else{
-						dispatch({type: "GET_FLIGHT_TO_UPDATE_FAILURE" , payload : null})
+						dispatch(getFlightByIDFailure())
 					}
 				})
 			}
