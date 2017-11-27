@@ -17,18 +17,18 @@ class HotelRow extends Component {
   }
   render() {
     return (
-      <div className="hotels-row col-md-12 no-padding">
-        <div className="hotel-image col-md-3 no-padding">
+      <div className="hotels-row col-xs-12 no-padding">
+        <div className="hotel-image col-xs-3 no-padding">
           <img className="img-responsive" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
         </div>
-        <div className="title-section col-md-7">
-          <div className="hotel-title col-md-12  no-padding">
+        <div className="title-section col-xs-7">
+          <div className="hotel-title col-xs-12  no-padding">
             { this.props.data.hotelName}
           </div>
-          <div className="star-rating col-md-12 no-padding">
+          <div className="star-rating col-xs-12 no-padding">
             <Rater total={5} rating={this.props.data.hotelStar} interactive={false}/>
           </div>
-          <div className="ratings-container col-md-12 no-padding">
+          <div className="ratings-container col-xs-12 no-padding">
             <div className="number-rating-container col-xs-3 no-padding">
               <span className="number-rating"> {(this.props.data.hotelRating).toFixed(1)} </span>
               <span className="rating-type">
@@ -54,7 +54,7 @@ class HotelRow extends Component {
             })}
           </div>
         </div>
-        <div className="price-section col-md-2 no-padding">
+        <div className="price-section col-xs-2 no-padding">
           {
             this.minFare !== this.maxFare ? <p>${this.minFare} - ${this.maxFare}</p> :  <p>${this.minFare} </p>
         }
