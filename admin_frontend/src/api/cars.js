@@ -55,14 +55,14 @@ export const deleteCarById = ( id , callback) => {
 } 
 
 
-export const updateCarById = ( obj , callback) => {
-    fetch(api+'/a/cars/'+obj._id, {
+export const updateCarById = ( obj , id , callback) => {
+    fetch(api+'/a/cars/'+id, {
         method: 'PUT',
         credentials: 'include',
         headers: {
             ...headers
         },
-        body: JSON.stringify(obj)
+        body: obj
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {

@@ -26,7 +26,10 @@ class CarComponent extends Component {
             updateErrorMessage : '',
             //
             openDeleteModal : false,
-            showCarUpdateModal : false
+            showCarUpdateModal : false ,
+            filename : '' , 
+            carFile : ''
+
         }
         this.openUpdateCar = this.openUpdateCar.bind(this);
         this.closeUpdateCar = this.closeUpdateCar.bind(this);
@@ -65,7 +68,8 @@ class CarComponent extends Component {
 
     closeUpdateCar(){
         this.setState({
-            showCarUpdateModal : false
+            showCarUpdateModal : false , 
+            updateErrorMessage : ''
         })
     }
 
@@ -76,6 +80,10 @@ class CarComponent extends Component {
 
             } else {
                 response.then((res) => {
+
+                    
+
+
                     if(res.status === 200){
                         _this.setState({
                             carQuantity : res.data[0].carQuantity ,
@@ -85,7 +93,9 @@ class CarComponent extends Component {
                             luggage : res.data[0].luggage ,
                             dailyRentalValue : res.data[0].dailyRentalValue,
                             serviceStartDate : res.data[0].serviceStartDate ,
-                            serviceEndDate : res.data[0].serviceEndDate ,
+                            serviceEndDate : res.data[0].serviceEndDate,
+                            filename : res.data[0].images[0] , 
+
                         })
                     }else{
 
@@ -100,6 +110,8 @@ class CarComponent extends Component {
         startDate.setDate(startDate.getDate() + 1);
         var endDate = new Date(this.state.serviceEndDate);
         endDate.setDate(endDate.getDate() + 1);
+
+        console.log("Start date and end date " , startDate , endDate)
 
         if(this.state.carQuantity === '' ){
             this.setState({ updateCarError : "Specify number of cars to add"})
@@ -161,11 +173,13 @@ class CarComponent extends Component {
             luggage : this.state.luggage ,
             dailyRentalValue : this.state.dailyRentalValue,
             serviceStartDate : this.state.serviceStartDate  ,
-            serviceEndDate : this.state.serviceEndDate
+            serviceEndDate : this.state.serviceEndDate ,
+
         }
         this.setState({ updateCarError : '' , carUpdateLoading : true})
 
-        this.props.updateCarById(obj)
+        console.log(this.state)
+        this.props.updateCarById(obj , this.props.car._id  , this.state.carFile)
     }
 
     openDeleteCar(){
@@ -185,7 +199,7 @@ class CarComponent extends Component {
     }
 
     render() {
-
+        
         return (
             <div className="singleCarComponent">
                 <div className="row mainRowDiv">
@@ -262,6 +276,52 @@ class CarComponent extends Component {
                             }} id="carname" type="text"  aria-describedby="basic-addon1"   />
                         </div>
 
+
+                        <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                            <label htmlFor="carname">Upload</label>
+                            <div className="input-group image-preview">
+
+                                <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
+                                <span className="input-group-btn">
+
+
+                                            {
+                                                this.state.carFile === '' ?
+                                                    <span></span>
+                                                    :
+                                                    <button type="button"  onClick={() => {
+                                                        this.setState({carFile : '' , filename : ''})
+                                                    }} className="btn btn-default image-preview-clear" >
+                                                        <span className="glyphicon glyphicon-remove"></span> Clear
+                                                    </button>
+                                            }
+
+
+
+                                    <div className="btn btn-default image-preview-input">
+                                                <span className="glyphicon glyphicon-folder-open"></span>
+                                                <span className="image-preview-input-title"></span> Browse
+                                                <input type="file" onChange={(e) => {
+                                                    var file = e.target.files[0];
+
+
+                                                    if(file === undefined){
+                                                        return ;
+                                                    }
+
+                                                    this.setState({ carFile : file , filename : file.name})
+
+                                                }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+                                            </div>
+
+                                        </span>
+
+                            </div>
+                        </div>
+
+
+
+
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="maxpeople">Occupancy</label>
                             <select value={this.state.occupancy}  onChange={(e) => {
@@ -294,22 +354,22 @@ class CarComponent extends Component {
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="serviceAvailable">Service Start Date</label>
-                            <input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+                            <input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control value={this.state.serviceStartDate} sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
                                 this.setState({
                                     serviceStartDate : e.target.value
                                 })
                             }} aria-describedby="basic-addon1"   />
-                            <div className="UpdatedDate">{this.state.serviceStartDate}</div>
+                            <div className="UpdatedDate"></div>
                         </div>
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="serviceAvailable">Service End Date</label>
-                            <input  className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+                            <input  value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control value={this.state.serviceEndDate} sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
                                 this.setState({
                                     serviceEndDate : e.target.value
                                 })
                             }} aria-describedby="basic-addon1"   />
-                            <div className="UpdatedDate">{this.state.serviceEndDate}</div>
+                            <div className="UpdatedDate"></div>
                         </div>
 
 
@@ -367,7 +427,7 @@ class CarComponent extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         deleteCarById : (id) => dispatch(actions.deleteCarById(id)) ,
-        updateCarById: (obj) => dispatch(actions.updateCarById(obj)) ,
+        updateCarById: (obj , id , file  ) => dispatch(actions.updateCarById(obj , id , file )) ,
         getCarById : (id) => dispatch(actions.getCarById(id))
     };
 }
