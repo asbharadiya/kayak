@@ -14,26 +14,32 @@ class CarFilters extends Component {
             luggage : [ 'YES' , 'NO'] ,
             category : ['Standard','Premium','Full Size','Luxury','Compact SUV','Standard SUV','Intermediate SUV','Full Size SUV'] ,
         };
+        this.occupantsChanged = this.occupantsChanged.bind(this);
+        this.luggageChanged = this.luggageChanged.bind(this);
+        this.categoryChanged = this.categoryChanged.bind(this);
     }
     occupantsChanged = (newoccupants) => {
         this.setState({
             occupants: newoccupants
+        }, function(){
+            this.props.applyFilters(this.state);
         });
-        this.props.getAllCars() ;
     }
 
     luggageChanged = (newLuggage) => {
         this.setState({
             luggage: newLuggage
+        }, function () {
+            this.props.applyFilters(this.state);
         });
-        this.props.getAllCars() ;
     }
 
     categoryChanged = (newCategory) => {
         this.setState({
             category: newCategory
+        }, function(){
+            this.props.applyFilters(this.state);
         });
-        this.props.getAllCars() ;
     }
 
     render() {

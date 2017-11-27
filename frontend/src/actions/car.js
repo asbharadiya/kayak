@@ -1,7 +1,9 @@
 import * as api from '../api/car';
 
 // Get all Cars
-export function getAllCars() {
+export function getAllCars(queryParams, filters) {
+	console.log(queryParams);
+	console.log(filters);
 	return function(dispatch) {
 		return api.getAllCars(function(error , response){
 			if(error){
