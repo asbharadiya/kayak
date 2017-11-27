@@ -25,15 +25,14 @@ DROP TABLE IF EXISTS `auth_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(500) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `is_verified` tinyint(4) NOT NULL,
+  `is_verified` tinyint(4) DEFAULT 1,
   `role` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

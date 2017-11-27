@@ -11,7 +11,6 @@ import Cars from './components/dashboard/cars/cars';
 import Customers from './components/dashboard/customers/customers';
 import Flights from './components/dashboard/flights/flights';
 import Hotels from './components/dashboard/hotels/hotels';
-import Test from './components/dashboard/test/Test';
 import Console from './components/dashboard/console/console';
 import Host from './components/dashboard/host/host';
 
@@ -88,13 +87,6 @@ class App extends Component {
                         <Host/>
                       )
                     )}/>
-                <Route path='/test' render={() => (
-                  !isLogged ? (
-                    <Redirect to="/test"/>
-                  ) : (
-                    <Test/>
-                  )
-                )}/>
               </Dashboard>
             </Switch>
           </BrowserRouter>

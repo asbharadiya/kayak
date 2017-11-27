@@ -9,13 +9,6 @@
 	margin-top: 15px
 }
 
-.carDeleteBody{
-	color : red ;
-	text-align:  center;
-	
-}
-
-
 .sharpButton{
 	border-radius: 0
 }
@@ -30,11 +23,6 @@
 	color : red;
 }
 
- .scrollDiv{
-	max-height: 600px ;
-	overflow-y: scroll;
-	margin-top: 20px
-}
 
 .sharpCornerForInfoButton{
 		border-radius : 0 ;

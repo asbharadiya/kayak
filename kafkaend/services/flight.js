@@ -189,9 +189,18 @@ function deleteFlightById(msg, callback){
 
 function getFlightsForCustomer(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    flightModel.find({ is_deleted : false}, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all hotels from the server"
+            callback(null , res) ;
+        }else{
+            res.code = 200  ;
+            res.message = "Success";
+            res.data = result;
+            callback(null , res) ;
+        }
+    });
 }
 
 exports.addFlight = addFlight;

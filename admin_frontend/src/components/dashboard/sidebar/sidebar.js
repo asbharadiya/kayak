@@ -4,7 +4,6 @@ import './sidebar.css';
 import './sidebar.responsive.css';
 
 class Sidebar extends Component {
-  	
   render() {
   	return (
   		<div className="sidebar-panel">

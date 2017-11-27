@@ -5,7 +5,11 @@ const reducer = (state = initialState, action) => {
         case "GET_LISTINGS_SUCCESS" :
             return {
                 ...state,
-                listings : action.data
+                listings : action.payload
+            };
+        case "GET_LISTINGS_FAILURE" :
+            return {
+                ...state
             };
         default :
             return state;
