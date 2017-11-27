@@ -12,7 +12,6 @@ function signin(msg, callback){
     if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5})) {
         var connection = mysql.getConnection(function(err) {
             if (err) throw err;
-            //TODO: SQL injection ???
             mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
                 if (err) throw err;
                 if(result[0]) {
@@ -65,7 +64,7 @@ function signup(msg, callback){
                             res.message = "Internal server error";
                             callback(null, res);
                         } else {
-                            //TODO: save auth user id in user model
+                            msg.auth_user_id = id;
                             var newUser = new userModel(msg);
                             newUser.save(function (err) {
                                 if(err) {
@@ -75,8 +74,7 @@ function signup(msg, callback){
                                 } else {
                                     res.code = 200  ;
                                     res.message = "Success";
-                                    //TODO: should we send mysql auth user id or mongo user id???
-                                    res.data = {_id: newUser._id ,username:msg.email, role: 'USER'};
+                                    res.data = {_id: newUser.auth_user_id, username:msg.email, role: 'USER'};
                                     callback(null , res) ;
                                 }
                             });
