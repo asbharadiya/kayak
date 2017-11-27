@@ -1,0 +1,15 @@
+.roomType-container {
+  margin-top: 20px;
+  text-align: center;
+
+}
+
+.roomType-container .roomType-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #5191E0;
+}
+
+.roomType-container .roomType-price {
+  font-size: 20px;
+}
