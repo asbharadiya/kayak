@@ -162,6 +162,24 @@ function makeServiceCall(data){
                 return;
             });
             break;
+        case 'deleteCustomersById':
+        	customer.deleteCustomerById(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
         case 'addHotel':
             hotel.addHotel(data.data, function(err,res){
                 var payloads = [

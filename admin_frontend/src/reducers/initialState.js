@@ -38,9 +38,6 @@ export default {
   },
 
   //Flights Initial Data End
-
-
-  
   allHotels : [] ,
   hotelAddSuccess : null ,
   hotelUpdateSuccess : null,
@@ -55,5 +52,6 @@ export default {
     hotelPhoneNumber : '',
     hotelEmail : '',
     hotelRooms : []
-  }
+  },
+  allCustomers : []
 }

@@ -10,7 +10,7 @@ function getCustomers(req,res){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
@@ -22,7 +22,7 @@ function getCustomerById(req,res){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
@@ -39,6 +39,18 @@ function updateCustomerById(req,res){
     });
 }
 
+function deleteCustomersById(req,res){	
+	var idToDelete = req.params.id ; 
+	kafka.make_request(topic_name,'deleteCustomersById',{ idToDelete : idToDelete },function(err,result){
+        if(err) {
+            return res.status(500).json({status:500,statusText:"Internal server error"});
+        } else {
+           return res.status(result.code).json({status:result.code,statusText:result.message, data:result.data});
+        }
+    });
+}
+
 exports.getCustomers = getCustomers;
 exports.getCustomerById = getCustomerById;
 exports.updateCustomerById = updateCustomerById;
+exports.deleteCustomersById = deleteCustomersById;

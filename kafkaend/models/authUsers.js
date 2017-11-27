@@ -12,7 +12,8 @@ var userSchema = new mongoose.Schema({
   phone_number: Number,
   profile_image: String,
   role: String,
-  email: String
+  email: String,
+  is_deleted: Boolean
 });
 
 module.exports = mongoose.model('users', userSchema);

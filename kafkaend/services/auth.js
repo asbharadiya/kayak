@@ -70,7 +70,7 @@ function signup(msg, callback){
                       res.message = "Internal server error";
                       callback(null, res);
                     } else {
-                      console.log(msg);
+                      msg.is_deleted = false;
                       var newUser = new userModel(msg);
                       newUser.save(function (err) {
                         if(err) {

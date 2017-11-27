@@ -399,8 +399,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        listOfHotels : state.hotelsReducer.allHotels , 
-        hotelAddSuccess : state.hotelsReducer.hotelAddSuccess
+        listOfHotels : state.hotelsReducer ? state.hotelsReducer.allHotels : null, 
+        hotelAddSuccess : state.hotelsReducer ? state.hotelsReducer.hotelAddSuccess : null
     };
 }
 
