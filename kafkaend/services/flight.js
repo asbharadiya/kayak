@@ -63,6 +63,7 @@ function getFlights(msg, callback){
 			res.message = "Fail to get all flights from the server"
 			callback(null , res) ; 
 		}else{
+			
 			res.code = 200  ; 
 			res.status  = 200 ; 
 			res.message = "Success"

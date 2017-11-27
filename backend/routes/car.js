@@ -58,13 +58,59 @@ function getCarById(req,res){
 }
 
 function updateCarById(req,res){
-    kafka.make_request(topic_name,'updateCarById',req.body,function(err,result){
+
+      var obj = {
+        carQuantity : req.body.carQuantity,
+        carType : req.body.carType,
+        carName : req.body.carName,
+        occupancy :  req.body.occupancy,
+        luggage :  req.body.luggage,
+        dailyRentalValue :  req.body.dailyRentalValue,
+        serviceStartDate :  req.body.serviceStartDate,
+        serviceEndDate :  req.body.serviceEndDate,
+        _id : req.body._id
+    }
+
+    
+
+    
+
+    if(req.files == null){
+        kafka.make_request(topic_name,'updateCarById',obj, function(err,result){
+                    if(err) {
+                        return res.status(500).json({status:500,statusText:"Internal server error"});
+                    } else {
+                        return res.status(result.code).json({status:result.code,statusText:result.message});
+                    }
+                });
+    }else{
+        
+        s3.upload(req.files, function(err, result){
+            if(err) {
+                return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
+            } else {
+                obj.images = result;
+
+
+                kafka.make_request(topic_name,'updateCarById',obj, function(err,result){
+                    if(err) {
+                        return res.status(500).json({status:500,statusText:"Internal server error"});
+                    } else {
+                        return res.status(result.code).json({status:result.code,statusText:result.message});
+                    }
+                });
+            }
+        });
+    }
+
+
+    /*kafka.make_request(topic_name,'updateCarById',req.body,function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
             return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
-    });
+    });*/
 }
 
 function deleteCarById(req,res){
