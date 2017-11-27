@@ -5,15 +5,14 @@ const headers = {
 };
 
 
-export const getAllFlights = (callback) => {
-    fetch(api+'/c/flights', {
+export const getAllFlights = (params, callback) => {
+    fetch(api+'/c/flights'+params, {
         method: 'GET',
         credentials: 'include',
         headers: {
             ...headers,
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify()
+        }
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {

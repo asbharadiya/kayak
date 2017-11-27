@@ -1,11 +1,17 @@
 import * as api from '../api/car';
+import * as util from './util';
 
 // Get all Cars
 export function getAllCars(queryParams, filters) {
-	console.log(queryParams);
-	console.log(filters);
+    var params = "?";
+    if(queryParams){
+        params += util.toQueryString(queryParams);
+    }
+    if(filters){
+        params += util.toQueryString(filters);
+    }
 	return function(dispatch) {
-		return api.getAllCars(function(error , response){
+		return api.getAllCars(params, function(error , response){
 			if(error){
 				dispatch({type: "GET_LISTINGS_FAILURE" });
 			} else {
