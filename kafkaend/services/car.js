@@ -86,6 +86,11 @@ function updateCarById(msg, callback){
 
     msg.updatedDate = new Date() ;
 
+
+
+   console.log("New update ")
+    
+
     var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
 
     var availabilityDateObject = [] ;
@@ -96,6 +101,9 @@ function updateCarById(msg, callback){
     }
 
     msg.availability = availabilityDateObject ;
+
+    console.log("Msg to update " ,msg)
+
 
     carModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
         if(err){

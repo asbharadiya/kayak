@@ -108,9 +108,25 @@ export function setBackCarUpdateSuccess(){
 
 
 
-export function updateCarById(obj) {
+export function updateCarById(payload , id , file  ) {
+
+    let data = new FormData();
+
+
+    data.append('file', file);
+    data.append('carQuantity' , payload.carQuantity) ;
+    data.append('carType' , payload.carType) ;
+    data.append('carName' , payload.carName) ;
+    data.append('occupancy' , payload.occupancy) ;
+    data.append('luggage' , payload.luggage) ;
+    data.append('dailyRentalValue' , payload.dailyRentalValue) ;
+    data.append('serviceStartDate' , payload.serviceStartDate) ;
+    data.append('serviceEndDate' , payload.serviceEndDate) ;
+    data.append('_id' , id) ;
+
+
     return function(dispatch) {
-        return api.updateCarById(obj , function(error , response){
+        return api.updateCarById(data , id ,  function(error , response){
             if(error){
                 dispatch(updateCarFailure())
             } else {
