@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var mongoosePaginate = require('mongoose-paginate');
 
 var carSchema = new mongoose.Schema({
 	id : String,
@@ -16,5 +17,7 @@ var carSchema = new mongoose.Schema({
     availability : [{ availabilityDate : Date, availableCars : Number }],
     images : [String]
 })
+
+carSchema.plugin(mongoosePaginate);
     
 module.exports = mongoose.model('car', carSchema);

@@ -8,6 +8,7 @@ export function getAllFlights(queryParams, filters) {
         params += util.toQueryString(queryParams);
     }
     if(filters){
+        params += "&";
         params += util.toQueryString(filters);
     }
     return function(dispatch) {

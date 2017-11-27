@@ -10,9 +10,9 @@ class CarFilters extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            occupants: ['2', '4' , '5' , '7' , '8' ] ,
-            luggage : [ 'YES' , 'NO'] ,
-            category : ['Standard','Premium','Full Size','Luxury','Compact SUV','Standard SUV','Intermediate SUV','Full Size SUV'] ,
+            occupants: [] ,
+            luggage : [] ,
+            category : []
         };
         this.occupantsChanged = this.occupantsChanged.bind(this);
         this.luggageChanged = this.luggageChanged.bind(this);
