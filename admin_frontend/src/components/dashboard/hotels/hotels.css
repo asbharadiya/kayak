@@ -1,0 +1,98 @@
+	.foo {
+    outline: 1px solid orange;
+    
+	}
+	
+	.div-color{
+		background-color: #fafafa
+	}
+	
+	.hotel-content{
+		margin-top: 15px
+	}
+	
+	.hotel-content .addButtonDiv{
+		
+	}
+	
+	.padd15{
+	padding: 15px
+	}
+	
+	
+	
+	.marginBottom15{
+		margin-bottom: 15px
+	}
+	
+	.col-xs-offset-right-2 {
+  margin-right: 16.66666667%;
+ 
+}
+
+ .hotel-content .addButtonDiv .addButton{
+
+ 	border: none;
+    text-decoration: none ;
+    border-radius: 0px;
+    height: 34px;
+    background-color: #ff690f;
+ }
+
+ .hotelAddErrorText{
+ 	color: red
+ }
+
+
+ .singleHotelComponent .mainRowDiv .dataDiv{
+	line-height: 1.5 ;
+	
+	
+}
+
+
+.headerDiv{
+	border-bottom: 1px solid #F0F0F0;
+	height :40px;
+}
+
+.outline{
+	 outline: 1px solid orange;
+}
+
+.listHeader{
+	border-bottom: 1px solid #F0F0F0;
+    margin: 0px;
+	margin-top: 15px ;
+	text-align: left;
+}
+
+
+.scrollDiv{
+	max-height: 600px ;
+	overflow-y: scroll;
+	margin-top: 15px
+}
+
+.sharpCornerForInfoButton{
+		border-radius : 0 ;
+}
+
+.sharpCorner{
+		border-radius : 0 ;
+		padding: 15px ;
+		box-shadow : 1px 1px 1px 1px linen	
+	}
+
+	.lable-margin{
+		margin-right: 15px
+	}
+.nopadding:first-child{
+	padding-left: 0 !important;
+}
+.nopadding:first{
+	padding-right: 0 !important;
+}	
+.clearBoth{
+	clear: both;
+}
