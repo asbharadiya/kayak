@@ -246,37 +246,29 @@ class FlightComponent extends Component {
     		<div className="singleFlightComponent">
 				<div className="row mainRowDiv">
 					<div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
-						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+						<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2">
 							{this.props.flight.airline}
 						</div>
 						<div>
-							<div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							<div className=" col-md-2 col-sm-2 col-lg-2 col-xs-2">
 								<div>
 									{this.props.flight.source}
 								</div>
-								<div>
-									{this.props.flight.departure}
-								</div>
-
 							</div>
 						</div>
 						<div>
-							<div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
+							<div className=" col-md-2 col-sm-2 col-lg-2 col-xs-2">
 								<div>
 									{this.props.flight.destination}
 								</div>
-								<div>
-									{this.props.flight.arrival}
-								</div>
-
 							</div>
 						</div>
 
-						<div className=" col-md-1 col-sm-1 col-lg-1 col-xs-1">
-							{this.props.flight.class}
+						<div className=" col-md-2 col-sm-2 col-lg-2 col-xs-2">
+							{this.props.flight.departure}
 						</div>
 						<div className=" col-md-2 col-sm-2 col-lg-2 col-xs-2">
-							{this.props.flight.price}
+							{this.props.flight.arrival}
 						</div>
 
 					</div>
