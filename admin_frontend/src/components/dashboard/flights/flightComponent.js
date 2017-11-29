@@ -239,243 +239,228 @@ class FlightComponent extends Component {
     render() {
         console.log(this.state) ;
         return (
-			<div className="singleFlightComponent">
-				<div className="row mainRowDiv">
-					<div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
-						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+            <div className="singleFlightComponent">
+                <div className="row mainRowDiv">
+                    <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
+                        <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
                             {this.props.flight.airline}
-						</div>
+                        </div>
                         <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
                             {this.props.flight.flightNumber}
                         </div>
-						<div>
-							<div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								<div>
+                        <div>
+                            <div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                                <div>
                                     {this.props.flight.source}
-								</div>
-								<div>
+                                </div>
+                                <div>
                                     {this.props.flight.departure}
-								</div>
+                                </div>
 
-							</div>
-						</div>
-						<div>
-							<div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								<div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                                <div>
                                     {this.props.flight.destination}
-								</div>
-								<div>
+                                </div>
+                                <div>
                                     {this.props.flight.arrival}
-								</div>
+                                </div>
 
-							</div>
-						</div>
+                            </div>
+                        </div>
 
-						<div className=" col-md-1 col-sm-1 col-lg-1 col-xs-1">
+                        <div className=" col-md-1 col-sm-1 col-lg-1 col-xs-1">
                             {this.props.flight.class}
-						</div>
-						<div className=" col-md-2 col-sm-2 col-lg-2 col-xs-2">
+                        </div>
+                        <div className=" col-md-2 col-sm-2 col-lg-2 col-xs-2">
                             {this.props.flight.price}
-						</div>
+                        </div>
 
-					</div>
-					<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
+                    </div>
+                    <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
 
-						<a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={this.openUpdateFlight}></i></a>
+                        <a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={this.openUpdateFlight}></i></a>
 
-						<a className="redIcon"><i className="fa fa-times fa-2x" aria-hidden="true" onClick={this.openDeleteFlight}></i></a>
+                        <a className="redIcon"><i className="fa fa-times fa-2x" aria-hidden="true" onClick={this.openDeleteFlight}></i></a>
 
-					</div>
+                    </div>
 
-					<Modal show={this.state.openDeleteModal}  id="flightModal" className="flightModal">
+                    <Modal show={this.state.openDeleteModal}  id="flightModal" className="deletFlightModal">
 
-						<Modal.Body className="flightDeleteBody">
-							<b>Are you sure to delete {this.props.flight.flightName } ?  </b>
-						</Modal.Body>
+                        <Modal.Body className="flightDeleteBody">
+                            <b>Are you sure to delete {this.props.flight.flightName } ?  </b>
+                        </Modal.Body>
 
-						<Modal.Footer className="flightDeleteFooter">
-							<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-								<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 col-md-offset-4 col-xs-offset-4 col-lg-offset-4 col-sm-offset-4">
-									<button className="btn btn-danger sharpCornerForInfoButton" onClick={this.deleteFlight}>YES</button>
-								</div>
-								<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 ">
-									<button className="btn sharpCornerForInfoButton" onClick={this.closeDeleteFlight}>NO</button>
-								</div>
-							</div>
-						</Modal.Footer>
+                        <Modal.Footer className="flightDeleteFooter">
+                            <button className="btn btn-primary btn-kayak" onClick={this.deleteFlight}>YES</button>
+                            <button className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeDeleteFlight}>NO</button>
+                        </Modal.Footer>
 
-					</Modal>
-					<Modal show={this.state.showFlightUpdateModal}  id="flightModal" className="flightModal" onEntered={this.fetchFlightData}>
-						<Modal.Body >
+                    </Modal>
+                    <Modal show={this.state.showFlightUpdateModal}  id="flightModal" className="flightModal" onEntered={this.fetchFlightData}>
+                        <Modal.Body >
 
-							<div className="flightModalBody">
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="flightid">Flight Number</label>
-									<input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="text"  onChange={(e) => {
+                            <div className="flightModalBody">
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="flightid">Flight Number</label>
+                                    <input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="text"  onChange={(e) => {
                                         this.setState({
                                             flightNumber : e.target.value
                                         })
                                     }} aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="airline">Airline Name</label>
-									<input value={this.state.airline} className="form-control sharpCorner" id="airline" type="text"  onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="airline">Airline Name</label>
+                                    <input value={this.state.airline} className="form-control sharpCorner" id="airline" type="text"  onChange={(e) => {
                                         this.setState({
                                             airline : e.target.value
                                         })
                                     }} aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="source">Source</label>
-									<input value={this.state.source} className="form-control sharpCorner" onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="source">Source</label>
+                                    <input value={this.state.source} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             source : e.target.value
                                         })
                                     }} id="source" type="text"  aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="destination">Destination</label>
-									<input value={this.state.destination} className="form-control sharpCorner" onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="destination">Destination</label>
+                                    <input value={this.state.destination} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             destination : e.target.value
                                         })
                                     }} id="destination" type="text"  aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="departure">Departure</label>
-									<input value={this.state.departure} className="form-control sharpCorner" onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="departure">Departure</label>
+                                    <input value={this.state.departure} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             departure : e.target.value
                                         })
                                     }} id="departure" type="time"  aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="arrival">Arrival</label>
-									<input value={this.state.arrival} className="form-control sharpCorner" onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="arrival">Arrival</label>
+                                    <input value={this.state.arrival} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             arrival : e.target.value
                                         })
                                     }} id="arrival" type="time"  aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="serviceStartDate">Flight Service Start Date</label>
-									<input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control sharpCorner" onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="serviceStartDate">Flight Service Start Date</label>
+                                    <input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             serviceStartDate : e.target.value
                                         })
                                     }} id="serviceStartDate" type="date"  aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="serviceStartDate">Flight Service End Date</label>
-									<input value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control sharpCorner" onChange={(e) => {
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="serviceStartDate">Flight Service End Date</label>
+                                    <input value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             serviceEndDate : e.target.value
                                         })
                                     }} id="serviceStartDate" type="date"  aria-describedby="basic-addon1"
-									/>
-								</div>
+                                    />
+                                </div>
 
-								<div className="form-group  seats-div  col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="class"># Seats</label>
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="class"># Seats</label>
 
-									<div className="row">
-										<div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
-											<p>First</p>
-											<input   value={this.state.firstClassSeats}  onChange={(e) => {
+                                    <div className="row">
+                                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                            <p>First</p>
+                                            <input   value={this.state.firstClassSeats}  onChange={(e) => {
                                                 this.setState({ firstClassSeats : e.target.value  })
                                             }}   className="form-control sharpCorner"id="serviceEndDate" type="number"  aria-describedby="basic-addon1"/>
-										</div>
-										<div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
-											<p>Business</p>
-											<input  value={this.state.businessClassSeats}   onChange={(e) => {
+                                        </div>
+                                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                            <p>Business</p>
+                                            <input  value={this.state.businessClassSeats}   onChange={(e) => {
                                                 this.setState({ businessClassSeats : e.target.value  })
                                             }}  className="form-control sharpCorner"id="serviceEndDate" type="number"  aria-describedby="basic-addon1"/>
-										</div>
-										<div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
-											<p>Economy</p>
-											<input  value={this.state.economyClassSeats}  onChange={(e) => {
+                                        </div>
+                                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                            <p>Economy</p>
+                                            <input  value={this.state.economyClassSeats}  onChange={(e) => {
                                                 this.setState({ economyClassSeats : e.target.value  })
                                             }}  className="form-control sharpCorner"id="serviceEndDate" type="number"  aria-describedby="basic-addon1"/>
-										</div>
-									</div>
-								</div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-								<div className="form-group seats-div marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-									<label htmlFor="class">Price</label>
+                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                    <label htmlFor="class">Price</label>
 
-									<div className="row">
-										<div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
-											<p>First</p>
-											<input value={this.state.firstClassPrice}  onChange={(e) => {
+                                    <div className="row">
+                                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                            <p>First</p>
+                                            <input value={this.state.firstClassPrice}  onChange={(e) => {
                                                 this.setState({ firstClassPrice : e.target.value  })
                                             }}  className="form-control sharpCorner"id="serviceEndDate" type="number"  aria-describedby="basic-addon1"/>
-										</div>
-										<div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
-											<p>Business</p>
-											<input value={this.state.businessClassPrice}  onChange={(e) => {
+                                        </div>
+                                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                            <p>Business</p>
+                                            <input value={this.state.businessClassPrice}  onChange={(e) => {
                                                 this.setState({ businessClassPrice : e.target.value  })
                                             }}  className="form-control sharpCorner"id="serviceEndDate" type="number"  aria-describedby="basic-addon1"/>
-										</div>
-										<div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
-											<p>Enonomy</p>
-											<input value={this.state.economyClassPrice}  onChange={(e) => {
+                                        </div>
+                                        <div className="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                            <p>Enonomy</p>
+                                            <input value={this.state.economyClassPrice}  onChange={(e) => {
                                                 this.setState({ economyClassPrice : e.target.value  })
                                             }}  className="form-control sharpCorner"id="serviceEndDate" type="number"  aria-describedby="basic-addon1"/>
-										</div>
-									</div>
-								</div>
-							</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-						</Modal.Body>
+                        </Modal.Body>
 
-						<Modal.Footer className="flightModalFooter">
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-								<div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
-									<Loading isLoading={this.state.flightUpdateLoading} ></Loading>
-								</div>
-							</div>
+                        <Modal.Footer className="flightModalFooter">
+                            <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right">
+                                <Loading isLoading={this.state.flightUpdateLoading} ></Loading>
+                            </div>
 
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 flightAddErrorText">
+                            <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right flightAddErrorText">
                                 {this.state.updateFlightError}
                                 {this.state.updateErrorMessage}
-							</div>
+                            </div>
 
-							<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-
-								<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
-									<button type="button" className="btn btn-default  btn-kayak" onClick={this.updateFlight} >Update
-									</button>
-								</div>
-								<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
-
-									<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={this.closeUpdateFlight}>Close</button>
-
-								</div>
-							</div>
+                            <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                                <button type="button" className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeUpdateFlight}>Close</button>
+                                <button type="button" className="btn btn-primary btn-kayak" onClick={this.updateFlight} >Update
+                                </button>
+                            </div>
 
 
-						</Modal.Footer>
+                        </Modal.Footer>
 
-					</Modal>
-				</div>
+                    </Modal>
+                </div>
 
-			</div>
+            </div>
         );
     }
 }

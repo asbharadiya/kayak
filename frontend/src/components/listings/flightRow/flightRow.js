@@ -8,17 +8,18 @@ class FlightRow extends Component {
       		<div className="flights-row">
                 <div className="info-section">
                     <div className="info-child carrier">
-                        <p className="name">American Airlines</p>
+                        <p className="name">{this.props.data.flightNumber}</p>
+                        <p className="name">{this.props.data.airline}</p>
                     </div>
                     <div className="info-child time">
                         <div className="dep">
-                            <p>5:40 am</p>
-                            <span>SFO</span>
+                            <p>{this.props.data.departure}</p>
+                            <span>{this.props.data.source}</span>
                         </div>
                         <div className="divider"></div>
                         <div className="arr">
-                            <p>7:13 am</p>
-                            <span>LAX</span>
+                            <p>{this.props.data.arrival}</p>
+                            <span>{this.props.data.destination}</span>
                         </div>
                     </div>
                     <div className="info-child duration">

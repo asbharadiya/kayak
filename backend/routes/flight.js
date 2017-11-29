@@ -2,7 +2,6 @@ var kafka = require('./kafka/client');
 
 var config = require('config');
 var topic_name = config.kafkaTopic;
-var s3 = require('./s3')
 
 
 
@@ -35,7 +34,6 @@ function getFlightById(req,res){
     kafka.make_request(topic_name,'getFlightById',{
         id
     },function(err,result){
-        console.log("result.data " , result.data)
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
@@ -56,7 +54,6 @@ function updateFlightById(req,res){
 }
 
 function deleteFlightById(req,res){
-    console.log("To Delete is " , req.params.id) ;
     var idToDelete = req.params.id ;
     kafka.make_request(topic_name,'deleteFlightById',{
         idToDelete : idToDelete

@@ -1,89 +1,117 @@
-	.foo {
-    outline: 1px solid orange;
-    
-	}
-	
-	.div-color{
-		background-color: #fafafa
-	}
-	
-	.flight-content{
-		margin-top: 15px
-	}
-	
-	.flight-content .addButtonDiv{
-		
-	}
-	
-	.padd15{
-	padding: 15px
-	}
-	
-	
-	
-	.marginBottom15{
-		margin-bottom: 15px
-	}
-	
-	.col-xs-offset-right-2 {
-  margin-right: 16.66666667%;
- 
+.modal-dialog {
+    top: 15px;
+    bottom: 15px;
+    margin: 0px auto;
+    left: 0px;
+    right: 0px;
+    position: absolute;
 }
 
- .flight-content .addButtonDiv .addButton{
+.modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
- 	border: none;
+.modal-body {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    flex: none;
+}
+
+.deletFlightModal .modal-dialog {
+    position: relative;
+}
+
+.foo {
+    outline: 1px solid orange;
+
+}
+
+.div-color{
+    background-color: #fafafa
+}
+
+.flight-content{
+    margin-top: 15px
+}
+
+.flight-content .addButtonDiv{
+
+}
+
+.padd15{
+    padding: 15px
+}
+
+
+
+.marginBottom15{
+    margin-bottom: 15px
+}
+
+.col-xs-offset-right-2 {
+    margin-right: 16.66666667%;
+
+}
+
+.flight-content .addButtonDiv .addButton{
+
+    border: none;
     text-decoration: none ;
     border-radius: 0px;
     height: 34px;
     background-color: #ff690f;
- }
+}
 
- .flightAddErrorText{
- 	color: red
- }
+.flightAddErrorText{
+    color: red
+}
 
 
- .singleFlightComponent .mainRowDiv .dataDiv{
-	line-height: 1.5 ;
-	
-	
+.singleFlightComponent .mainRowDiv .dataDiv{
+    line-height: 1.5 ;
+
+
 }
 
 
 .headerDiv{
-	border-bottom: 1px solid #F0F0F0;
-	height :40px;
+    border-bottom: 1px solid #F0F0F0;
+    height :40px;
 }
 
 .outline{
-	 outline: 1px solid orange;
+    outline: 1px solid orange;
 }
 
 .listHeader{
-	border-bottom: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
     margin: 0px;
-	margin-top: 15px ;
-	text-align: left;
+    margin-top: 15px ;
+    text-align: left;
 }
 
 
 .scrollDiv{
-/*	max-height: 600px ;
-	overflow-y: scroll;
-	margin-top: 15px*/
+    /*	max-height: 600px ;
+        overflow-y: scroll;
+        margin-top: 15px*/
 }
 
 .sharpCornerForInfoButton{
-		border-radius : 0 ;
+    border-radius : 0 ;
 }
 
 .sharpCorner{
-		border-radius : 0 ;
-		padding: 15px ;
-		box-shadow : 1px 1px 1px 1px linen	
-	}
+    border-radius : 0 ;
+    padding: 15px ;
+    box-shadow : 1px 1px 1px 1px linen
+}
 
-	.lable-margin{
-		margin-right: 15px
-	}
+.lable-margin{
+    margin-right: 15px
+}
