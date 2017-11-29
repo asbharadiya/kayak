@@ -29,7 +29,7 @@ class HotelFilters extends Component {
     this.setState({
         review_score : { 'min' : min, 'max' : max }
     }, function(){
-        this.props.getAllHotels(this.state);
+        //this.props.getAllHotels(this.state);
     });
   }
   updateStarFilter(starObject) {
@@ -37,7 +37,7 @@ class HotelFilters extends Component {
       this.setState({
           rating: starObject.rating
       }, function(){
-          this.props.getAllHotels(this.state);
+          //this.props.getAllHotels(this.state);
       });
     }
   }
