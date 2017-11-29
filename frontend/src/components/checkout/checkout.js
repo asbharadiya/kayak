@@ -13,17 +13,22 @@ class Checkout extends Component {
 
     constructor(props){
         super(props) ;
+        //TODO: restrict direct access to this page
         this.state = {
             category :  this.props.match.params.category,
             id :  this.props.match.params.id,
         }
     }
 
-
     componentDidMount(){
-
+        //TODO: get listing by id based on category
     }
 
+    //TODO: implement flight components
+    //TODO: implement hotel components
+    //TODO: finish cars components
+    //TODO: implement payments section
+    //TODO: complete booking
     render() {
         return (
             <div className="checkout-page-wrapper">

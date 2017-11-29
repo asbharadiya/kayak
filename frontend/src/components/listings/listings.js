@@ -12,6 +12,7 @@ import CarRow from './carRow/carRow';
 import * as carActions from '../../actions/car';
 import * as flightActions from '../../actions/flight';
 import * as hotelActions from '../../actions/hotel';
+import * as utilActions from '../../actions/util';
 import AuthModal from '../authModal/authModal';
 
 class Listings extends Component {
@@ -39,6 +40,10 @@ class Listings extends Component {
         this.loadPage(this.state.queryParams);
     }
 
+    componentWillUnmount(){
+        this.props.clearListingsFromStore();
+    }
+
     loadPage(queryParams,filters){
         if(this.state.category === 'cars'){
             this.props.getAllCars(queryParams,filters) ;
@@ -64,7 +69,6 @@ class Listings extends Component {
     }
 
     render() {
-
         return (
 			<div className="listings-page-wrapper">
 				<div className="inline-search-container">
@@ -109,7 +113,8 @@ function mapDispatchToProps(dispatch) {
     return {
         getAllCars : (queryParams,filters) => dispatch(carActions.getAllCars(queryParams,filters)),
         getAllFlights : (queryParams,filters) => dispatch(flightActions.getAllFlights(queryParams,filters)),
-        getAllHotels : (queryParams,filters) => dispatch(hotelActions.getAllHotels(queryParams,filters))
+        getAllHotels : (queryParams,filters) => dispatch(hotelActions.getAllHotels(queryParams,filters)),
+        clearListingsFromStore : () => dispatch(utilActions.clearListingsFromStore())
     }
 }
 

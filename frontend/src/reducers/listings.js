@@ -11,6 +11,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state
             };
+        case "CLEAR_LISTINGS_FROM_STORE" :
+            return {
+                ...state,
+                listings : []
+            };
         default :
             return state;
     }

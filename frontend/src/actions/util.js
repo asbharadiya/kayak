@@ -5,3 +5,9 @@ export function toQueryString(obj) {
     });
     return parts.join("&");
 }
+
+export function clearListingsFromStore(){
+    return {
+        type: 'CLEAR_LISTINGS_FROM_STORE'
+    }
+}
