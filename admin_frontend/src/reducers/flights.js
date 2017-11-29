@@ -68,27 +68,6 @@ const reducer = (state = initialState, action) => {
                 flightDeleteSuccess : null,
                 flightUpdateSuccess : false
 	    	};
-
-
-	    //additional	
-	    case "SET_BACK_FLIGHT_UPDATE_SUCCESS" :  
-	      	return {
-	      		...state,
-	      		flightUpdateSuccess : action.payload.success,
-	      		currentFlightToUpdate : action.payload.updatePlainObject
-	    	};
-	    case "SET_BACK_JUST_FLIGHT_UPDATE_SUCCESS" :  
-	      	return {
-	      		...state,
-	      		flightUpdateSuccess : action.payload.success
-	    	};
-	     case "GET_FLIGHT_TO_UPDATE_SUCCESS" :  
-	      	return {
-	      		...state,
-	      		currentFlightToUpdate : action.payload
-	    	};
-	    	
-
 	    	
 	    default : 
 	      	return state;

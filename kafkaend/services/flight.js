@@ -9,7 +9,6 @@ function addFlight(msg, callback){
 	msg.createdDate = new Date();
 	msg.updatedDate = new Date() ;
 	msg.is_deleted = false;
-	msg.deletedDate = new Date();
 
 	var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ; 
 
@@ -69,7 +68,6 @@ function getFlights(msg, callback){
 
 function getFlightById(msg, callback){
 	var res = {};
-	console.log(msg);
 	idToGet = new ObjectID(msg.id) ;
 
 	flightModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
@@ -115,7 +113,6 @@ function updateFlightById(msg, callback){
 	
 	flightModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
 		if(err){
-			console.log(err);
 			res.code = 500 ; 
 			res.status  = 500 ; 
 			res.message = "Error occured while updating  a flight"
@@ -135,9 +132,8 @@ function deleteFlightById(msg, callback){
 	
 	var idToDelete = new ObjectID(msg.idToDelete) ;
 	if(!validator.isEmpty(msg.idToDelete)){
-		flightModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true }}, { multi: false }, function(err , response){
+		flightModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true, updatedDate: new Date() }}, { multi: false }, function(err , response){
 			if(err){
-				console.log(err);
 				res.code = 500 ; 
 				res.status  = 500 ; 
 				res.message = "Error occured while deleting a hotel"

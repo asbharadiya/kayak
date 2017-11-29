@@ -10,9 +10,10 @@ export const addFlight = (payload , callback) => {
         method: 'POST',
         credentials: 'include',
         headers: {
-            ...headers
+            ...headers,
+            'Content-Type': 'application/json'
         },
-        body: payload
+        body: JSON.stringify(payload)
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
@@ -56,14 +57,15 @@ export const deleteFlightById = ( id , callback) => {
 } 
 
 
-export const updateFlightById = ( obj  , id , callback) => {
+export const updateFlightById = ( payload  , id , callback) => {
     fetch(api+'/a/flights/'+ id , {
         method: 'PUT',
         credentials: 'include',
         headers: {
-            ...headers
+            ...headers,
+            'Content-Type': 'application/json'
         },
-        body: obj
+        body: JSON.stringify(payload)
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
