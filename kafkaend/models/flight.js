@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var mongoosePaginate = require('mongoose-paginate');
 
 var flightSchema = new mongoose.Schema({
 	
@@ -12,7 +13,6 @@ var flightSchema = new mongoose.Schema({
 	
 	createdDate: Date,
     updatedDate : Date,
-    deletedDate : Date, 
     is_deleted : Boolean,
 
     serviceStartDate : Date,
@@ -30,4 +30,7 @@ var flightSchema = new mongoose.Schema({
     				}],
 	
 });
+
+flightSchema.plugin(mongoosePaginate);
+
 module.exports = mongoose.model('flight', flightSchema);

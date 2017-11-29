@@ -3,7 +3,6 @@ import * as util from './util';
 
 // Get all hotels
 export function getAllHotels(queryParams, filters) {
-    console.log(queryParams);
     var params = "?";
     if(queryParams){
         params += util.toQueryString(queryParams);

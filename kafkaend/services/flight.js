@@ -157,10 +157,32 @@ function deleteFlightById(msg, callback){
 
 function getFlightsForCustomer(msg, callback){
     var res = {};
-    flightModel.find({ is_deleted : false}, function(err, result){
+    // var parts = msg.queryParams.date.split("-");
+    // var date = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+    var query = {
+        is_deleted : false,
+        // availability: {
+        //     $elemMatch: {
+        //         availableCars: {
+        //             $gte: 1
+        //         },
+        //         availabilityDate: {
+        //             $gte: startDate,
+        //             $lte: endDate
+        //         }
+        //     }
+        // }
+    };
+    var options = {
+        select: 'flightNumber airline source destination departure arrival firstClassPrice businessClassPrice economyClassPrice',
+        lean: true,
+        page: msg.pageNo || 1,
+        limit: 20
+    };
+    flightModel.paginate(query,options, function(err, result){
         if(err){
             res.code = 500  ;
-            res.message = "Fail to get all hotels from the server"
+            res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
             res.code = 200  ;

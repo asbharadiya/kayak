@@ -132,6 +132,7 @@ function deleteHotelById(req,res){
 
 function getHotelsForCustomer(req,res){
 	kafka.make_request(topic_name,'getHotelsForCustomer',{
+        queryParams : req.query
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
