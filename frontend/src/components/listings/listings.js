@@ -12,7 +12,7 @@ import CarRow from './carRow/carRow';
 import * as carActions from '../../actions/car';
 import * as flightActions from '../../actions/flight';
 import * as hotelActions from '../../actions/hotel';
-
+import AuthModal from '../authModal/authModal';
 
 class Listings extends Component {
 
@@ -20,10 +20,19 @@ class Listings extends Component {
         super(props) ;
         this.state = {
             category : this.props.match.params.category,
-            queryParams : queryString.parse(this.props.location.search)
+            queryParams : this.props.location.search,
+            showAuthModal:false
         }
+        this.closeAuthModal = this.closeAuthModal.bind(this);
         this.loadPage = this.loadPage.bind(this);
         this.applyFilters = this.applyFilters.bind(this);
+        this.onBookClick = this.onBookClick.bind(this);
+    }
+
+    closeAuthModal(){
+        this.setState({
+            showAuthModal:false
+        })
     }
 
     componentDidMount(){
@@ -42,6 +51,16 @@ class Listings extends Component {
 
     applyFilters(filters){
         this.loadPage(this.state.queryParams,filters);
+    }
+
+    onBookClick(id){
+        if(this.props.isLogged){
+            this.props.history.push('/'+this.state.category+'/'+id+'/checkout'+this.state.queryParams);
+        } else {
+            this.setState({
+                showAuthModal:true
+            })
+        }
     }
 
     render() {
@@ -64,11 +83,11 @@ class Listings extends Component {
                                 this.props.listings.total > 0 ? (
                                     this.props.listings.docs.map((listing , key) => {
                                         if(this.state.category === 'hotels') {
-                                            return <HotelRow data={listing} key={key}/>
+                                            return <HotelRow data={listing} key={key} onBookClick={this.onBookClick}/>
                                         } else if (this.state.category === 'flights') {
-                                            return <FlightRow data={listing} key={key}/>
+                                            return <FlightRow data={listing} key={key} onBookClick={this.onBookClick}/>
                                         } else {
-                                            return <CarRow data={listing} key={key}/>
+                                            return <CarRow data={listing} key={key} onBookClick={this.onBookClick}/>
                                         }
                                     })
                                 ) : (
@@ -79,6 +98,7 @@ class Listings extends Component {
 					</div>
 					<div className="clearfix"></div>
 				</div>
+                <AuthModal showAuthModal={this.state.showAuthModal} closeAuthModal={this.closeAuthModal}></AuthModal>
 			</div>
         );
     }
@@ -94,7 +114,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return {listings:state.listingsReducer.listings};
+    return {
+        listings:state.listingsReducer.listings,
+        isLogged:state.authReducer.isLogged
+    };
 }
 
 export default withRouter(connect(mapStateToProps , mapDispatchToProps )(props => <Listings {...props}/>));

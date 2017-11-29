@@ -28,7 +28,7 @@ class FlightRow extends Component {
                 </div>
                 <div className="price-section">
 					<p>$983</p>
-					<button className="btn btn-primary btn-kayak">Book</button>
+					<button className="btn btn-primary btn-kayak" onClick={(id)=>this.props.onBookClick(this.props.data.id)}>Book</button>
 				</div>
             </div>
     	);
