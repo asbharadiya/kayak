@@ -1,7 +1,6 @@
-var mongo = require('./mongo');
 var validator = require('validator');
-var ObjectID = require('mongodb').ObjectID;
 var userModel = require('../models/authUsers.js');
+var creditCardModel = require('../models/creditCard.js');
 
 
 function getProfile(msg, callback){
@@ -28,7 +27,7 @@ function getProfile(msg, callback){
 function updateProfile(msg, callback){
 	console.log('USER KAFKA')
     var res = {};
-	idToUpdate = new ObjectID(msg.id) ;
+	idToUpdate = msg.id ;
 	console.log(idToUpdate)
 	
 	userModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , result){
@@ -47,16 +46,39 @@ function updateProfile(msg, callback){
 
 function addCreditCard(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    msg.creditCard.userId = msg.user_id;
+    creditCardModel.insert(msg.creditCard, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get credit cards from the server";
+            callback(null , res) ;
+        }else{
+            res.code = 200;
+            res.message = "Success";
+            callback(null, res);
+        }
+    });
 }
 
 function getCreditCards(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    creditCardModel.find(
+        {
+            userId : msg.user_id
+        },{
+            cardNumber:true
+        }, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get credit cards from the server";
+            callback(null , res) ;
+        }else{
+            res.code = 200;
+            res.message = "Success";
+            res.data = result;
+            callback(null, res);
+        }
+    });
 }
 
 function deleteCreditCardById(msg, callback){

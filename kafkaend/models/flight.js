@@ -24,7 +24,8 @@ var flightSchema = new mongoose.Schema({
     economyClassSeats: Number ,
     businessClassPrice: Number,
     businessClassSeats: Number ,  
-
+    meals : Boolean,
+    luggage : Number , 
     availability : [{
     					availabilityDate : Date  , sections : [{class : String , price : Number , available : Number}]
     				}],

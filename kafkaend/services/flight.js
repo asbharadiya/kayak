@@ -159,8 +159,25 @@ function getFlightsForCustomer(msg, callback){
     var res = {};
     // var parts = msg.queryParams.date.split("-");
     // var date = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+    
+
+    console.log(msg.queryParams)
+    
+    var queryParams = msg.queryParams ; 
+
+    var minPrice = queryParams.minPrice ;
+    var maxPrice = queryParams.maxPrice ; 
+
+    console.log(minPrice , maxPrice)
+
     var query = {
         is_deleted : false,
+        
+
+
+
+
+
         // availability: {
         //     $elemMatch: {
         //         availableCars: {
@@ -193,9 +210,29 @@ function getFlightsForCustomer(msg, callback){
     });
 }
 
+
+function getFlightByIdForCustomer(msg, callback){
+    var res = {};
+    idToGet = new ObjectID(msg.id) ;
+    flightModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all cars from the server"
+            callback(null , res) ;
+        }else{
+            delete result[0].availability;
+            res.code = 200  ;
+            res.message = "Success";
+            res.data = result;
+            callback(null , res) ;
+        }
+    })
+}
+
 exports.addFlight = addFlight;
 exports.getFlights = getFlights;
 exports.getFlightById = getFlightById;
 exports.updateFlightById = updateFlightById;
 exports.deleteFlightById = deleteFlightById;
 exports.getFlightsForCustomer = getFlightsForCustomer;
+exports.getFlightByIdForCustomer = getFlightByIdForCustomer;
