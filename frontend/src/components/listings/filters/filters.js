@@ -25,7 +25,7 @@ class Filters extends Component {
                     ) : this.state.category === "flights" ? (
                         <div></div>
                     ) : (
-                        <HotelFilters></HotelFilters>
+                        <HotelFilters applyFilters={this.props.applyFilters}></HotelFilters>
                     )
                 }
       		</div>

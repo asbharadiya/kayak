@@ -1,4 +1,8 @@
-.filters-content .hotelFilters{
+.react-rater {
+  font-size: 30px !important;
+}
+
+/*.filters-content .hotelFilters{
 	background: #fff;
 }
 
@@ -36,4 +40,4 @@
 
 .filters-content .move_bottom_20 {
 	padding-top: 20px;
-}
+}*/
