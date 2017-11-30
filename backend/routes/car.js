@@ -133,9 +133,22 @@ function getCarsForCustomer(req,res){
     });
 }
 
+
+function getCarByIdForCustomer(req,res){
+    kafka.make_request(topic_name,'getCarByIdForCustomer',{ id : req.params.id }, function(err,result){
+        if(err) {
+            return res.status(500).json({status:500,statusText:"Internal server error"});
+        } else {
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+        }
+    });
+}
+
+
 exports.addCar = addCar;
 exports.getCars = getCars;
 exports.getCarById = getCarById;
 exports.updateCarById = updateCarById;
 exports.deleteCarById = deleteCarById;
 exports.getCarsForCustomer = getCarsForCustomer;
+exports.getCarByIdForCustomer = getCarByIdForCustomer;

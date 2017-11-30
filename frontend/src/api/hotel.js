@@ -20,4 +20,18 @@ export const getAllHotels = (params, callback) => {
     });
 }
 
-
+export const getHotelById = ( id , callback) => {
+    fetch(api+'/c/hotels/'+id, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+    });
+}

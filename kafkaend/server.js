@@ -587,6 +587,60 @@ consumer.on('message', function (message) {
                 return;
             });
             break;
+        case 'getHotelByIdForCustomer':
+            hotel.getHotelByIdForCustomer(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
+        case 'getFlightByIdForCustomer':
+            flight.getFlightByIdForCustomer(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
+        case 'getCarByIdForCustomer':
+            car.getCarByIdForCustomer(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
         case 'makeBooking':
             booking.makeBooking(data.data, function(err,res){
                 var payloads = [

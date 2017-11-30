@@ -172,9 +172,28 @@ function getHotelsForCustomer(msg, callback){
     });
 }
 
+function getHotelByIdForCustomer(msg, callback){
+    var res = {};
+    idToGet = new ObjectID(msg.id) ;
+    hotelModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all cars from the server"
+            callback(null , res) ;
+        }else{
+            delete result[0].availability;
+            res.code = 200  ;
+            res.message = "Success";
+            res.data = result;
+            callback(null , res) ;
+        }
+    })
+}
+
 exports.addHotel = addHotel;
 exports.getHotels = getHotels;
 exports.getHotelById = getHotelById;
 exports.updateHotelById = updateHotelById;
 exports.deleteHotelById = deleteHotelById;
 exports.getHotelsForCustomer = getHotelsForCustomer;
+exports.getHotelByIdForCustomer = getHotelByIdForCustomer;
