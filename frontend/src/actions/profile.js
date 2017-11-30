@@ -13,8 +13,7 @@ export function getUserDetails() {
     return function(dispatch) {
         return api.getUserDetails().then(response => {
             if(response.status === 200){
-                console.log('200')
-                dispatch(checkUserSuccess(response.data));
+               dispatch(checkUserSuccess(response.data));
             } else {
                 dispatch(checkUserFailure());
             }
