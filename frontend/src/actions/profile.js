@@ -25,3 +25,31 @@ export function getUserDetails() {
 	    }); 
 	};
 }
+
+export function getCreditCards() {
+    return function(dispatch) {
+        return api.getCreditCards().then(response => {
+            if(response.status === 200){
+                dispatch({type: "GET_CREDIT_CARDS_SUCCESS", payload:response.data});
+            } else {
+                dispatch({type: "GET_CREDIT_CARDS_FAILURE"});
+            }
+        }).catch(error => {
+            dispatch({type: "GET_CREDIT_CARDS_FAILURE"});
+        });
+    };
+}
+
+export function addCreditCard(payload) {
+    return function(dispatch) {
+        return api.addCreditCard(payload).then(response => {
+            if(response.status === 200){
+                dispatch({type: "ADD_CREDIT_CARD_SUCCESS"});
+            } else {
+                dispatch({type: "ADD_CREDIT_CARD_FAILURE"});
+            }
+        }).catch(error => {
+            dispatch({type: "ADD_CREDIT_CARD_FAILURE"});
+        });
+    };
+}
