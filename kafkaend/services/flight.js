@@ -30,14 +30,11 @@ function addFlight(msg, callback){
 	var newFlight = new flightModel(msg);
 	newFlight.save(function (err) {
 		if(err) {
-			console.log(err);
-			res.code = 500 ; 
-			res.status  = 500 ; 
+			res.code = 500 ;
 			res.message = "Error occured while registering a flight with server"
 			callback(null , res); 
 		} else {
 			res.code = 200  ; 
-			res.status  = 200 ; 
 			res.message = "Success";
 			callback(null , res) ; 
 		}
@@ -52,13 +49,11 @@ function getFlights(msg, callback){
     flightModel.find({ is_deleted : false}, function(err, result){
     	if(err){
 			res.code = 500  ; 
-			res.status  = 500 ; 
 			res.message = "Fail to get all flights from the server"
 			callback(null , res) ; 
 		}else{
 			
 			res.code = 200  ; 
-			res.status  = 200 ; 
 			res.message = "Success"
 			res.data = result
 			callback(null , res) ; 
@@ -73,17 +68,20 @@ function getFlightById(msg, callback){
 	flightModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
 		if(err){
 			res.code = 500  ; 
-			res.status  = 500 ; 
 			res.message = "Fail to get all flights from the server"
 			callback(null , res) ; 
 		}else{
-
-			delete result[0].availability;
-			res.code = 200  ; 
-			res.status  = 200 ; 
-			res.message = "Success"
-			res.data = result
-			callback(null , res) ; 
+            if(result) {
+                delete result[0].availability;
+                res.code = 200;
+                res.message = "Success"
+                res.data = result
+                callback(null, res);
+            } else {
+                res.code = 500  ;
+                res.message = "Fail to get all flights from the server"
+                callback(null , res) ;
+            }
 		}
 	})	
 	
@@ -114,12 +112,10 @@ function updateFlightById(msg, callback){
 	flightModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
 		if(err){
 			res.code = 500 ; 
-			res.status  = 500 ; 
 			res.message = "Error occured while updating  a flight"
 			callback(null , res); 
 		}else{
 			res.code = 200  ; 
-			res.status  = 200 ; 
 			res.message = "Success"
 			callback(null , res) ; 	
 		}
@@ -135,19 +131,16 @@ function deleteFlightById(msg, callback){
 		flightModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true, updatedDate: new Date() }}, { multi: false }, function(err , response){
 			if(err){
 				res.code = 500 ; 
-				res.status  = 500 ; 
 				res.message = "Error occured while deleting a hotel"
 				callback(null , res); 
 			}else{
 				res.code = 200  ; 
-				res.status  = 200 ; 
 				res.message = "Success"
 				callback(null , res) ; 	
 			}
 		})
 	}else{
 		res.code = 400;
-		res.status  = 400 ; 
 		res.data = []
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
@@ -203,11 +196,17 @@ function getFlightByIdForCustomer(msg, callback){
             res.message = "Fail to get all cars from the server"
             callback(null , res) ;
         }else{
-            delete result[0].availability;
-            res.code = 200  ;
-            res.message = "Success";
-            res.data = result;
-            callback(null , res) ;
+            if(result) {
+                delete result[0].availability;
+                res.code = 200;
+                res.message = "Success";
+                res.data = result;
+                callback(null, res);
+            } else {
+                res.code = 500  ;
+                res.message = "Fail to get all cars from the server"
+                callback(null , res) ;
+            }
         }
     })
 }

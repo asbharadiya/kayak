@@ -10,7 +10,6 @@
 }
 
 .flight-checkout-details .info-section {
-    padding: 15px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -22,11 +21,15 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border: 1px solid #e4e5ea;
+    padding: 15px;
 }
 
 .flight-checkout-details .info-section .first.travel-date-row {
     justify-content: normal;
     margin-bottom: 15px;
+    border: 0px;
+    padding: 0px;
 }
 
 .flight-checkout-details .info-section .first.travel-date-row label {
@@ -37,6 +40,25 @@
 .flight-checkout-details .info-section .first.travel-date-row p {
     margin: 0px;
     font-weight: normal;
+}
+
+.flight-checkout-details .info-section .first.amenities-row {
+    justify-content: space-between;
+    margin-top: 15px;
+    border: 0px;
+    padding: 0px;
+}
+
+.flight-checkout-details .info-section .first.amenities-row label {
+    margin: 0px;
+    margin-right: 5px;
+    float: left;
+}
+
+.flight-checkout-details .info-section .first.amenities-row p {
+    margin: 0px;
+    font-weight: normal;
+    float: left;
 }
 
 

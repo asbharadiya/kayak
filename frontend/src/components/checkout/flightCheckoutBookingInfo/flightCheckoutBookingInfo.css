@@ -1,0 +1,21 @@
+.flight-checkout-booking {
+
+}
+
+.flight-checkout-booking .travelers-info {
+    background: #e4e5ea;
+    padding: 15px 0px;
+    margin-bottom: 15px;
+}
+
+.flight-checkout-booking .travelers-info .form-group:last-child {
+    margin-bottom: 0px;
+}
+
+.flight-checkout-booking .contact-info {
+
+}
+
+.flight-checkout-booking .contact-info .form-group:last-child {
+    margin-bottom: 0px;
+}
