@@ -150,9 +150,7 @@ function deleteFlightById(msg, callback){
 
 function getFlightsForCustomer(msg, callback){
     var res = {};
-    // var parts = msg.queryParams.date.split("-");
-    // var date = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
-    
+   
     
     
     var queryParams = msg.queryParams ; 
@@ -161,30 +159,20 @@ function getFlightsForCustomer(msg, callback){
 	var query = {
         is_deleted : false,
         
-
-
-
-
-
-        // availability: {
-        //     $elemMatch: {
-        //         availableCars: {
-        //             $gte: 1
-        //         },
-        //         availabilityDate: {
-        //             $gte: startDate,
-        //             $lte: endDate
-        //         }
-        //     }
-        // }
     };
+
+
+
 
 
 	
 
     if(queryParams.minPrice != undefined ){
-    	var minPrice = queryParams.minPrice ;
-   	    var maxPrice = queryParams.maxPrice ; 
+    	var minPrice = parseInt(queryParams.minPrice) ;
+   	    var maxPrice = parseInt(queryParams.maxPrice) ; 
+
+
+
 
    	    var mealsArray = msg.queryParams.meals.split(',')
         var lugaggeArray = msg.queryParams.luggage.split(',')
@@ -211,11 +199,20 @@ function getFlightsForCustomer(msg, callback){
 			 query.luggage =  { "$in" : lugaggeArray }
         }
 
-    }
+
+
+        query.availability = { $elemMatch : 
+								{ sections : { $elemMatch : 
+												{ class: { $regex : new RegExp( cabin, "i") } ,   price : {$gte : minPrice , $lte : maxPrice  }  } 
+											 } 
+								}  
+							} 
+
+	}
 
 
    
-    console.log(query) ; 
+   
     
     var options = {
         select: 'flightNumber airline source destination departure arrival firstClassPrice businessClassPrice economyClassPrice',
