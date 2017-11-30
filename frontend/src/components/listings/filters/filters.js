@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import './filters.css'
 import CarFilters from './carFilters/carFilters';
 import HotelFilters from './hotelFilters/hotelFilters';
+import FlightFilters from './flightFilters/flightFilters';
 
 class Filters extends Component {
 
@@ -23,7 +24,7 @@ class Filters extends Component {
                     this.state.category === "cars" ? (
                         <CarFilters applyFilters={this.props.applyFilters}/>
                     ) : this.state.category === "flights" ? (
-                        <div></div>
+                        <FlightFilters applyFilters={this.props.applyFilters}></FlightFilters>
                     ) : (
                         <HotelFilters applyFilters={this.props.applyFilters}></HotelFilters>
                     )

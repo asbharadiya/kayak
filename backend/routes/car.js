@@ -17,6 +17,7 @@ function addCar(req,res){
         serviceEndDate :  req.body.serviceEndDate
     }
 
+
     s3.upload(req.files, function(err, result){
         if(err) {
             return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
@@ -34,6 +35,9 @@ function addCar(req,res){
 }
 
 function getCars(req,res){
+    
+
+
     kafka.make_request(topic_name,'getCars',{
 
     },function(err,result){
@@ -122,6 +126,9 @@ function deleteCarById(req,res){
 }
 
 function getCarsForCustomer(req,res){
+    
+    console.log("Query Params " , req.query);
+
     kafka.make_request(topic_name,'getCarsForCustomer',{
         queryParams : req.query
     },function(err,result){
