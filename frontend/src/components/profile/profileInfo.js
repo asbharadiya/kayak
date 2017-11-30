@@ -1,14 +1,71 @@
 import React, { Component } from 'react';
 import './profileInfo.css';
 import Sidebar from './../sidebar/sidebar';
-import {getUserDetails } from '../../actions/profile'
+import {getUserDetails, updateUserProfile } from '../../actions/profile'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 class ProfileInfo extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            _id : '',
+            auth_user_id:''
+        }
+
+        this.updateProfile = this.updateProfile.bind(this)
+    }
+
     componentDidMount(){
-        this.props.getUserDetails()
+
+        this.props.getUserDetails();
+        console.log('MOUNT')
+        
+    }
+
+
+   
+   componentDidUpdate(prevProps, prevState) {
+      console.log('Component DID UPDATE!')
+      if(this.state._id==='')
+      {	
+      	this.setState({
+              		_id : this.props.profile[0]._id,
+              		auth_user_id: this.props.profile[0].auth_user_id
+            })
+      	
+	  }
+	  console.log(this.props.userUpdateSuccess)
+	  if(this.props.userUpdateSuccess===true)
+	  {
+	  	this.props.getUserDetails();
+	  }
+
+   }
+   componentWillUnmount() {
+      console.log('Component WILL UNMOUNT!')
+
+   }
+
+    updateProfile() {
+    	//var _id= this.props.profile[0]._id;
+    	console.log('Update')
+    	console.log(document.getElementById('email').value)
+    	var obj = {
+    		_id  : this.state._id,
+    		auth_user_id : this.state.auth_user_id,
+    		firstName : document.getElementById('firstName').value,
+    		lastName : document.getElementById('lastName').value,
+    		address : document.getElementById('address').value,
+    		city : document.getElementById('city').value,
+    		state : document.getElementById('state').value,
+    		zip_code : document.getElementById('zip_code').value,
+    		phone_number : document.getElementById('phone_number').value,
+    		email : document.getElementById('email').value,
+    	}
+    	console.log(obj)
+    	this.props.updateUserProfile(obj)
     }
 
     render() {
@@ -98,6 +155,9 @@ class ProfileInfo extends Component {
 	        );
 	    }
 	    else{
+
+	    	
+
 	    	return (
 			  	<div className="profile-page-wrapper">
 		        	<div className="row profile-page-header">
@@ -105,7 +165,8 @@ class ProfileInfo extends Component {
 		        			<h2>Profile</h2>
 		        		</div>
 		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8">
-		        		<button type="button" className="btn btn-default  btn-kayak pull-right">Edit</button>
+		        		<button type="button" className="btn btn-default  btn-kayak pull-right" data-toggle="modal" data-target="#editProfile">Edit</button>
+		        		
 		        		</div>
 		        	</div>
 		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
@@ -181,6 +242,76 @@ class ProfileInfo extends Component {
 
 		        	</div>
 
+		        	<div className="modal fade" id="editProfile" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="profile-modal-content">
+                                <div className="profile-modal-header">
+                                    <h3 className="modal-title" id="exampleModalLabel">Edit Profile</h3>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                     	<span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="profile-modal-body">
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">First Name :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="text" className="form-control" name="firstName" id="firstName" defaultValue={this.props.profile[0].firstName}></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">Last Name :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="text" className="form-control" name="lastName" id="lastName" defaultValue={this.props.profile[0].lastName}></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">Email :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="email" className="form-control" name="email" id="email" defaultValue={this.props.profile[0].email} disabled></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">Address :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="email" className="form-control" name="address" id="address" defaultValue={this.props.profile[0].address}></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">City :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="text" className="form-control" name="city" id="city" defaultValue={this.props.profile[0].city}></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">State :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="text" className="form-control" name="state" id="state" defaultValue={this.props.profile[0].state}></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">Zip Code :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="number" className="form-control" name="zip_code" id="zip_code" defaultValue={this.props.profile[0].zip_code}></input>
+	                                    </div>
+                                    </div>
+                                    <div className="row MoadalRow">
+	                                    <label className="col-sm-3 ">Phone :</label>
+	                                    <div className="col-sm-8 ">
+	                                    	<input type="number" className="form-control" name="phone_number" id="phone_number" defaultValue={this.props.profile[0].phone_number}></input>
+	                                    </div>
+                                    </div>
+
+
+                                </div>
+                                <div className="profile-modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.updateProfile}>Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 	  			</div>
 	        );
 	    }    
@@ -191,13 +322,15 @@ class ProfileInfo extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getUserDetails : () => dispatch(getUserDetails()),
+        updateUserProfile : (obj) => dispatch(updateUserProfile(obj)),
 
     };
 }
 
 function mapStateToProps(state) {
     return {
-        profile : state.profileReducer.profile
+        profile : state.profileReducer.profile,
+        userUpdateSuccess : state.profileReducer.userUpdateSuccess
     };
 }
 

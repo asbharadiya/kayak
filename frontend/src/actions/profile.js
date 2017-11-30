@@ -12,8 +12,6 @@ function checkUserFailure(){
 export function getUserDetails() {
 	return function(dispatch) {
 	    return api.getUserDetails().then(response => {
-	    	console.log('Inside react ' + response)
-	    	console.log(response)
 	    	if(response.status === 200){
 	    		console.log('200')
 	    		dispatch(checkUserSuccess(response.data));
@@ -24,4 +22,32 @@ export function getUserDetails() {
 	      	dispatch(checkUserFailure());
 	    }); 
 	};
+}
+
+function updateSuccess(data) {
+  	return {type: "USER_UPDATE_SUCCESS"}
+}
+
+function updateFailure(){
+    return {type: "USER_UPDATE_FAILURE"}
+}
+
+export function updateUserProfile(payload) {
+	console.log(payload)
+	return function(dispatch) {
+	    return api.updateUserProfile(payload ,  function(error , response){
+            if(error){
+                dispatch(updateFailure())
+            } else {
+                response.then((res) => {
+                    if(res.status === 200){
+                        dispatch(updateSuccess())
+                    }else{
+                        dispatch(updateFailure())
+                    }
+                })
+            }
+        })
+	};
+
 }

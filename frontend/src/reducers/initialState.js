@@ -5,5 +5,6 @@ export default {
         total: 0,
         docs: []
     },
+    userUpdateSuccess:null,
     profile: []
 }
