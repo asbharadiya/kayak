@@ -22,6 +22,8 @@ export function checkSession() {
 	};
 }
 
+
+
 function logoutSuccess() {
   	return {type: "SESSION_INACTIVE"}
 }

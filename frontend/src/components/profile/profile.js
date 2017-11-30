@@ -9,7 +9,7 @@ class Profile extends Component {
 		  	<div className="profile-page-wrapper">
 	        	<Sidebar/>
 	  			<div className="page-content">
-		          <h2>This is profile page</h2>
+		          {this.props.children}
 		        </div>
   			</div>
         );

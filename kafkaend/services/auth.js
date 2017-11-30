@@ -48,9 +48,9 @@ function signin(msg, callback){
 
 function signup(msg, callback){
     var res = {};
-    console.log('AMAN in SignUp')
+    
     if(validator.isEmail(msg.email) && validator.isByteLength(msg.password, {min: 5}) && validator.isByteLength(msg.firstName, {min: 1}) && validator.isByteLength(msg.lastName, {min: 1})) {
-        console.log('Inside If')
+        
     	mysql.query("select id, username, email, role, password from auth_user where email =" + "'" + msg.email + "';", function (err, result) {
             if (err) throw err;
             if(result[0]) {
@@ -63,19 +63,25 @@ function signup(msg, callback){
                   var id = crypto.randomBytes(20).toString('hex');
                   mysql.query("INSERT INTO auth_user (id, email, password, username, role)  VALUES ('" + id + "'" + "," + "'" + msg.email + "'" + " , " + "'" + hash + "'" + " , " + "'" + msg.email + "'" + " , " + "'USER'" + ");", function(err, result) {
                     if(err) {
-                    	console.log('Error 1 : ' + err);
+                    	
                       res.code = 500;
                       res.message = "Internal server error";
                       callback(null, res);
                     } 
                     else {
-                    	console.log('Inside Else')
+                    	
                       msg.is_deleted = false;
                       msg.auth_user_id = id;
+                      msg.address='';
+                      msg.city='';
+                      msg.state='';
+                      msg.zip_code='';
+                      msg.phone_number='';
+                     
                       var newUser = new userModel(msg);
                       newUser.save(function (err) {
                                 if(err) {
-                                	console.log('Error 2 : ' + err);
+                                	
                                     res.code = 500 ;
                                     res.message = "Error occured while registering a hotel with server"
                                     callback(null , res);

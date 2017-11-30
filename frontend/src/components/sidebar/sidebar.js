@@ -11,7 +11,7 @@ class Sidebar extends Component {
   				<div className="nav-container">
   					<ul>
   						<li>
-  							<NavLink to="/user/profile">
+  							<NavLink to="/user/profileInfo">
   								Profile
   							</NavLink>
   						</li>

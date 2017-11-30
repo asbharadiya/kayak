@@ -4,13 +4,16 @@ var config = require('config');
 var topic_name = config.kafkaTopic;
 
 function getProfile(req,res){
+	console.log('AMAN in GET PROFILE ' + req.session.passport.user._id)
+	var id= req.session.passport.user._id;
 	kafka.make_request(topic_name,'getProfile',{
-		
+		id
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+        	console.log('Backend Passed' + result.data)
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }

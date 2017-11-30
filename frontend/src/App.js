@@ -10,6 +10,7 @@ import Listings from './components/listings/listings';
 import Profile from "./components/profile/profile";
 import Checkout from "./components/checkout/checkout";
 import Bookings from "./components/bookings/bookings";
+import ProfileInfo from "./components/profile/profileInfo";
 
 class App extends Component {
 
@@ -55,6 +56,15 @@ class App extends Component {
                                             <Bookings/>
                                         )
                                     )}/>
+                                    <Profile>
+                                        <Route path='/user/profileInfo' render={() => (
+                                          !isLogged ? (
+                                                <Redirect to="/"/>
+                                          ) : (
+                                                <ProfileInfo/>
+                                              )
+                                         )}/>
+                                    </Profile>
                                 </Switch>
                             </div>
                         </BrowserRouter>

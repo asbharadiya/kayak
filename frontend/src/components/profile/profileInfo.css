@@ -1,0 +1,26 @@
+.profile-page-wrapper {
+	padding: 0px 80px 0px 0px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+}
+
+.profile-page-wrapper .profile-page-header {
+	
+	border-bottom: 1px solid rgba(51, 51, 51, 0.8);
+}
+
+.outline {
+	 outline: 1px solid orange;
+}
+
+.RowDiv {
+	border-bottom: 1px solid #F0F0F0;
+	margin: 0px;
+	margin-top: 20px;
+	font-size: 115%;	
+	padding: 0px 0px 0px 0px;
+} 
+
+.RowDiv .RowData {
+	padding: 0px 0px 0px 0px;	
+}

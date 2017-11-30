@@ -4,5 +4,6 @@ export default {
     listings: {
         total: 0,
         docs: []
-    }
+    },
+    profile: []
 }
