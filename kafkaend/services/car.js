@@ -74,12 +74,18 @@ function getCarById(msg, callback){
             res.message = "Fail to get all cars from the server"
             callback(null , res) ;
         }else{
-            delete result[0].availability;
+            if(result) {
+                delete result[0].availability;
 
-            res.code = 200  ;
-            res.message = "Success";
-            res.data = result;
-            callback(null , res) ;
+                res.code = 200;
+                res.message = "Success";
+                res.data = result;
+                callback(null, res);
+            } else {
+                res.code = 500  ;
+                res.message = "Fail to get all cars from the server"
+                callback(null , res) ;
+            }
         }
     })
 }
@@ -229,11 +235,17 @@ function getCarByIdForCustomer(msg, callback){
             res.message = "Fail to get all cars from the server"
             callback(null , res) ;
         }else{
-            delete result[0].availability;
-            res.code = 200  ;
-            res.message = "Success";
-            res.data = result;
-            callback(null , res) ;
+            if(result) {
+                delete result[0].availability;
+                res.code = 200;
+                res.message = "Success";
+                res.data = result;
+                callback(null, res);
+            } else {
+                res.code = 500  ;
+                res.message = "Fail to get all cars from the server"
+                callback(null , res) ;
+            }
         }
     })
 }

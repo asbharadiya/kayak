@@ -1,0 +1,24 @@
+.flight-checkout-summary {
+
+}
+
+.flight-checkout-summary .summary-row {
+    margin-bottom: 15px;
+    line-height: 24px;
+}
+
+.flight-checkout-summary .summary-row .label-text {
+    margin: 0px;
+}
+
+.flight-checkout-summary .summary-row .value {
+    font-weight: normal;
+    margin: 0px;
+}
+
+.flight-checkout-summary .summary-row.total-row {
+    margin-bottom: 0px;
+    padding: 15px 0px;
+    background: #e4e5ea;
+    font-size: 18px;
+}

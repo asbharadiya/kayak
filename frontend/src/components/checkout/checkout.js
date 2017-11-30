@@ -20,19 +20,23 @@ class Checkout extends Component {
         super(props) ;
         //TODO: restrict direct access to this page
         this.state = {
-            category :  this.props.match.params.category,
-            queryParams : queryString.parse(this.props.location.search),
-            id :  this.props.match.params.id,
-            listingDetails : null,
-            paymentMethod : 'existing',
-            creditCards:[],
-            selectedCreditCard:null,
-            cardNumber:'',
-            nameOnCard:'',
-            expiryDate:'',
-            cvv:'',
-            validBookingInfo:false
+            category: this.props.match.params.category,
+            queryParams: queryString.parse(this.props.location.search),
+            id: this.props.match.params.id,
+            listingDetails: null,
+            total: 0,
+            paymentMethod: 'existing',
+            creditCards: [],
+            selectedCreditCard: null,
+            cardNumber: '',
+            nameOnCard: '',
+            expiryDate: '',
+            cvv: '',
+            saveCard:false,
+            bookingInfo: null
         }
+        this.updateTotal = this.updateTotal.bind(this);
+        this.updateBookingInfo = this.updateBookingInfo.bind(this);
         this.onPaymentMethodChanged = this.onPaymentMethodChanged.bind(this);
         this.onCreditCardSelected = this.onCreditCardSelected.bind(this);
         this.completeBooking = this.completeBooking.bind(this);
@@ -106,6 +110,18 @@ class Checkout extends Component {
         })
     }
 
+    updateBookingInfo(info){
+        this.setState({
+            bookingInfo:info
+        })
+    }
+
+    updateTotal(total){
+        this.setState({
+            total:total
+        })
+    }
+
     onPaymentMethodChanged(method){
         this.setState({
             paymentMethod: method,
@@ -113,6 +129,7 @@ class Checkout extends Component {
             nameOnCard:'',
             expiryDate:'',
             cvv:'',
+            saveCard:false,
             selectedCreditCard:null
         })
     }
@@ -148,9 +165,25 @@ class Checkout extends Component {
     }
 
     completeBooking(){
-        if(!this.state.validBookingInfo){
+        if(this.state.bookingInfo === null){
             alert('Please fill out all the required booking information!');
             return;
+        }
+        if(this.state.category === 'flights'){
+            if(this.state.bookingInfo.emailAddress === '' || this.state.bookingInfo.phoneNumber === '') {
+                alert('Please fill out all the required booking information!');
+                return;
+            }
+            this.state.bookingInfo.travelerInfo.map((traveler , key) => {
+                if(traveler.firstName === '' || traveler.lastName === ''){
+                    alert('Please fill out all the required booking information!');
+                    return;
+                }
+            })
+        } else if(this.state.category === 'cars') {
+            //TODO: validate car booking info
+        } else {
+            //TODO: validate hotel booking info
         }
         if(this.state.paymentMethod === 'existing'){
             if(this.state.selectedCreditCard === null) {
@@ -164,10 +197,15 @@ class Checkout extends Component {
             }
         }
         //TODO: make booking...
+        //send listing id, new credit card info or credit card id for payment, booking information to backend
+        //should get all above data at this point in all three cases
+        //make entry to booking table
+        //make entry to billing table
+        //add new credit card if save checkbox is checked
+        //subtract available from the listing object
         console.log('Processing....');
     }
 
-    //TODO: implement flight components
     //TODO: implement hotel components
     //TODO: finish cars components
     render() {
@@ -202,11 +240,11 @@ class Checkout extends Component {
                             <div className="checkout-panel-body">
                                 {
                                     this.state.category === 'cars' ? (
-                                        <CarCheckoutBookingInfo />
+                                        <CarCheckoutBookingInfo queryParams={this.state.queryParams}/>
                                     ) : this.state.category === 'flights' ? (
-                                        <FlightCheckoutBookingInfo />
+                                        <FlightCheckoutBookingInfo queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
-                                        <CarCheckoutBookingInfo />
+                                        <CarCheckoutBookingInfo queryParams={this.state.queryParams}/>
                                     )
                                 }
                             </div>
@@ -267,7 +305,8 @@ class Checkout extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col-xs-12 checkbox">
-                                            <label><input type="checkbox"/>save this method for future use</label>
+                                            <label><input type="checkbox" checked={this.state.saveCard}
+                                                          onChange={()=>this.setState({saveCard:!this.state.saveCard})}/>save this method for future use</label>
                                         </div>
                                     </div>
                                     <div className="cover"></div>
@@ -282,12 +321,22 @@ class Checkout extends Component {
                             </div>
                             <div className="checkout-panel-body">
                                 {
-                                    this.state.category === 'cars' ? (
-                                        <CarCheckoutSummary />
-                                    ) : this.state.category === 'flights' ? (
-                                        <FlightCheckoutSummary />
+                                    this.state.listingDetails !== null ? (
+                                        this.state.category === 'cars' ? (
+                                            <CarCheckoutSummary details={this.state.listingDetails}
+                                                                queryParams={this.state.queryParams}
+                                                                updateTotal={this.updateTotal}/>
+                                        ) : this.state.category === 'flights' ? (
+                                            <FlightCheckoutSummary details={this.state.listingDetails}
+                                                                   queryParams={this.state.queryParams}
+                                                                   updateTotal={this.updateTotal}/>
+                                        ) : (
+                                            <CarCheckoutSummary details={this.state.listingDetails}
+                                                                queryParams={this.state.queryParams}
+                                                                updateTotal={this.updateTotal}/>
+                                        )
                                     ) : (
-                                        <CarCheckoutSummary />
+                                        <div className="text-center">Loading...</div>
                                     )
                                 }
                             </div>
