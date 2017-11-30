@@ -46,7 +46,9 @@ export const checkSession = () =>
 		return res.json();
 	}).catch(error => {
         return error;
-    });  
+    });
+
+     
 
 export const logout = () =>
 	fetch(api+'/logout', {

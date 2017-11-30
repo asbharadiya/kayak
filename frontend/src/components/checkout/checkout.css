@@ -21,13 +21,18 @@
     top: 15px;
 }
 
+.checkout-page-wrapper .page-container .summary-container .checkout-btn-container .btn-kayak {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+}
 .checkout-page-wrapper .checkout-panel {
     background: #fff;
     margin-bottom: 15px;
 }
 
 .checkout-page-wrapper .checkout-panel .checkout-panel-title {
-    padding: 15px;
+    padding: 15px 30px;
     border-bottom: 1px solid #e4e5ea;
 }
 
@@ -37,6 +42,69 @@
 }
 
 .checkout-page-wrapper .checkout-panel .checkout-panel-body {
-    padding: 15px;
+    padding: 30px;
 }
 
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body {
+
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .radio {
+    margin: 0px;
+    margin-bottom: 15px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .radio.payment-method {
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .radio.payment-method label {
+    font-weight: 600;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-list {
+    padding: 15px;
+    max-width: 400px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-list.disabled .cover {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: #ddd;
+    opacity: 0.3;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-list p {
+    margin: 0px;
+    font-weight: normal;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-form {
+    padding: 15px;
+    max-width: 400px;
+    position: relative;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-form .checkbox {
+    margin: 0px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-form.disabled .cover {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: #ddd;
+    opacity: 0.3;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+}

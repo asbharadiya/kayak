@@ -7,6 +7,7 @@ import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
 import * as api from '../../../api/flights';
 
+
 class FlightComponent extends Component {
 
     constructor(props){
@@ -31,11 +32,17 @@ class FlightComponent extends Component {
             businessClassSeats : 0,
             economyClassSeats : 0 ,
             _id : '' ,
+            luggage : '',
+            meals : '' , 
 
 
             updateFlightError : '' ,
             flightUpdateLoading : false ,
-            updateErrorMessage : ''
+            updateErrorMessage : '',
+
+           
+
+
         }
 
         this.openUpdateFlight = this.openUpdateFlight.bind(this);
@@ -45,6 +52,8 @@ class FlightComponent extends Component {
         this.deleteFlight = this.deleteFlight.bind(this);
         this.openDeleteFlight = this.openDeleteFlight.bind(this);
         this.closeDeleteFlight = this.closeDeleteFlight.bind(this);
+        this.onMealsChanged = this.onMealsChanged.bind(this);
+        this.onChangeLuggage = this.onChangeLuggage.bind(this) ;
 
     }
 
@@ -88,6 +97,8 @@ class FlightComponent extends Component {
         })
     }
 
+   
+
 
     fetchFlightData(){
         var _this = this;
@@ -111,7 +122,9 @@ class FlightComponent extends Component {
                             businessClassSeats : res.data[0].businessClassSeats  ,
                             businessClassPrice : res.data[0].businessClassPrice  ,
                             firstClassSeats : res.data[0].firstClassSeats  ,
-                            firstClassPrice : res.data[0].firstClassPrice
+                            firstClassPrice : res.data[0].firstClassPrice,
+                            luggage : res.data[0].luggage,
+                            meals : res.data[0].meals
                         })
                     }else{
 
@@ -120,6 +133,22 @@ class FlightComponent extends Component {
             }
         })
     }
+
+
+    onMealsChanged(e){
+        console.log(e.target.value)
+        this.setState({
+            meals : e.target.value
+        })
+    }
+
+    onChangeLuggage(e){
+        this.setState({
+            luggage : e.target.value
+        })
+    }
+
+
 
 
     updateFlight(){
@@ -154,6 +183,14 @@ class FlightComponent extends Component {
             this.setState({ updateFlightError : "Please Specify Departure Time"})
             return ;
         }
+        if(this.state.meals === '' ){
+            this.setState({ updateFlightError : "Please Specify Meals"})
+            return ;
+        }
+         if(this.state.luggage === '' ){
+            this.setState({ updateFlightError : "Please Specify Luggage"})
+            return ;
+        }
         if(this.state.serviceStartDate === '' ){
             this.setState({ updateFlightError : "Please Specify Date from which service will start"})
             return ;
@@ -170,11 +207,11 @@ class FlightComponent extends Component {
             this.setState({ updateFlightError : 'Please check PRICES for Corresponsing Flights' })
             return
         }
-        if(startDate <= new Date())	{
+        if(startDate <= new Date()) {
             this.setState({ updateFlightError : "Service Start Date should be a future date"})
             return
         }
-        if(endDate <= new Date())	{
+        if(endDate <= new Date())   {
             this.setState({ updateFlightError : "Service End Date should be a future date"})
             return
         }
@@ -203,7 +240,9 @@ class FlightComponent extends Component {
             businessClassPrice : this.state.businessClassPrice ,
             businessClassSeats : this.state.businessClassSeats,
             economyClassPrice :  this.state.economyClassPrice,
-            economyClassSeats : this.state.economyClassSeats
+            economyClassSeats : this.state.economyClassSeats,
+            meals : this.state.meals ,
+            luggage : this.state.luggage
         }
 
 
@@ -237,8 +276,8 @@ class FlightComponent extends Component {
 
 
     render() {
-        console.log(this.state) ;
-        return (
+       
+       return (
             <div className="singleFlightComponent">
                 <div className="row mainRowDiv">
                     <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
@@ -288,15 +327,24 @@ class FlightComponent extends Component {
 
                     </div>
 
-                    <Modal show={this.state.openDeleteModal}  id="flightModal" className="deletFlightModal">
+
+                    <Modal show={this.state.openDeleteModal}  id="flightModal" className="flightModal">
+
 
                         <Modal.Body className="flightDeleteBody">
                             <b>Are you sure to delete {this.props.flight.flightName } ?  </b>
                         </Modal.Body>
 
                         <Modal.Footer className="flightDeleteFooter">
-                            <button className="btn btn-primary btn-kayak" onClick={this.deleteFlight}>YES</button>
-                            <button className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeDeleteFlight}>NO</button>
+
+                            <div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                <div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 col-md-offset-4 col-xs-offset-4 col-lg-offset-4 col-sm-offset-4">
+                                    <button className="btn btn-danger sharpCornerForInfoButton" onClick={this.deleteFlight}>YES</button>
+                                </div>
+                                <div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 ">
+                                    <button className="btn sharpCornerForInfoButton" onClick={this.closeDeleteFlight}>NO</button>
+                                </div>
+                            </div>
                         </Modal.Footer>
 
                     </Modal>
@@ -304,7 +352,8 @@ class FlightComponent extends Component {
                         <Modal.Body >
 
                             <div className="flightModalBody">
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="flightid">Flight Number</label>
                                     <input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="text"  onChange={(e) => {
                                         this.setState({
@@ -314,7 +363,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="airline">Airline Name</label>
                                     <input value={this.state.airline} className="form-control sharpCorner" id="airline" type="text"  onChange={(e) => {
                                         this.setState({
@@ -324,7 +374,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="source">Source</label>
                                     <input value={this.state.source} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
@@ -334,7 +385,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="destination">Destination</label>
                                     <input value={this.state.destination} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
@@ -344,7 +396,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="departure">Departure</label>
                                     <input value={this.state.departure} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
@@ -354,7 +407,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="arrival">Arrival</label>
                                     <input value={this.state.arrival} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
@@ -364,8 +418,25 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
-                                    <label htmlFor="serviceStartDate">Flight Service Start Date</label>
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+                                       <label htmlFor="serviceStartDate">Lugagge Count</label>
+                                        <select onChange={this.onChangeLuggage} value={this.state.luggage} className="form-control selectpicker" id="carType">
+                                            <option  className="selected disabled hidden">Select</option>
+                                            <optgroup label="Counts">
+                                                <option>0</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </optgroup>
+                                        </select>
+                                        
+                                </div>
+
+
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+                                   <label htmlFor="serviceStartDate">Flight Service Start Date</label>
                                     <input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             serviceStartDate : e.target.value
@@ -374,7 +445,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="serviceStartDate">Flight Service End Date</label>
                                     <input value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
@@ -384,7 +456,8 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group  seats-div  col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="class"># Seats</label>
 
                                     <div className="row">
@@ -410,7 +483,8 @@ class FlightComponent extends Component {
                                 </div>
 
 
-                                <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+
+                                <div className="form-group seats-div marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="class">Price</label>
 
                                     <div className="row">
@@ -439,19 +513,29 @@ class FlightComponent extends Component {
                         </Modal.Body>
 
                         <Modal.Footer className="flightModalFooter">
-                            <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right">
-                                <Loading isLoading={this.state.flightUpdateLoading} ></Loading>
+
+                            <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+                                <div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
+                                    <Loading isLoading={this.state.flightUpdateLoading} ></Loading>
+                                </div>
                             </div>
 
-                            <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right flightAddErrorText">
+                            <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 flightAddErrorText">
                                 {this.state.updateFlightError}
                                 {this.state.updateErrorMessage}
                             </div>
 
-                            <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
-                                <button type="button" className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeUpdateFlight}>Close</button>
-                                <button type="button" className="btn btn-primary btn-kayak" onClick={this.updateFlight} >Update
-                                </button>
+                            <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+
+                                <div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
+                                    <button type="button" className="btn btn-default  btn-kayak" onClick={this.updateFlight} >Update
+                                    </button>
+                                </div>
+                                <div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
+
+                                    <button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={this.closeUpdateFlight}>Close</button>
+
+                                </div>
                             </div>
 
 
@@ -485,4 +569,4 @@ function mapStateToProps(state) {
 }
 
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <FlightComponent {...props}/>));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <FlightComponent {...props}/>))

@@ -1,21 +1,7 @@
 var mongoose = require("mongoose");
 
 var userSchema = new mongoose.Schema({
-
-
-
-
-
-
-
-
-
-
-
-
-
-  is_deleted: Boolean,
-
+	is_deleted: Boolean,
     id : String,
     auth_user_id : String,
     firstName : String,

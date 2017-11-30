@@ -97,9 +97,7 @@
 
 
 .scrollDiv{
-    /*	max-height: 600px ;
-        overflow-y: scroll;
-        margin-top: 15px*/
+
 }
 
 .sharpCornerForInfoButton{
@@ -114,4 +112,8 @@
 
 .lable-margin{
     margin-right: 15px
+}
+
+.radio-no{
+    margin-right: 40px
 }

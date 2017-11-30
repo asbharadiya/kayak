@@ -10,6 +10,7 @@ import Listings from './components/listings/listings';
 import Profile from "./components/profile/profile";
 import Checkout from "./components/checkout/checkout";
 import Bookings from "./components/bookings/bookings";
+import ProfileInfo from "./components/profile/profileInfo";
 
 class App extends Component {
 
@@ -33,7 +34,7 @@ class App extends Component {
                                         <Redirect to="/hotels"/>
                                     )}/>
                                     <Route exact path='/:category' component={Landing}/>
-                                    <Route exact path='/:category/listings' component={Listings} key="listing"/>
+                                    <Route exact path='/:category/listings' component={Listings}/>
                                     <Route exact path='/:category/:id/checkout' render={() => (
                                         !isLogged ? (
                                             <Redirect to="/"/>
@@ -55,6 +56,15 @@ class App extends Component {
                                             <Bookings/>
                                         )
                                     )}/>
+                                    <Profile>
+                                        <Route path='/user/profileInfo' render={() => (
+                                          !isLogged ? (
+                                                <Redirect to="/"/>
+                                          ) : (
+                                                <ProfileInfo/>
+                                              )
+                                         )}/>
+                                    </Profile>
                                 </Switch>
                             </div>
                         </BrowserRouter>

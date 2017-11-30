@@ -54,6 +54,9 @@ module.exports = function(router,passport) {
 	router.get('/c/hotels', hotel.getHotelsForCustomer);
 	router.get('/c/flights', flight.getFlightsForCustomer);
 	router.get('/c/cars', car.getCarsForCustomer);
+    router.get('/c/hotels/:id', isAuthenticated, hotel.getHotelByIdForCustomer);
+    router.get('/c/flights/:id', isAuthenticated, flight.getFlightByIdForCustomer);
+    router.get('/c/cars/:id', isAuthenticated, car.getCarByIdForCustomer);
 	router.post('/c/bookings', isAuthenticated, booking.makeBooking);
 	router.get('/c/bookings', isAuthenticated, booking.getBookings);
 	router.get('/c/bookings/:id', isAuthenticated, booking.getBookingById);
@@ -62,7 +65,7 @@ module.exports = function(router,passport) {
 		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'USER') {
 			next();
 	  	} else {
-			res.status(401).send();
+			res.status(401).json({status:401,statusText:"Unauthorized"});
 		}
 	}
 
@@ -70,7 +73,7 @@ module.exports = function(router,passport) {
 	    if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'ADMIN') {
 			next();
 	  	} else {
-			res.status(401).send();
+			res.status(401).json({status:401,statusText:"Unauthorized"});
 		}
 	}
 

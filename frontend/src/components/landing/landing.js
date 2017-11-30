@@ -9,7 +9,7 @@ class Landing extends Component {
   		return (
 	      	<div className="landing-page-wrapper">
 	        	<Banner/>
-	        	<Content/>
+	        	{/*<Content/>*/}
 	      	</div>
 	    );
   	}

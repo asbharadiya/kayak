@@ -15,7 +15,7 @@ class CarRow extends Component {
                     <div className="divForImageAndName row">
                         <div className="carName-category col-lg-7 col-md-7 col-sm-7 col-xs-7">
 
-                            <Rater total={5} rating={4} interactive={false}/>
+                            
 
                             <div className="category-section">
                                 {this.props.data.carType}

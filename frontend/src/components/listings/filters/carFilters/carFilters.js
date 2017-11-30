@@ -4,6 +4,7 @@ import './carFilters.css';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import {connect} from 'react-redux';
 import * as carActions from '../../../../actions/car';
+import Slider, { Range } from 'rc-slider';
 
 class CarFilters extends Component {
 
@@ -12,12 +13,28 @@ class CarFilters extends Component {
         this.state = {
             occupants: [] ,
             luggage : [] ,
-            category : []
+            category : [] ,
+
+            minPrice : 0  , 
+            maxPrice : 500  
         };
         this.occupantsChanged = this.occupantsChanged.bind(this);
         this.luggageChanged = this.luggageChanged.bind(this);
         this.categoryChanged = this.categoryChanged.bind(this);
+        this.updatePrice = this.updatePrice.bind(this);
     }
+
+    updatePrice(value) {
+        var min = value[0];
+        var max = value[1];
+        this.setState({
+            minPrice : min ,
+            maxPrice : max
+        }, function(){
+            this.props.applyFilters(this.state);
+        });
+    }
+
     occupantsChanged = (newoccupants) => {
         this.setState({
             occupants: newoccupants
@@ -52,6 +69,13 @@ class CarFilters extends Component {
                     <div className="groups-list">
                         <ul>
                             <li>
+                                 <div className="move_bottom_20">
+                                      <div className="pull-left"> ${this.state.minPrice}</div>
+                                      <div className="text-right"> ${this.state.maxPrice}</div>
+                                 </div>
+                                <div>
+                                    <Range min={0} max={500} step={1} defaultValue={[0, 500]} onChange={this.updatePrice} />
+                                </div>
 
                             </li>
                         </ul>

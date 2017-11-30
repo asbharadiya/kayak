@@ -4,5 +4,7 @@ export default {
     listings: {
         total: 0,
         docs: []
-    }
+    },
+    userUpdateSuccess:null,
+    profile: []
 }

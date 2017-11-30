@@ -79,9 +79,22 @@ function getFlightsForCustomer(req,res){
 
 }
 
+function getFlightByIdForCustomer(req,res){
+    kafka.make_request(topic_name,'getFlightByIdForCustomer',{
+        id : req.params.id
+    }, function(err,result){
+        if(err) {
+            return res.status(500).json({status:500,statusText:"Internal server error"});
+        } else {
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+        }
+    });
+}
+
 exports.addFlight = addFlight;
 exports.getFlights = getFlights;
 exports.getFlightById = getFlightById;
 exports.updateFlightById = updateFlightById;
 exports.deleteFlightById = deleteFlightById;
 exports.getFlightsForCustomer = getFlightsForCustomer;
+exports.getFlightByIdForCustomer = getFlightByIdForCustomer;

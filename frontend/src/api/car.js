@@ -14,10 +14,26 @@ export const getAllCars = (params, callback) => {
             'Content-Type': 'application/json'
         }
     }).then(res => {
-        callback( null , res.json());
+        callback(null, res.json());
     }).catch(error => {
         callback( error , {});
     });    
-} 
+}
+
+export const getCarById = ( id , callback) => {
+    fetch(api+'/c/cars/'+id, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    }).then(res => {
+        callback(null, res.json());
+    }).catch(error => {
+        callback( error , {});
+    });
+}
 
 

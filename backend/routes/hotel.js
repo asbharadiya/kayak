@@ -142,9 +142,21 @@ function getHotelsForCustomer(req,res){
     });
 }
 
+
+function getHotelByIdForCustomer(req,res){
+    kafka.make_request(topic_name,'getHotelByIdForCustomer',{ id : req.params.id }, function(err,result){
+        if(err) {
+            return res.status(500).json({status:500,statusText:"Internal server error"});
+        } else {
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+        }
+    });
+}
+
 exports.addHotel = addHotel;
 exports.getHotels = getHotels;
 exports.getHotelById = getHotelById;
 exports.updateHotelById = updateHotelById;
 exports.deleteHotelById = deleteHotelById;
 exports.getHotelsForCustomer = getHotelsForCustomer;
+exports.getHotelByIdForCustomer = getHotelByIdForCustomer;
