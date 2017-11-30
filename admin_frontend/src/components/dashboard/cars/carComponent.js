@@ -280,8 +280,42 @@ class CarComponent extends Component {
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="carname">Upload</label>
                            
+                             <div className="input-group image-preview">
+                              <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
+                                   <span className="input-group-btn">
 
-                               
+                                    {
+                                                 this.state.carFile === '' ?
+                                                     <span></span>
+                                                     :
+                                                     <button type="button"  onClick={() => {
+                                                         this.setState({carFile : '' , filename : ''})
+                                                     }} className="btn btn-default image-preview-clear" >
+                                                         <span className="glyphicon glyphicon-remove"></span> Clear
+                                                     </button>
+                                             }
+ 
+ 
+ 
+                                     <div className="btn btn-default image-preview-input">
+                                                 <span className="glyphicon glyphicon-folder-open"></span>
+                                                 <span className="image-preview-input-title"></span> Browse
+                                                 <input type="file" onChange={(e) => {
+                                                     var file = e.target.files[0];
+ 
+ 
+                                                     if(file === undefined){
+                                                         return ;
+                                                     }
+ 
+                                                     this.setState({ carFile : file , filename : file.name})
+ 
+                                                 }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+                                             </div>
+ 
+                                         </span>
+ 
+                             </div>
 
                             
                         </div>
