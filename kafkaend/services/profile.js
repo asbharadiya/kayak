@@ -25,10 +25,23 @@ function getProfile(msg, callback){
 }
 
 function updateProfile(msg, callback){
+	console.log('USER KAFKA')
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+	idToUpdate = msg.id ;
+	console.log(idToUpdate)
+	
+	userModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , result){
+        if(err){
+            res.code = 500 ;
+            res.message = "Error occured while updating Profle";
+            callback(null , res);
+        }else{
+        	console.log('Update Passed '+ result)
+            res.code = 200  ;
+            res.message = "Success";
+            callback(null , res) ;
+        }
+    })
 }
 
 function addCreditCard(msg, callback){

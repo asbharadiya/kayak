@@ -5,19 +5,37 @@ const headers = {
 };
 
 export const getUserDetails = () =>
-	fetch(api+'/c/profile', {
-	    method: 'GET',
-	    headers: {
-	    	...headers,
+    fetch(api+'/c/profile', {
+        method: 'GET',
+        headers: {
+            ...headers,
             'Content-Type': 'application/json'
         },
         credentials: 'include'
         
-	}).then(res => {
-		return res.json();
-	}).catch(error => {
+    }).then(res => {
+        return res.json();
+    }).catch(error => {
         return error;
-    });
+    }); 
+    
+export const updateUserProfile = (payload , callback) => {
+    console.log('API')
+    console.log(payload)
+    fetch(api+'/c/profile', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+    });    
+}
 
 export const getCreditCards = () =>
     fetch(api+'/c/credit_cards', {
@@ -42,7 +60,7 @@ export const addCreditCard = (payload) =>
             'Content-Type': 'application/json'
         },
         credentials: 'include',
-		body: JSON.stringify(payload)
+        body: JSON.stringify(payload)
     }).then(res => {
         return res.json();
     }).catch(error => {
