@@ -34,9 +34,9 @@ class App extends Component {
                                         <Redirect to="/hotels"/>
                                     )}/>
                                     <Route exact path='/:category' component={Landing}/>
-                                    <Route exact path='/:category/listings' component={Listings}/>
+                                    <Route exact path='/:category/listings' component={Listings} key="listing"/>
                                     <Route exact path='/:category/:id/checkout' render={() => (
-                                        isLogged ? (
+                                        !isLogged ? (
                                             <Redirect to="/"/>
                                         ) : (
                                             <Checkout/>

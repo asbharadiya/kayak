@@ -227,6 +227,7 @@ class Flights extends Component {
 
                 <Modal show={this.state.showFlightModal} id="flightModal" className="flightModal">
                     <Modal.Body className="flightModalBody">
+
                         <div className="scrollDiv">
 
                             <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
@@ -367,9 +368,11 @@ class Flights extends Component {
 
 
                         <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 flightAddErrorText">
+
                             {this.state.addFlightError}
 
                         </div>
+
 
 
                         <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
@@ -380,6 +383,7 @@ class Flights extends Component {
                             <div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
                                 <button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={this.closeAddFlight}>Close</button>
                             </div>
+
                         </div>
 
 

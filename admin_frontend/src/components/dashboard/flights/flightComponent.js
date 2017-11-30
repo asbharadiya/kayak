@@ -288,13 +288,16 @@ class FlightComponent extends Component {
 
                     </div>
 
+
                     <Modal show={this.state.openDeleteModal}  id="flightModal" className="flightModal">
+
 
                         <Modal.Body className="flightDeleteBody">
                             <b>Are you sure to delete {this.props.flight.flightName } ?  </b>
                         </Modal.Body>
 
                         <Modal.Footer className="flightDeleteFooter">
+
                             <div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                                 <div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 col-md-offset-4 col-xs-offset-4 col-lg-offset-4 col-sm-offset-4">
                                     <button className="btn btn-danger sharpCornerForInfoButton" onClick={this.deleteFlight}>YES</button>
@@ -310,6 +313,7 @@ class FlightComponent extends Component {
                         <Modal.Body >
 
                             <div className="flightModalBody">
+
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="flightid">Flight Number</label>
                                     <input value={this.state.flightNumber} className="form-control sharpCorner" id="flightid" type="text"  onChange={(e) => {
@@ -319,6 +323,7 @@ class FlightComponent extends Component {
                                     }} aria-describedby="basic-addon1"
                                     />
                                 </div>
+
 
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="airline">Airline Name</label>
@@ -330,6 +335,7 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
+
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="source">Source</label>
                                     <input value={this.state.source} className="form-control sharpCorner" onChange={(e) => {
@@ -339,6 +345,7 @@ class FlightComponent extends Component {
                                     }} id="source" type="text"  aria-describedby="basic-addon1"
                                     />
                                 </div>
+
 
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="destination">Destination</label>
@@ -350,6 +357,7 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
+
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="departure">Departure</label>
                                     <input value={this.state.departure} className="form-control sharpCorner" onChange={(e) => {
@@ -359,6 +367,7 @@ class FlightComponent extends Component {
                                     }} id="departure" type="time"  aria-describedby="basic-addon1"
                                     />
                                 </div>
+
 
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="arrival">Arrival</label>
@@ -370,8 +379,9 @@ class FlightComponent extends Component {
                                     />
                                 </div>
 
+
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-                                    <label htmlFor="serviceStartDate">Flight Service Start Date</label>
+                                   <label htmlFor="serviceStartDate">Flight Service Start Date</label>
                                     <input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control sharpCorner" onChange={(e) => {
                                         this.setState({
                                             serviceStartDate : e.target.value
@@ -379,6 +389,7 @@ class FlightComponent extends Component {
                                     }} id="serviceStartDate" type="date"  aria-describedby="basic-addon1"
                                     />
                                 </div>
+
 
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="serviceStartDate">Flight Service End Date</label>
@@ -389,6 +400,7 @@ class FlightComponent extends Component {
                                     }} id="serviceStartDate" type="date"  aria-describedby="basic-addon1"
                                     />
                                 </div>
+
 
                                 <div className="form-group  seats-div  col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                     <label htmlFor="class"># Seats</label>
@@ -414,6 +426,7 @@ class FlightComponent extends Component {
                                         </div>
                                     </div>
                                 </div>
+
 
 
                                 <div className="form-group seats-div marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
@@ -445,6 +458,7 @@ class FlightComponent extends Component {
                         </Modal.Body>
 
                         <Modal.Footer className="flightModalFooter">
+
                             <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                 <div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
                                     <Loading isLoading={this.state.flightUpdateLoading} ></Loading>

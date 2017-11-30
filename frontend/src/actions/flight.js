@@ -3,10 +3,7 @@ import * as util from './util';
 
 // Get all flights
 export function getAllFlights(queryParams, filters) {
-    var params = "?";
-    if(queryParams){
-        params += util.toQueryString(queryParams);
-    }
+    var params = queryParams;
     if(filters){
         params += "&";
         params += util.toQueryString(filters);

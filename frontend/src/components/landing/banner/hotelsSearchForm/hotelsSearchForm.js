@@ -10,7 +10,8 @@ class HotelsSearchForm extends Component {
   	}
 
 	search() {
-		this.props.history.push('/hotels/listings');
+		this.props.history.push('/hotels/listings?city=San Jose&checkInDate=12-10-2017&checkOutDate=12-15-2017&guests=2');
+
 	}
 
   	render() {
@@ -26,9 +27,12 @@ class HotelsSearchForm extends Component {
 	        			<div className=" field-container location">
 	        				<input type="text" className="form-control"/>
 	        			</div>
-	        			<div className="field-container date">
+	        			<div className="field-container checkInDate">
 	        				<input type="text" className="form-control"/>
 	        			</div>
+								<div className="field-container checkOutDate">
+									<input type="text" className="form-control"/>
+								</div>
 	        			<div className="field-container guests">
 	        				<input type="text" className="form-control"/>
 	        			</div>

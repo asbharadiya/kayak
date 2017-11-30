@@ -10,7 +10,8 @@ class FlightsSearchForm extends Component {
   	}
 
 	search() {
-		this.props.history.push('/flights/listings');
+        //TODO: take these value from input
+        this.props.history.push('/flights/listings?source=San Jose&dest=San Fransisco&date=12-10-2017&travellers=1');
 	}
 
   	render() {

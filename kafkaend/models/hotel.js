@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var mongoosePaginate = require('mongoose-paginate');
 
 var hotelSchema = new mongoose.Schema({
 	id : String,
@@ -11,10 +12,7 @@ var hotelSchema = new mongoose.Schema({
     hotelEmail: String,
     hotelStar : Number,
     hotelRating : Number,
-    hotelPhotos : [{ file : String, fileId : String }],
-    hotelAmenities : [{ name : String, id : String }],
-    hotelReviews : [{ userId : String, review : String, rating : Number, postDate : Date }],
-    hotelOverAllRating : Number,
+    hotelAmenities : [String],
     hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}],
     is_deleted : Boolean,
     serviceStartDate : Date,
@@ -22,4 +20,7 @@ var hotelSchema = new mongoose.Schema({
     availability : [{ availableDate: Date, hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}] } ],
     images : [String]
 });
+
+hotelSchema.plugin(mongoosePaginate);
+
 module.exports = mongoose.model('hotel', hotelSchema);

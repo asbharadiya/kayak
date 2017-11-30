@@ -14,7 +14,12 @@
     width: 100%;
 }
 
-
+.checkout-page-wrapper .page-container .summary-container {
+    width: 320px;
+    position: absolute;
+    right: 0px;
+    top: 15px;
+}
 
 .checkout-page-wrapper .checkout-panel {
     background: #fff;
@@ -34,3 +39,4 @@
 .checkout-page-wrapper .checkout-panel .checkout-panel-body {
     padding: 15px;
 }
+

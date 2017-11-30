@@ -149,10 +149,19 @@ function deleteHotelById(msg, callback){
 
 function getHotelsForCustomer(msg, callback){
     var res = {};
-    hotelModel.find({ is_deleted : false}, function(err, result){
+    var query = {
+        is_deleted : false
+    };
+    var options = {
+        select: 'hotelName hotelAddress hotelCity hotelState hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
+        lean: true,
+        page: msg.pageNo || 1,
+        limit: 20
+    };
+    hotelModel.paginate(query,options, function(err, result){
         if(err){
             res.code = 500  ;
-            res.message = "Fail to get all hotels from the server"
+            res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
             res.code = 200  ;

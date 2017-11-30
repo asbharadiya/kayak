@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
-import { Nav, NavDropdown, MenuItem, Modal } from 'react-bootstrap';
+import { Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import './header.css';
-import * as api from '../../api/auth';
 import * as actions from '../../actions/auth';
+import AuthModal from '../authModal/authModal';
 
 class Header extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showAuthModal:false,
-            activeForm:"signin",
-            emailError:"",
-            passwordError:"",
-            firstNameError:"",
-            lastNameError:"",
-            formError:""
+            showAuthModal:false
         }
         this.handleLink = this.handleLink.bind(this);
         this.openAuthModal = this.openAuthModal.bind(this);
         this.closeAuthModal = this.closeAuthModal.bind(this);
-        this.toggleActiveForm = this.toggleActiveForm.bind(this);
-        this.handleSigninSubmit = this.handleSigninSubmit.bind(this);
-        this.handleSignupSubmit = this.handleSignupSubmit.bind(this);
     }
 
     handleLink(path) {
@@ -33,13 +24,7 @@ class Header extends Component {
 
     openAuthModal(){
         this.setState({
-            showAuthModal:true,
-            activeForm:"signin",
-            emailError:"",
-            passwordError:"",
-            firstNameError:"",
-            lastNameError:"",
-            formError:""
+            showAuthModal:true
         })
     }
 
@@ -48,93 +33,6 @@ class Header extends Component {
             showAuthModal:false
         })
     }
-
-    toggleActiveForm(to){
-        this.setState({
-            activeForm:to,
-            emailError:"",
-            passwordError:"",
-            firstNameError:"",
-            lastNameError:"",
-            formError:""
-        })
-    }
-
-    handleSigninSubmit() {
-        this.setState({
-            emailError:"",
-            passwordError:"",
-            formError:""
-        });
-        let isFormValid = true;
-        if(this.email.value === ''){
-            this.setState({emailError:"Please enter your email"});
-            isFormValid = false;
-        } else if(!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email.value))){
-            this.setState({emailError:"Please enter valid email"});
-            isFormValid = false;
-        }
-        if(this.password.value === ''){
-            this.setState({passwordError:"Please enter your password"});
-            isFormValid = false;
-        }
-        if(isFormValid) {
-            api.signin({email:this.email.value,password:this.password.value})
-                .then((res) => {
-                    if (res.status === 200) {
-                        this.closeAuthModal();
-                        this.props.checkSession();
-                    } else if (res.status === 401) {
-                        this.setState({formError:"Invalid email or password"});
-                    } else {
-                        this.setState({formError:"Opps! Please try again"});
-                    }
-                });
-        }
-    };
-
-    handleSignupSubmit() {
-        this.setState({
-            emailError:"",
-            passwordError:"",
-            firstNameError:"",
-            lastNameError:"",
-            formError:""
-        });
-        let isFormValid = true;
-        if(this.email.value === ''){
-            this.setState({emailError:"Please enter your email"});
-            isFormValid = false;
-        } else if(!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email.value))){
-            this.setState({emailError:"Please enter valid email"});
-            isFormValid = false;
-        }
-        if(this.password.value === ''){
-            this.setState({passwordError:"Please enter your password"});
-            isFormValid = false;
-        }
-        if(this.firstName.value === ''){
-            this.setState({firstNameError:"Please enter your first name"});
-            isFormValid = false;
-        }
-        if(this.lastName.value === ''){
-            this.setState({lastNameError:"Please enter your last name"});
-            isFormValid = false;
-        }
-        if(isFormValid) {
-            api.signup({email:this.email.value,password:this.password.value,firstName:this.firstName.value,lastName:this.lastName.value})
-                .then((res) => {
-                    if (res.status === 200) {
-                        this.closeAuthModal();
-                        this.props.checkSession();
-                    } else if (res.status === 409) {
-                        this.setState({formError:"User already exists"});
-                    } else {
-                        this.setState({formError:"Opps! Please try again"});
-                    }
-                });
-        }
-    };
 
   	render() {
         return (
@@ -189,65 +87,7 @@ class Header extends Component {
                         }
       				</div>
       			</div>
-                <Modal show={this.state.showAuthModal} onHide={this.closeAuthModal} id="authModal">
-                    {
-                        this.state.activeForm === 'signin' ? (
-                            <div>
-                                <Modal.Body>
-                                    <div className="form-body">
-                                        <div className="form-group">
-                                            <span className="error">{this.state.emailError}</span>
-                                            <input type="email" className="form-control" placeholder="Email" ref={(email) => this.email = email}/>
-                                        </div>
-                                        <div className="form-group">
-                                            <span className="error">{this.state.passwordError}</span>
-                                            <input type="password" className="form-control" placeholder="Password" ref={(password) => this.password = password}/>
-                                        </div>
-                                        <div className="form-group btn-container">
-                                            <span className="error">{this.state.formError}</span>
-                                            <button className="btn btn-primary btn-kayak" onClick={this.handleSigninSubmit}>Sign in</button>
-                                        </div>
-                                    </div>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <span>Don't have an account?</span>
-                                    <button className="btn btn-primary btn-kayak" onClick={()=>this.toggleActiveForm('signup')}>Sign up</button>
-                                </Modal.Footer>
-                            </div>
-                        ) : (
-                            <div>
-                                <Modal.Body>
-                                    <div className="form-body">
-                                        <div className="form-group">
-                                            <span className="error">{this.state.firstNameError}</span>
-                                            <input type="text" className="form-control" placeholder="First Name" ref={(firstName) => this.firstName = firstName}/>
-                                        </div>
-                                        <div className="form-group">
-                                            <span className="error">{this.state.lastNameError}</span>
-                                            <input type="text" className="form-control" placeholder="Last Name" ref={(lastName) => this.lastName = lastName}/>
-                                        </div>
-                                        <div className="form-group">
-                                            <span className="error">{this.state.emailError}</span>
-                                            <input type="email" className="form-control" placeholder="Email" ref={(email) => this.email = email}/>
-                                        </div>
-                                        <div className="form-group">
-                                            <span className="error">{this.state.passwordError}</span>
-                                            <input type="password" className="form-control" placeholder="Password" ref={(password) => this.password = password}/>
-                                        </div>
-                                        <div className="form-group btn-container">
-                                            <span className="error">{this.state.formError}</span>
-                                            <button className="btn btn-primary btn-kayak" onClick={this.handleSignupSubmit}>Sign up</button>
-                                        </div>
-                                    </div>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <span>Already have an account?</span>
-                                    <button className="btn btn-primary btn-kayak" onClick={()=>this.toggleActiveForm('signin')}>Sign in</button>
-                                </Modal.Footer>
-                            </div>
-                        )
-                    }
-                </Modal>
+                <AuthModal showAuthModal={this.state.showAuthModal} closeAuthModal={this.closeAuthModal}></AuthModal>
       		</header>
     	);
   	}
