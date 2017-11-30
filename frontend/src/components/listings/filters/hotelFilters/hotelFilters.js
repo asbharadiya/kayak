@@ -41,7 +41,7 @@ class HotelFilters extends Component {
     this.setState({
         price : { 'min' : min, 'max' : max }
     }, function(){
-        //this.props.getAllHotels(this.state);
+        this.props.applyFilters(this.state);
     });
   }
 
