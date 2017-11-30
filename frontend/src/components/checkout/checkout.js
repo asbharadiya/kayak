@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import queryString from 'query-string';
 import './checkout.css';
-import CarCheckoutDetails from './carCheckOutDetails/carCheckoutDetails';
+import CarCheckoutDetails from './carCheckoutDetails/carCheckoutDetails';
 import CarCheckoutBookingInfo from './carCheckoutBookingInfo/carCheckoutBookingInfo';
 import CarCheckoutSummary from './carCheckoutSummary/carCheckoutSummary';
 import FlightCheckoutDetails from './flightCheckoutDetails/flightCheckoutDetails';

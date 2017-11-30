@@ -153,17 +153,12 @@ function getFlightsForCustomer(msg, callback){
     // var parts = msg.queryParams.date.split("-");
     // var date = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
     
-
-    console.log(msg.queryParams)
+    
     
     var queryParams = msg.queryParams ; 
+	var cabin= msg.queryParams.cabin ;
 
-    var minPrice = queryParams.minPrice ;
-    var maxPrice = queryParams.maxPrice ; 
-
-    console.log(minPrice , maxPrice)
-
-    var query = {
+	var query = {
         is_deleted : false,
         
 
@@ -183,6 +178,45 @@ function getFlightsForCustomer(msg, callback){
         //     }
         // }
     };
+
+
+	
+
+    if(queryParams.minPrice != undefined ){
+    	var minPrice = queryParams.minPrice ;
+   	    var maxPrice = queryParams.maxPrice ; 
+
+   	    var mealsArray = msg.queryParams.meals.split(',')
+        var lugaggeArray = msg.queryParams.luggage.split(',')
+        
+
+        if(( mealsArray.length == 1 && mealsArray[0] == '' )) {
+            mealsArray = []
+        }else if(mealsArray.length > 0){
+			 for(var i = 0 ; i < mealsArray.length ; i++){
+        	  	mealsArray[i] = mealsArray[i] == "false" ? false : true 
+        	  }
+			 query.meals =  { "$in" : mealsArray }
+        }
+
+        
+
+        if(( lugaggeArray.length == 1 && lugaggeArray[0] == '' )) {
+            lugaggeArray = []
+        }else if(lugaggeArray.length > 0 ){
+			 for(var i = 0 ; i < lugaggeArray.length ; i++){
+			 	
+        	  	lugaggeArray[i] = parseInt(lugaggeArray[i]) 
+        	  }
+			 query.luggage =  { "$in" : lugaggeArray }
+        }
+
+    }
+
+
+   
+    console.log(query) ; 
+    
     var options = {
         select: 'flightNumber airline source destination departure arrival firstClassPrice businessClassPrice economyClassPrice',
         lean: true,

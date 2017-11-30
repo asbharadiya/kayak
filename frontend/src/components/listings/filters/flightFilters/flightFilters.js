@@ -13,7 +13,7 @@ class FlightFilters extends Component {
         super(props);
         this.state = {
             meals : [] ,
-            lugagge : [] ,
+            luggage : [] ,
 
             minPrice : 0  , 
             maxPrice : 5000  
@@ -40,8 +40,8 @@ class FlightFilters extends Component {
         this.setState({
             meals: newMeals
         }, function(){
-           // this.props.applyFilters(this.state);
-           console.log(this.state.meals)
+           this.props.applyFilters(this.state);
+          
         });
     }
 
@@ -50,8 +50,8 @@ class FlightFilters extends Component {
         this.setState({
             luggage: newluggage
         }, function(){
-            //this.props.applyFilters(this.state);
-            console.log(this.state.luggage)
+            this.props.applyFilters(this.state);
+            
         });
     }
    
@@ -99,8 +99,8 @@ class FlightFilters extends Component {
                                     value={this.state.meals}
                                     onChange={this.mealsChanged} className="CheckboxGroup">
 
-                                    <label className="labelCheckBox"><Checkbox value="YES"/> YES </label>
-                                    <label className="labelCheckBox"><Checkbox value="NO"/> NO </label>
+                                    <label className="labelCheckBox"><Checkbox value="true"/> YES </label>
+                                    <label className="labelCheckBox"><Checkbox value="false"/> NO </label>
                                 </CheckboxGroup>
 
                             </li>
@@ -111,7 +111,7 @@ class FlightFilters extends Component {
                
                 <div className="groups-section">
                     <div className="groups-title">
-                        Meals
+                        Luggage Bag
                     </div>
                     <div className="groups-list">
                         <ul>
