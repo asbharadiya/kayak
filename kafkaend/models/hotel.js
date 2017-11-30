@@ -9,16 +9,16 @@ var hotelSchema = new mongoose.Schema({
 	hotelState : String,
 	hotelZip : Number,
 	hotelPhoneNumber : Number,
-    hotelEmail: String,
-    hotelStar : Number,
-    hotelRating : Number,
-    hotelAmenities : [String],
-    hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}],
-    is_deleted : Boolean,
-    serviceStartDate : Date,
-    serviceEndDate : Date,
-    availability : [{ availableDate: Date, hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}] } ],
-    images : [String]
+  hotelEmail: String,
+  hotelStar : Number,
+  hotelRating : Number,
+  hotelAmenities : [String],
+  hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}],
+  is_deleted : Boolean,
+  serviceStartDate : Date,
+  serviceEndDate : Date,
+  availability : [{ availableDate: Date, hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}] } ],
+  images : [String]
 });
 
 hotelSchema.plugin(mongoosePaginate);

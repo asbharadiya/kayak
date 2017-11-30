@@ -16,22 +16,27 @@ class HotelFilters extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          rating:0,
-          review_score: { 'min':0, 'max':5 },
-          price: {'min' :0, 'max' : 2000}
+          rating:5,
+          reviewScoreMin: 0,
+          reviewScoreMax: 5,
+          priceMin: 0,
+          priceMax: 2000,
+          roomType: []
       };
       this.updateStarFilter = this.updateStarFilter.bind(this);
       this.updateReviewScore = this.updateReviewScore.bind(this);
       this.updatePrice = this.updatePrice.bind(this);
+      this.updateRoomType = this.updateRoomType.bind(this);
   }
 
   updateReviewScore(value) {
     var min = value[0];
     var max = value[1];
     this.setState({
-        review_score : { 'min' : min, 'max' : max }
+        reviewScoreMin : min,
+        reviewScoreMax: max
     }, function(){
-        //this.props.getAllHotels(this.state);
+        this.props.applyFilters(this.state);
     });
   }
 
@@ -39,7 +44,8 @@ class HotelFilters extends Component {
     var min = value[0];
     var max = value[1];
     this.setState({
-        price : { 'min' : min, 'max' : max }
+        priceMin: min,
+        priceMax: max
     }, function(){
         this.props.applyFilters(this.state);
     });
@@ -50,9 +56,17 @@ class HotelFilters extends Component {
       this.setState({
           rating: starObject.rating
       }, function(){
-          //this.props.getAllHotels(this.state);
+        this.props.applyFilters(this.state);
       });
     }
+  }
+
+  updateRoomType(newFilter) {
+    this.setState({
+      roomType: newFilter
+    }, function() {
+      this.props.applyFilters(this.state);
+    });
   }
 
   render() {
@@ -78,8 +92,8 @@ class HotelFilters extends Component {
                   <ul>
                       <li className="text-center">
                         <div className="move_bottom_20">
-                          <div className="pull-left"> {this.state.review_score['min']}</div>
-                          <div className="text-right"> {this.state.review_score['max']}</div>
+                          <div className="pull-left"> {this.state.reviewScoreMin}</div>
+                          <div className="text-right"> {this.state.reviewScoreMax}</div>
                         </div>
                         <div>
                           <Range min={0} max={5} step={1} defaultValue={[0, 5]} onChange={this.updateReviewScore} />
@@ -95,8 +109,8 @@ class HotelFilters extends Component {
               <div className="groups-list">
                 <CheckboxGroup
                     name="luggage"
-                    value={this.state.luggage}
-                    onChange={this.luggageChanged} className="CheckboxGroup">
+                    value={this.state.roomType}
+                    onChange={this.updateRoomType} className="CheckboxGroup">
                   <ul>
                       <li>
                         <label className="labelCheckBox"><Checkbox value="Conference"/> Conference </label>
@@ -122,8 +136,8 @@ class HotelFilters extends Component {
                   <ul>
                       <li className="text-center">
                         <div className="move_bottom_20">
-                          <div className="pull-left"> ${this.state.price['min']}</div>
-                          <div className="text-right"> ${this.state.price['max']}</div>
+                          <div className="pull-left"> ${this.state.priceMin}</div>
+                          <div className="text-right"> ${this.state.priceMax}</div>
                         </div>
                         <div>
                           <Range min={0} max={2000} step={1} defaultValue={[0, 2000]} onChange={this.updatePrice} />

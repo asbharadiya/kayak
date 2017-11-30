@@ -19,20 +19,20 @@ function addHotel(msg, callback){
 		newHotel.save(function (err) {
 			if(err) {
 				console.log(err);
-				res.code = 500 ; 
-				res.status  = 500 ; 
+				res.code = 500 ;
+				res.status  = 500 ;
 				res.message = "Error occured while registering a hotel with server"
-				callback(null , res); 
+				callback(null , res);
 			} else {
-				res.code = 200  ; 
-				res.status  = 200 ; 
+				res.code = 200  ;
+				res.status  = 200 ;
 				res.message = "Success";
-				callback(null , res) ; 
+				callback(null , res) ;
 			}
 		});
 	}else{
 		res.code = 400;
-		res.status  = 400 ; 
+		res.status  = 400 ;
 		res.data = []
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
@@ -43,16 +43,16 @@ function getHotels(msg, callback){
     var res = {};
     hotelModel.find({ is_deleted : false}, function(err, result){
     	if(err){
-			res.code = 500  ; 
-			res.status  = 500 ; 
+			res.code = 500  ;
+			res.status  = 500 ;
 			res.message = "Fail to get all hotels from the server"
-			callback(null , res) ; 
+			callback(null , res) ;
 		}else{
-			res.code = 200  ; 
-			res.status  = 200 ; 
+			res.code = 200  ;
+			res.status  = 200 ;
 			res.message = "Success"
 			res.data = result;
-			callback(null , res) ; 
+			callback(null , res) ;
 		}
     });
 }
@@ -63,13 +63,13 @@ function getHotelById(msg, callback){
     if(!validator.isEmpty(msg.id)){
     	hotelModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result){
         	if(err){
-				res.code = 500 ; 
-				res.status  = 500; 
+				res.code = 500 ;
+				res.status  = 500;
 				res.message = "Fail to get hotel from the server";
-				callback(null , res); 
+				callback(null , res);
 			}else{
-				res.code = 200 ; 
-				res.status  = 200; 
+				res.code = 200 ;
+				res.status  = 200;
 				res.message = "Success";
 				res.data = result;
 				callback(null , res);
@@ -77,7 +77,7 @@ function getHotelById(msg, callback){
         });
 	}else{
 		res.code = 400;
-		res.status  = 400 ; 
+		res.status  = 400 ;
 		res.data = []
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
@@ -100,20 +100,20 @@ function updateHotelById(msg, callback){
     	hotelModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
     		if(err){
 	    		console.log(err);
-				res.code = 500 ; 
-				res.status  = 500 ; 
+				res.code = 500 ;
+				res.status  = 500 ;
 				res.message = "Error occured while updating a hotel"
-				callback(null , res); 
+				callback(null , res);
 			} else {
-				res.code = 200  ; 
-				res.status  = 200 ; 
+				res.code = 200  ;
+				res.status  = 200 ;
 				res.message = "Hotel successfully updated";
-				callback(null , res) ; 
+				callback(null , res) ;
 			}
 		})
 	}else{
 		res.code = 400;
-		res.status  = 400 ; 
+		res.status  = 400 ;
 		res.data = []
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
@@ -127,20 +127,20 @@ function deleteHotelById(msg, callback){
     	hotelModel.update({is_deleted : false , _id : idToDelete }, { $set: {is_deleted: true }}, { multi: false }, function(err , response){
     		if(err){
 				console.log(err);
-				res.code = 500 ; 
-				res.status  = 500 ; 
+				res.code = 500 ;
+				res.status  = 500 ;
 				res.message = "Error occured while deleting a hotel"
-				callback(null , res); 
+				callback(null , res);
 			}else{
-				res.code = 200  ; 
-				res.status  = 200 ; 
+				res.code = 200  ;
+				res.status  = 200 ;
 				res.message = "Hotel successfully deleted";
-				callback(null , res) ; 
+				callback(null , res) ;
 			}
 		})
 	}else{
 		res.code = 400;
-		res.status  = 400 ; 
+		res.status  = 400 ;
 		res.data = []
 		res.message = "Please pass the correct Parameteres";
 		callback(null, res);
@@ -148,8 +148,12 @@ function deleteHotelById(msg, callback){
 }
 
 function getHotelsForCustomer(msg, callback){
+		console.log(msg.queryParams);
     var res = {};
     var query = {
+				hotelCity: msg.queryParams.city,
+				hotelStar: {"$lte": msg.queryParams.rating || 5},
+				hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
         is_deleted : false
     };
     var options = {
