@@ -1,0 +1,106 @@
+.flight-checkout-details {
+    background: #fff;
+    display: flex;
+    width: 100%;
+    text-align: center;
+}
+
+.flight-checkout-details .price-section p {
+    font-size: 21px;
+}
+
+.flight-checkout-details .info-section {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flight-checkout-details .info-section .first {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flight-checkout-details .info-section .first.travel-date-row {
+    justify-content: normal;
+    margin-bottom: 15px;
+}
+
+.flight-checkout-details .info-section .first.travel-date-row label {
+    margin: 0px;
+    margin-right: 5px;
+}
+
+.flight-checkout-details .info-section .first.travel-date-row p {
+    margin: 0px;
+    font-weight: normal;
+}
+
+
+.flight-checkout-details .info-section .first .info-child {
+    display: inline-block;
+    width: auto;
+}
+
+.flight-checkout-details .info-section .first .info-child.carrier {
+    width: 100px;
+    font-weight: normal;
+}
+
+.flight-checkout-details .info-section .first .info-child.carrier p {
+    margin: 0px;
+}
+
+.flight-checkout-details .info-section .first .info-child.duration {
+    width: 100px;
+    font-weight: normal;
+}
+
+.flight-checkout-details .info-section .first .info-child.duration p {
+    margin: 0px;
+}
+
+.flight-checkout-details .info-section .first .info-child.time {
+    display: flex;
+}
+
+.flight-checkout-details .info-section .first .info-child.time .divider {
+    width: 70px;
+    height: 18px;
+    position: relative;
+    margin: 0px 15px;
+}
+
+.flight-checkout-details .info-section .first .info-child.time .divider:after {
+    content: "";
+    height: 2px;
+    background: #717585;
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    right: 0px;
+}
+
+.flight-checkout-details .info-section .first .info-child.time p {
+
+}
+
+.flight-checkout-details .info-section .first .info-child.time span {
+    font-weight: normal;
+}
+
+.flight-checkout-details .info-section .second {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding-top: 15px;
+}
+
+.flight-checkout-details .info-section .second .seat-section p {
+    font-weight: normal;
+    margin: 0px;
+}
+

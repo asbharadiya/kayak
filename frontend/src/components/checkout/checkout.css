@@ -21,13 +21,18 @@
     top: 15px;
 }
 
+.checkout-page-wrapper .page-container .summary-container .checkout-btn-container .btn-kayak {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+}
 .checkout-page-wrapper .checkout-panel {
     background: #fff;
     margin-bottom: 15px;
 }
 
 .checkout-page-wrapper .checkout-panel .checkout-panel-title {
-    padding: 15px;
+    padding: 15px 30px;
     border-bottom: 1px solid #e4e5ea;
 }
 
@@ -37,6 +42,33 @@
 }
 
 .checkout-page-wrapper .checkout-panel .checkout-panel-body {
-    padding: 15px;
+    padding: 30px;
 }
 
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body {
+
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .radio {
+    margin: 0px;
+    margin-bottom: 15px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .radio.payment-method label {
+    font-weight: 600;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-list {
+    padding-left: 20px;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-list p {
+    margin: 0px;
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.checkout-page-wrapper .checkout-panel .checkout-panel-body.payment-body .credit-card-form {
+    padding-left: 20px;
+    max-width: 400px;
+}

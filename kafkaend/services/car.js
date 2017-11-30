@@ -174,9 +174,28 @@ function getCarsForCustomer(msg, callback){
     });
 }
 
+function getCarByIdForCustomer(msg, callback){
+    var res = {};
+    idToGet = new ObjectID(msg.id) ;
+    carModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all cars from the server"
+            callback(null , res) ;
+        }else{
+            delete result[0].availability;
+            res.code = 200  ;
+            res.message = "Success";
+            res.data = result;
+            callback(null , res) ;
+        }
+    })
+}
+
 exports.addCar = addCar;
 exports.getCars = getCars;
 exports.getCarById = getCarById;
 exports.updateCarById = updateCarById;
 exports.deleteCarById = deleteCarById;
 exports.getCarsForCustomer = getCarsForCustomer;
+exports.getCarByIdForCustomer = getCarByIdForCustomer;
