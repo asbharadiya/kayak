@@ -32,7 +32,8 @@ function updateProfile(req,res){
 
 function addCreditCard(req,res){
 	kafka.make_request(topic_name,'addCreditCard',{
-		
+        user_id:req.session.passport.user._id,
+        creditCard:req.body
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
@@ -44,12 +45,12 @@ function addCreditCard(req,res){
 
 function getCreditCards(req,res){
 	kafka.make_request(topic_name,'getCreditCards',{
-		
+        user_id:req.session.passport.user._id
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
