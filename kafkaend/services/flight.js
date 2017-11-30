@@ -159,8 +159,25 @@ function getFlightsForCustomer(msg, callback){
     var res = {};
     // var parts = msg.queryParams.date.split("-");
     // var date = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+    
+
+    console.log(msg.queryParams)
+    
+    var queryParams = msg.queryParams ; 
+
+    var minPrice = queryParams.minPrice ;
+    var maxPrice = queryParams.maxPrice ; 
+
+    console.log(minPrice , maxPrice)
+
     var query = {
         is_deleted : false,
+        
+
+
+
+
+
         // availability: {
         //     $elemMatch: {
         //         availableCars: {

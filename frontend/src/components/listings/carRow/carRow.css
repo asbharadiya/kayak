@@ -78,8 +78,9 @@
 .cars-row .info-section .divForImageAndName .carImageDiv .carImage{
         border: 0;
        height: 100%;
-       max-width: 150px;
-        max-height: 150px
+       min-width: 190px;
+       max-width: 190px ; 
+        height: auto
 }
 
 

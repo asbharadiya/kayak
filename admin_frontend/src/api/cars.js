@@ -13,6 +13,7 @@ export const addCar = (data , callback) => {
         },
         body: data
     }).then(res => {
+        console.log("Add car err " , res )
         callback( null , res.json());
     }).catch(error => {
         callback( error , {});
