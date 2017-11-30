@@ -11,7 +11,9 @@ class ProfileInfo extends Component {
         super(props);
         this.state = {
             _id : '',
-            auth_user_id:''
+            auth_user_id:'',
+            filename : '' , 
+            profileFile : ''
         }
 
         this.updateProfile = this.updateProfile.bind(this)
@@ -75,81 +77,10 @@ class ProfileInfo extends Component {
     	{	
 	        return (
 			  	<div className="profile-page-wrapper">
-		        	<div className="row profile-page-header">
-		        		<h2>Profile</h2>
+		        	<div className="row profile-page-header ">
+		        		<h2>Loading ...</h2>
 		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			First Name
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			Last Name
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			Email
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			Address
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			City
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			State
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4  RowData">
-		        			Zip Code
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
-		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4 RowData ">
-		        			Phone
-		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8 ">
-		        			
-		        		</div>
-
-		        	</div>
+		        	
 
 	  			</div>
 	        );
@@ -161,12 +92,15 @@ class ProfileInfo extends Component {
 	    	return (
 			  	<div className="profile-page-wrapper">
 		        	<div className="row profile-page-header">
-		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4 outline">
 		        			<h2>Profile</h2>
 		        		</div>
-		        		<div className="col-md-8 col-sm-8 col-lg-8 col-xs-8">
-		        		<button type="button" className="btn btn-default  btn-kayak pull-right" data-toggle="modal" data-target="#editProfile">Edit</button>
-		        		
+		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4 outline">
+		        			<img className="profileImage img-circle" src="/assets/images/profile.png" 
+                                 alt=""/>
+		        		</div>
+		        		<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4 outline">
+		        			<button type="button" className="btn btn-default  btn-kayak pull-right edit-button" data-toggle="modal" data-target="#editProfile">Edit</button>
 		        		</div>
 		        	</div>
 		        	<div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 RowDiv"> 
@@ -242,6 +176,8 @@ class ProfileInfo extends Component {
 
 		        	</div>
 
+
+
 		        	<div className="modal fade" id="editProfile" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog" role="document">
                             <div className="profile-modal-content">
@@ -252,54 +188,97 @@ class ProfileInfo extends Component {
                                     </button>
                                 </div>
                                 <div className="profile-modal-body">
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">First Name :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="text" className="form-control" name="firstName" id="firstName" defaultValue={this.props.profile[0].firstName}></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">Last Name :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="text" className="form-control" name="lastName" id="lastName" defaultValue={this.props.profile[0].lastName}></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">Email :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="email" className="form-control" name="email" id="email" defaultValue={this.props.profile[0].email} disabled></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">Address :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="email" className="form-control" name="address" id="address" defaultValue={this.props.profile[0].address}></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">City :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="text" className="form-control" name="city" id="city" defaultValue={this.props.profile[0].city}></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">State :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="text" className="form-control" name="state" id="state" defaultValue={this.props.profile[0].state}></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow">
 	                                    <label className="col-sm-3 ">Zip Code :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="number" className="form-control" name="zip_code" id="zip_code" defaultValue={this.props.profile[0].zip_code}></input>
 	                                    </div>
                                     </div>
-                                    <div className="row MoadalRow">
+                                    <div className="row ModalRow ">
 	                                    <label className="col-sm-3 ">Phone :</label>
 	                                    <div className="col-sm-8 ">
 	                                    	<input type="number" className="form-control" name="phone_number" id="phone_number" defaultValue={this.props.profile[0].phone_number}></input>
 	                                    </div>
                                     </div>
+
+                                    <div className="form-group ModalRow  row">
+		                            <label htmlFor="profile" className="col-sm-3 ">Profile Image :</label>
+		                           
+			                             <div className="input-group image-preview col-sm-8">
+			                              <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
+			                                   <span className="input-group-btn">
+
+			                                    {
+			                                                 this.state.carFile === '' ?
+			                                                     <span></span>
+			                                                     :
+			                                                     <button type="button"  onClick={() => {
+			                                                         this.setState({profileFile : '' , filename : ''})
+			                                                     }} className="btn btn-default image-preview-clear" >
+			                                                         <span className="glyphicon glyphicon-remove"></span> Clear
+			                                                     </button>
+			                                             }
+			 
+			 
+			 
+			                                     <div className="btn btn-default image-preview-input">
+			                                                 <span className="glyphicon glyphicon-folder-open"></span>
+			                                                 <span className="image-preview-input-title"></span> Browse
+			                                                 <input type="file" onChange={(e) => {
+			                                                     var file = e.target.files[0];
+			 
+			 
+			                                                     if(file === undefined){
+			                                                         return ;
+			                                                     }
+			 
+			                                                     this.setState({ profileFile : file , filename : file.name})
+			 
+			                                                 }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+			                                             </div>
+			 
+			                                         </span>
+			 
+			                            	</div>
+
+		                            
+		                        	</div>
 
 
                                 </div>
