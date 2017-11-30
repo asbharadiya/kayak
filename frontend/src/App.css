@@ -41,6 +41,7 @@ body {
 
 .btn-kayak:focus {
     outline: none;
+    box-shadow: none;
 }
 
 .btn-kayak:active:focus {
