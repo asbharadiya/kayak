@@ -54,6 +54,8 @@ input, select {
     box-shadow: none !important;
     border-radius: 0px !important;
     font-weight: normal;
+    /*border: 0px !important;
+    border-bottom: 1px solid #d8d8d8 !important;*/
 }
 
 input:focus, select:focus {
