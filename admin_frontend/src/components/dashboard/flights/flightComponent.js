@@ -7,6 +7,7 @@ import {withRouter} from 'react-router-dom';
 import Loading from 'react-loading-spinner';
 import * as api from '../../../api/flights';
 
+
 class FlightComponent extends Component {
 
     constructor(props){
@@ -31,11 +32,17 @@ class FlightComponent extends Component {
             businessClassSeats : 0,
             economyClassSeats : 0 ,
             _id : '' ,
+            luggage : '',
+            meals : '' , 
 
 
             updateFlightError : '' ,
             flightUpdateLoading : false ,
-            updateErrorMessage : ''
+            updateErrorMessage : '',
+
+           
+
+
         }
 
         this.openUpdateFlight = this.openUpdateFlight.bind(this);
@@ -45,6 +52,8 @@ class FlightComponent extends Component {
         this.deleteFlight = this.deleteFlight.bind(this);
         this.openDeleteFlight = this.openDeleteFlight.bind(this);
         this.closeDeleteFlight = this.closeDeleteFlight.bind(this);
+        this.onMealsChanged = this.onMealsChanged.bind(this);
+        this.onChangeLuggage = this.onChangeLuggage.bind(this) ;
 
     }
 
@@ -88,6 +97,8 @@ class FlightComponent extends Component {
         })
     }
 
+   
+
 
     fetchFlightData(){
         var _this = this;
@@ -111,7 +122,9 @@ class FlightComponent extends Component {
                             businessClassSeats : res.data[0].businessClassSeats  ,
                             businessClassPrice : res.data[0].businessClassPrice  ,
                             firstClassSeats : res.data[0].firstClassSeats  ,
-                            firstClassPrice : res.data[0].firstClassPrice
+                            firstClassPrice : res.data[0].firstClassPrice,
+                            luggage : res.data[0].luggage,
+                            meals : res.data[0].meals
                         })
                     }else{
 
@@ -120,6 +133,22 @@ class FlightComponent extends Component {
             }
         })
     }
+
+
+    onMealsChanged(e){
+        console.log(e.target.value)
+        this.setState({
+            meals : e.target.value
+        })
+    }
+
+    onChangeLuggage(e){
+        this.setState({
+            luggage : e.target.value
+        })
+    }
+
+
 
 
     updateFlight(){
@@ -152,6 +181,14 @@ class FlightComponent extends Component {
         }
         if(this.state.departure === '' ){
             this.setState({ updateFlightError : "Please Specify Departure Time"})
+            return ;
+        }
+        if(this.state.meals === '' ){
+            this.setState({ updateFlightError : "Please Specify Meals"})
+            return ;
+        }
+         if(this.state.luggage === '' ){
+            this.setState({ updateFlightError : "Please Specify Luggage"})
             return ;
         }
         if(this.state.serviceStartDate === '' ){
@@ -203,7 +240,9 @@ class FlightComponent extends Component {
             businessClassPrice : this.state.businessClassPrice ,
             businessClassSeats : this.state.businessClassSeats,
             economyClassPrice :  this.state.economyClassPrice,
-            economyClassSeats : this.state.economyClassSeats
+            economyClassSeats : this.state.economyClassSeats,
+            meals : this.state.meals ,
+            luggage : this.state.luggage
         }
 
 
@@ -237,8 +276,8 @@ class FlightComponent extends Component {
 
 
     render() {
-        console.log(this.state) ;
-        return (
+       
+       return (
             <div className="singleFlightComponent">
                 <div className="row mainRowDiv">
                     <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
@@ -378,6 +417,22 @@ class FlightComponent extends Component {
                                     }} id="arrival" type="time"  aria-describedby="basic-addon1"
                                     />
                                 </div>
+
+
+                                <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+                                       <label htmlFor="serviceStartDate">Lugagge Count</label>
+                                        <select onChange={this.onChangeLuggage} value={this.state.luggage} className="form-control selectpicker" id="carType">
+                                            <option  className="selected disabled hidden">Select</option>
+                                            <optgroup label="Counts">
+                                                <option>0</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </optgroup>
+                                        </select>
+                                        
+                                </div>
+
 
 
                                 <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">

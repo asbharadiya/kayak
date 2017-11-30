@@ -29,6 +29,8 @@ class Flights extends Component {
             firstClassSeats : 0 ,
             businessClassSeats : 0,
             economyClassSeats : 0 ,
+            luggage : '',
+            meals : '' ,
 
 
             addFlightError : "" ,
@@ -39,13 +41,21 @@ class Flights extends Component {
         this.openAddFlights = this.openAddFlights.bind(this) ;
         this.closeAddFlight = this.closeAddFlight.bind(this) ;
         this.addFlight = this.addFlight.bind(this) ;
+        this.onMealsChanged = this.onMealsChanged.bind(this);
+        this.onChangeLuggage = this.onChangeLuggage.bind(this);
     }
 
-    /*onChangeLuggage(e){
+    onMealsChanged(e){
+        this.setState({
+            meals : e.target.value
+        })
+    }
+
+    onChangeLuggage(e){
         this.setState({
             luggage : e.target.value
         })
-    }*/
+    }
 
     componentDidMount(){
         this.props.getAllFlights()
@@ -74,6 +84,8 @@ class Flights extends Component {
                 firstClassSeats : 0 ,
                 businessClassSeats : 0,
                 economyClassSeats : 0 ,
+                meals : '',
+                luggage : '',
 
                 addFlightError : '' ,
             }) ;
@@ -155,6 +167,14 @@ class Flights extends Component {
             this.setState({ addFlightError : "Please Specify Departure Time"})
             return ;
         }
+         if(this.state.meals === '' ){
+            this.setState({ addFlightError : "Please Specify Meals"})
+            return ;
+        }
+        if(this.state.luggage === '' ){
+            this.setState({ addFlightError : "Please Specify number of luggage bags allowed"})
+            return ;
+        }
         if(this.state.serviceStartDate === '' ){
             this.setState({ addFlightError : "Please Specify Date from which service will start"})
             return ;
@@ -206,7 +226,9 @@ class Flights extends Component {
             businessClassPrice : this.state.businessClassPrice ,
             businessClassSeats : this.state.businessClassSeats,
             economyClassPrice :  this.state.economyClassPrice,
-            economyClassSeats : this.state.economyClassSeats
+            economyClassSeats : this.state.economyClassSeats,
+            luggage : this.state.luggage ,
+            meals : this.state.meals
 
         }
         this.setState({ addFlightError : '' ,
@@ -228,7 +250,7 @@ class Flights extends Component {
                 <Modal show={this.state.showFlightModal} id="flightModal" className="flightModal">
                     <Modal.Body className="flightModalBody">
 
-                        <div className="scrollDiv">
+                        <div >
 
                             <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                 <label htmlFor="flightid">Flight Number</label>
@@ -289,6 +311,36 @@ class Flights extends Component {
                                 }} id="arrival" type="time"  aria-describedby="basic-addon1"
                                 />
                             </div>
+
+                            <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+                                   <label htmlFor="serviceStartDate">Meals Included</label>
+                                    <div className="radio-group" >
+                                            <div className="radio">
+
+                                              <label  className="radio-no"><input type="radio" name="optradio" required value='false' onChange={this.onMealsChanged}/>No </label>
+                                              <label><input type="radio" name="optradio" required value='true' onChange={this.onMealsChanged}/>Yes </label>
+                                              
+                                            </div >
+                                    </div>
+
+                            </div>
+
+                            <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+                                   <label htmlFor="serviceStartDate">Lugagge Count</label>
+                                    <select onChange={this.onChangeLuggage} className="form-control selectpicker" id="carType">
+                                        <option  className="selected disabled hidden">Select</option>
+                                        <optgroup label="Counts">
+                                            <option>0</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </optgroup>
+                                    </select>
+                                    
+                            </div>
+
+
+
 
                             <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
                                 <label htmlFor="serviceStartDate">Flight Service Start Date</label>
