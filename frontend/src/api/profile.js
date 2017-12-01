@@ -21,17 +21,17 @@ export const getUserDetails = () =>
         return error;
     }); 
     
-export const updateUserProfile = (payload , callback) => {
+export const updateUserProfile = (data , callback) => {
     console.log('API')
-    console.log(payload)
+    console.log(data)
     fetch(api+'/c/profile', {
         method: 'PUT',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
+            
         },
-        body: JSON.stringify(payload)
+        body: data
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
