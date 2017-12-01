@@ -171,10 +171,7 @@ function getFlightsForCustomer(msg, callback){
     	var minPrice = parseInt(queryParams.minPrice) ;
    	    var maxPrice = parseInt(queryParams.maxPrice) ; 
 
-
-
-
-   	    var mealsArray = msg.queryParams.meals.split(',')
+		var mealsArray = msg.queryParams.meals.split(',')
         var lugaggeArray = msg.queryParams.luggage.split(',')
         
 
@@ -211,10 +208,7 @@ function getFlightsForCustomer(msg, callback){
 	}
 
 
-   
-   
-    
-    var options = {
+   var options = {
         select: 'flightNumber airline source destination departure arrival firstClassPrice businessClassPrice economyClassPrice',
         lean: true,
         page: msg.pageNo || 1,

@@ -29,8 +29,9 @@ function getBillById(req,res){
 
 function makeBooking(req,res){
 	kafka.make_request(topic_name,'makeBooking',{
-		
-	},function(err,result){
+	    userId:req.session.passport.user._id,
+        data:req.body
+    },function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {

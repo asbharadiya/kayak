@@ -5,6 +5,7 @@ const headers = {
 };
 
 export const getUserDetails = () =>
+
     fetch(api+'/c/profile', {
         method: 'GET',
         headers: {
@@ -14,6 +15,7 @@ export const getUserDetails = () =>
         credentials: 'include'
         
     }).then(res => {
+        
         return res.json();
     }).catch(error => {
         return error;
@@ -37,7 +39,7 @@ export const updateUserProfile = (payload , callback) => {
     });    
 }
 
-export const getCreditCards = () =>
+export const getCreditCards = (callback) =>
     fetch(api+'/c/credit_cards', {
         method: 'GET',
         headers: {
@@ -47,12 +49,12 @@ export const getCreditCards = () =>
         credentials: 'include'
 
     }).then(res => {
-        return res.json();
+        callback( null , res.json());
     }).catch(error => {
-        return error;
+        callback( error , {});
     });
 
-export const addCreditCard = (payload) =>
+export const addCreditCard = (payload, callback) =>
     fetch(api+'/c/credit_cards', {
         method: 'POST',
         headers: {
@@ -62,7 +64,7 @@ export const addCreditCard = (payload) =>
         credentials: 'include',
         body: JSON.stringify(payload)
     }).then(res => {
-        return res.json();
+        callback( null , res.json());
     }).catch(error => {
-        return error;
+        callback( error , {});
     });

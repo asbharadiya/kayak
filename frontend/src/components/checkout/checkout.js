@@ -13,6 +13,8 @@ import * as carApis from '../../api/car';
 import * as flightApis from '../../api/flight';
 import * as hotelApis from '../../api/hotel';
 import * as profileApis from '../../api/profile';
+import * as actions from '../../actions/booking';
+import {getUserDetails} from '../../actions/profile'
 
 class Checkout extends Component {
 
@@ -33,7 +35,10 @@ class Checkout extends Component {
             expiryDate: '',
             cvv: '',
             saveCard:false,
-            bookingInfo: null
+            bookingInfo: null,
+
+            //added for profile in CHeckout page to preopulate the data
+            profile : null
         }
         this.updateTotal = this.updateTotal.bind(this);
         this.updateBookingInfo = this.updateBookingInfo.bind(this);
@@ -43,6 +48,8 @@ class Checkout extends Component {
     }
 
     componentDidMount(){
+
+        
         var _this = this;
         if(this.state.category === 'cars') {
             carApis.getCarById(this.state.id, function(error, response){
@@ -108,6 +115,12 @@ class Checkout extends Component {
                 })
             }
         })
+
+
+
+        this.props.getUserDetails();
+
+        
     }
 
     updateBookingInfo(info){
@@ -204,11 +217,26 @@ class Checkout extends Component {
         //add new credit card if save checkbox is checked
         //subtract available from the listing object
         console.log('Processing....');
+        var _obj = {
+            listingType:this.state.category,
+            listingId:this.state.id,
+            bookingInfo:this.state.bookingInfo,
+            paymentMethod:this.state.paymentMethod,
+            selectedCreditCard:this.state.selectedCreditCard,
+            cardNumber:this.state.cardNumber,
+            nameOnCard:this.state.nameOnCard,
+            expiryDate:this.state.expiryDate,
+            cvv:this.state.cvv,
+            saveCard:this.state.saveCard,
+            total:this.state.total
+        }
+        this.props.makeBooking(_obj);
     }
 
     //TODO: implement hotel components
     //TODO: finish cars components
     render() {
+
         return (
             <div className="checkout-page-wrapper">
                 <div className="page-container">
@@ -240,7 +268,7 @@ class Checkout extends Component {
                             <div className="checkout-panel-body">
                                 {
                                     this.state.category === 'cars' ? (
-                                        <CarCheckoutBookingInfo queryParams={this.state.queryParams}/>
+                                        <CarCheckoutBookingInfo  profile={this.props.profileData[0]}  queryParams={this.state.queryParams}/>
                                     ) : this.state.category === 'flights' ? (
                                         <FlightCheckoutBookingInfo queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
@@ -263,7 +291,7 @@ class Checkout extends Component {
                                     {
                                         this.state.creditCards.length > 0 ? (
                                             this.state.creditCards.map((creditCard , key) => {
-                                                <div className="radio" key={key}>
+                                                return <div className="radio" key={key}>
                                                     <label><input type="radio" name="creditcard" value={creditCard.id}
                                                                   checked={this.state.selectedCreditCard === creditCard.id}
                                                                   onChange={(id)=>this.onCreditCardSelected(creditCard.id)}/>{creditCard.cardNumber}</label>
@@ -354,11 +382,17 @@ class Checkout extends Component {
 function mapDispatchToProps(dispatch) {
     return {
 
+        makeBooking : (payload) => dispatch(actions.makeBooking(payload)),
+
+        getUserDetails : () => dispatch(getUserDetails())
+
     }
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        profileData : state.profileReducer.profile
+    };
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <Checkout {...props}/>));
