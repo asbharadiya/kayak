@@ -398,8 +398,12 @@ class Checkout extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+
+
         makeBooking : (payload) => dispatch(actions.makeBooking(payload)),
+
         getUserDetails : () => dispatch(getUserDetails())
+
     }
 }
 
