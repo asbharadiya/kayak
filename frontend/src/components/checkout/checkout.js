@@ -226,14 +226,8 @@ class Checkout extends Component {
                 return;
             }
         }
-        //TODO: make booking...
-        //send listing id, new credit card info or credit card id for payment, booking information to backend
-        //should get all above data at this point in all three cases
-        //make entry to booking table
-        //make entry to billing table
-        //add new credit card if save checkbox is checked
-        //subtract available from the listing object
-        console.log('Processing.... ' , this.state.total);
+       
+        
         var _obj = {
             listingType:this.state.category,
             listingId:this.state.id,
@@ -251,7 +245,6 @@ class Checkout extends Component {
     }
 
     //TODO: implement hotel components
-    //TODO: finish cars components
     render() {
 
         return (
