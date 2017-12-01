@@ -220,6 +220,7 @@ function getCarsForCustomer(msg, callback){
             res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
+            console.log(result) ; 
             res.code = 200  ;
             res.message = "Success";
             res.data = result;
