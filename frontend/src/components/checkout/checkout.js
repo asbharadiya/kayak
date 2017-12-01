@@ -13,11 +13,8 @@ import * as carApis from '../../api/car';
 import * as flightApis from '../../api/flight';
 import * as hotelApis from '../../api/hotel';
 import * as profileApis from '../../api/profile';
-<<<<<<< Updated upstream
 import * as actions from '../../actions/booking';
-=======
 import {getUserDetails} from '../../actions/profile'
->>>>>>> Stashed changes
 
 class Checkout extends Component {
 
@@ -239,11 +236,7 @@ class Checkout extends Component {
     //TODO: implement hotel components
     //TODO: finish cars components
     render() {
-<<<<<<< Updated upstream
-        console.log(this.state.creditCards);
-=======
-        
->>>>>>> Stashed changes
+
         return (
             <div className="checkout-page-wrapper">
                 <div className="page-container">
@@ -388,11 +381,11 @@ class Checkout extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-<<<<<<< Updated upstream
+
         makeBooking : (payload) => dispatch(actions.makeBooking(payload)),
-=======
+
         getUserDetails : () => dispatch(getUserDetails())
->>>>>>> Stashed changes
+
     }
 }
 
