@@ -163,27 +163,87 @@ function deleteHotelById(msg, callback){
 }
 
 function getHotelsForCustomer(msg, callback){
-	var date = moment(msg.queryParams.checkInDate, 'MM-DD-YYYY');
-	var date2 = moment(msg.queryParams.checkOutDate, 'MM-DD-YYYY');
-	var daysCount = date2.diff(date,'days');
-	console.log(daysCount);
-	var res = {};
+    var res = {};
+    var parts = msg.queryParams.checkInDate.split("-");
+    var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+    parts = msg.queryParams.checkOutDate.split("-");
+    var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
 	var query = {
-		hotelCity: msg.queryParams.city,
-		hotelStar: {"$lte": msg.queryParams.rating || 5},
-		hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
-		is_deleted : false,
-		availability: {
-			$elemMatch: {
-				availableDate: {
-					$gte: msg.queryParams.checkInDate,
-					$lte: msg.queryParams.checkOutDate
-				}
-			}
-		},
-		availability:  {$exists:true},
-		$where: 'this.availability.length > ' + daysCount
-	};
+        is_deleted : false,
+        hotelCity: msg.queryParams.city,
+        serviceStartDate : { $lte: startDate },
+        serviceEndDate : { $gte: endDate },
+        availability: {
+            $elemMatch: {
+                availableDate: {
+                    $gte: startDate,
+                    $lte: endDate
+                },
+                hotelRooms : {
+                    $elemMatch: {
+                        roomType :msg.queryParams.roomType,
+                        totalAvailable: {
+                            $gte: 1
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+
+    // if(msg.queryParams.luggage != undefined ){
+    //
+     //    var priceRangeArray = [] ;
+     //    priceRangeArray.push(parseInt(msg.queryParams.minPrice));
+     //    priceRangeArray.push(parseInt(msg.queryParams.maxPrice));
+    //
+    //
+    //
+     //    var lugaggesArray = msg.queryParams.luggage.split(',')
+     //    var occupantsArray = msg.queryParams.occupants.split(',')
+     //    var categoryArray = msg.queryParams.category.split(',')
+    //
+    //
+     //    if(priceRangeArray.length == 2){
+     //        query.dailyRentalValue = { $gte : priceRangeArray[0]  , $lte: priceRangeArray[1] }
+     //    }
+    //
+     //    if(( lugaggesArray.length == 1 && lugaggesArray[0] == '' )) {
+     //        lugaggesArray = []
+     //    }else if(lugaggesArray.length > 0){
+     //        query.luggage  =  { "$in" : lugaggesArray}
+     //    }
+    //
+     //    if( occupantsArray.length == 1 && occupantsArray[0] == '' ){
+     //        occupantsArray = []
+     //    }else if(occupantsArray.length > 0 ){
+     //        query.occupancy =  { "$in" : occupantsArray }
+     //    }
+    //
+     //    if( categoryArray.length == 1 && categoryArray[0] == '' ){
+     //        categoryArray = []
+     //    }else if(categoryArray.length > 0){
+     //        query.carType = {"$in" : categoryArray}
+     //    }
+    //
+    // }
+	// var query = {
+	// 	hotelCity: msg.queryParams.city,
+	// 	hotelStar: {"$lte": msg.queryParams.rating || 5},
+	// 	hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
+	// 	is_deleted : false,
+	// 	availability: {
+	// 		$elemMatch: {
+	// 			availableDate: {
+	// 				$gte: msg.queryParams.checkInDate,
+	// 				$lte: msg.queryParams.checkOutDate
+	// 			}
+	// 		}
+	// 	},
+	// 	availability:  {$exists:true},
+	// 	$where: 'this.availability.length > ' + daysCount
+	// };
 
 	// query.availability = {
 	// 	$group : {
@@ -200,24 +260,25 @@ function getHotelsForCustomer(msg, callback){
 	// 	}
 	// }
 
-var options = {
-	select: 'hotelName hotelAddress hotelCity hotelState hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
-	lean: true,
-	page: msg.pageNo || 1,
-	limit: 20
-};
-hotelModel.paginate(query,options, function(err, result){
-	if(err){
-		res.code = 500  ;
-		res.message = "Fail to get all hotels from the server";
-		callback(null , res) ;
-	}else{
-		res.code = 200  ;
-		res.message = "Success";
-		res.data = result;
-		callback(null , res) ;
-	}
-});
+	var options = {
+		select: 'hotelName hotelAddress hotelCity hotelState hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
+		lean: true,
+		page: msg.pageNo || 1,
+		limit: 20
+	};
+	hotelModel.paginate(query,options, function(err, result){
+		if(err){
+		    console.log(err);
+			res.code = 500  ;
+			res.message = "Fail to get all hotels from the server";
+			callback(null , res) ;
+		}else{
+			res.code = 200  ;
+			res.message = "Success";
+			res.data = result;
+			callback(null , res) ;
+		}
+	});
 }
 
 function getHotelByIdForCustomer(msg, callback){
