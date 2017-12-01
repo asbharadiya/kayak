@@ -81,9 +81,6 @@ class HotelCheckoutDetails extends Component {
                               Contact
                             </div>
                             <div className="detail-data">
-                                { this.props.details.hotelEmail }
-                            </div>
-                            <div className="detail-data">
                                 { this.props.details.hotelPhoneNumber }
                             </div>
                         </div>

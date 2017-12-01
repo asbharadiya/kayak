@@ -17,6 +17,7 @@ import * as profileApis from '../../api/profile';
 import * as actions from '../../actions/booking';
 import {getUserDetails} from '../../actions/profile'
 import HotelCheckoutSummary from './hotelCheckOutSummary/hotelCheckOutSummary';
+import HotelCheckoutBookingInfo from './hotelCheckoutBookingInfo/hotelCheckoutBookingInfo';
 
 
 
@@ -286,7 +287,7 @@ class Checkout extends Component {
                                     ) : this.state.category === 'flights' ? (
                                         <FlightCheckoutBookingInfo  profile={this.props.profileData[0]}  queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
-                                        <CarCheckoutBookingInfo queryParams={this.state.queryParams}/>
+                                        <HotelCheckoutBookingInfo queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo} queryParams={this.state.queryParams}/>
                                     )
                                 }
                             </div>
