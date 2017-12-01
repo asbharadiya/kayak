@@ -174,10 +174,63 @@ function getBookings(msg, callback){
 
 function getBookingById(msg, callback){
     var res = {};
+    var data = {}
 
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+
+    
+
+    billingModel.find({  userId : msg.userId , bookingId : msg.bookingId}, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all Cars from the server"
+            callback(null , res) ;
+        }else{
+            
+            data.billingId = result[0]._id ;
+            data.bookingId = result[0].bookingId ; 
+            data.date = result[0].createdDate ; 
+            data.amount = result[0].totalAmount ; 
+            data.commodity = result[0].listingType ;
+           
+           var creditCard = result[0].creditCardId ;  
+
+            bookingModel.find({ _id : new ObjectID(data.bookingId)} , function(err , result1 ){
+                if(err){
+                    res.code = 500  ;
+                    res.message = "Fail to get all Cars from the server"
+                    callback(null , res) ;
+                }else{
+                  data.bookingInfo = result1[0].bookingInfo ;
+                  
+                  creditCardModel.find({_id : new ObjectID(creditCard)} , function(err , result2 ){
+                      if(err){
+                        res.code = 500  ;
+                        res.message = "Fail to get all Cars from the server"
+                        callback(null , res) ;
+                      }else{
+                        if(result2.length > 0 ){
+                              data.creditCard = result[0].cardNumber ;
+                               res.code = 200  ;
+                                res.message = "Success"
+                                res.data = data
+                                callback(null , res) ;
+                          }else{
+                             res.code = 200  ;
+                              res.message = "Success"
+                              res.data = data; 
+                              callback(null , res) ;
+                          }
+                      }
+                  })
+
+                }
+            })
+
+
+
+           
+        }
+    });
 }
 
 exports.getBills = getBills;

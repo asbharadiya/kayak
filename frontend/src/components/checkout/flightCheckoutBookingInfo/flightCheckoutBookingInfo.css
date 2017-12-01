@@ -3,12 +3,14 @@
 }
 
 .flight-checkout-booking .travelers-info {
-    background: #e4e5ea;
-    padding: 15px 0px;
     margin-bottom: 15px;
 }
 
-.flight-checkout-booking .travelers-info .form-group:last-child {
+.flight-checkout-booking .travelers-info .traveler-row {
+
+}
+
+.flight-checkout-booking .travelers-info .form-group {
     margin-bottom: 0px;
 }
 

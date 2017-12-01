@@ -6,8 +6,10 @@ class PaymentMethods extends Component {
 
     render() {
         return (
-            <div className="payments-page-wrapper">
-
+            <div className="profile-panel payments-page-wrapper">
+            	<div className="profile-panel-body">
+            		
+            	</div>
             </div>
         );
     }
