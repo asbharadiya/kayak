@@ -1,61 +1,33 @@
 .sidebar-panel {
-  width: 240px;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 100vh;
-  
-  z-index: 6;
+    width: 235px;
+    position: absolute;
+    background: #fff;
+    padding: 30px;
 }
 
-.sidebar-panel .sidebar-panel-container {
-  position: absolute;
-  top: 0;
-  bottom: 0px;
-  padding: 40px 25px 0 40px;
-  width: 100%;
+.sidebar-panel .nav-container {
+
 }
 
-.sidebar-panel .sidebar-panel-container .logo-container {
-  margin-bottom: 30px;
+.sidebar-panel .nav-container ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
 }
 
-.sidebar-panel .sidebar-panel-container .logo-container .logo-icon {
-  width: 100%;
-  height: 30px;
+.sidebar-panel .nav-container ul li {
+    padding: 12px 0px;
 }
 
-.sidebar-panel .sidebar-panel-container .nav-container {
-
-  margin-top: 50px;
-  margin-left:35px;
-  
+.sidebar-panel .nav-container ul li a {
+    text-decoration: none;
+    color: #333;
 }
 
-.sidebar-panel .sidebar-panel-container .nav-container ul {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
+.sidebar-panel .nav-container ul li a:hover {
+    color: #ff690f;
 }
 
-.sidebar-panel .sidebar-panel-container .nav-container ul li {
-  height: 40px;
-  padding: 12px 0px;
-  
-  margin-bottom: 15px;
-}
-
-.sidebar-panel .sidebar-panel-container .nav-container ul li a {
-  font-size: 15px;
-  line-height: 16px;
-  text-decoration: none;
-  color: #333;
-}
-
-.sidebar-panel .sidebar-panel-container .nav-container ul li a:hover {
-  opacity: .8;
-}
-
-.sidebar-panel .sidebar-panel-container .nav-container ul li a.active {
-  color: #ff690f;
+.sidebar-panel .nav-container ul li a.active {
+    color: #ff690f;
 }

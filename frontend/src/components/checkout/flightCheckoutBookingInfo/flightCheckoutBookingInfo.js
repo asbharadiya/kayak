@@ -16,7 +16,13 @@ class FlightCheckoutBookingInfo extends Component {
                     middleName:'',
                     lastName:''
                 }
-            })
+            }),
+
+            cabin : '',
+            date : '' ,
+            dest : '',
+            source : '',
+            travelers : ''
         }
     }
 
@@ -57,6 +63,21 @@ class FlightCheckoutBookingInfo extends Component {
         this.props.updateBookingInfo(this.state);
     }
 
+    componentWillReceiveProps(newProps){
+        if(this.props.queryParams != undefined){
+            this.setState({ cabin :  newProps.queryParams.cabin,
+                            dest :  newProps.queryParams.dest ,
+                            date :  newProps.queryParams.date,
+                            source :  newProps.queryParams.source,
+                            travelers :   newProps.queryParams.travelers,
+                            phoneNumber : newProps.profile != undefined ? (newProps.profile.phone_number != null ? newProps.profile.phone_number : ''  ) : '',
+                            emailAddress : newProps.profile != undefined ? newProps.profile.email : '' ,
+                        } , function(){
+                             newProps.updateBookingInfo(this.state);
+                        } )
+        }
+    }
+
     render() {
         return (
             <div className="flight-checkout-booking">
@@ -84,12 +105,12 @@ class FlightCheckoutBookingInfo extends Component {
                 <div className="contact-info">
                     <div className="form-group row">
                         <div className="col-xs-12">
-                            <input type="text" className="form-control" placeholder="Email address" onChange={this.getPhoneNumber.bind(this)}/>
+                            <input type="text" value={this.state.emailAddress} className="form-control" placeholder="Email address" onChange={this.getEmailAddress.bind(this)}/>
                         </div>
                     </div>
                     <div className="form-group row">
                         <div className="col-xs-12">
-                            <input type="text" className="form-control" placeholder="Phone number" onChange={this.getEmailAddress.bind(this)}/>
+                            <input type="text" value={this.state.phoneNumber} className="form-control" placeholder="Phone number" onChange={this.getPhoneNumber.bind(this)}/>
                         </div>
                     </div>
                 </div>
