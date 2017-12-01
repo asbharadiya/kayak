@@ -15,8 +15,8 @@ class CarFilters extends Component {
             luggage : [] ,
             category : [] ,
 
-            minPrice : 0  , 
-            maxPrice : 500  
+            minPrice : 0  ,
+            maxPrice : 500
         };
         this.occupantsChanged = this.occupantsChanged.bind(this);
         this.luggageChanged = this.luggageChanged.bind(this);

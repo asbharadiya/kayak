@@ -21,12 +21,12 @@ class HotelFilters extends Component {
           reviewScoreMax: 5,
           priceMin: 0,
           priceMax: 2000,
-          roomType: []
+          amenities: []
       };
       this.updateStarFilter = this.updateStarFilter.bind(this);
       this.updateReviewScore = this.updateReviewScore.bind(this);
       this.updatePrice = this.updatePrice.bind(this);
-      this.updateRoomType = this.updateRoomType.bind(this);
+      this.updateAnemities = this.updateAnemities.bind(this);
   }
 
   updateReviewScore(value) {
@@ -61,9 +61,9 @@ class HotelFilters extends Component {
     }
   }
 
-  updateRoomType(newFilter) {
+  updateAnemities(newFilter) {
     this.setState({
-      roomType: newFilter
+      amenities: newFilter
     }, function() {
       this.props.applyFilters(this.state);
     });
@@ -104,25 +104,37 @@ class HotelFilters extends Component {
           </div>
           <div className="groups-section">
               <div className="groups-title">
-                  Room Type
+                  Amenities
               </div>
               <div className="groups-list">
                 <CheckboxGroup
-                    name="luggage"
-                    value={this.state.roomType}
-                    onChange={this.updateRoomType} className="CheckboxGroup">
+                    name="amenities"
+                    value={this.state.amenities}
+                    onChange={this.updateAnemities} className="CheckboxGroup">
                   <ul>
                       <li>
-                        <label className="labelCheckBox"><Checkbox value="Conference"/> Conference </label>
+                        <label className="labelCheckBox"><Checkbox value="Pool"/> Pool </label>
                       </li>
                       <li>
-                        <label className="labelCheckBox"><Checkbox value="Premium"/> Premium </label>
+                        <label className="labelCheckBox"><Checkbox value="Lunch"/> Lunch </label>
                       </li>
                       <li>
-                        <label className="labelCheckBox"><Checkbox value="Honeymoon Suite"/> Honeymoon Suite </label>
+                        <label className="labelCheckBox"><Checkbox value="Parking"/> Parking </label>
                       </li>
                       <li>
-                        <label className="labelCheckBox"><Checkbox value="Standard"/> Standard </label>
+                        <label className="labelCheckBox"><Checkbox value="Dinner"/> Dinner </label>
+                      </li>
+                      <li>
+                        <label className="labelCheckBox"><Checkbox value="Wifi"/> Wifi </label>
+                      </li>
+                      <li>
+                        <label className="labelCheckBox"><Checkbox value="Jacuzzi"/> Jacuzzi </label>
+                      </li>
+                      <li>
+                        <label className="labelCheckBox"><Checkbox value="TV"/> TV </label>
+                      </li>
+                      <li>
+                        <label className="labelCheckBox"><Checkbox value="AC"/> AC </label>
                       </li>
                   </ul>
                 </CheckboxGroup>

@@ -168,6 +168,7 @@ function getHotelsForCustomer(msg, callback){
     var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
     parts = msg.queryParams.checkOutDate.split("-");
     var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
+		console.log(msg.queryParams);
 	// var query = {
   //       is_deleted : false,
   //       hotelCity: msg.queryParams.city,
@@ -190,6 +191,8 @@ function getHotelsForCustomer(msg, callback){
   //           }
   //       }
   //   };
+	console.log(msg.queryParams);
+
 		var query = {
 			hotelCity: msg.queryParams.city,
 			hotelStar: {"$lte": msg.queryParams.rating || 5},
@@ -206,6 +209,15 @@ function getHotelsForCustomer(msg, callback){
 			//availability:  {$exists:true},
 			//$where: 'this.availability.length > ' + daysCount
 		};
+
+		if(msg.queryParams.amenities != undefined ){
+			var amenitiesArray = msg.queryParams.amenities.split(',');
+			if(amenitiesArray.length == 1 && amenitiesArray[0] == '' ){
+				amenitiesArray = []
+			}else if(amenitiesArray.length > 0 ){
+				query.hotelAmenities =  { "$all" : amenitiesArray }
+			}
+		}
 
 
     // if(msg.queryParams.luggage != undefined ){
