@@ -4,8 +4,8 @@
 
 .roomType-container .roomType-label {
   font-size: 13px;
-  font-weight: 500;
-  color: #5191E0;
+  font-weight: bold;
+  padding: 10px;
 }
 
 .roomType-container .roomType-price {

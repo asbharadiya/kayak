@@ -195,14 +195,14 @@ function getHotelsForCustomer(msg, callback){
 			hotelStar: {"$lte": msg.queryParams.rating || 5},
 			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
 			is_deleted : false,
-			availability: {
-				$elemMatch: {
-					availableDate: {
-						$gte: msg.queryParams.checkInDate,
-						$lte: msg.queryParams.checkOutDate
-					}
-				}
-			},
+			// availability: {
+			// 	$elemMatch: {
+			// 		availableDate: {
+			// 			$gte: msg.queryParams.checkInDate,
+			// 			$lte: msg.queryParams.checkOutDate
+			// 		}
+			// 	}
+			// },
 			//availability:  {$exists:true},
 			//$where: 'this.availability.length > ' + daysCount
 		};

@@ -18,7 +18,7 @@ class HotelRow extends Component {
   render() {
     return (
       <div className="hotels-row col-xs-12 no-padding">
-        <div className="hotel-image col-xs-3 no-padding">
+        <div className="hotel-image col-xs-3">
           <img className="img-responsive" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
         </div>
         <div className="title-section col-xs-7">
@@ -48,7 +48,7 @@ class HotelRow extends Component {
               return <div className="amenities col-xs-3"><i className="fa fa-check-circle"></i> {room}</div>
             })}
           </div>
-          <div className="col-xs-12 no-padding">
+          <div className="col-xs-12">
             {this.props.data.hotelRooms.map((room, key) => {
               return <RoomType data={room} key={key}></RoomType>
             })}

@@ -82,6 +82,10 @@
 	margin-top: 20px;
 }
 
+.hotels-row .hotel-image {
+	padding: 20px;
+}
+
 .hotels-row .hotel-location-label {
 	font-size: 16px;
 }
