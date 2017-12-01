@@ -11,11 +11,25 @@ function addHotel(msg, callback){
 		var now = msg.serviceStartDate;
 		msg.availability = [];
 		var availabilityObj = {};
-		for (var d = new Date(msg.serviceStartDate); d <= new Date(msg.serviceEndDate); d.setDate(d.getDate() + 1)) {
-			availabilityObj.availableDate = new Date(d);
-			availabilityObj.hotelRooms = msg.hotelRooms;
-			msg.availability.push(availabilityObj);
+
+
+
+		var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
+		var availabilityDateObject = [] ;
+		for (var i=0 ; i <= serviceDays ; i++) {
+			
+			var date = new Date(new Date(msg.serviceStartDate).setUTCHours(0,0,0,0));
+			date.setDate(date.getDate() + i);
+			
+			availabilityDateObject.push({availableDate : date , hotelRooms : msg.hotelRooms});
 		}
+
+		msg.availability = availabilityDateObject ; 
+		console.log(msg) ; 
+
+
+
+
 		var newHotel = new hotelModel(msg);
 		newHotel.save(function (err) {
 			if(err) {

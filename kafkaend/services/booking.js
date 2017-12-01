@@ -151,13 +151,30 @@ function makeBooking(msg, callback){
 
 function getBookings(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    console.log(msg) ;
+
+    var userid = msg.userId ; 
+
+     billingModel.find({  userId : userid}, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all Cars from the server"
+            callback(null , res) ;
+        }else{
+            console.log(result)
+            res.code = 200  ;
+            res.message = "Success"
+            res.data = result
+            callback(null , res) ;
+        }
+    });
+
+    
 }
 
 function getBookingById(msg, callback){
     var res = {};
+
     res.code = 200;
     res.message = "Success";
     callback(null, res);
