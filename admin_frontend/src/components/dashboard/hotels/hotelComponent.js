@@ -295,8 +295,8 @@ class HotelComponent extends Component {
 									    <option className="selected disabled hidden">Select</option>
 										<option>Standard</option>
 										<option>Premium</option>
-										<option>Conference room</option>
-										<option>Honeymoon suit</option>
+										<option>Conference</option>
+										<option>Honeymoon</option>
 								  </select>
 						        </div>
 						      	<div className="col-md-6 nopadding">	

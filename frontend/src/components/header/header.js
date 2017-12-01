@@ -75,8 +75,7 @@ class Header extends Component {
 										</div>
                                     } id="user-dropdown">
 										<MenuItem eventKey={1.1} onClick={()=>this.handleLink("/user/profile")}>Profile</MenuItem>
-										<MenuItem eventKey={1.2} onClick={()=>this.handleLink("/user/bookings")}>History</MenuItem>
-										<MenuItem eventKey={1.3} onClick={()=>this.props.logout()}>Logout</MenuItem>
+										<MenuItem eventKey={1.2} onClick={()=>this.props.logout()}>Logout</MenuItem>
 									</NavDropdown>
 								</Nav>
                             ) : (

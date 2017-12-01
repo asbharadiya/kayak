@@ -50,7 +50,7 @@ class HotelRow extends Component {
           </div>
           <div className="col-xs-12 no-padding">
             {this.props.data.hotelRooms.map((room, key) => {
-              return <RoomType data={room}></RoomType>
+              return <RoomType data={room} key={key}></RoomType>
             })}
           </div>
         </div>
