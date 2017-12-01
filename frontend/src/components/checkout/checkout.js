@@ -121,7 +121,7 @@ class Checkout extends Component {
 
         this.props.getUserDetails();
 
-        
+
     }
 
     updateBookingInfo(info){
