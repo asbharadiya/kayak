@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import './bookings.css';
 import * as bookings from '../../../api/profile'
+import BookedComponent from './bookedComponent/bookedComponent'
 
 class Bookings extends Component {
 
@@ -36,25 +37,10 @@ class Bookings extends Component {
     render() {
     	
     	const listOfBooking = this.state.bookingData.map((data, key) => {
-    		return			 <div key={key} className="row past-booking-content-list">
-	                			<div className="col-md-3 col-lg-3 col-sm-3 col-xs-3">
-		                			{data.bookingId}
-		                		</div>
-		                		<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2">
-		                			 {data.listingType}
-		                		</div>
-		                		<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2">
-		                			{(data.createdDate).toString().substr(0,10)}
-		                		</div>
-		                		<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2">
-		                			${data.totalAmount}
-		                		</div>
-		                		<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-		                			<a>View</a>
-		                		</div>
-	                		 </div>
+    		return  <BookedComponent key={key} data={data}/> 
     	})
-    	console.log(this.state.bookingData)
+
+    	
         return (
             <div className="profile-panel bookings-page-wrapper">
                 <div className="profile-panel-body">
