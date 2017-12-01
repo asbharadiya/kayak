@@ -20,8 +20,7 @@ function getProfile(req,res){
 }
 
 function updateProfile(req,res){
-	console.log('AMAN in UPDATE PROFILE ' + req.session.passport.user._id)
-	console.log(req.files)
+
 	
 	var obj = {
 			
