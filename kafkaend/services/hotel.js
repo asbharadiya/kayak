@@ -2,6 +2,9 @@ var mongo = require('./mongo');
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var hotelModel = require('../models/hotel.js');
+const Moment = require('moment');
+const MomentRange = require('moment-range');
+const moment = MomentRange.extendMoment(Moment);
 
 function addHotel(msg, callback){
 	var res = {};
@@ -148,32 +151,61 @@ function deleteHotelById(msg, callback){
 }
 
 function getHotelsForCustomer(msg, callback){
-	console.log(msg.queryParams);
+	var date = moment(msg.queryParams.checkInDate, 'MM-DD-YYYY');
+	var date2 = moment(msg.queryParams.checkOutDate, 'MM-DD-YYYY');
+	var daysCount = date2.diff(date,'days') + 1;
+	console.log(daysCount);
 	var res = {};
 	var query = {
 		hotelCity: msg.queryParams.city,
 		hotelStar: {"$lte": msg.queryParams.rating || 5},
 		hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
-		is_deleted : false
+		is_deleted : false,
+		availability: {
+			$elemMatch: {
+				availableDate: {
+					$gte: msg.queryParams.checkInDate,
+					$lte: msg.queryParams.checkOutDate
+				}
+			}
+		},
+		availability:  {$exists:true},
+		$where: 'this.availability.length > ' + daysCount
 	};
-	var options = {
-		select: 'hotelName hotelAddress hotelCity hotelState hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
-		lean: true,
-		page: msg.pageNo || 1,
-		limit: 20
-	};
-	hotelModel.paginate(query,options, function(err, result){
-		if(err){
-			res.code = 500  ;
-			res.message = "Fail to get all hotels from the server";
-			callback(null , res) ;
-		}else{
-			res.code = 200  ;
-			res.message = "Success";
-			res.data = result;
-			callback(null , res) ;
-		}
-	});
+
+	// query.availability = {
+	// 	$group : {
+	// 		$elemMatch: {
+	// 			availability :{$gte: msg.queryParams.checkInDate, $lte: msg.queryParams.checkOutDate},
+	// 			$elemMatch : {
+	// 				hotelRooms: {
+	// 					$elemMatch : {
+	// 						totalAvailable : 0
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+var options = {
+	select: 'hotelName hotelAddress hotelCity hotelState hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
+	lean: true,
+	page: msg.pageNo || 1,
+	limit: 20
+};
+hotelModel.paginate(query,options, function(err, result){
+	if(err){
+		res.code = 500  ;
+		res.message = "Fail to get all hotels from the server";
+		callback(null , res) ;
+	}else{
+		res.code = 200  ;
+		res.message = "Success";
+		res.data = result;
+		callback(null , res) ;
+	}
+});
 }
 
 function getHotelByIdForCustomer(msg, callback){
