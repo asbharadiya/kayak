@@ -46,6 +46,34 @@ class HotelCheckoutDetails extends Component {
                           </div>
                         </div>
                         <div className="col-xs-3">
+                          <div className="room-type-container">
+                            <div className="detail-label">
+                              Room Type
+                            </div>
+                            <div className="contact-email">
+                                { this.props.queryParams.roomType }
+                            </div>
+                          </div>
+                          <div className="guests-container">
+                            <div className="detail-label">
+                              Guests
+                            </div>
+                            <div className="contact-email">
+                              { this.props.queryParams.guests }
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-xs-3">
+                            <div className="detail-label">
+                              Address
+                            </div>
+                            <div className="contact-email">
+                                <div> { this.props.details.hotelAddress } </div>
+                                <div> { this.props.details.hotelCity } </div>
+                                <div> { this.props.details.hotelState } - { this.props.details.hotelZip} </div>
+                            </div>
+                        </div>
+                        <div className="col-xs-3">
                             <div className="detail-label">
                               Contact
                             </div>
@@ -54,11 +82,6 @@ class HotelCheckoutDetails extends Component {
                             </div>
                             <div className="contact-email">
                                 { this.props.details.hotelPhoneNumber }
-                            </div>
-                        </div>
-                        <div className="col-xs-4">
-                            <div className="from-date">
-                                {this.props.queryParams.endDate}
                             </div>
                         </div>
                     </div>
