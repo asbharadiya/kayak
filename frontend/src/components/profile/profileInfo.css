@@ -124,3 +124,8 @@
 .image-preview-input-title {
     margin-left:2px;
 }
+
+.image-preview{
+    padding-left: 15px !important;
+    padding-right: 15px !important ; 
+}
