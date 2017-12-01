@@ -32,7 +32,7 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-label">
                               Check-In
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                               { this.props.queryParams.checkInDate }
                             </div>
                           </div>
@@ -40,7 +40,7 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-label">
                               Check-Out
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                               { this.props.queryParams.checkOutDate }
                             </div>
                           </div>
@@ -50,7 +50,7 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-label">
                               Room Type
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                                 { this.props.queryParams.roomType }
                             </div>
                           </div>
@@ -58,7 +58,7 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-label">
                               Guests
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                               { this.props.queryParams.guests }
                             </div>
                           </div>
@@ -67,7 +67,7 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-label">
                               Address
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                                 <div> { this.props.details.hotelAddress } </div>
                                 <div> { this.props.details.hotelCity } </div>
                                 <div> { this.props.details.hotelState } - { this.props.details.hotelZip} </div>
@@ -77,10 +77,10 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-label">
                               Contact
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                                 { this.props.details.hotelEmail }
                             </div>
-                            <div className="contact-email">
+                            <div className="detail-data">
                                 { this.props.details.hotelPhoneNumber }
                             </div>
                         </div>
