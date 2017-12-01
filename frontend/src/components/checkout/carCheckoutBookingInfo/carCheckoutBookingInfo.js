@@ -69,7 +69,7 @@ class CarCheckoutBookingInfo extends Component {
 
 
     componentWillReceiveProps(newProps){
-        console.log("query params "  , this.props.queryParams) ;
+        
         this.setState({
             firstName :  newProps.profile != undefined ? newProps.profile.firstName : '' ,
             lastName : newProps.profile != undefined ? newProps.profile.lastName : '' ,

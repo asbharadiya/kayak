@@ -206,7 +206,7 @@ class Checkout extends Component {
                 return
             }
 
-            console.log(this.state.bookingInfo.email) ; 
+            
              if(!( /^[0-9]{10,10}$/.test(this.state.bookingInfo.phoneNumber))){
                 alert("Enter a valid Mobile number")
                 return
@@ -280,7 +280,7 @@ class Checkout extends Component {
                                     this.state.category === 'cars' ? (
                                         <CarCheckoutBookingInfo  profile={this.props.profileData[0]} updateBookingInfo={this.updateBookingInfo} queryParams={this.state.queryParams}/>
                                     ) : this.state.category === 'flights' ? (
-                                        <FlightCheckoutBookingInfo queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
+                                        <FlightCheckoutBookingInfo  profile={this.props.profileData[0]}  queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
                                         <CarCheckoutBookingInfo queryParams={this.state.queryParams}/>
                                     )
