@@ -9,8 +9,9 @@ import Landing from './components/landing/landing';
 import Listings from './components/listings/listings';
 import Profile from "./components/profile/profile";
 import Checkout from "./components/checkout/checkout";
-import Bookings from "./components/bookings/bookings";
-import ProfileInfo from "./components/profile/profileInfo";
+import Bookings from "./components/profile/bookings/bookings";
+import ProfileInfo from "./components/profile/profileInfo/profileInfo";
+import PaymentMethods from "./components/profile/paymentMethods/paymentMethods";
 
 class App extends Component {
 
@@ -42,28 +43,28 @@ class App extends Component {
                                             <Checkout/>
                                         )
                                     )}/>
-                                    <Route exact path='/user/profile' render={() => (
-                                        !isLogged ? (
-                                            <Redirect to="/"/>
-                                        ) : (
-                                            <Profile/>
-                                        )
-                                    )}/>
-                                    <Route exact path='/user/bookings' render={() => (
-                                        !isLogged ? (
-                                            <Redirect to="/"/>
-                                        ) : (
-                                            <Bookings/>
-                                        )
-                                    )}/>
                                     <Profile>
-                                        <Route path='/user/profileInfo' render={() => (
-                                          !isLogged ? (
+                                        <Route exact path='/user/profile' render={() => (
+                                            !isLogged ? (
                                                 <Redirect to="/"/>
-                                          ) : (
+                                            ) : (
                                                 <ProfileInfo/>
-                                              )
-                                         )}/>
+                                            )
+                                        )}/>
+                                        <Route exact path='/user/paymentMethods' render={() => (
+                                            !isLogged ? (
+                                                <Redirect to="/"/>
+                                            ) : (
+                                                <PaymentMethods/>
+                                            )
+                                        )}/>
+                                        <Route exact path='/user/bookings' render={() => (
+                                            !isLogged ? (
+                                                <Redirect to="/"/>
+                                            ) : (
+                                                <Bookings/>
+                                            )
+                                        )}/>
                                     </Profile>
                                 </Switch>
                             </div>

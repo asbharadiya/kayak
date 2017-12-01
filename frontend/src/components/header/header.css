@@ -140,6 +140,10 @@ header .header-wrapper .menu-container .nav .dropdown.open .dropdown-toggle {
 	background: none;
 }
 
+header .header-wrapper .menu-container .nav .dropdown .dropdown-toggle:after {
+	display: none;
+}
+
 header .header-wrapper .menu-container .nav .dropdown.open .dropdown-menu {
 	right: 0px;
 	left: auto;

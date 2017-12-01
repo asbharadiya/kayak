@@ -2,9 +2,7 @@ var mongo = require('./mongo');
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var hotelModel = require('../models/hotel.js');
-const Moment = require('moment');
-const MomentRange = require('moment-range');
-const moment = MomentRange.extendMoment(Moment);
+const moment = require('moment');
 
 function addHotel(msg, callback){
 	var res = {};

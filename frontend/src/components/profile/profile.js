@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import './profile.css';
-import Sidebar from './../sidebar/sidebar';
+import Sidebar from "../sidebar/sidebar";
 
 class Profile extends Component {
 
     render() {
         return (
-		  	<div className="profile-page-wrapper">
-	        	<Sidebar/>
-	  			<div className="page-content">
-		          {this.props.children}
-		        </div>
-  			</div>
+            <div className="profile-page-wrapper">
+                <div className="page-container">
+                    <Sidebar></Sidebar>
+                    <div className="tab-section">
+                        {this.props.children}
+                    </div>
+                    <div className="clearfix"></div>
+                </div>
+            </div>
         );
     }
 }

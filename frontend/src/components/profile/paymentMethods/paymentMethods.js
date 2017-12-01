@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import './bookings.css';
+import './paymentMethods.css';
 
-class Bookings extends Component {
+class PaymentMethods extends Component {
 
     render() {
         return (
-            <div className="bookings-page-wrapper">
+            <div className="payments-page-wrapper">
 
             </div>
         );
@@ -17,4 +17,4 @@ function mapStateToProps(state) {
     return {};
 }
 
-export default connect(mapStateToProps)(Bookings);
+export default connect(mapStateToProps)(PaymentMethods);
