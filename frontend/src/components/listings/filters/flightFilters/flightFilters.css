@@ -1,14 +1,10 @@
-.react-rater {
-  font-size: 30px !important;
-}
-
 .rc-slider-track{
     background-color: orange !important
 }
 
 .rc-slider-handle{
-	border-radius: 50% !important ; 
-	border : solid 2px chocolate !important ; 
+	border-radius: 50% !important ;
+	border : solid 2px chocolate !important ;
 
 }
 
@@ -16,5 +12,5 @@
 .rc-slider-handle:active{
 	border-color: chocolate !important ;
 	box-shadow: 0 0 5px #57c5f7 !important ;
-	 
+
 }

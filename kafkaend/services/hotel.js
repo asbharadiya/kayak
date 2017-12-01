@@ -17,15 +17,15 @@ function addHotel(msg, callback){
 		var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
 		var availabilityDateObject = [] ;
 		for (var i=0 ; i <= serviceDays ; i++) {
-			
+
 			var date = new Date(new Date(msg.serviceStartDate).setUTCHours(0,0,0,0));
 			date.setDate(date.getDate() + i);
-			
+
 			availabilityDateObject.push({availableDate : date , hotelRooms : msg.hotelRooms});
 		}
 
-		msg.availability = availabilityDateObject ; 
-		console.log(msg) ; 
+		msg.availability = availabilityDateObject ;
+		console.log(msg) ;
 
 
 
@@ -168,28 +168,44 @@ function getHotelsForCustomer(msg, callback){
     var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
     parts = msg.queryParams.checkOutDate.split("-");
     var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
-	var query = {
-        is_deleted : false,
-        hotelCity: msg.queryParams.city,
-        serviceStartDate : { $lte: startDate },
-        serviceEndDate : { $gte: endDate },
-        availability: {
-            $elemMatch: {
-                availableDate: {
-                    $gte: startDate,
-                    $lte: endDate
-                },
-                hotelRooms : {
-                    $elemMatch: {
-                        roomType :msg.queryParams.roomType,
-                        totalAvailable: {
-                            $gte: 1
-                        }
-                    }
-                }
-            }
-        }
-    };
+	// var query = {
+  //       is_deleted : false,
+  //       hotelCity: msg.queryParams.city,
+  //       serviceStartDate : { $lte: startDate },
+  //       serviceEndDate : { $gte: endDate },
+  //       availability: {
+  //           $elemMatch: {
+  //               availableDate: {
+  //                   $gte: startDate,
+  //                   $lte: endDate
+  //               },
+  //               hotelRooms : {
+  //                   $elemMatch: {
+  //                       roomType :msg.queryParams.roomType,
+  //                       totalAvailable: {
+  //                           $gte: 1
+  //                       }
+  //                   }
+  //               }
+  //           }
+  //       }
+  //   };
+		var query = {
+			hotelCity: msg.queryParams.city,
+			hotelStar: {"$lte": msg.queryParams.rating || 5},
+			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
+			is_deleted : false,
+			availability: {
+				$elemMatch: {
+					availableDate: {
+						$gte: msg.queryParams.checkInDate,
+						$lte: msg.queryParams.checkOutDate
+					}
+				}
+			},
+			//availability:  {$exists:true},
+			//$where: 'this.availability.length > ' + daysCount
+		};
 
 
     // if(msg.queryParams.luggage != undefined ){

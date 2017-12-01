@@ -22,31 +22,31 @@ class HotelRow extends Component {
           <img className="img-responsive" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
         </div>
         <div className="title-section col-xs-7">
-          <div className="hotel-title col-xs-12  no-padding">
-            { this.props.data.hotelName}
+          <div className="hotel-title col-xs-9  no-padding">
+            <div className="hotel-name">
+              { this.props.data.hotelName }
+            </div>
+            <div className="hotel-address">
+              { this.props.data.hotelCity }, { this.props.data.hotelState }
+            </div>
+          </div>
+          <div className="number-rating-container col-xs-3 text-right">
+            <span className="number-rating"> {(this.props.data.hotelRating).toFixed(1)} </span>
+            <span className="rating-type">
+              {this.props.data.hotelRating == 5 ? "Excellent" : ""}
+              {this.props.data.hotelRating == 4 ? "Good" : ""}
+              {this.props.data.hotelRating == 3 ? "Average" : ""}
+              {this.props.data.hotelRating == 2 ? "Below Average" : ""}
+              {this.props.data.hotelRating == 1 ? "Poor" : ""}
+            </span>
           </div>
           <div className="star-rating col-xs-12 no-padding">
             <Rater total={5} rating={this.props.data.hotelStar} interactive={false}/>
           </div>
-          <div className="ratings-container col-xs-12 no-padding">
-            <div className="number-rating-container col-xs-3 no-padding">
-              <span className="number-rating"> {(this.props.data.hotelRating).toFixed(1)} </span>
-              <span className="rating-type">
-                {this.props.data.hotelRating == 5 ? "Excellent" : ""}
-                {this.props.data.hotelRating == 4 ? "Good" : ""}
-                {this.props.data.hotelRating == 3 ? "Average" : ""}
-                {this.props.data.hotelRating == 2 ? "Below Average" : ""}
-                {this.props.data.hotelRating == 1 ? "Poor" : ""}
-              </span>
-            </div>
-            <div className="location-container col-xs-6 no-padding text-center">
-              <div className="hotel-location-label col-xs-12"> Location </div>
-              <div className="hotel-location-name col-xs-12"> {this.props.data.hotelCity}, {this.props.data.hotelState} </div>
-            </div>
-            <div className="location-container col-xs-3 no-padding pull-right text-center">
-              <div className="hotel-location-label col-xs-12"> Contact </div>
-              <div className="hotel-location-name col-xs-12"> {this.props.data.hotelPhoneNumber} </div>
-            </div>
+          <div className="col-xs-12 amenities-container">
+            {this.props.data.hotelAmenities.map((room, key) => {
+              return <div className="amenities col-xs-3"><i className="fa fa-check-circle"></i> {room}</div>
+            })}
           </div>
           <div className="col-xs-12 no-padding">
             {this.props.data.hotelRooms.map((room, key) => {
