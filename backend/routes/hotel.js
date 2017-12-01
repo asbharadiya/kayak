@@ -10,6 +10,12 @@ function addHotel(req,res){
 		tempHotelRooms[i].totalAvailable = parseInt(tempHotelRooms[i].totalAvailable);
 		tempHotelRooms[i].personPerRoom = parseInt(tempHotelRooms[i].personPerRoom);
 	}
+
+    var amenities = req.body.amenities.split(",") ;
+    if(amenities.length == 1 && amenities[0] == ''){
+        amenities = [] ; 
+    }
+
 	var obj = {
 		hotelName : req.body.hotelName ,
 		hotelAddress : req.body.hotelAddress,
@@ -22,8 +28,11 @@ function addHotel(req,res){
 		hotelRating : req.body.hotelRating,
 		serviceStartDate : req.body.serviceStartDate,
 		serviceEndDate : req.body.serviceEndDate,
-		hotelRooms: tempHotelRooms
+		hotelRooms: tempHotelRooms ,
+        amenities : amenities
     }
+    
+
 	if(req.files == null){
         kafka.make_request(topic_name,'addHotel',obj, function(err,result){
             if(err) {

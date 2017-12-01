@@ -15,6 +15,7 @@ export function addHotel(payload, file) {
     data.append('hotelRooms' , JSON.stringify(payload.hotelRooms)) ;
     data.append('serviceStartDate' , payload.serviceStartDate) ;
     data.append('serviceEndDate' , payload.serviceEndDate) ;
+    data.append('amenities' , payload.amenities)
     
 	return function(dispatch) {
 		return api.addHotel(data , function(error , response){

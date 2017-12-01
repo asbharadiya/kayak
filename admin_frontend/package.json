@@ -8,6 +8,7 @@
     "react": "^16.0.0",
     "react-autocomplete": "*",
     "react-bootstrap": "^0.31.3",
+    "react-checkbox-group": "^3.3.4",
     "react-dom": "^16.0.0",
     "react-loading-spinner": "^1.0.12",
     "react-modal": "*",
