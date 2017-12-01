@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import queryString from 'query-string';
 import './checkout.css';
 import CarCheckoutDetails from './carCheckoutDetails/carCheckoutDetails';
+import HotelCheckoutDetails from './hotelCheckoutDetails/hotelCheckoutDetails';
 import CarCheckoutBookingInfo from './carCheckoutBookingInfo/carCheckoutBookingInfo';
 import CarCheckoutSummary from './carCheckoutSummary/carCheckoutSummary';
 import FlightCheckoutDetails from './flightCheckoutDetails/flightCheckoutDetails';
@@ -50,7 +51,7 @@ class Checkout extends Component {
 
     componentDidMount(){
 
-        
+
         var _this = this;
         if(this.state.category === 'cars') {
             carApis.getCarById(this.state.id, function(error, response){
@@ -86,6 +87,7 @@ class Checkout extends Component {
             })
         } else {
             hotelApis.getHotelById(this.state.id, function(error, response){
+              console.log("response");
                 if(error){
 
                 } else {
@@ -121,7 +123,7 @@ class Checkout extends Component {
 
         this.props.getUserDetails();
 
-        
+
     }
 
     updateBookingInfo(info){
@@ -206,7 +208,7 @@ class Checkout extends Component {
                 return
             }
 
-            console.log(this.state.bookingInfo.email) ; 
+            console.log(this.state.bookingInfo.email) ;
              if(!( /^[0-9]{10,10}$/.test(this.state.bookingInfo.phoneNumber))){
                 alert("Enter a valid Mobile number")
                 return
@@ -226,8 +228,8 @@ class Checkout extends Component {
                 return;
             }
         }
-       
-        
+
+
         var _obj = {
             listingType:this.state.category,
             listingId:this.state.id,
@@ -263,7 +265,7 @@ class Checkout extends Component {
                                         ) : this.state.category === 'flights' ? (
                                             <FlightCheckoutDetails details={this.state.listingDetails} queryParams={this.state.queryParams} />
                                         ) : (
-                                            <CarCheckoutDetails details={this.state.listingDetails} queryParams={this.state.queryParams} />
+                                            <HotelCheckoutDetails details={this.state.listingDetails} queryParams={this.state.queryParams} />
                                         )
                                     ) : (
                                         <div className="text-center">Loading...</div>

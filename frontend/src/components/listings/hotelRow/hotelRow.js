@@ -59,7 +59,7 @@ class HotelRow extends Component {
             this.minFare !== this.maxFare ? <p>${this.minFare} - ${this.maxFare}</p> :  <p>${this.minFare} </p>
         }
 
-        <button className="btn btn-primary btn-kayak">Book</button>
+        <button className="btn btn-primary btn-kayak" onClick={(id)=>this.props.onBookClick(this.props.data.id)}>Book</button>
       </div>
     </div>
   );
