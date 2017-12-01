@@ -153,7 +153,7 @@ function deleteHotelById(msg, callback){
 function getHotelsForCustomer(msg, callback){
 	var date = moment(msg.queryParams.checkInDate, 'MM-DD-YYYY');
 	var date2 = moment(msg.queryParams.checkOutDate, 'MM-DD-YYYY');
-	var daysCount = date2.diff(date,'days') + 1;
+	var daysCount = date2.diff(date,'days');
 	console.log(daysCount);
 	var res = {};
 	var query = {
