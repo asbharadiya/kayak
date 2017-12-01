@@ -1,9 +1,16 @@
+.checkout-panel .checkout-panel-body .car-panel-body-content{
+    padding-bottom: 0px
+}
 
-
+.checkout-panel .checkout-panel-body .car-panel-body-content .content-name{
+    width: 100%
+}
 
 .checkout-panel .checkout-panel-body .car-panel-body-content .checkout-panel-body-content-data{
     text-align: center;
-    padding-top: 10px ;
+    padding-top: 20px ;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .checkout-panel .checkout-panel-body .car-panel-body-content .checkout-panel-body-content-head{
@@ -28,7 +35,7 @@
 
 .checkout-panel .checkout-panel-body .car-panel-body-content .checkout-panel-body-content-head .carProperty{
     font-size: 10px ;
-    color: lightgrey
+    color: darkgrey
 }
 
 .checkout-panel .checkout-panel-body .car-panel-body-content .checkout-panel-body-content-head .carName{
@@ -128,8 +135,12 @@
 }
 
 .checkout-panel .checkout-panel-body .car-panel-body-content .checkout-panel-body-content-image .carImage{
-    max-height:  52px ;
-    max-width:  135px
+    height:  auto ;
+    width:  60% ;
+}
+
+.checkout-panel .checkout-panel-body .car-panel-body-content .checkout-panel-body-content-image{
+    padding : 0;
 }
 
 

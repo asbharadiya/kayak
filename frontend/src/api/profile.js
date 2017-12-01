@@ -5,6 +5,7 @@ const headers = {
 };
 
 export const getUserDetails = () =>
+
     fetch(api+'/c/profile', {
         method: 'GET',
         headers: {
@@ -14,6 +15,7 @@ export const getUserDetails = () =>
         credentials: 'include'
         
     }).then(res => {
+        
         return res.json();
     }).catch(error => {
         return error;

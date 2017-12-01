@@ -41,7 +41,7 @@ class CarRow extends Component {
 
                 <div className="price-section">
                     <p>${this.props.data.dailyRentalValue}</p>
-                    <button className="btn btn-primary btn-kayak">Book</button>
+                    <button className="btn btn-primary btn-kayak" onClick={(id)=>this.props.onBookClick(this.props.data.id)}>Book</button>
                 </div>
 
             </div>

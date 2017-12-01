@@ -11,7 +11,7 @@ class CarsSearchForm extends Component {
 
 	search() {
 		//TODO: take these value from input
-		this.props.history.push('/cars/listings?city=San Jose&startDate=12-10-2017&endDate=12-10-2017');
+		this.props.history.push('/cars/listings?city=San Jose&startDate=12-10-2017&endDate=12-13-2017');
 	}
 
   	render() {
