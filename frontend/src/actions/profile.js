@@ -33,9 +33,6 @@ function updateFailure(){
 
 export function updateUserProfile(payload, file) {
 
-    console.log('AMAN UPLOAD')
-    console.log(file)
-
     let data = new FormData();
 
     data.append('file', file );

@@ -22,8 +22,7 @@ export const getUserDetails = () =>
     }); 
     
 export const updateUserProfile = (data , callback) => {
-    console.log('API')
-    console.log(data)
+
     fetch(api+'/c/profile', {
         method: 'PUT',
         credentials: 'include',
