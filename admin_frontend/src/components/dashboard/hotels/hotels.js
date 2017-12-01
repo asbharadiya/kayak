@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import HotelComponent  from './hotelComponent'
+import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 
 //Loading
 import Loading from 'react-loading-spinner';
@@ -31,8 +32,18 @@ class Hotels extends Component {
 			hotelAddLoading : false ,
 			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}],
 	        hotelFile : '' ,
-	        filename : ''
+	        filename : '',
+	        amenities : []
 		}
+
+		this.amenitiesChanged = this.amenitiesChanged.bind(this) ; 
+
+	}
+
+	amenitiesChanged(newAmentieis){
+		this.setState({
+            amenities: newAmentieis
+        });
 	}
 
 	componentDidMount(){
@@ -58,7 +69,8 @@ class Hotels extends Component {
 			serviceEndDate : '',
 			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}],
             hotelFile : '' ,
-            filename : ''
+            filename : '',
+            amenities : []
 		});
       	this.props.getAllHotels();
       }
@@ -74,7 +86,7 @@ class Hotels extends Component {
 				</div>
 				 <Modal show={this.state.showHotelModal} onHide={this.closeHotelModal} id="hotelModal" className="hotelModal">	
 					<Modal.Body className="hotelModalBody">
-					    <div className="scrollDiv">
+					    <div >
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="hotelname">Hotel Name</label>
 					      		<input className="form-control sharpCorner" onChange={(e) => {
@@ -125,6 +137,9 @@ class Hotels extends Component {
 					      			})
 					      		}} id="hotelPhoneNumber" type="text"  aria-describedby="basic-addon1"   />
 					      	</div>
+					      	
+
+
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      		<label htmlFor="hotelEmail">Email</label>
 					      		<input className="form-control sharpCorner" onChange={(e) => {
@@ -133,6 +148,48 @@ class Hotels extends Component {
 					      			})
 					      		}} id="hotelEmail" type="text"  aria-describedby="basic-addon1"   />
 					      	</div>
+
+					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+					      		<label htmlFor="hotelEmail">Amenities</label>
+					      		<CheckboxGroup
+                                    name="amenities"
+                                    value={this.state.amenities}
+                                    onChange={this.amenitiesChanged} className="CheckboxGroup">
+                                    <div className="row">
+                                    	<div className="col-xs-4">
+                                    		<label className="labelCheckBox"><Checkbox value="Pool"/> Pool</label>
+                                    	</div>
+                                    	<div className="div-check-box col-xs-4">
+                                    		<label className="labelCheckBox"><Checkbox value="Bar"/> Bar</label>
+                                    	</div>
+                                    	<div className="div-check-box col-xs-4">
+                                    		<label className="labelCheckBox"><Checkbox value="Jacuzzi"/> Jacuzzi</label>
+                                    	</div>
+                                    	<div className="col-xs-4">
+                                    		<label className="labelCheckBox"><Checkbox value="Lunch"/> Lunch</label>
+                                    	</div>
+                                    	<div className="col-xs-4 div-check-box">
+                                    		<label className="labelCheckBox"><Checkbox value="Dinner"/> Dinner</label>
+                                    	</div>
+                                    	<div className="col-xs-4 div-check-box">
+                                    		<label className="labelCheckBox"><Checkbox value="Air-conditioner"/> A/C</label>
+                                    	</div>
+                                    	<div className="col-xs-4">
+                                    		<label className="labelCheckBox"><Checkbox value="Parking"/> Parking</label>
+                                    	</div>
+                                    	<div className="col-xs-4 div-check-box">
+                                    		<label className="labelCheckBox"><Checkbox value="Wifi"/> Wifi</label>
+                                    	</div>
+                                    	<div className="col-xs-4 div-check-box">
+                                    		<label className="labelCheckBox"><Checkbox value="TV"/> TV</label>
+                                    	</div>
+                                    </div>
+                                    
+                                </CheckboxGroup>
+					      	</div>
+
+
+
 					      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
 					      	<div className="col-md-6 nopadding">
 					      		<label htmlFor="hotelStar">Star</label>
@@ -371,7 +428,8 @@ class Hotels extends Component {
 												hotelEmail : this.state.hotelEmail,
 												serviceStartDate : this.state.serviceStartDate,
 												serviceEndDate : this.state.serviceEndDate,
-												hotelRooms : this.state.hotelRooms
+												hotelRooms : this.state.hotelRooms,
+												amenities : this.state.amenities
 						      				}
 						      				this.setState({
 						      					addHotelError : '' , 

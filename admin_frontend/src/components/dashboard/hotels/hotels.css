@@ -96,3 +96,12 @@
 .clearBoth{
 	clear: both;
 }
+
+.labelCheckBox{
+	margin-right: 35px
+}
+
+.div-check-box{
+	right-padding: 0px ;
+
+}
