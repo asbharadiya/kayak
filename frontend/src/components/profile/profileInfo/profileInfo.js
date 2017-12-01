@@ -65,7 +65,7 @@ class ProfileInfo extends Component {
             email : document.getElementById('email').value,
         }
         console.log(obj)
-        this.props.updateUserProfile(obj)
+        this.props.updateUserProfile(obj, this.state.profileFile)
     }
 
     render() {
@@ -222,7 +222,7 @@ class ProfileInfo extends Component {
                                             <span className="input-group-btn">
 
                                                     {
-                                                        this.state.carFile === '' ?
+                                                        this.state.profileFile === '' ?
                                                             <span></span>
                                                             :
                                                             <button type="button" onClick={() => {
@@ -279,7 +279,7 @@ class ProfileInfo extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getUserDetails : () => dispatch(getUserDetails()),
-        updateUserProfile : (obj) => dispatch(updateUserProfile(obj)),
+        updateUserProfile : (obj, file) => dispatch(updateUserProfile(obj, file)),
 
     };
 }
