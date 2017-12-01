@@ -16,6 +16,8 @@ import * as hotelApis from '../../api/hotel';
 import * as profileApis from '../../api/profile';
 import * as actions from '../../actions/booking';
 import {getUserDetails} from '../../actions/profile'
+import HotelCheckoutSummary from './hotelCheckOutSummary/hotelCheckOutSummary';
+
 
 
 class Checkout extends Component {
@@ -371,7 +373,7 @@ class Checkout extends Component {
                                                                    queryParams={this.state.queryParams}
                                                                    updateTotal={this.updateTotal}/>
                                         ) : (
-                                            <CarCheckoutSummary details={this.state.listingDetails}
+                                            <HotelCheckoutSummary details={this.state.listingDetails}
                                                                 queryParams={this.state.queryParams}
                                                                 updateTotal={this.updateTotal}/>
                                         )
