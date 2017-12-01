@@ -2,6 +2,7 @@ var bookingModel = require('../models/booking.js');
 var billingModel = require('../models/billing.js');
 var creditCardModel = require('../models/creditCard.js');
 var ObjectID = require('mongodb').ObjectID;
+var carModel = require('../models/car.js');
 
 function getBills(msg, callback){
     var res = {};
@@ -18,8 +19,44 @@ function getBillById(msg, callback){
 }
 
 function makeBooking(msg, callback){
+    
     var res = {};
     var curr_date = new Date();
+
+  if( msg.data.listingType === "cars"){
+        
+         var query = { is_deleted : false , _id : new ObjectID(msg.data.listingId) , 
+                      availability : { $elemMatch : { 
+                                                      availabilityDate : ''
+                                                   }
+                                     }
+                     };
+          var updateQuery = {
+                            $inc : {
+                                  "availability.$.availableCars" : -1
+                            }
+          }
+
+        var startDate =  new Date(new Date(msg.data.bookingInfo.startDate).setUTCHours(0,0,0,0));
+        var endDate = new Date(new Date(msg.data.bookingInfo.endDate).setHours(0,0,0,0));
+        var serviceDays = ((endDate- startDate)/(1000*60*60*24))+1 ;
+        
+        for(var i =0 ; i < serviceDays ; i++){
+          if(i != 0 ){
+             startDate.setDate(startDate.getDate() + 1);
+          }
+         
+          query.availability. $elemMatch.availabilityDate = startDate ; 
+          
+          carModel.update(query, updateQuery, { multi: false }, function(err , response){
+              
+          })
+
+
+        }
+
+  }
+
     //TODO: first subtract availability based on category and travellers, take additional data from frontend if needed
     var booking = new bookingModel();
     booking.listingType = msg.data.listingType;
@@ -29,6 +66,7 @@ function makeBooking(msg, callback){
     booking.createdDate = curr_date;
     booking.save(function (err, booking) {
         if (!err) {
+          console.log("BBB")
             var billing = new billingModel();
             billing.listingType = msg.data.listingType;
             billing.listingId = new ObjectID(msg.data.listingId);
@@ -45,9 +83,11 @@ function makeBooking(msg, callback){
                     card.cvv = msg.data.cvv;
                     card.userId = msg.userId;
                     card.save(function(err,card){
+                      console.log("CCC")
                        if(!err){
                            billing.creditCardId = new ObjectID(card._id);
                            billing.save(function(err){
+                            console.log("DDD")
                                if(!err){
                                    res.code = 200;
                                    res.message = "Success";

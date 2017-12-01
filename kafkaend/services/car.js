@@ -18,9 +18,11 @@ function addCar(msg, callback){
 
         var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
 
+         
+
         var availabilityDateObject = [] ;
         for(var i=0 ; i <= serviceDays ; i++){
-            var date = new Date(msg.serviceStartDate) ;
+            var date = new Date(new Date(msg.serviceStartDate).setUTCHours(0,0,0,0));
             date.setDate(date.getDate() + i);
             availabilityDateObject.push({availabilityDate : date , availableCars : msg.carQuantity})
         }

@@ -30,7 +30,10 @@ class CarCheckoutSummary extends Component {
 						totalBaseFare : serviceDays * dailyRentalValue,
 						tax : Math.ceil(0.12 * (serviceDays * dailyRentalValue)),
 					  } , function(){
-					  	this.setState({total : (this.state.totalDays * this.state.baseFare) + this.state.tax})
+					  	this.setState({total : (this.state.totalDays * this.state.baseFare) + this.state.tax}  , function(){
+                        
+                         this.props.updateTotal(this.state.total)
+                        })
 					  })
 	}
 

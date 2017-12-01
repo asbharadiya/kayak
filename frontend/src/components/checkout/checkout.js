@@ -16,6 +16,7 @@ import * as profileApis from '../../api/profile';
 import * as actions from '../../actions/booking';
 import {getUserDetails} from '../../actions/profile'
 
+
 class Checkout extends Component {
 
     constructor(props){
@@ -194,7 +195,23 @@ class Checkout extends Component {
                 }
             })
         } else if(this.state.category === 'cars') {
-            //TODO: validate car booking info
+            if(this.state.bookingInfo.firstName === '' || this.state.bookingInfo.lastName === '' || this.state.bookingInfo.phoneNumber === '' ||
+                        this.state.bookingInfo.email === '' || this.state.bookingInfo.licenseNumber === '') {
+                alert('Please fill out all the required booking information!');
+                return;
+            }
+
+            if(!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.state.bookingInfo.email))){
+                alert("Enter a valid Email Address")
+                return
+            }
+
+            console.log(this.state.bookingInfo.email) ; 
+             if(!( /^[0-9]{10,10}$/.test(this.state.bookingInfo.phoneNumber))){
+                alert("Enter a valid Mobile number")
+                return
+            }
+
         } else {
             //TODO: validate hotel booking info
         }
@@ -216,7 +233,7 @@ class Checkout extends Component {
         //make entry to billing table
         //add new credit card if save checkbox is checked
         //subtract available from the listing object
-        console.log('Processing....');
+        console.log('Processing.... ' , this.state.total);
         var _obj = {
             listingType:this.state.category,
             listingId:this.state.id,
@@ -268,7 +285,7 @@ class Checkout extends Component {
                             <div className="checkout-panel-body">
                                 {
                                     this.state.category === 'cars' ? (
-                                        <CarCheckoutBookingInfo  profile={this.props.profileData[0]}  queryParams={this.state.queryParams}/>
+                                        <CarCheckoutBookingInfo  profile={this.props.profileData[0]} updateBookingInfo={this.updateBookingInfo} queryParams={this.state.queryParams}/>
                                     ) : this.state.category === 'flights' ? (
                                         <FlightCheckoutBookingInfo queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
@@ -381,6 +398,7 @@ class Checkout extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
+
 
         makeBooking : (payload) => dispatch(actions.makeBooking(payload)),
 
