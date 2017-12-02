@@ -57,6 +57,7 @@ function addHotel(msg, callback){
 function getHotels(msg, callback){
 	var res = {};
 	hotelModel.find({ is_deleted : false}, function(err, result){
+		console.log(result) ; 
 		if(err){
 			res.code = 500  ;
 			res.status  = 500 ;
@@ -194,9 +195,12 @@ function getHotelsForCustomer(msg, callback){
 	console.log(msg.queryParams);
 
 		var query = {
-			hotelCity: msg.queryParams.city,
+			//commented by Palash
+			/*hotelCity: msg.queryParams.city,
 			hotelStar: {"$lte": msg.queryParams.rating || 5},
 			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
+			*/
+
 			is_deleted : false,
 			// availability: {
 			// 	$elemMatch: {
