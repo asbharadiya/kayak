@@ -91,8 +91,10 @@ function getCreditCards(req,res){
 }
 
 function deleteCreditCardById(req,res){
+
 	kafka.make_request(topic_name,'deleteCreditCardById',{
-		
+		cardId : req.params.id	 ,
+		user_id:req.session.passport.user._id
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});

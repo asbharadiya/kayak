@@ -68,6 +68,21 @@ export const addCreditCard = (payload, callback) =>
         callback( error , {});
     });
 
+export const deleteCreditCard = (id, callback) =>
+    fetch(api+'/c/credit_cards/'+id, {
+        method: 'DELETE',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify()
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+});
+
 
 
 export const getBookingDetails = (callback) =>
@@ -84,6 +99,10 @@ export const getBookingDetails = (callback) =>
     }).catch(error => {
         callback( error , {});
     });
+
+
+
+
 
 export const getBookingDetailsById = (id , callback) =>
     fetch(api+'/c/bookings/'+id, {
