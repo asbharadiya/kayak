@@ -18,4 +18,8 @@ export function makeBooking(payload) {
     };
 }
 
-
+export function resetSuccessBookingFlag(payload) {
+  return {
+    type: 'RESET_SUCCESS_BOOKING_FLAG'
+  }
+}

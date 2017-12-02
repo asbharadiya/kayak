@@ -18,7 +18,7 @@ import * as actions from '../../actions/booking';
 import {getUserDetails} from '../../actions/profile'
 import HotelCheckoutSummary from './hotelCheckOutSummary/hotelCheckOutSummary';
 import HotelCheckoutBookingInfo from './hotelCheckoutBookingInfo/hotelCheckoutBookingInfo';
-
+import SuccessModal from './checkoutSuccess/successModal';
 
 
 class Checkout extends Component {
@@ -267,6 +267,7 @@ class Checkout extends Component {
 
         return (
             <div className="checkout-page-wrapper">
+              <SuccessModal category={this.state.category} />
                 <div className="page-container">
                     <div className="steps-container">
                         <div className="checkout-panel">

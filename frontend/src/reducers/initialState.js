@@ -3,7 +3,8 @@ export default {
     uname: "",
     listings: {
         total: 0,
-        docs: []
+        docs: [],
+        bookingSuccess: false
     },
     userUpdateSuccess:null,
     profile: []
