@@ -11,8 +11,7 @@ import Cars from './components/dashboard/cars/cars';
 import Customers from './components/dashboard/customers/customers';
 import Flights from './components/dashboard/flights/flights';
 import Hotels from './components/dashboard/hotels/hotels';
-import Console from './components/dashboard/console/console';
-import Host from './components/dashboard/host/host';
+import UserTracking from './components/dashboard/userTracking/userTracking';
 import Bills from './components/dashboard/bills/bills';
 
 class App extends Component {
@@ -74,18 +73,11 @@ class App extends Component {
                     <Hotels/>
                   )
                 )}/>
-                <Route path='/console' render={() => (
-                    !isLogged ? (
-                      <Redirect to="/"/>
-                    ) : (
-                      <Console/>
-                    )
-                  )}/>
-                  <Route path='/host' render={() => (
+                  <Route path='/userTracking' render={() => (
                       !isLogged ? (
                         <Redirect to="/"/>
                       ) : (
-                        <Host/>
+                        <UserTracking/>
                       )
                     )}/>
                     <Route path='/billings' render={() => (

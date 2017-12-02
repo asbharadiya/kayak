@@ -134,11 +134,9 @@ function makeBooking(msg, callback){
                     card.cvv = msg.data.cvv;
                     card.userId = msg.userId;
                     card.save(function(err,card){
-                      console.log("CCC")
                        if(!err){
                            billing.creditCardId = new ObjectID(card._id);
                            billing.save(function(err){
-                            console.log("DDD")
                                if(!err){
                                    res.code = 200;
                                    res.message = "Success";
@@ -202,17 +200,13 @@ function makeBooking(msg, callback){
 
 function getBookings(msg, callback){
     var res = {};
-    console.log(msg) ;
-
     var userid = msg.userId ; 
-
      billingModel.find({  userId : userid}, function(err, result){
         if(err){
             res.code = 500  ;
             res.message = "Fail to get all Cars from the server"
             callback(null , res) ;
         }else{
-            console.log(result)
             res.code = 200  ;
             res.message = "Success"
             res.data = result

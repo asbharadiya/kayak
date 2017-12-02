@@ -15,46 +15,41 @@ class Sidebar extends Component {
   				</div>
   				<div className="nav-container">
   					<ul>
-  						<li>
-  							<NavLink to="/home">
-  								Home
-  							</NavLink>
-  						</li>
-  						<li>
-  							<NavLink to="/hotels">
-  								Hotels
-  							</NavLink>
-  						</li>
-              <li>
-                <NavLink to="/flights">
-                  Flights
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/cars">
-                  Cars
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/customers">
-                  Customers
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/billings">
-                  Billings
-                </NavLink>
-              </li>
-              <li>
-	              <NavLink to="/console">
-	                Admin Console
-	              </NavLink>
-	            </li>
-              <li>
-	              <NavLink to="/host">
-	                Host Console
-	              </NavLink>
-	            </li>
+						<li>
+					      <NavLink to="/home">
+					       Dashboard
+					      </NavLink>
+			            </li>
+				        <li>
+						  <NavLink to="/userTracking">
+						    User Tracking
+						  </NavLink>
+					    </li>
+						<li>
+							<NavLink to="/hotels">
+								Hotels
+							</NavLink>
+						</li>
+						  <li>
+						    <NavLink to="/flights">
+						      Flights
+						    </NavLink>
+						  </li>
+						  <li>
+						    <NavLink to="/cars">
+						      Cars
+						    </NavLink>
+						  </li>
+						  <li>
+						    <NavLink to="/customers">
+						      Customers
+						    </NavLink>
+						  </li>
+						  <li>
+						    <NavLink to="/billings">
+						      Billings
+						    </NavLink>
+						  </li>
   					</ul>
   				</div>
   			</div>

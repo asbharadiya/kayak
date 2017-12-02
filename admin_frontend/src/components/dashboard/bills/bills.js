@@ -47,7 +47,7 @@ class Bills extends Component {
 								 <b>Listing Type</b>
 							 </div>
 							 <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
-								 <b>Toatl Amount</b>
+								 <b>Total Amount</b>
 							 </div>
 						 </div>
 					 </div>

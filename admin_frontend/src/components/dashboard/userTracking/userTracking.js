@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, Brush, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
-import './host.css';
+import './userTracking.css';
 
-class Host extends Component {
+class UserTracking extends Component {
 	
 	constructor(props){
 		super(props);
@@ -35,7 +35,7 @@ class Host extends Component {
 	
 	render() {
 		return (
-    		<div className="hostpage">
+    		<div className="userTrackingpage">
     		<div>
 	            <div class="col-lg-3 col-md-6">
 	                <div class="card">
@@ -139,4 +139,4 @@ class Host extends Component {
 	}
 }
 
-export default Host;
+export default UserTracking;
