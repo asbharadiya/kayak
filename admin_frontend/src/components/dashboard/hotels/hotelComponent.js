@@ -74,29 +74,115 @@ class HotelComponent extends Component {
      }
    }
 
+
+   updateHotelDetails(){
+   	var startDate = new Date(this.state.serviceStartDate);
+   	startDate.setDate(startDate.getDate() + 1);
+   	var endDate = new Date(this.state.serviceEndDate);
+   	endDate.setDate(endDate.getDate() + 1);	
+   	if(this.state.hotelName === '' ){
+   		this.setState({ updateHotelError : "Please enter hotel Name"})
+   		return ;
+   	}
+   	if(this.state.hotelAddress === '' ){
+   		this.setState({ updateHotelError : "Please enter hotel Address"})
+   		return ;
+   	}
+   	if(this.state.hotelCity === '' ){
+   		this.setState({ updateHotelError : "Please enter hotel City"})
+   		return ;
+   	}
+   	if(this.state.hotelState === '' ){
+   		this.setState({ updateHotelError : "Please enter hotel state"})
+   		return ;
+   	}
+   	if(this.state.hotelZip === '' || isNaN(this.state.hotelZip)){
+   		this.setState({ updateHotelError : "Please enter valid hotel zip"})
+   		return ;
+   	}
+   	if(this.state.hotelPhoneNumber === '' || isNaN(this.state.hotelPhoneNumber) || this.state.hotelPhoneNumber < 999999999){
+   		this.setState({ updateHotelError : "Please enter valid hotel phone number"})
+   		return ;
+   	}
+   	if(this.state.hotelEmail === '' || !(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/).test(this.state.hotelEmail)){
+   		this.setState({ updateHotelError : "Please enter valid hotel email"})
+   		return ;
+   	}
+   	if(this.state.hotelStar === '' ){
+   		this.setState({ updateHotelError : "Please enter hotel star"})
+   		return ;
+   	}
+   	if(this.state.hotelRating === '' ){
+   		this.setState({ updateHotelError : "Please enter hotel rating"})
+   		return ;
+   	}
+   	if(this.state.serviceStartDate === ''){
+   		this.setState({ updateHotelError : "Please enter service start date"})
+   		return
+   	}						      				
+   	if(this.state.serviceEndDate === ''){
+   		this.setState({ updateHotelError : "Please enter service end date"})
+   		return
+   	}						      				
+   	if(!this.state.hotelRooms || this.state.hotelRooms.length===0 || this.state.hotelRooms[0].roomType===''){
+   		this.setState({ updateHotelError : "Please enter hotelRooms details correctly"})
+   		return
+   	}
+   	if(startDate <= new Date())	{
+   		this.setState({ updateHotelError : "Service Start Date should be a future date"})
+   		return
+   	}
+   	if(endDate <= new Date())	{
+   		this.setState({ updateHotelError : "Service End Date should be a future date"})
+   		return
+   	}
+   	if(endDate <= startDate){
+   		this.setState({ updateHotelError : "Service End Date should be a greater than start date"})
+   		return	
+   	}
+   	var obj = {
+   		_id : this.state._id,
+   		hotelName : this.state.hotelName ,
+   		hotelAddress : this.state.hotelAddress,
+   		hotelCity : this.state.hotelCity,
+   		hotelState : this.state.hotelState,
+   		hotelZip : this.state.hotelZip,
+   		hotelStar : this.state.hotelStar,
+   		hotelRating : this.state.hotelRating,
+   		hotelPhoneNumber : this.state.hotelPhoneNumber,
+   		hotelEmail : this.state.hotelEmail,
+   		serviceStartDate : this.state.serviceStartDate,
+   		serviceEndDate : this.state.serviceEndDate,
+   		hotelRooms : this.state.hotelRooms
+   	}
+   	this.setState({ updateHotelError : '' , hotelUpdateLoading : true})
+
+   	this.props.updateHotelById(obj, this.props.hotel._id  , this.state.hotelFile);
+   }
+
 	render() {
 		return (
     		<div className="singleHotelComponent">
 				<div className="row mainRowDiv">
-					<div className="col-md-10 col-sm-10 col-lg-10 col-xs-10 dataDiv">
-						<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+					<div className=" col-xs-10 dataDiv">
+						<div className=" col-xs-3">
 							{this.props.hotel.hotelName}
 						</div>
-						<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+						<div className="col-xs-4">
 							{this.props.hotel.hotelAddress},
 							{this.props.hotel.hotelCity},
 							{this.props.hotel.hotelState},
 							{this.props.hotel.hotelZip}
 						</div>
-						<div className="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+						<div className=" col-xs-4">
 							{this.props.hotel.hotelPhoneNumber},
 							{this.props.hotel.hotelEmail}
 						</div>
-						<div className="col-md-1 col-sm-1 col-lg-1 col-xs-1">
+						<div className=" col-xs-1">
 							{this.props.hotel.hotelStar}
 						</div>
 					</div>
-					<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 buttonGroup ">						
+					<div className="col-xs-2 buttonGroup ">						
 						<a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={() => {
 							this.props.getHotelById(this.props.hotel._id);
 							this.setState({
@@ -119,14 +205,14 @@ class HotelComponent extends Component {
 					</Modal.Body>
 
 					<Modal.Footer className="hotelDeleteFooter">
-						 <div className="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-							<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 col-md-offset-4 col-xs-offset-4 col-lg-offset-4 col-sm-offset-4">
+						 <div className="col-xs-12">
+							<div className="col-xs-2 col-xs-offset-4">
 								<button className="btn btn-danger sharpCornerForInfoButton" onClick={() => {
 									this.props.deleteHotelById(this.props.hotel._id)
 									this.setState({openDeleteModal : false})
 								}}>YES</button>
 							</div>
-							<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 ">
+							<div className="col-xs-2 ">
 								<button className="btn sharpCornerForInfoButton" onClick={() => {
 									this.setState({openDeleteModal : false})
 								}}>NO</button>
@@ -136,10 +222,11 @@ class HotelComponent extends Component {
 
 				</Modal>
 
+
 				<Modal show={this.state.showHotelUpdateModal}  id="hotelModal" className="hotelModal">
 					<Modal.Body className="hotelModalBody">
-						<div className="scrollDiv">
-						<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+						<div >
+						<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="hotelname">Hotel Name</label>
 			      		<input value={this.state.hotelName} className="form-control sharpCorner" onChange={(e) => {
 			      			this.setState({
@@ -147,7 +234,7 @@ class HotelComponent extends Component {
 			      			})
 			      		}} id="hotelname" type="text"  aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="hoteladdress">Address</label>
 			      		<input value={this.state.hotelAddress} className="form-control sharpCorner" onChange={(e) => {
 			      			this.setState({
@@ -155,7 +242,7 @@ class HotelComponent extends Component {
 			      			})
 			      		}} id="hoteladdress" type="text"  aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="hotelCity">City</label>
 			      		<input value={this.state.hotelCity} className="form-control sharpCorner" onChange={(e) => {
 			      			this.setState({
@@ -163,7 +250,7 @@ class HotelComponent extends Component {
 			      			})
 			      		}} id="hotelCity" type="text"  aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<div className="col-md-6 nopadding">
 					      	<label htmlFor="hotelState">State</label>
 				      		<input value={this.state.hotelState} className="form-control sharpCorner" onChange={(e) => {
@@ -181,7 +268,7 @@ class HotelComponent extends Component {
 				      		}} id="hotelZip" type="text"  aria-describedby="basic-addon1"   />
 				      	</div>
 				    </div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="hotelPhoneNumber">Phone Number</label>
 			      		<input value={this.state.hotelPhoneNumber} className="form-control sharpCorner" onChange={(e) => {
 			      			this.setState({
@@ -189,7 +276,7 @@ class HotelComponent extends Component {
 			      			})
 			      		}} id="hotelPhoneNumber" type="text"  aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="hotelEmail">Email</label>
 			      		<input value={this.state.hotelEmail} className="form-control sharpCorner" onChange={(e) => {
 			      			this.setState({
@@ -197,7 +284,7 @@ class HotelComponent extends Component {
 			      			})
 			      		}} id="hotelEmail" type="text"  aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      	<div className="col-md-6 nopadding">
 			      		<label htmlFor="hotelStar">Star</label>
 			      		<select value={this.state.hotelStar} value={this.state.hotelStar}  onChange={(e) => {
@@ -229,7 +316,7 @@ class HotelComponent extends Component {
 						   </select>
 						   </div>
 				    </div>
-				    <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+				    <div className="form-group image-preview col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
 	                    <label htmlFor="carname">Upload</label>
 	                    <div className="input-group image-preview">
 	                        <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
@@ -258,7 +345,7 @@ class HotelComponent extends Component {
 	                       </span>
 	                    </div>
 	                </div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="serviceAvailable">Service Start Date</label>
 			      		<input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
 			      				this.setState({
@@ -266,7 +353,7 @@ class HotelComponent extends Component {
 			      				})
 			      		}} aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<label htmlFor="serviceAvailable">Service End Date</label>
 			      		<input value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
 			      				this.setState({
@@ -274,17 +361,16 @@ class HotelComponent extends Component {
 			      				})
 			      		}} aria-describedby="basic-addon1"   />
 			      	</div>
-			      	<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
-			      		<label htmlFor="serviceAvailable">Rooms</label>
+			      	<div className="form-group room-category-button marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 			      		<button type="button" className="btn btn-info btn-default sharpCornerForInfoButton pull-right" onClick={() => {
 			      			var tempRooms = this.state.hotelRooms;
 			      			tempRooms.push({ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0});
 		      				this.setState({hotelRooms : tempRooms})
-		      			}}>Add Room category</button>
+		      			}}>Add More Room categories</button>
 			      	</div>
 			      	{(this.state.hotelRooms && this.state.hotelRooms.length > 0) ? this.state.hotelRooms.map((eachHotel, index) => 
 					    <div className="clearBoth">  	
-			      			<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+			      			<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 					      		<div className="col-md-6 nopadding">
 							      	<label htmlFor="roomType">Room Type</label>
 							      	<select value={eachHotel.roomType}  onChange={(e) => {
@@ -320,7 +406,7 @@ class HotelComponent extends Component {
 								  </select>
 						      	</div>
 						    </div>
-						    <div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+						    <div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 					      		<div className="col-md-6 nopadding">
 							      	<label htmlFor="priceTotal">Rent for one day</label>
 						      		<input value={eachHotel.priceTotal} className="form-control sharpCorner" onChange={(e) => {
@@ -344,114 +430,31 @@ class HotelComponent extends Component {
 
 					   </Modal.Body>
 					   <Modal.Footer className="hotelModalFooter">
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+								<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 									<div className="col-sm-5 col-lg-5 col-md-5 pull-right  text-right">
 										<Loading isLoading={this.state.hotelUpdateLoading} ></Loading>
 									</div>
 								</div>
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2 hotelAddErrorText">
+								<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd hotelAddErrorText">
 									{this.state.updateHotelError}
 
 								</div>
 
 
-								<div className="form-group marginBottom15 col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-xs-offset-right-2">
+								<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
 
 									<div className="col-sm-3 col-lg-3 col-md-3 pull-right  text-right">
+										<button type="button" className="btn btn-default btn-kayak" onClick={this.updateHotelDetails.bind(this)} >Update
+										</button>
+									</div>
+									<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
 										<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
 											this.setState({
 												showHotelUpdateModal : false
 											})
 											}}>Close</button>
-									</div>
-									<div className="col-sm-9 col-lg-9 col-md-9 pull-right  text-right">
-
-										<button type="button" className="btn btn-info sharpCornerForInfoButton" onClick={() => {
-											var startDate = new Date(this.state.serviceStartDate);
-						      				startDate.setDate(startDate.getDate() + 1);
-						      				var endDate = new Date(this.state.serviceEndDate);
-						      				endDate.setDate(endDate.getDate() + 1);	
-						      				if(this.state.hotelName === '' ){
-						      					this.setState({ updateHotelError : "Please enter hotel Name"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelAddress === '' ){
-						      					this.setState({ updateHotelError : "Please enter hotel Address"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelCity === '' ){
-						      					this.setState({ updateHotelError : "Please enter hotel City"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelState === '' ){
-						      					this.setState({ updateHotelError : "Please enter hotel state"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelZip === '' || isNaN(this.state.hotelZip)){
-						      					this.setState({ updateHotelError : "Please enter valid hotel zip"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelPhoneNumber === '' || isNaN(this.state.hotelPhoneNumber) || this.state.hotelPhoneNumber < 999999999){
-						      					this.setState({ updateHotelError : "Please enter valid hotel phone number"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelEmail === '' || !(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/).test(this.state.hotelEmail)){
-						      					this.setState({ updateHotelError : "Please enter valid hotel email"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelStar === '' ){
-						      					this.setState({ updateHotelError : "Please enter hotel star"})
-						      					return ;
-						      				}
-						      				if(this.state.hotelRating === '' ){
-						      					this.setState({ updateHotelError : "Please enter hotel rating"})
-						      					return ;
-						      				}
-						      				if(this.state.serviceStartDate === ''){
-						      					this.setState({ updateHotelError : "Please enter service start date"})
-						      					return
-						      				}						      				
-						      				if(this.state.serviceEndDate === ''){
-						      					this.setState({ updateHotelError : "Please enter service end date"})
-						      					return
-						      				}						      				
-						      				if(!this.state.hotelRooms || this.state.hotelRooms.length===0 || this.state.hotelRooms[0].roomType===''){
-						      					this.setState({ updateHotelError : "Please enter hotelRooms details correctly"})
-						      					return
-						      				}
-						      				if(startDate <= new Date())	{
-						      					this.setState({ updateHotelError : "Service Start Date should be a future date"})
-						      					return
-						      				}
-						      				if(endDate <= new Date())	{
-						      					this.setState({ updateHotelError : "Service End Date should be a future date"})
-						      					return
-						      				}
-						      				if(endDate <= startDate){
-						      					this.setState({ updateHotelError : "Service End Date should be a greater than start date"})
-						      					return	
-						      				}
-						      				var obj = {
-						      					_id : this.state._id,
-												hotelName : this.state.hotelName ,
-												hotelAddress : this.state.hotelAddress,
-												hotelCity : this.state.hotelCity,
-												hotelState : this.state.hotelState,
-												hotelZip : this.state.hotelZip,
-												hotelStar : this.state.hotelStar,
-												hotelRating : this.state.hotelRating,
-												hotelPhoneNumber : this.state.hotelPhoneNumber,
-												hotelEmail : this.state.hotelEmail,
-												serviceStartDate : this.state.serviceStartDate,
-												serviceEndDate : this.state.serviceEndDate,
-												hotelRooms : this.state.hotelRooms
-						      				}
-											this.setState({ updateHotelError : '' , hotelUpdateLoading : true})
-
-											this.props.updateHotelById(obj, this.props.hotel._id  , this.state.hotelFile);
-										}} >Update
-										</button>
+										
 									</div>
 								</div>
 						  </Modal.Footer>
