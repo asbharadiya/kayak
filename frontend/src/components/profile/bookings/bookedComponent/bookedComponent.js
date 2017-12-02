@@ -137,7 +137,12 @@ class BookedComponent extends Component {
 																	{ this.state.bookingDetails.commodity == "cars"  ?  
 																		<span>Duration</span>
 																		:
-																		<span>Journey Date</span>
+																		(
+																			this.state.bookingDetails.commodity == "flights" ?
+																			<span>Journey Date</span>
+																			:
+																			<span>Hotel Stay</span>
+																		)
 																	}
 																</span>
 															</div>
@@ -158,7 +163,13 @@ class BookedComponent extends Component {
 
 	    															:
 
-	    															<span>{this.state.bookingDetails.bookingInfo.date}</span>
+	    															(
+	    																this.state.bookingDetails.commodity == "flights"  ?  
+	    																<span>{this.state.bookingDetails.bookingInfo.date}</span>
+	    																:
+	    																<span className="price">{this.state.bookingDetails.bookingInfo.checkInDate} - {this.state.bookingDetails.bookingInfo.checkOutDate}</span>
+	    															)
+	    															
 																}
 
 																
@@ -173,7 +184,13 @@ class BookedComponent extends Component {
 																	this.state.bookingDetails.commodity == "cars"  ?  
 																 	<span >City</span>
 																 	:
-																 	<span>From - To</span>
+																 	(
+																 		this.state.bookingDetails.commodity == "flights"  ?
+																 		<span>From - To</span>
+																 		:
+																 		<span>Hotel</span>
+
+																 	)
 																}
 															</div>
 
@@ -182,9 +199,17 @@ class BookedComponent extends Component {
 															<div className="fair-type">
 																{
 																	this.state.bookingDetails.commodity == "cars"  ?  
-																 	<span className="price">{this.state.bookingDetails.bookingInfo.city}</span>
-																 	:
-																 	<span className="price">{this.state.bookingDetails.bookingInfo.source} - {this.state.bookingDetails.bookingInfo.dest}</span>
+																	<span className="price">{this.state.bookingDetails.bookingInfo.city}</span>
+																	:
+																	(
+																		this.state.bookingDetails.commodity == "flights"  ?
+																		<span className="price">{this.state.bookingDetails.bookingInfo.source} - {this.state.bookingDetails.bookingInfo.dest}</span>
+																		:
+																		<span>{this.state.bookingDetails.bookingInfo.city} - {this.state.bookingDetails.bookingInfo.roomType}</span>
+																	)
+																 	
+																 	
+																 	
 																}
 																
 															</div>
