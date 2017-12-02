@@ -211,14 +211,27 @@ class Checkout extends Component {
                 return
             }
 
-            console.log(this.state.bookingInfo.email) ;
              if(!( /^[0-9]{10,10}$/.test(this.state.bookingInfo.phoneNumber))){
                 alert("Enter a valid Mobile number")
                 return
             }
 
         } else {
-            //TODO: validate hotel booking info
+          if(this.state.bookingInfo.firstName === '' || this.state.bookingInfo.lastName === '' || this.state.bookingInfo.phoneNumber === '' ||
+                      this.state.bookingInfo.email === '') {
+              alert('Please fill out all the required booking information!');
+              return;
+          }
+
+          if(!(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.state.bookingInfo.email))){
+              alert("Enter a valid Email Address")
+              return
+          }
+
+           if(!( /^[0-9]{10,10}$/.test(this.state.bookingInfo.phoneNumber))){
+              alert("Enter a valid Mobile number")
+              return
+          }
         }
         if(this.state.paymentMethod === 'existing'){
             if(this.state.selectedCreditCard === null) {
