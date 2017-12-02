@@ -26,9 +26,10 @@ function addFlight(msg, callback){
 
 	msg.availability = availabilityDateObject ;
 
-
+	console.log("XXXXXXX " , msg)  ; 
 	var newFlight = new flightModel(msg);
 	newFlight.save(function (err) {
+		console.log(err) ; 
 		if(err) {
 			res.code = 500 ;
 			res.message = "Error occured while registering a flight with server"
