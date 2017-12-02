@@ -127,25 +127,52 @@ class BookedComponent extends Component {
 												</div>
 											</div>
 
+
 											
-											{
-												this.state.bookingDetails.commodity === "cars" ? 
-												
-												<div>
 													<div className="row single-price-component">
 														<div className=" fair-type-div col-xs-7 pull-left">
 															<div className="fair-type">
-																<span >Duration</span>
+																<span >
+
+																	{ this.state.bookingDetails.commodity == "cars"  ?  
+																		<span>Duration</span>
+																		:
+																		(
+																			this.state.bookingDetails.commodity == "flights" ?
+																			<span>Journey Date</span>
+																			:
+																			<span>Hotel Stay</span>
+																		)
+																	}
+																</span>
 															</div>
 
 														</div>
+
 														<div className="fair-type-price col-xs-5 pull-right">
 															<div className="fair-type">
-																<span className="price">
-																	{ (this.state.bookingDetails.bookingInfo.startDate).toString().substr(0,10)}
-																	<span>-</span>
-																	{ (this.state.bookingDetails.bookingInfo.endDate).toString().substr(0,10)}
-    															</span>
+																
+																{
+																	this.state.bookingDetails.commodity == "cars"  ?  
+
+																	<span className="price">
+																		{ (this.state.bookingDetails.bookingInfo.startDate).toString().substr(0,10)}
+																		<span>-</span>
+																		{ (this.state.bookingDetails.bookingInfo.endDate).toString().substr(0,10)}
+	    															</span>
+
+	    															:
+
+	    															(
+	    																this.state.bookingDetails.commodity == "flights"  ?  
+	    																<span>{this.state.bookingDetails.bookingInfo.date}</span>
+	    																:
+	    																<span className="price">{this.state.bookingDetails.bookingInfo.checkInDate} - {this.state.bookingDetails.bookingInfo.checkOutDate}</span>
+	    															)
+	    															
+																}
+
+																
 															</div>
 														</div>
 													</div>
@@ -153,23 +180,63 @@ class BookedComponent extends Component {
 													<div className="row single-price-component">
 														<div className=" fair-type-div col-xs-7 pull-left">
 															<div className="fair-type">
-																<span >City</span>
+																{
+																	this.state.bookingDetails.commodity == "cars"  ?  
+																 	<span >City</span>
+																 	:
+																 	(
+																 		this.state.bookingDetails.commodity == "flights"  ?
+																 		<span>From - To</span>
+																 		:
+																 		<span>Hotel</span>
+
+																 	)
+																}
 															</div>
 
 														</div>
 														<div className="fair-type-price col-xs-5 pull-right">
 															<div className="fair-type">
-																<span className="price">{this.state.bookingDetails.bookingInfo.city}</span>
+																{
+																	this.state.bookingDetails.commodity == "cars"  ?  
+																	<span className="price">{this.state.bookingDetails.bookingInfo.city}</span>
+																	:
+																	(
+																		this.state.bookingDetails.commodity == "flights"  ?
+																		<span className="price">{this.state.bookingDetails.bookingInfo.source} - {this.state.bookingDetails.bookingInfo.dest}</span>
+																		:
+																		<span>{this.state.bookingDetails.bookingInfo.city} - {this.state.bookingDetails.bookingInfo.roomType}</span>
+																	)
+																 	
+																 	
+																 	
+																}
+																
 															</div>
 														</div>
 													</div>
-												</div>
+											
 
-												:
+												{
+													this.state.bookingDetails.commodity == "flights" ? 
+													<div className="row single-price-component">
+														<div className=" fair-type-div col-xs-7 pull-left">
+															<div className="fair-type">
+																<span ># of travellers</span>
+															</div>
 
-												<div>
-												</div>
-											}
+														</div>
+														<div className="fair-type-price col-xs-5 pull-right">
+															<div className="fair-type">
+																<span className="price">{this.state.bookingDetails.bookingInfo.travelers}</span>
+															</div>
+														</div>
+													</div>
+													:
+													<div></div>
+
+												}
+										
 
 											
 

@@ -160,9 +160,19 @@ class Checkout extends Component {
     }
 
     getCardNumber(e){
-        this.setState({
-            cardNumber : e.target.value
-        })
+        var cardNo = e.target.value ; 
+        
+        if(e.target.value.length == 4 || e.target.value.length == 11 || e.target.value.length == 18 ){
+            e.target.value += " - "
+        }
+
+
+
+        if(e.target.value.length <= 25){
+            this.setState({
+                cardNumber : e.target.value
+            })
+        }
     }
 
     getNameOnCard(e){
@@ -172,15 +182,26 @@ class Checkout extends Component {
     }
 
     getExpiryDate(e){
-        this.setState({
-            expiryDate : e.target.value
-        })
+        if(e.target.value.length == 2 && e.target.value.indexOf("/") == -1){
+            e.target.value += "/"
+        }
+
+         var mm = ( e.target.value.substring(0 , e.target.value.indexOf("/")));
+         var yy = ( e.target.value.substring(e.target.value.indexOf("/") +1, e.target.value.length));
+
+        if(e.target.value.length < 6 && (!isNaN(mm) && !isNaN(yy)    )){
+            this.setState({
+                expiryDate : e.target.value
+            })
+        }
     }
 
     getCvv(e){
-        this.setState({
-            cvv : e.target.value
-        })
+        if(!isNaN(e.target.value) && e.target.value.length < 4){
+            this.setState({
+                cvv : e.target.value
+            })
+        }
     }
 
     completeBooking(){
@@ -340,23 +361,23 @@ class Checkout extends Component {
                                 <div className={"credit-card-form "+(this.state.paymentMethod !== "new" ? "disabled":"")}>
                                     <div className="form-group row">
                                         <div className="col-xs-12">
-                                            <input type="text" className="form-control" placeholder="Card number (XXXX XXXX XXXX XXXX)"
+                                            <input value={this.state.cardNumber} type="text" className="form-control" placeholder="Card number (XXXX XXXX XXXX XXXX)"
                                                    onChange={this.getCardNumber.bind(this)}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <div className="col-xs-12">
-                                            <input type="text" className="form-control" placeholder="Name on card"
+                                            <input value={this.state.nameOnCard} type="text" className="form-control" placeholder="Name on card"
                                                    onChange={this.getNameOnCard.bind(this)}/>
                                         </div>
                                     </div>
                                     <div className="form-group row">
                                         <div className="col-xs-6">
-                                            <input type="text" className="form-control" placeholder="Expiry date (MM/YY)"
+                                            <input value={this.state.expiryDate} type="text" className="form-control" placeholder="Expiry date (MM/YY)"
                                                    onChange={this.getExpiryDate.bind(this)}/>
                                         </div>
                                         <div className="col-xs-6">
-                                            <input type="text" className="form-control" placeholder="CVV"
+                                            <input value={this.state.cvv}  type="text" className="form-control" placeholder="CVV"
                                                    onChange={this.getCvv.bind(this)}/>
                                         </div>
                                     </div>

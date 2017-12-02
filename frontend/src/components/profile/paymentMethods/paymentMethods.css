@@ -1,0 +1,29 @@
+.profile-panel-body .add-card-button{
+	margin-right: 10px
+}
+
+
+
+.profile-panel-body .add-card-button-div{
+	margin-bottom: 20px
+}
+
+.add-new-card-div{
+	padding: 20px;
+	background-color: #ddd
+}
+
+.modal-main-div{
+	padding: 30px
+}
+
+  .add-card-confirm-button-div{
+	padding-top: 20px ;
+	width: 100%
+}
+
+
+.add-card-confirm-button-div .button-add{
+	width: 100% ;
+	border-radius: 0
+}

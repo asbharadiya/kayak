@@ -13,6 +13,7 @@ import Flights from './components/dashboard/flights/flights';
 import Hotels from './components/dashboard/hotels/hotels';
 import Console from './components/dashboard/console/console';
 import Host from './components/dashboard/host/host';
+import Bills from './components/dashboard/bills/bills';
 
 class App extends Component {
 
@@ -87,6 +88,13 @@ class App extends Component {
                         <Host/>
                       )
                     )}/>
+                    <Route path='/billings' render={() => (
+                        !isLogged ? (
+                          <Redirect to="/"/>
+                        ) : (
+                          <Bills/>
+                        )
+                      )}/>
               </Dashboard>
             </Switch>
           </BrowserRouter>
