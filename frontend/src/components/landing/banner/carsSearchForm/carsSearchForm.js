@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './carsSearchForm.css';
+import * as analytics from '../../../../actions/analytics';
+import {connect} from 'react-redux';
 
 class CarsSearchForm extends Component {
 
 	constructor(props) {
 		super(props);
 		this.search = this.search.bind(this);
-  	}
+  }
+
+	trackClick(click, page) {
+			var payload = {'click' : click, 'page' : page};
+			this.props.trackClick(payload);
+	}
 
 	search() {
+		this.trackClick('cars-search', 'home')
 		//TODO: take these value from input
 		this.props.history.push('/cars/listings?city=San Jose&startDate=12-10-2017&endDate=12-13-2017');
 	}
@@ -40,4 +48,16 @@ class CarsSearchForm extends Component {
   	}
 }
 
-export default withRouter(props => <CarsSearchForm {...props}/>);
+
+function mapStateToProps(state) {
+    return {
+		};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(props => <CarsSearchForm {...props}/>));

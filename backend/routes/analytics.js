@@ -13,7 +13,7 @@ function trackClick(req,res){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+            return res.status(result.code).json({status:result.code,statusText:result.message});
         }
     });
 }

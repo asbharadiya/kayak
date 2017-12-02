@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './flightsSearchForm.css';
+import * as analytics from '../../../../actions/analytics';
+import {connect} from 'react-redux';
 
 class FlightsSearchForm extends Component {
 
@@ -9,7 +11,13 @@ class FlightsSearchForm extends Component {
 		this.search = this.search.bind(this);
   	}
 
+	trackClick(click, page) {
+			var payload = {'click' : click, 'page' : page};
+			this.props.trackClick(payload);
+	}
+
 	search() {
+				this.trackClick('flights-search', 'home')
         //TODO: take these value from input
         this.props.history.push('/flights/listings?source=San Jose&dest=San Fransisco&date=12-10-2017&travelers=1&cabin=economy');
 	}
@@ -43,4 +51,15 @@ class FlightsSearchForm extends Component {
   	}
 }
 
-export default withRouter(props => <FlightsSearchForm {...props}/>);
+function mapStateToProps(state) {
+    return {
+		};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(props => <FlightsSearchForm {...props}/>));

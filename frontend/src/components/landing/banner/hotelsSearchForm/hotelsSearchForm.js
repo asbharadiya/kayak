@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './hotelsSearchForm.css';
+import * as analytics from '../../../../actions/analytics';
+import {connect} from 'react-redux';
 
 class HotelsSearchForm extends Component {
 
@@ -9,7 +11,13 @@ class HotelsSearchForm extends Component {
 		this.search = this.search.bind(this);
   	}
 
+	trackClick(click, page) {
+			var payload = {'click' : click, 'page' : page};
+			this.props.trackClick(payload);
+	}
+
 	search() {
+		this.trackClick('hotels-search', 'home');
 		this.props.history.push('/hotels/listings?city=test city&checkInDate=12-10-2017&checkOutDate=12-15-2017&guests=2&roomType=Conference');
 
 	}
@@ -43,4 +51,16 @@ class HotelsSearchForm extends Component {
   	}
 }
 
-export default withRouter(props => <HotelsSearchForm {...props}/>);
+
+function mapStateToProps(state) {
+    return {
+		};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(props => <HotelsSearchForm {...props}/>));
