@@ -21,17 +21,16 @@ export const getUserDetails = () =>
         return error;
     }); 
     
-export const updateUserProfile = (payload , callback) => {
-    console.log('API')
-    console.log(payload)
+export const updateUserProfile = (data , callback) => {
+
     fetch(api+'/c/profile', {
         method: 'PUT',
         credentials: 'include',
         headers: {
-            ...headers,
-            'Content-Type': 'application/json'
+            ...headers
+            
         },
-        body: JSON.stringify(payload)
+        body: data
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
@@ -69,6 +68,21 @@ export const addCreditCard = (payload, callback) =>
         callback( error , {});
     });
 
+export const deleteCreditCard = (id, callback) =>
+    fetch(api+'/c/credit_cards/'+id, {
+        method: 'DELETE',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify()
+    }).then(res => {
+        callback( null , res.json());
+    }).catch(error => {
+        callback( error , {});
+});
+
 
 
 export const getBookingDetails = (callback) =>
@@ -85,6 +99,10 @@ export const getBookingDetails = (callback) =>
     }).catch(error => {
         callback( error , {});
     });
+
+
+
+
 
 export const getBookingDetailsById = (id , callback) =>
     fetch(api+'/c/bookings/'+id, {

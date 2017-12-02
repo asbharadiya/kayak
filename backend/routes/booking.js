@@ -55,13 +55,17 @@ function getBookings(req,res){
 }
 
 function getBookingById(req,res){
+
+    
 	kafka.make_request(topic_name,'getBookingById',{
-		
+		bookingId : req.params.id ,
+        userId : req.session.passport.user._id
 	},function(err,result){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
+            console.log(result)
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }

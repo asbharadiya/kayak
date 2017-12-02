@@ -84,7 +84,7 @@ class FlightCheckoutBookingInfo extends Component {
                 <div className="travelers-info">
                     {
                         this.state.travelerInfo.map((traveler , key) => {
-                            return <div className="form-group" key={key}>
+                            return <div className="row form-group traveler-row" key={key}>
                                 <div className="col-xs-12">
                                     <p>Traveler #{key+1}</p>
                                 </div>
@@ -97,7 +97,9 @@ class FlightCheckoutBookingInfo extends Component {
                                 <div className="col-xs-4">
                                     <input type="text" className="form-control" placeholder="Last name/Family name" onChange={this.getLastName.bind(this,key)}/>
                                 </div>
-                                <div className="clearfix"></div>
+                                <div className="col-xs-12">
+                                    <hr/>
+                                </div>
                             </div>
                         })
                     }

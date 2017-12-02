@@ -17,21 +17,31 @@ function addCar(req,res){
         serviceEndDate :  req.body.serviceEndDate
     }
 
-
-    s3.upload(req.files, function(err, result){
-        if(err) {
-            return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
-        } else {
-            obj.images = result;
-            kafka.make_request(topic_name,'addCar',obj, function(err,result){
-                if(err) {
-                    return res.status(500).json({status:500,statusText:"Internal server error"});
-                } else {
-                    return res.status(result.code).json({status:result.code,statusText:result.message});
-                }
-            });
-        }
-    });
+    if(req.files == null){
+    	kafka.make_request(topic_name,'addCar',obj, function(err,result){
+            if(err) {
+                return res.status(500).json({status:500,statusText:"Internal server error"});
+            } else {
+                return res.status(result.code).json({status:result.code,statusText:result.message});
+            }
+        });
+    }
+    else {
+	    s3.upload(req.files, function(err, result){
+	        if(err) {
+	            return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
+	        } else {
+	            obj.images = result;
+	            kafka.make_request(topic_name,'addCar',obj, function(err,result){
+	                if(err) {
+	                    return res.status(500).json({status:500,statusText:"Internal server error"});
+	                } else {
+	                    return res.status(result.code).json({status:result.code,statusText:result.message});
+	                }
+	            });
+	        }
+	    });
+    }
 }
 
 function getCars(req,res){

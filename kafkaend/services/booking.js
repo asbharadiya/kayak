@@ -75,39 +75,39 @@ function makeBooking(msg, callback){
     var res = {};
     var curr_date = new Date();
 
-  if( msg.data.listingType === "cars"){
-        
-         var query = { is_deleted : false , _id : new ObjectID(msg.data.listingId) , 
-                      availability : { $elemMatch : { 
-                                                      availabilityDate : ''
-                                                   }
-                                     }
-                     };
-          var updateQuery = {
-                            $inc : {
-                                  "availability.$.availableCars" : -1
-                            }
-          }
-
-        var startDate =  new Date(new Date(msg.data.bookingInfo.startDate).setUTCHours(0,0,0,0));
-        var endDate = new Date(new Date(msg.data.bookingInfo.endDate).setHours(0,0,0,0));
-        var serviceDays = ((endDate- startDate)/(1000*60*60*24))+1 ;
-        
-        for(var i =0 ; i < serviceDays ; i++){
-          if(i != 0 ){
-             startDate.setDate(startDate.getDate() + 1);
-          }
-         
-          query.availability. $elemMatch.availabilityDate = startDate ; 
+    if( msg.data.listingType === "cars"){
           
-          carModel.update(query, updateQuery, { multi: false }, function(err , response){
-              
-          })
+           var query = { is_deleted : false , _id : new ObjectID(msg.data.listingId) , 
+                        availability : { $elemMatch : { 
+                                                        availabilityDate : ''
+                                                     }
+                                       }
+                       };
+            var updateQuery = {
+                              $inc : {
+                                    "availability.$.availableCars" : -1
+                              }
+            }
+
+          var startDate =  new Date(new Date(msg.data.bookingInfo.startDate).setUTCHours(0,0,0,0));
+          var endDate = new Date(new Date(msg.data.bookingInfo.endDate).setHours(0,0,0,0));
+          var serviceDays = ((endDate- startDate)/(1000*60*60*24))+1 ;
+          
+          for(var i =0 ; i < serviceDays ; i++){
+            if(i != 0 ){
+               startDate.setDate(startDate.getDate() + 1);
+            }
+           
+            query.availability. $elemMatch.availabilityDate = startDate ; 
+            
+            carModel.update(query, updateQuery, { multi: false }, function(err , response){
+                
+            })
 
 
-        }
+          }
 
-  }
+    }
 
     //TODO: first subtract availability based on category and travellers, take additional data from frontend if needed
     var booking = new bookingModel();
@@ -225,10 +225,63 @@ function getBookings(msg, callback){
 
 function getBookingById(msg, callback){
     var res = {};
+    var data = {}
 
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+
+    
+
+    billingModel.find({  userId : msg.userId , bookingId : msg.bookingId}, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get all Cars from the server"
+            callback(null , res) ;
+        }else{
+            
+            data.billingId = result[0]._id ;
+            data.bookingId = result[0].bookingId ; 
+            data.date = result[0].createdDate ; 
+            data.amount = result[0].totalAmount ; 
+            data.commodity = result[0].listingType ;
+           
+           var creditCard = result[0].creditCardId ;  
+
+            bookingModel.find({ _id : new ObjectID(data.bookingId)} , function(err , result1 ){
+                if(err){
+                    res.code = 500  ;
+                    res.message = "Fail to get all Cars from the server"
+                    callback(null , res) ;
+                }else{
+                  data.bookingInfo = result1[0].bookingInfo ;
+                  
+                  creditCardModel.find({_id : new ObjectID(creditCard)} , function(err , result2 ){
+                      if(err){
+                        res.code = 500  ;
+                        res.message = "Fail to get all Cars from the server"
+                        callback(null , res) ;
+                      }else{
+                        if(result2.length > 0 ){
+                              data.creditCard = result[0].cardNumber ;
+                               res.code = 200  ;
+                                res.message = "Success"
+                                res.data = data
+                                callback(null , res) ;
+                          }else{
+                             res.code = 200  ;
+                              res.message = "Success"
+                              res.data = data; 
+                              callback(null , res) ;
+                          }
+                      }
+                  })
+
+                }
+            })
+
+
+
+           
+        }
+    });
 }
 
 exports.getBills = getBills;

@@ -31,10 +31,24 @@ function updateFailure(){
     return {type: "USER_UPDATE_FAILURE"}
 }
 
-export function updateUserProfile(payload) {
+export function updateUserProfile(payload, file) {
+
+    let data = new FormData();
+
+    data.append('file', file );
+    data.append('_id',  payload._id )
+    data.append('auth_user_id', payload.auth_user_id )
+    data.append('firstName', payload.firstName )
+    data.append('lastName', payload.lastName )
+    data.append('address', payload.address )
+    data.append('city',  payload.city )
+    data.append('state', payload.state )
+    data.append('zip_code', payload.zip_code )
+    data.append('phone_number',  payload.phone_number )
+    data.append('email', payload.email )
     
     return function(dispatch) {
-        return api.updateUserProfile(payload ,  function(error , response){
+        return api.updateUserProfile(data ,  function(error , response){
             if(error){
                 dispatch(updateFailure())
             } else {

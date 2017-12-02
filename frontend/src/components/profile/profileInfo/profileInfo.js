@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal } from 'react-bootstrap';
 import {getUserDetails, updateUserProfile } from '../../../actions/profile';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -12,9 +13,12 @@ class ProfileInfo extends Component {
             _id : '',
             auth_user_id:'',
             filename : '' ,
-            profileFile : ''
+            profileFile : '',
+            showProfileEditModal : false ,
         }
         this.updateProfile = this.updateProfile.bind(this)
+        this.openEditProfile = this.openEditProfile.bind(this);
+        this.closeEditProfile = this.closeEditProfile.bind(this);
     }
 
     componentDidMount(){
@@ -48,10 +52,21 @@ class ProfileInfo extends Component {
 
     }
 
+    openEditProfile(){
+        this.setState({
+            showProfileEditModal : true
+        })
+    }
+
+    closeEditProfile(){
+        this.setState({
+            showProfileEditModal : false 
+        })
+    }
+
     updateProfile() {
         //var _id= this.props.profile[0]._id;
-        console.log('Update')
-        console.log(document.getElementById('email').value)
+
         var obj = {
             _id  : this.state._id,
             auth_user_id : this.state.auth_user_id,
@@ -65,7 +80,8 @@ class ProfileInfo extends Component {
             email : document.getElementById('email').value,
         }
         console.log(obj)
-        this.props.updateUserProfile(obj)
+        this.props.updateUserProfile(obj, this.state.profileFile)
+        this.closeEditProfile()
     }
 
     render() {
@@ -95,7 +111,7 @@ class ProfileInfo extends Component {
                                 </div>
                                 <div className="btn-container">
                                     <button type="button" className="btn btn-primary btn-kayak"
-                                            data-toggle="modal" data-target="#editProfile">Edit profile
+                                            onClick={this.openEditProfile}>Edit profile
                                     </button>
                                 </div>
                             </div>
@@ -144,17 +160,17 @@ class ProfileInfo extends Component {
                         </div>
                     </div>
 
-                    <div className="modal fade" id="editProfile" tabIndex="-1" role="dialog"
+                    <Modal show={this.state.showProfileEditModal} className="modal fade" id="editProfile" tabIndex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
+                         <div className="modal-dialog" role="document">
                             <div className="profile-modal-content">
-                                <div className="profile-modal-header">
+                            
+                                <Modal.Header className="profile-modal-header">
                                     <h3 className="modal-title" id="exampleModalLabel">Edit Profile</h3>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="profile-modal-body">
+                                    
+                                </Modal.Header>
+
+                                <Modal.Body className="profile-modal-body">
                                     <div className="row ModalRow">
                                         <label className="col-sm-3 ">First Name :</label>
                                         <div className="col-sm-8 ">
@@ -222,7 +238,7 @@ class ProfileInfo extends Component {
                                             <span className="input-group-btn">
 
                                                     {
-                                                        this.state.carFile === '' ?
+                                                        this.state.profileFile === '' ?
                                                             <span></span>
                                                             :
                                                             <button type="button" onClick={() => {
@@ -258,17 +274,20 @@ class ProfileInfo extends Component {
                                     </div>
 
 
-                                </div>
-                                <div className="profile-modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="button" className="btn btn-success" data-dismiss="modal"
-                                            onClick={this.updateProfile}>Update
-                                    </button>
-                                </div>
+                                </Modal.Body>
+
+                                <Modal.Footer className="profile-modal-footer">
+                                    <button type="button" className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeEditProfile}>Close</button>
+                                    <button type="button" className="btn btn-primary btn-kayak" onClick={this.updateProfile} >Update</button>
+                                </Modal.Footer>
+
                             </div>
-                        </div>
-                    </div>
+                        </div>    
+                    </Modal>     
+
+
+
+
                 </div>
             );
         }
@@ -279,7 +298,7 @@ class ProfileInfo extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         getUserDetails : () => dispatch(getUserDetails()),
-        updateUserProfile : (obj) => dispatch(updateUserProfile(obj)),
+        updateUserProfile : (obj, file) => dispatch(updateUserProfile(obj, file)),
 
     };
 }

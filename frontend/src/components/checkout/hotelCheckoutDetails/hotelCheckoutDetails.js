@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import './hotelCheckoutDetails.css';
+import moment from 'moment';
 
 class HotelCheckoutDetails extends Component {
 
     constructor(props){
         super(props) ;
+        var checkInDate = moment(this.props.queryParams.checkInDate, 'MM-DD-YYYY');
+        var checkOutDate = moment(this.props.queryParams.checkOutDate, 'MM-DD-YYYY');
         this.state = {
-
+          totalDays: checkOutDate.diff(checkInDate,'days')+1
         }
     }
 
@@ -76,9 +79,6 @@ class HotelCheckoutDetails extends Component {
                         <div className="col-xs-3">
                             <div className="detail-label">
                               Contact
-                            </div>
-                            <div className="detail-data">
-                                { this.props.details.hotelEmail }
                             </div>
                             <div className="detail-data">
                                 { this.props.details.hotelPhoneNumber }
