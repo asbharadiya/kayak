@@ -8,7 +8,7 @@ module.exports = function(router,passport) {
 	var flight = require('./flight');
 	var car = require('./car');
 	var booking = require('./booking');
-
+	var analytics = require('./analytics');
 
     router.post('/logout', auth.logout);
 
@@ -60,7 +60,8 @@ module.exports = function(router,passport) {
 	router.post('/c/bookings', isAuthenticated, booking.makeBooking);
 	router.get('/c/bookings', isAuthenticated, booking.getBookings);
 	router.get('/c/bookings/:id', isAuthenticated, booking.getBookingById);
-	
+	router.post('/c/track-click', analytics.trackClick);
+
 	function isAuthenticated(req, res, next) {
 		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'USER') {
 			next();

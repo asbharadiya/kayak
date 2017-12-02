@@ -5,6 +5,8 @@ import { Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import './header.css';
 import * as actions from '../../actions/auth';
 import AuthModal from '../authModal/authModal';
+import * as analytics from '../../actions/analytics';
+
 
 class Header extends Component {
 
@@ -19,6 +21,7 @@ class Header extends Component {
     }
 
     handleLink(path) {
+        this.trackClick('profile', 'home');
         this.props.history.push(path);
     }
 
@@ -34,6 +37,11 @@ class Header extends Component {
         })
     }
 
+    trackClick(click, page) {
+      var payload = {'click' : click, 'page' : page};
+      this.props.trackClick(payload);
+    }
+
     render() {
         return (
 			<header className={(this.props.location.pathname === "/hotels"
@@ -47,17 +55,17 @@ class Header extends Component {
 					</div>
 					<div className="nav-container">
 						<ul className="nav">
-							<li className="nav-item">
+							<li className="nav-item" onClick={()=> {this.trackClick('hotel-search', 'home')}}>
 								<NavLink to="/hotels">
 									Hotels
 								</NavLink>
 							</li>
-							<li className="nav-item">
+							<li className="nav-item" onClick={()=> {this.trackClick('flights-search', 'home')}}>
 								<NavLink to="/flights">
 									Flights
 								</NavLink>
 							</li>
-							<li className="nav-item">
+							<li className="nav-item" onClick={()=> {this.trackClick('cars-search', 'home')}}>
 								<NavLink to="/cars">
 									Cars
 								</NavLink>
@@ -101,7 +109,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         checkSession : () => dispatch(actions.checkSession()),
-        logout : () => dispatch(actions.logout())
+        logout : () => dispatch(actions.logout()),
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
     };
 }
 
