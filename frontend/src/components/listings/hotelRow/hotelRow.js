@@ -45,7 +45,7 @@ class HotelRow extends Component {
           </div>
           <div className="col-xs-12 amenities-container">
             {this.props.data.hotelAmenities.map((room, key) => {
-              return <div className="amenities col-xs-3"><i className="fa fa-check-circle"></i> {room}</div>
+              return <div key={key} className="amenities col-xs-3"><i className="fa fa-check-circle"></i> {room}</div>
             })}
           </div>
           <div className="col-xs-12">

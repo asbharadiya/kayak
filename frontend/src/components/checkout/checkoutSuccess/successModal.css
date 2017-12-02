@@ -1,0 +1,22 @@
+.successModal {
+  margin-top: 50px;
+}
+.successModal .orange {
+  color: #FF543B;
+}
+
+.successModal .success-congrats {
+    font-size: 30px;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.successModal .booking-successfull {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.successModal .success-header {
+  background-color: #292b2c;
+  border-radius: 2px;
+}
