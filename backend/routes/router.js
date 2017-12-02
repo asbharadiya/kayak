@@ -38,8 +38,8 @@ module.exports = function(router,passport) {
 	router.put('/a/cars/:id', isAdminAuthenticated, car.updateCarById);
 	router.delete('/a/cars/:id', isAdminAuthenticated, car.deleteCarById);
 
-	router.get('/a/billings', isAdminAuthenticated, booking.getBills);
-	router.get('/a/billings/:id', isAdminAuthenticated, booking.getBillById);
+	router.get('/a/billings', booking.getBills);
+	router.get('/a/billings/:id', booking.getBillById);
 
 	//user
 	router.post('/c/signin', auth.customerSignIn);

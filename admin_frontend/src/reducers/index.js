@@ -4,6 +4,7 @@ import carsReducer from './cars';
 import flightsReducer from './flights'
 import hotelsReducer from './hotels';
 import customersReducer from './customers';
+import billsReducer from './bills';
 
 const rootReducer = combineReducers({
   	// short hand property names
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   	carsReducer,
   	flightsReducer,
   	hotelsReducer,
-  	customersReducer
+  	customersReducer,
+  	billsReducer
 })
 
 export default rootReducer;

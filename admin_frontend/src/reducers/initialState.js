@@ -45,5 +45,18 @@ export default {
     hotelEmail : '',
     hotelRooms : []
   },
-  allCustomers : []
+  allCustomers : [],
+  
+  allBills : [] ,
+  hotelUpdateSuccess : null,
+  currentBillToUpdate : {
+    bookingId : '',
+	createdDate : '', 
+	_id : '',
+	totalAmount : '', 
+	userId : '',
+	listingId : '',
+	listingType : '',
+	userData : null	
+  },
 }

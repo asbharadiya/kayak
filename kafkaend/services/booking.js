@@ -1,21 +1,73 @@
+var ObjectID = require('mongodb').ObjectID;
+var billModel = require('../models/billing.js');
+var validator = require('validator');
 var bookingModel = require('../models/booking.js');
 var billingModel = require('../models/billing.js');
-var creditCardModel = require('../models/creditCard.js');
-var ObjectID = require('mongodb').ObjectID;
-var carModel = require('../models/car.js');
+var userModel = require('../models/authUsers.js');
 
 function getBills(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    billModel.find(function(err, result){
+		if(err){
+			res.code = 500 ;
+			res.status  = 500 ;
+			res.message = "Fail to get all bills from the server"
+			callback(null , res) ;
+		}else{
+			res.code = 200  ;
+			res.status  = 200 ;
+			res.message = "Success"
+			res.data = result;
+			callback(null , res) ;
+		}
+	});
 }
 
 function getBillById(msg, callback){
     var res = {};
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
+    var idToGet = new ObjectID(msg.id) ;
+	if(!validator.isEmpty(idToGet.toString())){
+		billModel.findOne({ _id : idToGet }).lean().exec(function(err, result){
+			if(err){
+				res.code = 500 ;
+				res.status  = 500;
+				res.message = "Fail to get bill from the server";
+				callback(null , res);
+			}else{
+				userModel.findOne({ auth_user_id : result.userId }, function(err, result0){
+					result.userData = result0;
+					if(err){
+						res.code = 500 ;
+						res.status  = 500;
+						res.message = "Fail to get bill from the server";
+						callback(null , res);
+					} else {
+						bookingModel.findOne({ _id : new ObjectID(result.bookingId) }, function(err, result1){
+							if(err){
+								res.code = 500 ;
+								res.status  = 500;
+								res.message = "Fail to get bill from the server";
+								callback(null , res);
+							} else {
+								result.listingData = result1.bookingInfo;
+								res.code = 200 ;
+								res.status  = 200;
+								res.message = "Success";
+								res.data = result;
+								callback(null , res);
+							}
+						});
+					}
+				});
+			}
+		});
+	}else{
+		res.code = 400;
+		res.status  = 400 ;
+		res.data = []
+		res.message = "Please pass the correct Parameteres";
+		callback(null, res);
+	}
 }
 
 function makeBooking(msg, callback){
@@ -66,7 +118,6 @@ function makeBooking(msg, callback){
     booking.createdDate = curr_date;
     booking.save(function (err, booking) {
         if (!err) {
-          console.log("BBB")
             var billing = new billingModel();
             billing.listingType = msg.data.listingType;
             billing.listingId = new ObjectID(msg.data.listingId);
