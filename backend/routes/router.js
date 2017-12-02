@@ -8,7 +8,7 @@ module.exports = function(router,passport) {
 	var flight = require('./flight');
 	var car = require('./car');
 	var booking = require('./booking');
-
+	var analytics = require('./analytics');
 
     router.post('/logout', auth.logout);
 
@@ -40,6 +40,10 @@ module.exports = function(router,passport) {
 
 	router.get('/a/billings', booking.getBills);
 	router.get('/a/billings/:id', booking.getBillById);
+	
+	router.get('/a/revenueByType', analytics.getRevenueByType);
+	router.get('/a/revenueByTopCmpny', analytics.getRevenueByTopCmpny);
+	router.get('/a/revenueByCity', analytics.getRevenueByCity);
 
 	//user
 	router.post('/c/signin', auth.customerSignIn);

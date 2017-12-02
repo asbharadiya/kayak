@@ -1,5 +1,4 @@
 var ObjectID = require('mongodb').ObjectID;
-var billModel = require('../models/billing.js');
 var validator = require('validator');
 var bookingModel = require('../models/booking.js');
 var billingModel = require('../models/billing.js');
@@ -7,7 +6,7 @@ var userModel = require('../models/authUsers.js');
 
 function getBills(msg, callback){
     var res = {};
-    billModel.find(function(err, result){
+    billingModel.find(function(err, result){
 		if(err){
 			res.code = 500 ;
 			res.status  = 500 ;
@@ -27,7 +26,7 @@ function getBillById(msg, callback){
     var res = {};
     var idToGet = new ObjectID(msg.id) ;
 	if(!validator.isEmpty(idToGet.toString())){
-		billModel.findOne({ _id : idToGet }).lean().exec(function(err, result){
+		billingModel.findOne({ _id : idToGet }).lean().exec(function(err, result){
 			if(err){
 				res.code = 500 ;
 				res.status  = 500;
@@ -71,12 +70,10 @@ function getBillById(msg, callback){
 }
 
 function makeBooking(msg, callback){
-    
     var res = {};
     var curr_date = new Date();
-
+    var revenueGeneratingCity = "";
     if( msg.data.listingType === "cars"){
-          
            var query = { is_deleted : false , _id : new ObjectID(msg.data.listingId) , 
                         availability : { $elemMatch : { 
                                                         availabilityDate : ''
@@ -88,25 +85,22 @@ function makeBooking(msg, callback){
                                     "availability.$.availableCars" : -1
                               }
             }
-
           var startDate =  new Date(new Date(msg.data.bookingInfo.startDate).setUTCHours(0,0,0,0));
           var endDate = new Date(new Date(msg.data.bookingInfo.endDate).setHours(0,0,0,0));
           var serviceDays = ((endDate- startDate)/(1000*60*60*24))+1 ;
-          
           for(var i =0 ; i < serviceDays ; i++){
             if(i != 0 ){
                startDate.setDate(startDate.getDate() + 1);
             }
-           
             query.availability. $elemMatch.availabilityDate = startDate ; 
-            
             carModel.update(query, updateQuery, { multi: false }, function(err , response){
-                
             })
-
-
           }
-
+          revenueGeneratingCity = msg.data.bookingInfo.city;
+    } else if( msg.data.listingType === "hotels"){
+    	revenueGeneratingCity = msg.data.bookingInfo.city;
+    } else if( msg.data.listingType === "flights"){
+    	revenueGeneratingCity = msg.data.bookingInfo.source;
     }
 
     //TODO: first subtract availability based on category and travellers, take additional data from frontend if needed
@@ -125,6 +119,7 @@ function makeBooking(msg, callback){
             billing.totalAmount = msg.data.total;
             billing.createdDate = curr_date;
             billing.bookingId = new ObjectID(booking._id);
+            billing.revenueGeneratingCity = revenueGeneratingCity;
             if(msg.data.paymentMethod === 'new'){
                 if(msg.data.saveCard){
                     var card = new creditCardModel();

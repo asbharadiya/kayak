@@ -28,7 +28,8 @@ class Cars extends Component {
             //
             addCarError : "" ,
             carAddLoading : false ,
-            showCarModal: false
+            showCarModal: false,
+            carCity: ''
         }
         this.openAddCar = this.openAddCar.bind(this);
         this.closeAddCar = this.closeAddCar.bind(this);
@@ -55,7 +56,7 @@ class Cars extends Component {
                 serviceEndDate : '',
                 carFile : '' ,
                 filename : '',
-                //
+                carCity : '',
                 addCarError : '' ,
                 carAddLoading : false ,
                 showCarModal : false
@@ -85,7 +86,7 @@ class Cars extends Component {
             serviceEndDate : '' ,
             carFile : '' ,
             filename : '',
-            //
+            carCity : '',
             addCarError : "" ,
             carAddLoading : false ,
             showCarModal : true
@@ -110,6 +111,10 @@ class Cars extends Component {
         }
         if(this.state.carName === '' ){
             this.setState({ addCarError : "Please enter Car Name"})
+            return ;
+        }
+        if(this.state.carCity === '' ){
+            this.setState({ addCarError : "Please enter Car City"})
             return ;
         }
         if(this.state.occupancy === '' ){
@@ -164,7 +169,8 @@ class Cars extends Component {
             luggage : this.state.luggage ,
             dailyRentalValue : this.state.dailyRentalValue,
             serviceStartDate : this.state.serviceStartDate,
-            serviceEndDate : this.state.serviceEndDate
+            serviceEndDate : this.state.serviceEndDate,
+            carCity : this.state.carCity
         }
 
         this.setState({
@@ -306,6 +312,15 @@ class Cars extends Component {
                                     serviceEndDate : e.target.value
                                 })
                             }} aria-describedby="basic-addon1"   />
+                        </div>
+
+                        <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                            <label htmlFor="carCity">Car City</label>
+                            <input className="form-control sharpCorner" onChange={(e) => {
+                                this.setState({
+                                	carCity : e.target.value
+                                })
+                            }} id="carCity" type="text"  aria-describedby="basic-addon1"   />
                         </div>
 
 

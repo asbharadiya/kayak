@@ -7,6 +7,7 @@ var car = require('./services/car');
 var booking = require('./services/booking');
 var customer = require('./services/customer');
 var profile = require('./services/profile');
+var analytics = require('./services/analytics');
 
 var mongo = require('./services/mongo');
 mongo.createConnectionPool();
@@ -679,6 +680,60 @@ consumer.on('message', function (message) {
             break;
         case 'getBookingById':
             booking.getBookingById(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
+        case 'getRevenueByType':
+        	analytics.getRevenueByType(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
+        case 'getRevenueByCity':
+            analytics.getRevenueByCity(data.data, function(err,res){
+                var payloads = [
+                    {
+                        topic: data.replyTo,
+                        messages:JSON.stringify({
+                            correlationId:data.correlationId,
+                            data : res
+                        }),
+                        partition : 0
+                    }
+                ];
+                producer.send(payloads, function(err, data){
+                    //console.log(data);
+                });
+                return;
+            });
+            break;
+        case 'getRevenueByTopCmpny':
+            analytics.getRevenueByTopCmpny(data.data, function(err,res){
                 var payloads = [
                     {
                         topic: data.replyTo,

@@ -33,7 +33,7 @@ export function addCar(payload , file ) {
     data.append('dailyRentalValue' , payload.dailyRentalValue) ;
     data.append('serviceStartDate' , payload.serviceStartDate) ;
     data.append('serviceEndDate' , payload.serviceEndDate) ;
-
+    data.append('carCity', payload.carCity);
 
     return function(dispatch) {
         return api.addCar(data , function(error , response){
@@ -86,7 +86,8 @@ var updatePlainObject =  {
     luggage : "NO" ,
     dailyRentalValue : 0,
     serviceStartDate : '',
-    serviceEndDate : ''
+    serviceEndDate : '',
+    carCity:''
 }
 
 
@@ -118,6 +119,7 @@ export function updateCarById(payload , id , file  ) {
     data.append('carQuantity' , payload.carQuantity) ;
     data.append('carType' , payload.carType) ;
     data.append('carName' , payload.carName) ;
+    data.append('carCity', payload.carCity);
     data.append('occupancy' , payload.occupancy) ;
     data.append('luggage' , payload.luggage) ;
     data.append('dailyRentalValue' , payload.dailyRentalValue) ;

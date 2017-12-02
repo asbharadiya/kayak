@@ -14,7 +14,8 @@ function addCar(req,res){
         luggage :  req.body.luggage,
         dailyRentalValue :  req.body.dailyRentalValue,
         serviceStartDate :  req.body.serviceStartDate,
-        serviceEndDate :  req.body.serviceEndDate
+        serviceEndDate :  req.body.serviceEndDate,
+        carCity : req.body.carCity
     }
 
     if(req.files == null){
@@ -82,7 +83,8 @@ function updateCarById(req,res){
         dailyRentalValue :  req.body.dailyRentalValue,
         serviceStartDate :  req.body.serviceStartDate,
         serviceEndDate :  req.body.serviceEndDate,
-        _id : req.body._id
+        _id : req.body._id,
+        carCity : req.body.carCity
     }
 
     if(req.files == null){
