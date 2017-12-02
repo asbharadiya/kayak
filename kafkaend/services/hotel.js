@@ -195,11 +195,11 @@ function getHotelsForCustomer(msg, callback){
 	console.log(msg.queryParams);
 
 		var query = {
-			//commented by Palash
-			/*hotelCity: msg.queryParams.city,
+			
+			hotelCity: msg.queryParams.city,
 			hotelStar: {"$lte": msg.queryParams.rating || 5},
 			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
-			*/
+			
 
 			is_deleted : false,
 			// availability: {

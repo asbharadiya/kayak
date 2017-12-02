@@ -89,9 +89,11 @@
 	}
 .nopadding:first-child{
 	padding-left: 0 !important;
+	margin-bottom: 15px
 }
-.nopadding:first{
+.nopadding:last-child{
 	padding-right: 0 !important;
+	margin-bottom: 15px
 }	
 .clearBoth{
 	clear: both;
@@ -104,4 +106,24 @@
 .div-check-box{
 	right-padding: 0px ;
 
+}
+
+.image-preview{
+	padding-left: 0;
+	padding-right: 0
+}
+
+.room-category-button{
+	margin-top: 30px;
+	margin-bottom: 30px
+}
+
+.room-category-button button{
+	width: 100%
+}
+
+
+.ignorePadd{
+	padding-right: 0 ;
+	padding-left: 0
 }
