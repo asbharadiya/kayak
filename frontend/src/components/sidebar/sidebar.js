@@ -16,7 +16,7 @@ class Sidebar extends Component {
 						</li>
 						<li>
 							<NavLink to="/user/paymentMethods">
-								Payment Methods
+								Payment methods
 							</NavLink>
 						</li>
 						<li>

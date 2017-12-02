@@ -48,7 +48,11 @@ function updateProfile(msg, callback){
 function addCreditCard(msg, callback){
     var res = {};
     msg.creditCard.userId = msg.user_id;
-    creditCardModel.insert(msg.creditCard, function(err, result){
+    msg.creditCard.isDeleted = false
+    console.log(msg.creditCard)
+
+    var cardModel = new creditCardModel(msg.creditCard)
+    cardModel.save(function(err, result){
         if(err){
             res.code = 500  ;
             res.message = "Fail to get credit cards from the server";
@@ -65,7 +69,8 @@ function getCreditCards(msg, callback){
     var res = {};
     creditCardModel.find(
         {
-            userId : msg.user_id
+            userId : msg.user_id ,
+            isDeleted : false
         },{
             cardNumber:true
         }, function(err, result){
@@ -84,6 +89,20 @@ function getCreditCards(msg, callback){
 
 function deleteCreditCardById(msg, callback){
     var res = {};
+    
+    creditCardModel.update({isDeleted: false , _id : msg.cardId , userId : msg.user_id}, {isDeleted : true }, { multi: false }, function(err , response){
+        if(err){
+            res.code = 500 ; 
+            res.message = "Error occured while updating  a flight"
+            callback(null , res); 
+        }else{
+            res.code = 200  ; 
+            res.message = "Success"
+            callback(null , res) ;  
+        }
+    })
+
+
     res.code = 200;
     res.message = "Success";
     callback(null, res);
