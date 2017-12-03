@@ -27,6 +27,25 @@ function processClickPerPage(lineObj, callback) {
   callback;
 }
 
+function processUserActivityTracking(lineObj, callback) {
+  var payload = {};
+  if(lineObj.message.user) {
+    payload.email = lineObj.message.user.email;
+  }
+  payload.page = lineObj.message.page;
+  payload.duration = lineObj.message.duration;
+  payload.time = lineObj.message.time;
+  console.log(lineObj);
+  if(results.userActivityTracking[lineObj.message.userId]) {
+    results.userActivityTracking[lineObj.message.userId].push(payload);
+  } else {
+    results.userActivityTracking[lineObj.message.userId] = [];
+    results.userActivityTracking[lineObj.message.userId].push(payload);
+  }
+
+
+}
+
 function processListingView(lineObj) {
   listingName = lineObj.message.name
   listingName= listingName.replace(/ /g,"_");
@@ -63,10 +82,13 @@ function readEachLine(line, callback) {
     });
   } else if (lineObj.message.type === 'listingView') {
     processListingView(lineObj, function() {
-
+    });
+  } else if(lineObj.message.type === 'userActivityTracking') {
+    processUserActivityTracking(lineObj, function() {
     });
   }
 }
+
 
 function run(callback) {
   results = {
@@ -83,6 +105,9 @@ function run(callback) {
       flights : {
 
       }
+    },
+    userActivityTracking: {
+
     }
   };
   var rl = readline.createInterface({

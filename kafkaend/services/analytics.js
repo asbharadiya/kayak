@@ -28,6 +28,16 @@ function trackClick(msg, callback) {
   callback(null , res)
 }
 
+function trackTotalDurationSpent(msg, callback) {
+  var res = {};
+  msg.type = 'userActivityTracking';
+  logger.log({
+    level: 'info',
+    message: msg
+  });
+  console.log(msg);
+}
+
 function trackCarPageViews(cars) {
   cars.docs.forEach(function(entry) {
     var car = {};
@@ -207,6 +217,7 @@ function getUserAnalytics(msg, callback){
     });
 }
 
+exports.trackTotalDurationSpent = trackTotalDurationSpent;
 exports.getRevenueByType = getRevenueByType;
 exports.getRevenueByCity = getRevenueByCity;
 exports.getRevenueByTopCmpny = getRevenueByTopCmpny;

@@ -12,7 +12,6 @@ export const logPageChange = (page) => {
         page : lastPageVisited,
         duration :totalSecondsSpent
       }
-      console.log(payload);
       api.trackTotalDurationSpent(payload);
     });
   })
