@@ -73,7 +73,20 @@ function getRevenueByCity(req,res){
     });
 }
 
+function getUserAnalytics(req,res){
+    kafka.make_request(topic_name,'getUserAnalytics',{
+
+    },function(err,result){
+        if(err) {
+            return res.status(500).json({status:500,statusText:"Internal server error"});
+        } else {
+            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+        }
+    });
+}
+
 exports.getRevenueByType = getRevenueByType;
 exports.getRevenueByCity = getRevenueByCity;
 exports.getRevenueByTopCmpny = getRevenueByTopCmpny;
 exports.trackClick = trackClick;
+exports.getUserAnalytics = getUserAnalytics;

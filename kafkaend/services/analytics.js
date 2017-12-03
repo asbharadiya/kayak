@@ -12,7 +12,7 @@ var carModel = require('../models/car.js');
 var hotelModel = require('../models/hotel.js');
 var flightModel = require('../models/flight.js');
 var userModel = require('../models/authUsers.js');
-
+var analyticsModel = require('../models/analytics.js');
 
 
 function trackClick(msg, callback) {
@@ -134,7 +134,24 @@ function getRevenueByCity(msg, callback){
     });
 }
 
+function getUserAnalytics(msg, callback){
+    var res = {};
+    analyticsModel.find({}, function(err, result){
+        if(err){
+            res.code = 500  ;
+            res.message = "Fail to get data from the server"
+            callback(null , res) ;
+        }else{
+            res.code = 200  ;
+            res.message = "Success"
+            res.data = result
+            callback(null , res) ;
+        }
+    });
+}
+
 exports.getRevenueByType = getRevenueByType;
 exports.getRevenueByCity = getRevenueByCity;
 exports.getRevenueByTopCmpny = getRevenueByTopCmpny;
 exports.trackClick = trackClick;
+exports.getUserAnalytics = getUserAnalytics;

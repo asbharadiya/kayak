@@ -69,5 +69,6 @@ export default {
 	revenueByTopCmpny : [],
 	revenueByTopCmpnyMonth : [],
 	userCount : [],
-	listingCount : []
+	listingCount : [],
+	userAnalytics : []
 }

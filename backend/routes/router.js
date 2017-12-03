@@ -44,6 +44,7 @@ module.exports = function(router,passport) {
 	router.get('/a/revenueByType', analytics.getRevenueByType);
 	router.get('/a/revenueByTopCmpny', analytics.getRevenueByTopCmpny);
 	router.get('/a/revenueByCity', analytics.getRevenueByCity);
+	router.get('/a/userAnalytics', analytics.getUserAnalytics);
 
 	//user
 	router.post('/c/signin', auth.customerSignIn);
