@@ -1,6 +1,7 @@
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var carModel = require('../models/car.js');
+var analytics = require('./analytics');
 
 //Redis
 /*var redisClient = require('redis').createClient;
@@ -23,7 +24,7 @@ function addCar(msg, callback){
 
         var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
 
-         
+
 
         var availabilityDateObject = [] ;
         for(var i=0 ; i <= serviceDays ; i++){
@@ -117,7 +118,7 @@ function updateCarById(msg, callback){
 
     msg.availability = availabilityDateObject ;
 
-    
+
 
     carModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
         if(err){
@@ -176,23 +177,23 @@ function getCarsForCustomer(msg, callback){
                     }
                 }
             };
-       
+
 
     if(msg.queryParams.luggage != undefined ){
-        
+
         var priceRangeArray = [] ;
         priceRangeArray.push(parseInt(msg.queryParams.minPrice));
         priceRangeArray.push(parseInt(msg.queryParams.maxPrice));
 
-       
+
 
         var lugaggesArray = msg.queryParams.luggage.split(',')
         var occupantsArray = msg.queryParams.occupants.split(',')
         var categoryArray = msg.queryParams.category.split(',')
-        
+
 
         if(priceRangeArray.length == 2){
-            query.dailyRentalValue = { $gte : priceRangeArray[0]  , $lte: priceRangeArray[1] } 
+            query.dailyRentalValue = { $gte : priceRangeArray[0]  , $lte: priceRangeArray[1] }
         }
 
         if(( lugaggesArray.length == 1 && lugaggesArray[0] == '' )) {
@@ -214,7 +215,7 @@ function getCarsForCustomer(msg, callback){
         }
 
     }
-    
+
 
 
     var options = {
@@ -225,7 +226,7 @@ function getCarsForCustomer(msg, callback){
     };
 
 
-   
+
 
 
     carModel.paginate(query,options, function(err, result){
@@ -234,11 +235,12 @@ function getCarsForCustomer(msg, callback){
             res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
-          	
-        	console.log(result) ; 
+          	console.log('results');
+        	  console.log(result) ;
             res.code = 200  ;
             res.message = "Success";
             res.data = result;
+            analytics.trackCarPageViews(result);
             callback(null , res) ;
         }
     });

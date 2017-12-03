@@ -28,6 +28,29 @@ function trackClick(msg, callback) {
   callback(null , res)
 }
 
+function trackCarPageViews(cars) {
+  console.log('getting into tracking');
+  cars.docs.forEach(function(entry) {
+    var car = {};
+    car.id = entry._id;
+    car.name = entry.carName;
+    car.type = 'listingView';
+    getFormattedDate(function(dateTime) {
+  		car.time = dateTime;
+      logger.log({
+        level: 'info',
+        message: car
+      });
+    });
+  });
+}
+
+function getFormattedDate(callback) {
+	var date = new Date();
+	var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+	callback(str);
+}
+
 function getRevenueByType(msg, callback){
     var res = {};
     billingModel.aggregate ({$group: { _id: "$listingType", totalAmount: { $sum: "$totalAmount" }, count: { $sum: 1 } } } , function(err, result){
@@ -154,4 +177,5 @@ exports.getRevenueByType = getRevenueByType;
 exports.getRevenueByCity = getRevenueByCity;
 exports.getRevenueByTopCmpny = getRevenueByTopCmpny;
 exports.trackClick = trackClick;
+exports.trackCarPageViews = trackCarPageViews;
 exports.getUserAnalytics = getUserAnalytics;

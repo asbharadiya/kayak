@@ -16,7 +16,7 @@ var isPaused = false;
 var results;
 
 function processClickPerPage(lineObj, callback) {
-  console.log('record Click Page' + fileCursor.y);
+  //console.log('record Click Page' + fileCursor.y);
   if(lineObj.message.type = 'clicksPerPage') {
     if(results.clicksPerPage[lineObj.message.page]) {
       results.clicksPerPage[lineObj.message.page].push({'timestamp': lineObj.message.time});
@@ -27,12 +27,31 @@ function processClickPerPage(lineObj, callback) {
   callback;
 }
 
+function processListingView(lineObj) {
+  listingName = lineObj.message.name
+  listingName= listingName.replace(/ /g,"_");
+  console.log(listingName);
+  if(results.viewsPerListing.cars[listingName]) {
+    results.viewsPerListing.cars[listingName].push({'timestamp' : lineObj.message.time});
+  } else {
+    results.viewsPerListing.cars[listingName] = [];
+    results.viewsPerListing.cars[listingName].push({'timestamp' : lineObj.message.time});
+  }
+
+}
+
 function readEachLine(line, callback) {
-  console.log('reading line function' + fileCursor.y);
+//  console.log('reading line function' + fileCursor.y);
   var lineObj = JSON.parse(line);
-  processClickPerPage(lineObj, function() {
-    callback;
-  })
+  if(lineObj.message.type === 'clicksPerPage') {
+    processClickPerPage(lineObj, function() {
+      //callback;
+    });
+  } else if (lineObj.message.type === 'listingView') {
+    processListingView(lineObj, function() {
+
+    });
+  }
 }
 
 function run(callback) {
@@ -40,11 +59,10 @@ function run(callback) {
     clicksPerPage: {
 
     },
-    buttonClick:{
+    viewsPerListing: {
+      cars : {
 
-    },
-    userTrack:{
-
+      }
     }
   };
   var rl = readline.createInterface({
