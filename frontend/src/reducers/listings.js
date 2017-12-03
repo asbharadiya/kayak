@@ -24,6 +24,11 @@ const reducer = (state = initialState, action) => {
         case "RESET_SUCCESS_BOOKING_FLAG" :
             return {
               ...state,
+              bookingSuccess: null
+            }
+        case "MAKE_BOOKING_FAILURE" :
+            return {
+              ...state,
               bookingSuccess: false
             }
         default :
