@@ -1,23 +1,24 @@
-.form-container .form-body .fields-col .field-container.location {
-	width: 30.5%;
+.form-container.hotel-search-form-container .form-body .fields-col .field-container.location {
+	width: 30%;
 }
 
-.form-container .form-body .fields-col .field-container.location input {
-
-}
-
-.form-container .form-body .fields-col .field-container.date {
-	width: 30.5%;
-}
-
-.form-container .form-body .fields-col .field-container.date input {
+.form-container.hotel-search-form-container .form-body .fields-col .field-container.location input {
 
 }
 
-.form-container .form-body .fields-col .field-container.guests {
+.form-container.hotel-search-form-container .form-body .fields-col .field-container.date {
 	width: 25%;
+	position: relative;
 }
 
-.form-container .form-body .fields-col .field-container.guests input {
+.form-container.hotel-search-form-container .form-body .fields-col .field-container.date input {
+
+}
+
+.form-container.hotel-search-form-container .form-body .fields-col .field-container.guests {
+	width: 20%;
+}
+
+.form-container.hotel-search-form-container .form-body .fields-col .field-container.guests input {
 
 }

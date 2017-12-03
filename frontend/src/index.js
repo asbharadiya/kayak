@@ -7,8 +7,6 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import promise from 'redux-promise-middleware'
-import { createLogger as logger } from 'redux-logger'
 
 
 const store = createStore(

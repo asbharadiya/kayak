@@ -4,6 +4,7 @@ var validator = require('validator');
 var bookingModel = require('../models/booking.js');
 var billingModel = require('../models/billing.js');
 var userModel = require('../models/authUsers.js');
+var creditCardModel = require('../models/creditCard.js');
 
 function getBills(msg, callback){
     var res = {};

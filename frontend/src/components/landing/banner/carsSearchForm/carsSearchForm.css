@@ -1,23 +1,16 @@
-.form-container .form-body .fields-col .field-container.pickup {
-	width: 50%;
+.form-container.car-search-form-container .form-body .fields-col .field-container.pickup {
+	width: 40%;
 }
 
-.form-container .form-body .fields-col .field-container.pickup input {
+.form-container.car-search-form-container .form-body .fields-col .field-container.pickup input {
 
 }
 
-.form-container .form-body .fields-col .field-container.pickup-date {
-	width: 25%;
+.form-container.car-search-form-container .form-body .fields-col .field-container.date {
+	width: 30%;
+	position: relative;
 }
 
-.form-container .form-body .fields-col .field-container.pickup-date input {
-	
-}
-
-.form-container .form-body .fields-col .field-container.dropoff-date {
-	width: 25%;
-}
-
-.form-container .form-body .fields-col .field-container.dropoff-date input {
+.form-container.car-search-form-container .form-body .fields-col .field-container.pickup-date input {
 	
 }
