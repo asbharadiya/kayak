@@ -2,6 +2,7 @@ var mongo = require('./mongo');
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var flightModel = require('../models/flight.js');
+var analytics = require('./analytics');
 
 function addFlight(msg, callback){
 	var res = {};
@@ -224,6 +225,7 @@ function getFlightsForCustomer(msg, callback){
             res.code = 200  ;
             res.message = "Success";
             res.data = result;
+						analytics.trackFlightPageViews(result);
             callback(null , res) ;
         }
     });

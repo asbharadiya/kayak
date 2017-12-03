@@ -62,6 +62,23 @@ function trackHotelPageViews(hotels) {
   });
 }
 
+function trackFlightPageViews(flights) {
+  flights.docs.forEach(function(entry) {
+    var flight = {};
+    flight.id = entry._id;
+    flight.name = entry.airline;
+    flight.type = 'listingView';
+    flight.category = 'flight';
+    getFormattedDate(function(dateTime) {
+  		flight.time = dateTime;
+      logger.log({
+        level: 'info',
+        message: flight
+      });
+    });
+  });
+}
+
 function getFormattedDate(callback) {
 	var date = new Date();
 	var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -197,3 +214,4 @@ exports.trackClick = trackClick;
 exports.trackCarPageViews = trackCarPageViews;
 exports.trackHotelPageViews = trackHotelPageViews;
 exports.getUserAnalytics = getUserAnalytics;
+exports.trackFlightPageViews = trackFlightPageViews;

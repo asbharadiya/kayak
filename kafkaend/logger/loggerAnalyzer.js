@@ -44,6 +44,13 @@ function processListingView(lineObj) {
       results.viewsPerListing.hotels[listingName] = [];
       results.viewsPerListing.hotels[listingName].push({'timestamp' : lineObj.message.time});
     }
+  } else {
+    if(results.viewsPerListing.flights[listingName]) {
+      results.viewsPerListing.flights[listingName].push({'timestamp' : lineObj.message.time});
+    } else {
+      results.viewsPerListing.flights[listingName] = [];
+      results.viewsPerListing.flights[listingName].push({'timestamp' : lineObj.message.time});
+    }
   }
 }
 
@@ -71,6 +78,9 @@ function run(callback) {
 
       },
       hotels : {
+
+      },
+      flights : {
 
       }
     }
