@@ -209,7 +209,10 @@ function getUserAnalytics(msg, callback){
             res.message = "Fail to get data from the server"
             callback(null , res) ;
         }else{
-        	var userAnalyticsPageClicks=[], userAnalyticsListingViewCar=[], userAnalyticsListingViewHotel=[], userAnalyticsListingViewFlight=[];
+        	var userAnalyticsPageClicks=[], userAnalyticsListingViewCar=[], userAnalyticsListingViewHotel=[], userAnalyticsListingViewFlight=[], 
+        	userActivityTracking=[];
+        	//{name: 'Rosewood Hotels & Resorts', uv1: 4000, pv1: 9000, uv2: 4000, pv2: 9000, amt: 2400}
+        	var i=0;
         	for (var key in result[0].results.clicksPerPage) {
         		userAnalyticsPageClicks.push({name: key, value: result[0].results.clicksPerPage[key].length});
         	}
@@ -222,6 +225,54 @@ function getUserAnalytics(msg, callback){
         	for (var key in result[0].results.viewsPerListing.flights) {
         		userAnalyticsListingViewFlight.push({name: key, value: result[0].results.viewsPerListing.flights[key].length});
         	}
+        	for (var key in result[0].results.userActivityTracking) {
+        		if(i==10) break;
+        		var tempObj = {};
+        		tempObj.name = key;
+        		var car=0, hotel=0, flight=0, carListing=0, hotelListing=0, flightListing=0, profile=0, paymentMethods=0, checkout=0, booking=0, home=0;
+        		var pageName = "";
+        		for(var j=0; j<result[0].results.userActivityTracking[key].length; j++){
+        			if(result[0].results.userActivityTracking[key][j].page!=undefined){
+        				pageName = result[0].results.userActivityTracking[key][j].page.replace('/', '');
+        				if(pageName==""){
+                			tempObj["Home-"+home+"-visit"]=result[0].results.userActivityTracking[key][j].duration; 
+                			home++;
+        				} else if(pageName=="cars"){
+                			tempObj["Cars-"+car+"-visit"]=result[0].results.userActivityTracking[key][j].duration; 
+                			car++;
+        				} else if(pageName=="hotels"){
+        					tempObj["Hotels-"+hotel+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					hotel++;
+        				} else if(pageName=="flights"){
+        					tempObj["Flights-"+flight+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					flight++;
+        				} else if(pageName=="cars/listings"){
+                			tempObj["Car-listing-"+carListing+"-visit"]=result[0].results.userActivityTracking[key][j].duration; 
+                			carListing++;
+        				} else if(pageName=="hotels/listings"){
+        					tempObj["Hotel-listing-"+hotelListing+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					hotelListing++;
+        				} else if(pageName=="flights/listings"){
+        					tempObj["Flight-listing-"+flightListing+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					flightListing++;
+        				} else if(pageName=="user/profile"){
+                			tempObj["Profile-"+profile+"-visit"]=result[0].results.userActivityTracking[key][j].duration; 
+                			profile++;
+        				} else if(pageName=="user/paymentMethods"){
+        					tempObj["Payment-methods-"+paymentMethods+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					paymentMethods++;
+        				} else if(pageName=="user/bookings"){
+        					tempObj["Bookings-"+booking+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					flightListing++;
+        				} else if(pageName.includes("checkout")){
+        					tempObj["Checkout-"+checkout+"-visit"]=result[0].results.userActivityTracking[key][j].duration;        
+        					checkout++;
+        				}				
+        			}
+        		}
+        		userActivityTracking.push(tempObj);
+        		i++;
+        	}
         	userAnalyticsPageClicks.sort(function(a, b) { return b.value - a.value; });
         	userAnalyticsListingViewCar.sort(function(a, b) { return b.value - a.value; });
         	userAnalyticsListingViewHotel.sort(function(a, b) { return b.value - a.value; });
@@ -233,6 +284,7 @@ function getUserAnalytics(msg, callback){
             res.data.userAnalyticsListingViewCar = userAnalyticsListingViewCar;
             res.data.userAnalyticsListingViewHotel = userAnalyticsListingViewHotel;
             res.data.userAnalyticsListingViewFlight = userAnalyticsListingViewFlight;
+            res.data.userActivityTracking = userActivityTracking;
             callback(null , res) ;
         }
     });

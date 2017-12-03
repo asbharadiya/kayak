@@ -73,5 +73,6 @@ export default {
 	userAnalyticsPageClicks : [],
 	userAnalyticsListingViewCar : [],
 	userAnalyticsListingViewHotel : [],
-	userAnalyticsListingViewFlight : []
+	userAnalyticsListingViewFlight : [],
+	userActivityTracking : []
 }

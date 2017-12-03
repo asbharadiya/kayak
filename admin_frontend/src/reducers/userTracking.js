@@ -8,7 +8,8 @@ const reducer = (state = initialState, action) => {
                 userAnalyticsPageClicks : action.payload.userAnalyticsPageClicks,
                 userAnalyticsListingViewCar : action.payload.userAnalyticsListingViewCar,
                 userAnalyticsListingViewHotel : action.payload.userAnalyticsListingViewHotel,
-                userAnalyticsListingViewFlight : action.payload.userAnalyticsListingViewFlight
+                userAnalyticsListingViewFlight : action.payload.userAnalyticsListingViewFlight,
+                userActivityTracking : action.payload.userActivityTracking
             };
         case "GET_USER_ANALYTICS_FAILURE" :
             return {

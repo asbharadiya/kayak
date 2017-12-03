@@ -9,14 +9,30 @@ class UserTracking extends Component {
 	
 	constructor(props){
 		super(props);
+		let bars = [];
+		for (var i = 0; i < 10; i++) {
+			bars.push(<Bar dataKey={"Bookings-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar dataKey={"Cars-"+i+"-visit"} stackId="a" fill="#8884d8" />);
+			bars.push(<Bar dataKey={"Flight-"+i+"-visit"} stackId="a" fill="#f46b42" />);
+			bars.push(<Bar dataKey={"Hotel-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar dataKey={"Cars-listing-"+i+"-visit"} stackId="a" fill="#8884d8" />);
+			bars.push(<Bar dataKey={"Hotel-listing-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar dataKey={"Flight-listing-"+i+"-visit"} stackId="a" fill="#f46b42" />);
+			bars.push(<Bar dataKey={"Payment-methods-"+i+"-visit"} stackId="a" fill="#d641f4" />);
+			bars.push(<Bar dataKey={"Home-"+i+"-visit"} stackId="a" fill="#f44176" />);
+			bars.push(<Bar dataKey={"Profile-"+i+"-visit"} stackId="a" fill="#f4cd41" />);
+			bars.push(<Bar dataKey={"Checkout-"+i+"-visit"} stackId="a" fill="#41d6f4" />);
+	    }
 		this.state = {
+			bars : bars,
 			userAnalyticsPageClicks : [],
 			userAnalyticsListingViewCar : [],
 			userAnalyticsListingViewHotel : [],
 			userAnalyticsListingViewFlight : [],
+			userActivityTracking : [],
 			pieData : [{name: 'Cars', value: 2400}, {name: 'Hotels', value: 4567},
                 {name: 'Flights', value: 1398}],
-            lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800}, 
+            lineData : [{name: 'Rosewood Hotels & Resorts', uv1: 4000, pv1: 9000, uv2: 4000, pv2: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800}, 
             	{name: 'Sonesta Collection Hotels', uv: 2000, pv: 750, amt: 750}, {name: 'W Hotels & Resorts', uv: 2000, pv: 1900, amt: 1900},
             	{name: 'Virgin America', uv: 2000, pv: 1350, amt: 1350}, {name: 'Delta Air Lines', uv: 2000, pv: 900, amt: 900},
             	{name: 'JetBlue', uv: 2000, pv: 2100, amt: 2100}, {name: 'United', uv: 2000, pv: 1625, amt: 1625},
@@ -140,6 +156,14 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#8884d8" />
 			      </BarChart>
+			      <BarChart width={600} height={600} data={this.props.userActivityTracking}
+		            margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+			       <XAxis dataKey="name"/>
+			       <YAxis/>
+			       <CartesianGrid strokeDasharray="3 3"/>
+			       <Tooltip/>
+			       {this.state.bars}
+				   </BarChart>
             </div>
   	    );
 	}
@@ -157,7 +181,8 @@ function mapStateToProps(state) {
     	userAnalyticsPageClicks : state.userTrackingReducer.userAnalyticsPageClicks,
     	userAnalyticsListingViewCar : state.userTrackingReducer.userAnalyticsListingViewCar,
     	userAnalyticsListingViewHotel : state.userTrackingReducer.userAnalyticsListingViewHotel,
-    	userAnalyticsListingViewFlight : state.userTrackingReducer.userAnalyticsListingViewFlight
+    	userAnalyticsListingViewFlight : state.userTrackingReducer.userAnalyticsListingViewFlight,
+    	userActivityTracking : state.userTrackingReducer.userActivityTracking
     };
 }
 
