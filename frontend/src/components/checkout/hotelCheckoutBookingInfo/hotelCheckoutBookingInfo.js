@@ -67,7 +67,7 @@ class HotelCheckoutBookingInfo extends Component {
 
 
     componentWillReceiveProps(newProps){
-        
+
         this.setState({
             firstName :  newProps.profile !== undefined ? newProps.profile.firstName : '' ,
             lastName : newProps.profile !== undefined ? newProps.profile.lastName : '' ,
@@ -80,7 +80,7 @@ class HotelCheckoutBookingInfo extends Component {
     }
 
     render() {
-       
+
         return (
             <div className="row hotel-checkout-booking">
 

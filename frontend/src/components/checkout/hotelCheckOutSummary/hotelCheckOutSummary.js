@@ -3,13 +3,11 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import './hotelCheckOutSummary.css';
 
-
-
 class HotelCheckoutSummary extends Component {
 
 	constructor(props){
 		super(props) ;
-		
+
 		this.state = {
 			baseFare : 0,
 			tax : 0 ,
@@ -27,7 +25,7 @@ class HotelCheckoutSummary extends Component {
 					baseFare: room.priceTotal,
 					totalBaseFare: serviceDays * room.priceTotal,
 					total: serviceDays * room.priceTotal ,
-                    totalDays : serviceDays 
+                    totalDays : serviceDays
 				}, function() {
 						this.props.updateTotal(this.state.total);
 					})
@@ -36,7 +34,7 @@ class HotelCheckoutSummary extends Component {
 		)
 	}
 
-  
+
 
 
 	render() {

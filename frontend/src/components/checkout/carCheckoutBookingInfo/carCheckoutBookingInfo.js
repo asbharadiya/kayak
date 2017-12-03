@@ -69,11 +69,11 @@ class CarCheckoutBookingInfo extends Component {
 
 
     componentWillReceiveProps(newProps){
-        
+
         this.setState({
             firstName :  newProps.profile !== undefined ? newProps.profile.firstName : '' ,
             lastName : newProps.profile !== undefined ? newProps.profile.lastName : '' ,
-            phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number !== null ? newProps.profile.phone_number : ''  ) : '',
+            phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number != null ? newProps.profile.phone_number : ''  ) : '',
             email : newProps.profile !== undefined ? newProps.profile.email : '' ,
             city : this.props.queryParams.city ,
             startDate : this.props.queryParams.startDate ,
@@ -85,7 +85,7 @@ class CarCheckoutBookingInfo extends Component {
 
     render() {
 
-        
+
         return (
             <div className="row car-checkout-booking">
 

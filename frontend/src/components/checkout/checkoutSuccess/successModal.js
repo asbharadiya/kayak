@@ -15,14 +15,14 @@ class SuccessModal extends Component {
         }
     }
 
-   
+
 
     closeErrorModal() {
       this.setState({
         showError: false ,
       })
     }
-   
+
 
     componentWillReceiveProps(props){
       if(props.bookingSuccess === true ) {
@@ -107,7 +107,7 @@ class SuccessModal extends Component {
                 </Modal.Footer>
               </div>
             </Modal>
-        
+
 
           </div>
 

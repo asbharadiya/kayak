@@ -243,4 +243,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <PaymentMethods {...props}/>));
-

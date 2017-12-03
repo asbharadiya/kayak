@@ -14,10 +14,10 @@ class FlightFilters extends Component {
             meals : [] ,
             luggage : [] ,
 
-            minPrice : 0  , 
-            maxPrice : 5000  
+            minPrice : 0  ,
+            maxPrice : 5000
         };
-      
+
         this.updatePrice = this.updatePrice.bind(this);
         this.mealsChanged = this.mealsChanged.bind(this);
 
@@ -40,7 +40,7 @@ class FlightFilters extends Component {
             meals: newMeals
         }, function(){
            this.props.applyFilters(this.state);
-          
+
         });
     }
 
@@ -50,18 +50,18 @@ class FlightFilters extends Component {
             luggage: newluggage
         }, function(){
             this.props.applyFilters(this.state);
-            
+
         });
     }
-   
+
 
     render() {
-       
+
 
 
         return (
             <div className="groups-content">
-               
+
 
 
                 <div className="groups-section">
@@ -107,7 +107,7 @@ class FlightFilters extends Component {
                     </div>
                 </div>
 
-               
+
                 <div className="groups-section">
                     <div className="groups-title">
                         Luggage Bag
@@ -125,14 +125,14 @@ class FlightFilters extends Component {
                                     <label className="labelCheckBox"><Checkbox value="1"/> 1</label>
                                     <label className="labelCheckBox"><Checkbox value="2"/> 2</label>
                                     <label className="labelCheckBox"><Checkbox value="3"/> 3</label>
-                                    
+
                                 </CheckboxGroup>
 
                             </li>
                         </ul>
                     </div>
                 </div>
-               
+
 
 
 

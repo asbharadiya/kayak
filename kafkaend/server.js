@@ -1,5 +1,4 @@
 var connection =  new require('./kafka/connection');
-
 var auth = require('./services/auth');
 var hotel = require('./services/hotel');
 var flight = require('./services/flight');
@@ -9,6 +8,8 @@ var customer = require('./services/customer');
 var profile = require('./services/profile');
 var analytics = require('./services/analytics');
 var mongo = require('./services/mongo');
+var cron = require('./services/cron');
+
 mongo.createConnectionPool();
 
 // var mongoWithDbPool = require('./services/mongoWithDbPool');

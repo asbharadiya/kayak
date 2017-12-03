@@ -12,10 +12,10 @@ class FlightCheckoutDetails extends Component {
 
     timeDiff(first, second) {
         var f = first.split(':'), s = second.split(':');
-        var fh = parseInt(f[0]);
-        var fm = parseInt(f[1]);
-        var sh = parseInt(s[0]);
-        var sm = parseInt(s[1]);
+        var fh = parseInt(f[0], 10);
+        var fm = parseInt(f[1], 10);
+        var sh = parseInt(s[0], 10);
+        var sm = parseInt(s[1], 10);
 
         var minutes = 0;
         if(fh<sh) {

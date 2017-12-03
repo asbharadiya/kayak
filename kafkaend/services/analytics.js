@@ -3,8 +3,6 @@ const filename = 'logger/analyticsLogger.log';
 var loggerFile = require('../logger/logger.js');
 var logger = loggerFile.getLogger();
 var analyze = require('../logger/loggerAnalyzer.js');
-var cron = require('node-cron');
-
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var billingModel = require('../models/billing.js');

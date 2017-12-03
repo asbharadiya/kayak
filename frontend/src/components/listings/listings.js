@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
-import queryString from 'query-string';
 import './listings.css';
 import Search from './search/search';
 import Filters from './filters/filters';

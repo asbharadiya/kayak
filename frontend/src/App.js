@@ -22,7 +22,7 @@ class App extends Component {
     }
 
     componentDidUpdate(prevProps) {
-       if(this.props.location !== prevProps.location) {
+      if(this.props.location !== prevProps.location) {
         this.props.trackUserActivity(this.props.location);
       }
     }
