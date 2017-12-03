@@ -19,3 +19,18 @@ export const trackClick = (payload) =>
 	}).catch(error => {
         return error;
   });
+
+export const trackTotalDurationSpent = (payload) =>
+	fetch(api+'/c/track-total-duration-spent', {
+	    method: 'POST',
+	    headers: {
+	    	...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+	}).then(res => {
+		return res;
+	}).catch(error => {
+        return error;
+  });
