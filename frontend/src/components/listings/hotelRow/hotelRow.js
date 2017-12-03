@@ -9,9 +9,9 @@ class HotelRow extends Component {
   constructor(props){
     super(props) ;
     var prices = [];
-    {this.props.data.hotelRooms.map((room, key) => {
+    this.props.data.hotelRooms.forEach(room => {
       prices.push(room.priceTotal);
-    })}
+    })
     this.minFare = Math.min.apply(null, prices);
     this.maxFare = Math.max.apply(null, prices);
   }

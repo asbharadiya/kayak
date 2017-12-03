@@ -58,7 +58,7 @@ class PaymentMethodsComponents extends Component {
                     <label>{this.props.card.cardNumber}</label>
                 </div>
                 <div className="pull-right">
-                    <a onClick={this.openDeleteCardModal.bind(this)}><i className="fa fa-minus-circle fa-lg" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)" onClick={this.openDeleteCardModal.bind(this)}><i className="fa fa-minus-circle fa-lg" aria-hidden="true"></i></a>
                 </div>
 
                 <Modal show={this.state.openCardDeleteModal}   id="carModal" className="booking-detail-modal">

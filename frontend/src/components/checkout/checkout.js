@@ -212,7 +212,7 @@ class Checkout extends Component {
                 alert('Please fill out all the required booking information!');
                 return;
             }
-            this.state.bookingInfo.travelerInfo.map((traveler , key) => {
+            this.state.bookingInfo.travelerInfo.forEach(traveler => {
                 if(traveler.firstName === '' || traveler.lastName === ''){
                     alert('Please fill out all the required booking information!');
                     return;
