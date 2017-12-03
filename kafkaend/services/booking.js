@@ -295,6 +295,7 @@ function makeBooking(msg, callback){
                     card.expiryDate = msg.data.expiryDate;
                     card.cvv = msg.data.cvv;
                     card.userId = msg.userId;
+                    card.is_deleted = false;
                     card.save(function(err,card){
                        if(!err){
                            billing.creditCardId = new ObjectID(card._id);

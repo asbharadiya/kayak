@@ -30,6 +30,7 @@ class HotelCheckoutSummary extends Component {
 						this.props.updateTotal(this.state.total);
 					})
 				}
+				return;
 			}
 		)
 	}

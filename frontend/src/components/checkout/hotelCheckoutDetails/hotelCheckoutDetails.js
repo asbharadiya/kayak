@@ -8,8 +8,8 @@ class HotelCheckoutDetails extends Component {
 
     constructor(props){
         super(props) ;
-        var checkInDate = moment(this.props.queryParams.checkInDate, 'MM-DD-YYYY');
-        var checkOutDate = moment(this.props.queryParams.checkOutDate, 'MM-DD-YYYY');
+        var checkInDate = moment(this.props.queryParams.startDate, 'MM-DD-YYYY');
+        var checkOutDate = moment(this.props.queryParams.endDate, 'MM-DD-YYYY');
         this.state = {
           totalDays: checkOutDate.diff(checkInDate,'days')+1
         }
@@ -36,7 +36,7 @@ class HotelCheckoutDetails extends Component {
                               Check-In
                             </div>
                             <div className="detail-data">
-                              { this.props.queryParams.checkInDate }
+                              { this.props.queryParams.startDate }
                             </div>
                           </div>
                           <div className="check-out-container">
@@ -44,7 +44,7 @@ class HotelCheckoutDetails extends Component {
                               Check-Out
                             </div>
                             <div className="detail-data">
-                              { this.props.queryParams.checkOutDate }
+                              { this.props.queryParams.endDate }
                             </div>
                           </div>
                         </div>

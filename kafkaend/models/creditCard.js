@@ -7,7 +7,7 @@ var creditCardSchema = new mongoose.Schema({
     nameOnCard:String,
     cvv:String,
     expiryDate:String,
-    isDeleted : Boolean
+    is_deleted : Boolean
 })
 
 module.exports = mongoose.model('creditcards', creditCardSchema);

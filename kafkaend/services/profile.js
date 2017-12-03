@@ -1,22 +1,16 @@
 var userModel = require('../models/authUsers.js');
 var creditCardModel = require('../models/creditCard.js');
-var mongo = require("./mongo");
 
 
 function getProfile(msg, callback){
     var res = {};
-    console.log('KAFKA '+ msg.id)
     userModel.find({ auth_user_id : msg.id}, function(err, result){
     	if(err){
-    		console.log('ERROR ' + err)
-			res.code = 500  ; 
-			res.status  = 500 ; 
+    		res.code = 500  ;
 			res.message = "Fail to get User Details from the server"
 			callback(null , res) ; 
 		}else{
-			console.log('Passed '+ result)
-			res.code = 200  ; 
-			res.status  = 200 ; 
+			res.code = 200  ;
 			res.message = "Success"
 			res.data = result
 			callback(null , res) ; 
@@ -25,19 +19,15 @@ function getProfile(msg, callback){
 }
 
 function updateProfile(msg, callback){
-	console.log('USER KAFKA')
-    var res = {};
+	var res = {};
 	idToUpdate = msg.id ;
-	console.log(idToUpdate)
-	
 	userModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , result){
         if(err){
             res.code = 500 ;
             res.message = "Error occured while updating Profle";
             callback(null , res);
         }else{
-        	console.log('Update Passed '+ result)
-            res.code = 200  ;
+        	res.code = 200  ;
             res.message = "Success";
             callback(null , res) ;
         }
@@ -47,8 +37,7 @@ function updateProfile(msg, callback){
 function addCreditCard(msg, callback){
     var res = {};
     msg.creditCard.userId = msg.user_id;
-    msg.creditCard.isDeleted = false
-    console.log(msg.creditCard)
+    msg.creditCard.is_deleted = false;
 
     var cardModel = new creditCardModel(msg.creditCard)
     cardModel.save(function(err, result){
@@ -69,7 +58,7 @@ function getCreditCards(msg, callback){
     creditCardModel.find(
         {
             userId : msg.user_id ,
-            isDeleted : false
+            is_deleted : false
         },{
             cardNumber:true
         }, function(err, result){

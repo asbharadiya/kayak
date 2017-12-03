@@ -18,11 +18,11 @@ class FlightCheckoutBookingInfo extends Component {
                 }
             }),
 
-            cabin : '',
-            date : '' ,
-            dest : '',
-            source : '',
-            travelers : ''
+            cabin :  this.props.queryParams.cabin,
+            dest :  this.props.queryParams.dest ,
+            date :  this.props.queryParams.date,
+            source :  this.props.queryParams.source,
+            travelers :   this.props.queryParams.travelers
         }
     }
 
@@ -65,12 +65,7 @@ class FlightCheckoutBookingInfo extends Component {
 
     componentWillReceiveProps(newProps){
         if(this.props.queryParams !== undefined){
-            this.setState({ cabin :  newProps.queryParams.cabin,
-                            dest :  newProps.queryParams.dest ,
-                            date :  newProps.queryParams.date,
-                            source :  newProps.queryParams.source,
-                            travelers :   newProps.queryParams.travelers,
-                            phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number !== null ? newProps.profile.phone_number : ''  ) : '',
+            this.setState({ phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number !== null ? newProps.profile.phone_number : ''  ) : '',
                             emailAddress : newProps.profile !== undefined ? newProps.profile.email : '' ,
                         } , function(){
                              newProps.updateBookingInfo(this.state);

@@ -60,15 +60,11 @@ class SuccessModal extends Component {
           <div>
             <Modal show={this.state.show} className="successModal" id="successMoal">
               <div>
-                <Modal.Header className="success-header">
-                  <div>
-                  </div>
-                </Modal.Header>
                 <Modal.Body>
                   <div className="form-body">
                     <div className="form-group">
                       <div className="success-congrats"> Congratulations! </div>
-                      <div className="booking-successfull"> <i className="fa fa-check-circle orange"> </i> Your booking was successful </div>
+                      <div className="booking-successfull"> <i className="fa fa-check-circle"> </i> Your booking was successful </div>
                     </div>
                   </div>
                 </Modal.Body>
@@ -78,7 +74,7 @@ class SuccessModal extends Component {
                         <a> <button className="btn btn-primary btn-kayak" onClick={this.closeSuccessAndRedirect.bind(this)}>My Bookings</button> </a>
                     </div>
                     <div className=" col-xs-6">
-                        <a> <button className="btn btn-primary btn-kayak home-button-close" onClick={this.closeSuccessAndRedirectHome.bind(this)}>Home</button> </a>
+                        <a> <button className="btn btn-primary btn-kayak" onClick={this.closeSuccessAndRedirectHome.bind(this)}>Home</button> </a>
                     </div>
                   </div>
                 </Modal.Footer>
