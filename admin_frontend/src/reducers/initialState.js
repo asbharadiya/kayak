@@ -70,5 +70,8 @@ export default {
 	revenueByTopCmpnyMonth : [],
 	userCount : [],
 	listingCount : [],
-	userAnalytics : []
+	userAnalyticsPageClicks : [],
+	userAnalyticsListingViewCar : [],
+	userAnalyticsListingViewHotel : [],
+	userAnalyticsListingViewFlight : []
 }

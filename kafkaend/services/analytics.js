@@ -209,9 +209,30 @@ function getUserAnalytics(msg, callback){
             res.message = "Fail to get data from the server"
             callback(null , res) ;
         }else{
+        	var userAnalyticsPageClicks=[], userAnalyticsListingViewCar=[], userAnalyticsListingViewHotel=[], userAnalyticsListingViewFlight=[];
+        	for (var key in result[0].results.clicksPerPage) {
+        		userAnalyticsPageClicks.push({name: key, value: result[0].results.clicksPerPage[key].length});
+        	}
+        	for (var key in result[0].results.viewsPerListing.cars) {
+        		userAnalyticsListingViewCar.push({name: key, value: result[0].results.viewsPerListing.cars[key].length});
+        	}
+        	for (var key in result[0].results.viewsPerListing.hotels) {
+        		userAnalyticsListingViewHotel.push({name: key, value: result[0].results.viewsPerListing.hotels[key].length});
+        	}
+        	for (var key in result[0].results.viewsPerListing.flights) {
+        		userAnalyticsListingViewFlight.push({name: key, value: result[0].results.viewsPerListing.flights[key].length});
+        	}
+        	userAnalyticsPageClicks.sort(function(a, b) { return b.value - a.value; });
+        	userAnalyticsListingViewCar.sort(function(a, b) { return b.value - a.value; });
+        	userAnalyticsListingViewHotel.sort(function(a, b) { return b.value - a.value; });
+        	userAnalyticsListingViewFlight.sort(function(a, b) { return b.value - a.value; });
             res.code = 200  ;
-            res.message = "Success"
-            res.data = result
+            res.message = "Success";
+            res.data = {};
+            res.data.userAnalyticsPageClicks = userAnalyticsPageClicks;
+            res.data.userAnalyticsListingViewCar = userAnalyticsListingViewCar;
+            res.data.userAnalyticsListingViewHotel = userAnalyticsListingViewHotel;
+            res.data.userAnalyticsListingViewFlight = userAnalyticsListingViewFlight;
             callback(null , res) ;
         }
     });
