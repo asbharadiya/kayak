@@ -6,23 +6,92 @@ var userModel = require('../models/authUsers.js');
 var carModel = require('../models/car.js');
 var creditCardModel = require('../models/creditCard.js')
 var flightModel = require('../models/flight.js');
+var hotelModel = require('../models/hotel.js');
+var moment  =  require('moment');
 
 function getBills(msg, callback){
+
+   
     var res = {};
-    billingModel.find(function(err, result){
-		if(err){
-			res.code = 500 ;
-			res.status  = 500 ;
-			res.message = "Fail to get all bills from the server"
-			callback(null , res) ;
-		}else{
-			res.code = 200  ;
-			res.status  = 200 ;
-			res.message = "Success"
-			res.data = result;
-			callback(null , res) ;
-		}
-	});
+
+    var objToFInd = {};
+
+    if(msg.category === 'date' || msg.category === "all"){
+         if(msg.category === 'date'){
+            var dateToFind = new Date(msg.param) ; 
+            
+            var sod = moment(dateToFind).startOf('day').utcOffset(0); ;
+            sod.set({hour:0,minute:0,second:0,millisecond:0})
+            sod.toISOString()
+            sod.format() ;
+
+
+            var eod = moment(dateToFind).add(1, 'days').utcOffset(0);
+            eod.set({hour:0,minute:0,second:0,millisecond:0})
+            eod.toISOString()
+            eod.format() ;
+
+            objToFInd.createdDate = { $gte: sod.toDate(),
+                                      $lt: eod.toDate()
+                                     } 
+          }
+
+          billingModel.find( objToFInd ,  function(err, result){
+              if(err){
+                res.code = 500 ;
+                res.status  = 500 ;
+                res.message = "Fail to get all bills from the server"
+                callback(null , res) ;
+              }else{
+                res.code = 200  ;
+                res.status  = 200 ;
+                res.message = "Success"
+                res.data = result;
+                callback(null , res) ;
+              }
+          });
+    }else if(msg.category == "month"){
+
+      console.log(msg.param)
+      var monthAndYearArray = msg.param.split(" ");
+      console.log(monthAndYearArray) ; 
+
+      billingModel.aggregate(  [
+                                 {
+                                   $project:
+                                     {
+                                       bookingId : "$bookingId",
+                                       listingType : "$listingType",
+                                       totalAmount : "$totalAmount",
+                                       createdDate: "$createdDate",
+                                       year: { $year: "$createdDate" },
+                                       month: { $month: "$createdDate" }
+                                     }
+                                 },
+                                 { $match : { "month" : parseInt(monthAndYearArray[0]), "year": parseInt(monthAndYearArray[1]) } }
+                               ]  ,  function(err, result){
+              if(err){
+                res.code = 500 ;
+                res.status  = 500 ;
+                res.message = "Fail to get all bills from the server"
+                callback(null , res) ;
+              }else{
+                console.log(result)
+                res.code = 200  ;
+                res.status  = 200 ;
+                res.message = "Success"
+                res.data = result;
+                callback(null , res) ;
+              }
+          });
+
+
+    }
+
+   
+ 
+
+
 }
 
 function getBillById(msg, callback){
@@ -102,15 +171,62 @@ function makeBooking(msg, callback){
           }
           revenueGeneratingCity = msg.data.bookingInfo.city;
     } else if( msg.data.listingType === "hotels"){
+          
+      var idToGet = new ObjectID(msg.data.listingId);
+      hotelModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
+        if(err){
+          res.code = 500  ;
+          res.message = "Fail to get all cars from the server"
+          callback(null , res) ;
+        }else{
+          availabilityArray = result[0].availability;
 
 
+          var startDate =  new Date(new Date(msg.data.bookingInfo.checkInDate).setUTCHours(0,0,0,0));
+          var endDate = new Date(new Date(msg.data.bookingInfo.checkOutDate).setHours(0,0,0,0));
+          var serviceDays = ((endDate- startDate)/(1000*60*60*24)) ;
+
+          for(var i =0 ; i < serviceDays ; i++){
+            var date = new Date(new Date(msg.data.bookingInfo.checkInDate).setUTCHours(0,0,0,0));
+            date.setDate(date.getDate() + i);
+
+            availabilityArray.forEach(function(singleAvailability){
+              if((new Date(singleAvailability.availableDate)).getTime() ==   date.getTime() ){
+                singleAvailability.hotelRooms.forEach(function(singleRoom){
+                  if(singleRoom.roomType.toLowerCase() == msg.data.bookingInfo.roomType.toLowerCase()){
+                    singleRoom.totalAvailable -= 1 ; 
+                  }
+                })
+              }
+            })
+
+          }
+
+
+          hotelModel.update({is_deleted : false , _id : idToGet }, { availability  : availabilityArray}, function(err , response){
+            if(err){
+              console.log(err);
+              res.code = 500 ;
+              res.status  = 500 ;
+              res.message = "Error occured while updating a hotel"
+              callback(null , res);
+            } else {
+              res.code = 200  ;
+              res.status  = 200 ;
+              res.message = "Hotel successfully updated";
+              callback(null , res) ;
+            }
+          })
+
+        }
+      })
 
 
       revenueGeneratingCity = msg.data.bookingInfo.city;
     } else if( msg.data.listingType === "flights"){
 
        var idToGet = new ObjectID(msg.data.listingId);
-      console.log(idToGet)
+     
       flightModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
         if(err){
           res.code = 500  ; 

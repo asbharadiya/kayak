@@ -322,7 +322,7 @@ class Checkout extends Component {
                                     ) : this.state.category === 'flights' ? (
                                         <FlightCheckoutBookingInfo  profile={this.props.profileData[0]}  queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
-                                        <HotelCheckoutBookingInfo queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo} queryParams={this.state.queryParams}/>
+                                        <HotelCheckoutBookingInfo profile={this.props.profileData[0]} queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo} />
                                     )
                                 }
                             </div>

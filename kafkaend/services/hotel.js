@@ -166,11 +166,12 @@ function deleteHotelById(msg, callback){
 
 function getHotelsForCustomer(msg, callback){
     var res = {};
-    var parts = msg.queryParams.checkInDate.split("-");
+
+   /* var parts = msg.queryParams.checkInDate.split("-");
     var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
     parts = msg.queryParams.checkOutDate.split("-");
     var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
-		console.log(msg.queryParams);
+		console.log(msg.queryParams);*/
 	// var query = {
   //       is_deleted : false,
   //       hotelCity: msg.queryParams.city,
@@ -197,7 +198,7 @@ function getHotelsForCustomer(msg, callback){
 
 		var query = {
 
-			hotelCity: msg.queryParams.city,
+			//hotelCity: msg.queryParams.city,
 			hotelStar: {"$lte": msg.queryParams.rating || 5},
 			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
 

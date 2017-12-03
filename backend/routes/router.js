@@ -1,3 +1,6 @@
+var kafka = require('./kafka/client');
+var config = require('config');
+var topic_name = config.kafkaTopic;
 
 module.exports = function(router,passport) {
 
@@ -38,7 +41,7 @@ module.exports = function(router,passport) {
 	router.put('/a/cars/:id', isAdminAuthenticated, car.updateCarById);
 	router.delete('/a/cars/:id', isAdminAuthenticated, car.deleteCarById);
 
-	router.get('/a/billings', booking.getBills);
+	router.get('/a/billings/:category/:param', booking.getBills);
 	router.get('/a/billings/:id', booking.getBillById);
 
 	router.get('/a/revenueByType', analytics.getRevenueByType);

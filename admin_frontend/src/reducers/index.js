@@ -7,6 +7,7 @@ import customersReducer from './customers';
 import billsReducer from './bills';
 import homeReducer from './home';
 import userTrackingReducer from './userTracking';
+import citiesReducer from './cities';
 
 const rootReducer = combineReducers({
   	// short hand property names
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   	customersReducer,
   	billsReducer,
   	homeReducer,
-  	userTrackingReducer
+  	userTrackingReducer,
+	  citiesReducer
 })
 
 export default rootReducer;

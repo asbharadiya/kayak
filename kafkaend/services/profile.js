@@ -1,7 +1,6 @@
-var validator = require('validator');
-var ObjectID = require('mongodb').ObjectID;
 var userModel = require('../models/authUsers.js');
 var creditCardModel = require('../models/creditCard.js');
+var mongo = require("./mongo");
 
 
 function getProfile(msg, callback){
@@ -101,11 +100,6 @@ function deleteCreditCardById(msg, callback){
             callback(null , res) ;  
         }
     })
-
-
-    res.code = 200;
-    res.message = "Success";
-    callback(null, res);
 }
 
 exports.getProfile = getProfile;

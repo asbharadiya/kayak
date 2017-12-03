@@ -31,6 +31,7 @@ body {
 
 .btn-kayak:hover {
     background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background: #d15500;
 }
 
 .btn-kayak:active {
@@ -51,6 +52,13 @@ body {
     box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
 }
 
+.btn-kayak:active:hover {
+    outline: none;
+    background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background: #d15500;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
 input, select {
     box-shadow: none !important;
     border-radius: 0px !important;
@@ -59,8 +67,9 @@ input, select {
     border-bottom: 1px solid #d8d8d8 !important;*/
 }
 
-input:focus, select:focus {
+input:focus, select:focus, .form-control:focus {
     border-color: #ff690f !important;
+    box-shadow: none;
 }
 
 .error {
@@ -77,3 +86,65 @@ input:focus, select:focus {
     padding-top: 50px;
 }
 
+.react-datepicker-wrapper {
+    width: 100% !important;
+}
+
+.react-datepicker__input-container {
+    width: 100% !important;
+}
+
+.react-datepicker-popper {
+    right: 5px !important;
+}
+
+.react-datepicker {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    /*width: 100% !important;*/
+}
+
+.react-datepicker__month-container {
+    /*width: 100% !important;*/
+}
+
+.react-datepicker__month {
+    margin: 0px !important;
+}
+
+.react-datepicker__day-names, .react-datepicker__week {
+    /*width: 100% !important;*/
+    display: flex !important;
+}
+
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+    width: 30px !important;
+    padding: 5px 0px !important;
+}
+
+.react-autocomplete .menu {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9;
+}
+
+
+.react-autocomplete .menu .item {
+    padding: 15px 12px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.react-autocomplete .menu .item p {
+    margin: 0px;
+}
+
+.react-autocomplete .menu .item.item-highlighted {
+    color: white;
+    background-color: #ff690f;
+}

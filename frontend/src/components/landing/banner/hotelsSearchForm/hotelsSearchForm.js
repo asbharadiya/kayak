@@ -1,59 +1,181 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import queryString from 'query-string';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
+import Autocomplete from 'react-autocomplete';
 import './hotelsSearchForm.css';
 import * as analytics from '../../../../actions/analytics';
-import {connect} from 'react-redux';
 
 class HotelsSearchForm extends Component {
+    constructor(props) {
+        super(props);
+        const queryParams = queryString.parse(this.props.location.search);
+        this.state = {
+            city:queryParams.city ? queryParams.city:'',
+            checkInDate:moment(),
+            checkOutDate:moment(),
+            roomType:'Standard',
+            guests:1,
+            citySearch:queryParams.city ? queryParams.city:''
+        }
+        this.search = this.search.bind(this);
+    }
 
-	constructor(props) {
-		super(props);
-		this.search = this.search.bind(this);
-  	}
+		trackClick(click, page) {
+				var payload = {'click' : click, 'page' : page};
+				this.props.trackClick(payload);
+		}
 
-	trackClick(click, page) {
-			var payload = {'click' : click, 'page' : page};
-			this.props.trackClick(payload);
-	}
+    handleCityChange(val,item){
+        this.setState({
+            citySearch:item.city+', '+item.state,
+            city:item.city+', '+item.state
+        });
+    }
 
-	search() {
-		this.trackClick('hotels-search', '/hotels/listings');
-		this.props.history.push('/hotels/listings?city=test city&checkInDate=12-10-2017&checkOutDate=12-15-2017&guests=2&roomType=Conference');
-	}
+    handleCitySearchChange(e,val){
+        this.setState({
+            citySearch: val,
+            city:''
+        });
+    }
 
-  	render() {
-	  	return (
-	      	<div className="form-container">
-	        	<div className="form-body">
-	        		<div className="button-col">
-	        			<button className="btn btn-primary btn-kayak" onClick={this.search}>
-	        				<i className="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i>
-	        			</button>
-	        		</div>
-	        		<div className="fields-col">
-	        			<div className=" field-container location">
-	        				<input type="text" className="form-control"/>
-	        			</div>
-	        			<div className="field-container checkInDate">
-	        				<input type="text" className="form-control"/>
-	        			</div>
-								<div className="field-container checkOutDate">
-									<input type="text" className="form-control"/>
-								</div>
-	        			<div className="field-container guests">
-	        				<input type="text" className="form-control"/>
-	        			</div>
-	        		</div>
-	        	</div>
-	      	</div>
-	    );
-  	}
+    handleCheckInDateChange(date){
+        this.setState({
+            checkInDate: date,
+            checkOutDate: this.state.checkOutDate < date ? date:this.state.checkOutDate
+        });
+    }
+
+    handleCheckOutDateChange(date){
+        this.setState({
+            checkOutDate: date
+        });
+    }
+
+    handleRoomTypeChange(type){
+        this.setState({
+            roomType: type
+        });
+    }
+
+    handleGuestsChange(e){
+        this.setState({
+            guests: e.target.value
+        });
+    }
+
+    search() {
+				this.trackClick('hotels-search', '/hotels/listings');
+        if(this.state.city === ''){
+            alert("Please select city!");
+            return;
+        }
+        this.props.history.push('/hotels/listings?city='+this.state.city+'&startDate='+moment(this.state.startDate).format('MM-DD-YYYY')+'&endDate='+moment(this.state.startDate).format('MM-DD-YYYY')+'&guests='+this.state.guests+'&roomType='+this.state.roomType);
+    }
+
+    render() {
+        var options = this.props.cities;
+        return (
+            <div className="form-container hotel-search-form-container">
+                <div className="form-body">
+                    <div className="button-col">
+                        <button className="btn btn-primary btn-kayak" onClick={this.search}>
+                            <i className="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div className="fields-col">
+                        <div className="field-container location">
+                            <label>City</label>
+                            <Autocomplete
+                                inputProps={{ className: 'form-control'}}
+                                wrapperProps={{ className:'react-autocomplete' }}
+                                wrapperStyle={{ position: 'relative', display: 'inline-block', width: '100%' }}
+                                shouldItemRender={(item, value) =>
+                                    value.length > 0 ? (item.city+', '+item.state).toLowerCase().indexOf(value.toLowerCase()) > -1 : false
+                                }
+                                getItemValue={(item) => item.city+', '+item.state}
+                                items={options}
+                                renderItem={(item, isHighlighted) =>
+                                    <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`} key={item.rank}>
+                                        <p>{item.city}, {item.state}</p>
+                                    </div>
+                                }
+                                value={this.state.citySearch}
+                                onChange={this.handleCitySearchChange.bind(this)}
+                                onSelect={this.handleCityChange.bind(this)}
+                                renderMenu={children => (
+                                    <div className="menu">
+                                        {children}
+                                    </div>
+                                )}
+                                selectOnBlur={true}
+                            />
+                        </div>
+                        <div className="field-container date">
+                            <label>Check-in date</label>
+                            <DatePicker className="form-control" readOnly={true}
+                                        minDate={moment()}
+                                        selected={this.state.checkInDate}
+                                        onChange={this.handleCheckInDateChange.bind(this)}
+                            />
+                        </div>
+                        <div className="field-container date">
+                            <label>Check-out date</label>
+                            <DatePicker className="form-control" readOnly={true}
+                                        minDate={this.state.checkInDate}
+                                        selected={this.state.checkOutDate}
+                                        onChange={this.handleCheckOutDateChange.bind(this)}
+                            />
+                        </div>
+                        <div className="field-container guests">
+                            <label>No of guests</label>
+                            <input type="number" min="1" className="form-control"
+                                   value={this.state.guests} onChange={this.handleGuestsChange.bind(this)}/>
+                        </div>
+                    </div>
+                    <div className="footer-row">
+                        <label>Room type: </label>
+                        <div className="radio-options">
+                            <label className="radio-inline">
+                                <input type="radio" name="roomType"
+                                       value="Standard" checked={this.state.roomType === 'Standard'}
+                                       onChange={this.handleRoomTypeChange.bind(this,'Standard')}/>
+                                Standard
+                            </label>
+                            <label className="radio-inline">
+                                <input type="radio" name="roomType"
+                                       value="Premium" checked={this.state.roomType === 'Premium'}
+                                       onChange={this.handleRoomTypeChange.bind(this,'Premium')}/>
+                                Premium
+                            </label>
+                            <label className="radio-inline">
+                                <input type="radio" name="roomType"
+                                       value="Honeymoon" checked={this.state.roomType === 'Honeymoon'}
+                                       onChange={this.handleRoomTypeChange.bind(this,'Honeymoon')}/>
+                                Honeymoon
+                            </label>
+                            <label className="radio-inline">
+                                <input type="radio" name="roomType"
+                                       value="Conference" checked={this.state.roomType === 'Conference'}
+                                       onChange={this.handleRoomTypeChange.bind(this,'Conference')}/>
+                                Conference Room
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
-
 function mapStateToProps(state) {
-    return {
-		};
+	return {
+			cities:state.citiesReducer.cities
+	};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -62,4 +184,5 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(props => <HotelsSearchForm {...props}/>));
+
+export default withRouter(connect(mapStateToProps , mapDispatchToProps )(props => <HotelsSearchForm {...props}/>));

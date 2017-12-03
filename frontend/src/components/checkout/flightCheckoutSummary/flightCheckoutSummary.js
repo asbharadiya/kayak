@@ -7,7 +7,7 @@ class FlightCheckoutSummary extends Component {
 
     constructor(props){
         super(props);
-        const fare = this.props.queryParams.cabin === 'economy' ? this.props.details.economyClassPrice:(this.props.queryParams.cabin === 'firstClass' ? this.props.details.firstClassPrice:this.props.details.businessClassPrice)
+        const fare = this.props.queryParams.cabin === 'Economy' ? this.props.details.economyClassPrice:(this.props.queryParams.cabin === 'First' ? this.props.details.firstClassPrice:this.props.details.businessClassPrice)
         this.state = {
             baseFare:fare,
             subtotal:fare*this.props.queryParams.travelers,
