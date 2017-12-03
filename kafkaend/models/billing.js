@@ -8,7 +8,8 @@ var billingSchema = new mongoose.Schema({
     userId:String,
     totalAmount:String,
     createdDate:Date,
-    creditCardId:mongoose.Schema.ObjectId
+    creditCardId:mongoose.Schema.ObjectId,
+    revenueGeneratingCity:String
 })
 
 module.exports = mongoose.model('billings', billingSchema);

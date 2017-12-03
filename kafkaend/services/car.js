@@ -2,6 +2,11 @@ var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var carModel = require('../models/car.js');
 
+//Redis
+var redisClient = require('redis').createClient;
+var redis = redisClient(6379, 'localhost');
+
+
 function addCar(msg, callback){
     var res = {};
 
@@ -30,6 +35,9 @@ function addCar(msg, callback){
         msg.availability = availabilityDateObject ;
 
         console.log("Message " , msg)
+
+
+
 
         var newCar = new carModel(msg);
 
@@ -208,19 +216,26 @@ function getCarsForCustomer(msg, callback){
     }
     
 
+
     var options = {
-        select: 'carType carName occupancy luggage dailyRentalValue images',
+        select: 'carType carName occupancy luggage dailyRentalValue images carQuantity',
         lean: true,
         page: msg.pageNo || 1,
         limit: 20
     };
+
+
+   
+
+
     carModel.paginate(query,options, function(err, result){
         if(err){
             res.code = 500  ;
             res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
-            console.log(result) ; 
+          	
+        	console.log(result) ; 
             res.code = 200  ;
             res.message = "Success";
             res.data = result;

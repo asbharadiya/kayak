@@ -28,7 +28,8 @@ class CarComponent extends Component {
             openDeleteModal : false,
             showCarUpdateModal : false ,
             filename : '' , 
-            carFile : ''
+            carFile : '',
+            carCity : ''
 
         }
         this.openUpdateCar = this.openUpdateCar.bind(this);
@@ -95,7 +96,7 @@ class CarComponent extends Component {
                             serviceStartDate : res.data[0].serviceStartDate ,
                             serviceEndDate : res.data[0].serviceEndDate,
                             filename : res.data[0].images[0] , 
-
+                            carCity : res.data[0].carCity
                         })
                     }else{
 
@@ -124,6 +125,9 @@ class CarComponent extends Component {
         if(this.state.carName === '' ){
             this.setState({ updateCarError : "Please enter Car Name"})
             return ;
+        }
+        if(this.state.carCity === ''){
+        	this.setState({ updateCarError : "Please enter car city"})
         }
         if(this.state.occupancy === '' ){
             this.setState({ updateCarError : "Please select number of occupants"})
@@ -174,7 +178,7 @@ class CarComponent extends Component {
             dailyRentalValue : this.state.dailyRentalValue,
             serviceStartDate : this.state.serviceStartDate  ,
             serviceEndDate : this.state.serviceEndDate ,
-
+            carCity : this.state.carCity
         }
         this.setState({ updateCarError : '' , carUpdateLoading : true})
 
@@ -371,6 +375,15 @@ class CarComponent extends Component {
                                 })
                             }} aria-describedby="basic-addon1"   />
                             <div className="UpdatedDate"></div>
+                        </div>
+
+                        <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
+                            <label htmlFor="carCity">Car City</label>
+                            <input value={this.state.carCity}  className="form-control sharpCorner" onChange={(e) => {
+                                this.setState({
+                                	carCity : e.target.value
+                                })
+                            }} id="carCity" type="text"  aria-describedby="basic-addon1"   />
                         </div>
 
 

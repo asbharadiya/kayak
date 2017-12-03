@@ -15,7 +15,8 @@ var carSchema = new mongoose.Schema({
     updatedDate : Date,
     is_deleted : Boolean,
     availability : [{ availabilityDate : Date, availableCars : Number }],
-    images : [String]
+    images : [String],
+    carCity : String
 })
 
 carSchema.plugin(mongoosePaginate);
