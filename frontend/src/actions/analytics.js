@@ -1,5 +1,5 @@
 import * as api from '../api/analytics';
-
+import * as userActivity from './trackUserActivity';
 
 export function trackClick(payload) {
 	return function(dispatch) {
@@ -7,4 +7,10 @@ export function trackClick(payload) {
          console.log('tracking failed');
       })
 	};
+}
+
+export function trackUserActivity(page) {
+	return function(dispatch) {
+		return userActivity.logPageChange(page);
+	}
 }

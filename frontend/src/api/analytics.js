@@ -18,4 +18,4 @@ export const trackClick = (payload) =>
 		return res;
 	}).catch(error => {
         return error;
-    });
+  });
