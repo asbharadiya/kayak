@@ -10,31 +10,38 @@ class HotelCheckoutSummary extends Component {
 
 	constructor(props){
 		super(props) ;
-		var checkInDate = moment(this.props.queryParams.checkInDate, 'MM-DD-YYYY');
-		var checkOutDate = moment(this.props.queryParams.checkOutDate, 'MM-DD-YYYY');
+		
 		this.state = {
 			baseFare : 0,
 			tax : 0 ,
-			totalDays: checkOutDate.diff(checkInDate,'days')+1,
+			totalDays: 0,
 			totalBaseFare : 0 ,
 			total : 0
 		}
 	}
 
 	componentDidMount(){
-		{this.props.details.hotelRooms.map((room, key) => {
+		console.log("Lola") ; 
+        var serviceDays = ((new Date(this.props.queryParams.endDate)- new Date(this.props.queryParams.startDate))/(1000*60*60*24))+1 ;
+        {this.props.details.hotelRooms.map((room, key) => {
+            console.log(room.roomType , '  -  ' ,  this.props.queryParams.roomType) ;
+
 			if(room.roomType === this.props.queryParams.roomType) {
+                console.log("Room Info " , room.priceTotal , serviceDays ) ; 
 				this.setState({
 					baseFare: room.priceTotal,
-					totalBaseFare: this.state.totalDays * room.priceTotal,
-					total: this.state.totalDays * room.priceTotal
+					totalBaseFare: serviceDays * room.priceTotal,
+					total: serviceDays * room.priceTotal ,
+                    totalDays : serviceDays 
 				}, function() {
-						// this.props.updateTotal(this.state.totalBaseFare);
+						this.props.updateTotal(this.state.total);
 					})
 				}
 			}
 		)}
 	}
+
+  
 
 
 	render() {
