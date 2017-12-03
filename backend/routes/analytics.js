@@ -9,13 +9,22 @@ function trackClick(req,res){
 	} else {
 		req.body.user = 'anonymous';
 	}
-	kafka.make_request(topic_name,'trackClick', req.body ,function(err,result){
-        if(err) {
-            return res.status(500).json({status:500,statusText:"Internal server error"});
-        } else {
-            return res.status(result.code).json({status:result.code,statusText:result.message});
-        }
-    });
+	getFormattedDate(function(dateTime) {
+		req.body.time = dateTime;
+		kafka.make_request(topic_name,'trackClick', req.body ,function(err,result){
+					if(err) {
+							return res.status(500).json({status:500,statusText:"Internal server error"});
+					} else {
+							return res.status(result.code).json({status:result.code,statusText:result.message});
+					}
+			});
+	})
+}
+
+function getFormattedDate(callback) {
+    var date = new Date();
+    var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    callback(str);
 }
 
 
