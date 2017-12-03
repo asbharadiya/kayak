@@ -1,8 +1,9 @@
 import * as api from '../api/bills';
 
-export function getAllBills() {
+export function getAllBills(category , value ) {
+	console.log("Actions called ") ; 
 	return function(dispatch) {
-		return api.getAllBills(function(error , response){
+		return api.getAllBills(category , value , function(error , response){
 			if(error){
 				dispatch({type: "GET_ALL_BILL_FAILURE" });
 			} else {
