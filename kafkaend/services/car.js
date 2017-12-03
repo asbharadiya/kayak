@@ -3,8 +3,8 @@ var ObjectID = require('mongodb').ObjectID;
 var carModel = require('../models/car.js');
 
 //Redis
-var redisClient = require('redis').createClient;
-var redis = redisClient(6379, 'localhost');
+/*var redisClient = require('redis').createClient;
+var redis = redisClient(6379, 'localhost');*/
 
 
 function addCar(msg, callback){

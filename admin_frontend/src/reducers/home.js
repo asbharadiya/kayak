@@ -15,12 +15,17 @@ const reducer = (state = initialState, action) => {
         	
         	var orderByTypeStr = JSON.stringify(action.payload.revenueByType);
         	orderByTypeStr = orderByTypeStr.replace(/_id/g, 'name');
-        	orderByTypeStr = orderByTypeStr.replace(/totalAmount/g, 'value');
+        	orderByTypeStr = orderByTypeStr.replace(/count/g, 'value');
         	var orderByTypeObj = JSON.parse(orderByTypeStr);
         	
         	var userCount = [];
         	userCount.push({name: "User Registred", value: action.payload.userCount});
         	userCount.push({name: "Visitors", value: action.payload.userCount*2});
+        	
+        	var listingCount = [];
+        	listingCount.push({name: "Hotels", value: action.payload.hotelCount});
+        	listingCount.push({name: "Cars", value: action.payload.carCount});
+        	listingCount.push({name: "Flights", value: action.payload.flightCount});
         	
             return {
                 ...state,
@@ -28,7 +33,8 @@ const reducer = (state = initialState, action) => {
                 orderByType : orderByTypeObj,
                 totalRevenue : totalRevenue,
                 totalOrders : totalOrders,
-                userCount : userCount
+                userCount : userCount,
+                listingCount : listingCount
             };
         case "GET_REVENUEBYCITY_SUCCESS" :
 
@@ -43,8 +49,8 @@ const reducer = (state = initialState, action) => {
 	      		revenueByCity : revenueByCityObj
 	    	};
         case "GET_REVENUEBYTOPCMPNY_SUCCESS" :
-        	var revenueYrObj, revenueByTopCmpnyMonthObj;
-        	if(action.payload && action.payload.revenueYr){
+        	var revenueYrObj=action.payload.revenueYr, revenueByTopCmpnyMonthObj=action.payload.revenueMonth;
+        	/*if(action.payload && action.payload.revenueYr){
 	        	var revenueYrStr = JSON.stringify(action.payload.revenueYr);
 	        	revenueYrStr = revenueYrStr.replace(/_id/g, 'name');
 	        	revenueYrObj = JSON.parse(revenueYrStr);
@@ -53,7 +59,21 @@ const reducer = (state = initialState, action) => {
 	        	var revenueByTopCmpnyMonthStr = JSON.stringify(action.payload.revenueMonth);
 	        	revenueByTopCmpnyMonthStr = revenueByTopCmpnyMonthStr.replace(/_id/g, 'name');
 	        	revenueByTopCmpnyMonthObj = JSON.parse(revenueByTopCmpnyMonthStr);
+        	}*/
+        	
+        	for(var i=0; i<revenueYrObj.length; i++){
+        		if(revenueYrObj[i].listingHotelName.length>0){
+        			console.log(revenueYrObj[i].listingHotelName[0].hotelName);
+        			revenueYrObj[i].name = revenueYrObj[i].listingHotelName[0].hotelName;
+        		} else if(revenueYrObj[i].listingCarName.length>0){
+        			console.log(revenueYrObj[i].listingCarName);
+        			revenueYrObj[i].name = revenueYrObj[i].listingCarName[0].carName;
+        		} else if(revenueYrObj[i].listingFlightName.length>0){
+        			console.log(revenueYrObj[i].listingFlightName);
+        			revenueYrObj[i].name = revenueYrObj[i].listingFlightName[0].airline;
+        		}
         	}
+        	
 	    	return {
 	      		...state,
 	      		revenueByTopCmpny : revenueYrObj,

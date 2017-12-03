@@ -18,6 +18,7 @@ class Home extends Component {
 			revenueByTopCmpny : [],
 			revenueByTopCmpnyMonth : [],
 			userCount : [],
+			listingCount : [],
 			pieData : [{name: 'Cars', value: 2400}, {name: 'Hotels', value: 4567},
                 {name: 'Flights', value: 1398}],
             lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800}, 
@@ -103,6 +104,11 @@ class Home extends Component {
 	                </div>
 	            </div>
 	        </div>
+		   		 <PieChart width={375} height={400}>
+					<text x={200} y={200} dy={8} textAnchor="middle" fill="#f46b42">Listings</text>
+			        <Pie data={this.props.listingCount} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#f46b42" label/>
+			        <Tooltip/>
+			   </PieChart>
 	    		<PieChart width={375} height={400}>
 	    			<text x={200} y={200} dy={8} textAnchor="middle" fill="#8884d8">Revenue</text>
 		            <Pie data={this.props.revenueByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#8884d8" label/>
@@ -113,11 +119,6 @@ class Home extends Component {
 		            <Pie data={this.props.orderByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" label/>
 		            <Tooltip/>
 	           </PieChart>
-		   		<PieChart width={375} height={400}>
-					<text x={200} y={200} dy={8} textAnchor="middle" fill="#f46b42">Users</text>
-			        <Pie data={this.props.userCount} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#f46b42" label/>
-			        <Tooltip/>
-			   </PieChart>
 			   <LineChart width={580} height={300} data={this.props.revenueByTopCmpny} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 				   <XAxis dataKey="name">
 		       		<Label value="Top 10 Revenue Generating Company in last year" offset={0} position="insideBottom" />
@@ -171,7 +172,8 @@ function mapStateToProps(state) {
     	revenueByCity : state.homeReducer.revenueByCity,
     	revenueByTopCmpny : state.homeReducer.revenueByTopCmpny,
     	revenueByTopCmpnyMonth : state.homeReducer.revenueByTopCmpnyMonth,
-    	userCount : state.homeReducer.userCount
+    	userCount : state.homeReducer.userCount,
+    	listingCount : state.homeReducer.listingCount
     };
 }
 
