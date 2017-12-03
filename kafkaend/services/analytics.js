@@ -24,9 +24,8 @@ function trackClick(msg, callback) {
   });
   res.code = 200  ;
   res.message = "Success";
-  analyze.run(function() {
-    callback(null , res);
-  });
+  analyze.run();
+  callback(null , res)
 }
 
 function getRevenueByType(msg, callback){
