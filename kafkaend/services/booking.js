@@ -3,6 +3,8 @@ var validator = require('validator');
 var bookingModel = require('../models/booking.js');
 var billingModel = require('../models/billing.js');
 var userModel = require('../models/authUsers.js');
+var carModel = require('../models/car.js');
+var creditCardModel = require('../models/creditCard.js')
 
 function getBills(msg, callback){
     var res = {};

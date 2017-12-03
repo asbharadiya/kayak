@@ -4,8 +4,8 @@ export default {
     listings: {
         total: 0,
         docs: [],
-        bookingSuccess: false
     },
     userUpdateSuccess:null,
-    profile: []
+    profile: [] ,
+    bookingSuccess: null
 }
