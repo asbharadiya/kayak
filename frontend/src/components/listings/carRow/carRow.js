@@ -4,7 +4,9 @@ import Rater from 'react-rater' ;
 import './carRow.css';
 
 class CarRow extends Component {
+
     render() {
+        console.log(this.props.data)
         return (
             <div className="cars-row">
                 <div className="info-section">
