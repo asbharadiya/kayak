@@ -14,6 +14,7 @@ import * as flightActions from '../../actions/flight';
 import * as hotelActions from '../../actions/hotel';
 import * as utilActions from '../../actions/util';
 import AuthModal from '../authModal/authModal';
+import * as analytics from '../../actions/analytics';
 
 class Listings extends Component {
 
@@ -28,6 +29,11 @@ class Listings extends Component {
         this.loadPage = this.loadPage.bind(this);
         this.applyFilters = this.applyFilters.bind(this);
         this.onBookClick = this.onBookClick.bind(this);
+    }
+
+    trackClick(click, page) {
+        var payload = {'click' : click, 'page' : page};
+        this.props.trackClick(payload);
     }
 
     closeAuthModal(){
@@ -46,10 +52,13 @@ class Listings extends Component {
 
     loadPage(queryParams,filters){
         if(this.state.category === 'cars'){
+            this.trackClick('cars-filters', '/cars/listings')
             this.props.getAllCars(queryParams,filters) ;
         } else if(this.state.category === 'flights') {
+            this.trackClick('flights-filters', '/flights/listings')
             this.props.getAllFlights(queryParams,filters);
         } else {
+            this.trackClick('hotels-filters', '/hotels/listings')
             this.props.getAllHotels(queryParams,filters);
         }
     }
@@ -114,7 +123,8 @@ function mapDispatchToProps(dispatch) {
         getAllCars : (queryParams,filters) => dispatch(carActions.getAllCars(queryParams,filters)),
         getAllFlights : (queryParams,filters) => dispatch(flightActions.getAllFlights(queryParams,filters)),
         getAllHotels : (queryParams,filters) => dispatch(hotelActions.getAllHotels(queryParams,filters)),
-        clearListingsFromStore : () => dispatch(utilActions.clearListingsFromStore())
+        clearListingsFromStore : () => dispatch(utilActions.clearListingsFromStore()),
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
     }
 }
 

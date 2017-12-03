@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { NavLink, withRouter } from 'react-router-dom';
 import './paymentMethodComponents.css';
 import { Modal } from 'react-bootstrap';
-import * as profiles from '../../../../api/profile.js' 
+import * as profiles from '../../../../api/profile.js' ;
+import * as analytics from '../../../../actions/analytics';
+
 
 class PaymentMethodsComponents extends Component {
 
@@ -14,8 +17,14 @@ class PaymentMethodsComponents extends Component {
         }
     }
 
+
+  trackClick(click, page) {
+    var payload = {'click' : click, 'page' : page};
+    this.props.trackClick(payload);
+  }
+
    deleteCard(){
-       var _this = this ; 
+       var _this = this ;
        profiles.deleteCreditCard(this.props.card._id , function(err , response){
             if(!err){
                 response.then(res => {
@@ -39,21 +48,21 @@ class PaymentMethodsComponents extends Component {
 
 
     render() {
-            
-       
+
+
 
         return (
             <div className="row credit-card-div">
                 <div className="col-xs-11">
                     <span>#{this.props.number}</span>
                     <label>{this.props.card.cardNumber}</label>
-                </div>	
+                </div>
                 <div className="pull-right">
                     <a onClick={this.openDeleteCardModal.bind(this)}><i className="fa fa-minus-circle fa-lg" aria-hidden="true"></i></a>
                 </div>
 
                 <Modal show={this.state.openCardDeleteModal}   id="carModal" className="booking-detail-modal">
-    
+
                     <Modal.Body>
                         <div className="delete-card-confirm">
                             <h3>Are you sure to delete the Card ? </h3>
@@ -70,9 +79,9 @@ class PaymentMethodsComponents extends Component {
 
                     </Modal.Body>
 
-                   
-                        
-                  
+
+
+
 
                 </Modal>
             </div>
@@ -84,4 +93,13 @@ function mapStateToProps(state) {
     return {};
 }
 
-export default connect(mapStateToProps)(PaymentMethodsComponents);
+function mapDispatchToProps(dispatch) {
+    return {
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
+    };
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <PaymentMethodsComponents {...props}/>));
+function mapStateToProps(state) {
+    return {};
+}

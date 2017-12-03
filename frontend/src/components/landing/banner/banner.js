@@ -30,17 +30,17 @@ class Banner extends Component {
 	        		</div>
 	        		<div className="nav-section">
 	        			<ul className="nav">
-	  						<li className="nav-item" onClick={()=> {this.trackClick('hotels-search-banner', 'home')}}>
+	  						<li className="nav-item" onClick={()=> {this.trackClick('hotels-search-banner', '/home')}}>
 	  							<NavLink to="/hotels">
 	  								Hotels
 	  							</NavLink>
 	  						</li>
-	  						<li className="nav-item" onClick={()=> {this.trackClick('flights-search-banner', 'home')}}>
+	  						<li className="nav-item" onClick={()=> {this.trackClick('flights-search-banner', '/home')}}>
 	  							<NavLink to="/flights">
 	  								Flights
 	  							</NavLink>
 	  						</li>
-	  						<li className="nav-item" onClick={()=> {this.trackClick('cars-search-banner', 'home')}}>
+	  						<li className="nav-item" onClick={()=> {this.trackClick('cars-search-banner', '/home')}}>
 	  							<NavLink to="/cars">
 	  								Cars
 	  							</NavLink>

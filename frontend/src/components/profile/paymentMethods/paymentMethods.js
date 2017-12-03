@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { NavLink, withRouter } from 'react-router-dom';
 import './paymentMethods.css';
 import * as profileApis from '../../../api/profile';
 import PaymentMethodComponents from './paymentMethodComponents/paymentMethodComponents'
 import { Modal } from 'react-bootstrap';
+import * as analytics from '../../../actions/analytics';
+
 
 
 class PaymentMethods extends Component {
@@ -13,7 +16,7 @@ class PaymentMethods extends Component {
 
         this.state = {
             creditCards : [] ,
-            showCardModal : false , 
+            showCardModal : false ,
             cardNumber : '',
             nameOnCard : '',
             expiryDate : '',
@@ -21,15 +24,15 @@ class PaymentMethods extends Component {
 
         }
 
-        this.showCardModal = this.showCardModal.bind(this); 
+        this.showCardModal = this.showCardModal.bind(this);
         this.hideCardModal = this.hideCardModal.bind(this);
         this.saveCard = this.saveCard.bind(this);
         this.getCreditCardsForUser = this.getCreditCardsForUser.bind(this);
     }
 
     getCardNumber(e){
-        var cardNo = e.target.value ; 
-        
+        var cardNo = e.target.value ;
+
         if(e.target.value.length == 4 || e.target.value.length == 11 || e.target.value.length == 18 ){
             e.target.value += " - "
         }
@@ -41,7 +44,13 @@ class PaymentMethods extends Component {
                 cardNumber : e.target.value
             })
         }
-        
+
+    }
+
+
+    trackClick(click, page) {
+      var payload = {'click' : click, 'page' : page};
+      this.props.trackClick(payload);
     }
 
     getNameOnCard(e){
@@ -51,7 +60,7 @@ class PaymentMethods extends Component {
     }
 
     getExpiryDate(e){
-       
+
     if(e.target.value.length == 2 && e.target.value.indexOf("/") == -1){
             e.target.value += "/"
         }
@@ -72,11 +81,12 @@ class PaymentMethods extends Component {
                 cvv : e.target.value
             })
         }
-        
-        
+
+
     }
 
     showCardModal(){
+        this.trackClick('add-new-card', '/profile');
         this.setState({showCardModal : true  })
     }
 
@@ -85,7 +95,7 @@ class PaymentMethods extends Component {
     }
 
     saveCard(){
-        var _this = this ; 
+        var _this = this ;
         console.log(_this.state)
        if(_this.state.cardNumber == "" || _this.state.cvv == "" || _this.state.nameOnCard == ""  || _this.state.expiryDate == ""){
         alert("Invalid Card Details");
@@ -95,11 +105,11 @@ class PaymentMethods extends Component {
 
        var _obj = {
             cardNumber : _this.state.cardNumber ,
-            cvv : _this.state.cvv , 
+            cvv : _this.state.cvv ,
             nameOnCard : _this.state.nameOnCard ,
             expiryDate : _this.state.expiryDate
         }
-       
+
        profileApis.addCreditCard(_obj, function(err , response){
             if(!err){
                 response.then(res => {
@@ -113,7 +123,7 @@ class PaymentMethods extends Component {
                                         showCardModal : false
                                       })
 
-                        _this.getCreditCardsForUser() ; 
+                        _this.getCreditCardsForUser() ;
 
                     }
                 })
@@ -128,7 +138,7 @@ class PaymentMethods extends Component {
 
 
     getCreditCardsForUser(){
-        var _this = this ; 
+        var _this = this ;
         profileApis.getCreditCards(function(error, response){
             if(error){
 
@@ -147,11 +157,11 @@ class PaymentMethods extends Component {
     }
 
     render() {
-            
+
         var creditCardNo = 0 ;
         var creditCardsList = this.state.creditCards.map((card , key  ) => {
-            creditCardNo += 1 ; 
-            return   <PaymentMethodComponents  getCreditCardsForUser={this.getCreditCardsForUser}  card={card} key={key} number={creditCardNo}/> 
+            creditCardNo += 1 ;
+            return   <PaymentMethodComponents  getCreditCardsForUser={this.getCreditCardsForUser}  card={card} key={key} number={creditCardNo}/>
         })
 
         return (
@@ -164,14 +174,14 @@ class PaymentMethods extends Component {
                     </div>
 
 
-                    
+
 
 
 
                     <Modal show={this.state.showCardModal}   id="carModal" className="booking-detail-modal">
                         <Modal.Body>
                                <div className="row modal-main-div">
-                                    
+
                                          <div className="add-new-card-div col-cs-6">
                                                     <div className="form-group row">
                                                         <div className="col-xs-12">
@@ -195,7 +205,7 @@ class PaymentMethods extends Component {
                                                                    />
                                                         </div>
                                                     </div>
-                                                    
+
 
                                          </div>
                                          <div className="add-card-confirm-button-div col-cs-6">
@@ -211,13 +221,13 @@ class PaymentMethods extends Component {
                     </Modal>
 
 
-                    
+
                     <div >
                         {creditCardsList}
                     </div>
 
-                    
-                  
+
+
                 </div>
             </div>
         );
@@ -228,4 +238,13 @@ function mapStateToProps(state) {
     return {};
 }
 
-export default connect(mapStateToProps)(PaymentMethods);
+function mapDispatchToProps(dispatch) {
+    return {
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
+    };
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <PaymentMethods {...props}/>));
+function mapStateToProps(state) {
+    return {};
+}
