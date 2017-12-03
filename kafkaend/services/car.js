@@ -218,19 +218,14 @@ function getCarsForCustomer(msg, callback){
 
 
     var options = {
-        select: 'carType carName occupancy luggage dailyRentalValue images',
+        select: 'carType carName occupancy luggage dailyRentalValue images carQuantity',
         lean: true,
         page: msg.pageNo || 1,
         limit: 20
     };
 
 
-    redis.get(options.toString() , function(err , reply){
-        console.log(reply.toString());
-        if(!err){
-
-        }
-    })
+   
 
 
     carModel.paginate(query,options, function(err, result){
@@ -239,11 +234,8 @@ function getCarsForCustomer(msg, callback){
             res.message = "Fail to get all hotels from the server";
             callback(null , res) ;
         }else{
-            
-            redis.set(options.toString() , result.toString() , function () {
-                       console.log("Set")
-            });
-
+          	
+        	console.log(result) ; 
             res.code = 200  ;
             res.message = "Success";
             res.data = result;
