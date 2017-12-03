@@ -15,8 +15,8 @@ class CarsSearchForm extends Component {
         const queryParams = queryString.parse(this.props.location.search);
         this.state = {
             city:queryParams.city ? queryParams.city:'',
-            startDate:moment(),
-            endDate:moment(),
+            startDate:queryParams.startDate ? moment(queryParams.startDate):moment(),
+            endDate:queryParams.endDate ? moment(queryParams.endDate):moment(),
             citySearch:queryParams.city ? queryParams.city:''
         }
 		this.search = this.search.bind(this);
@@ -54,7 +54,7 @@ class CarsSearchForm extends Component {
             alert("Please select city!");
             return;
         }
-        this.props.history.push('/cars/listings?city='+this.state.city+'&startDate='+moment(this.state.startDate).format('MM-DD-YYYY')+'&endDate='+moment(this.state.startDate).format('MM-DD-YYYY'));
+        this.props.history.push('/cars/listings?city='+this.state.city+'&startDate='+moment(this.state.startDate).format('MM-DD-YYYY')+'&endDate='+moment(this.state.endDate).format('MM-DD-YYYY'));
 	}
 
   	render() {
