@@ -4,8 +4,9 @@ const headers = {
     'Accept': 'application/json'
 };
 
-export const getAllBills = (callback) => {
-    fetch(api+'/a/billings', {
+export const getAllBills = (category , value , callback) => {
+    console.log("API called " , category , value ) ; 
+    fetch(api+'/a/billings/'+category+"/"+value, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -16,6 +17,7 @@ export const getAllBills = (callback) => {
     }).then(res => {
         callback( null , res.json());
     }).catch(error => {
+        console.log(error)
         callback( error , {});
     });    
 } 

@@ -7,23 +7,91 @@ var carModel = require('../models/car.js');
 var creditCardModel = require('../models/creditCard.js')
 var flightModel = require('../models/flight.js');
 var hotelModel = require('../models/hotel.js');
+var moment  =  require('moment');
 
 function getBills(msg, callback){
+
+   
     var res = {};
-    billingModel.find(function(err, result){
-		if(err){
-			res.code = 500 ;
-			res.status  = 500 ;
-			res.message = "Fail to get all bills from the server"
-			callback(null , res) ;
-		}else{
-			res.code = 200  ;
-			res.status  = 200 ;
-			res.message = "Success"
-			res.data = result;
-			callback(null , res) ;
-		}
-	});
+
+    var objToFInd = {};
+
+    if(msg.category === 'date' || msg.category === "all"){
+         if(msg.category === 'date'){
+            var dateToFind = new Date(msg.param) ; 
+            
+            var sod = moment(dateToFind).startOf('day').utcOffset(0); ;
+            sod.set({hour:0,minute:0,second:0,millisecond:0})
+            sod.toISOString()
+            sod.format() ;
+
+
+            var eod = moment(dateToFind).add(1, 'days').utcOffset(0);
+            eod.set({hour:0,minute:0,second:0,millisecond:0})
+            eod.toISOString()
+            eod.format() ;
+
+            objToFInd.createdDate = { $gte: sod.toDate(),
+                                      $lt: eod.toDate()
+                                     } 
+          }
+
+          billingModel.find( objToFInd ,  function(err, result){
+              if(err){
+                res.code = 500 ;
+                res.status  = 500 ;
+                res.message = "Fail to get all bills from the server"
+                callback(null , res) ;
+              }else{
+                res.code = 200  ;
+                res.status  = 200 ;
+                res.message = "Success"
+                res.data = result;
+                callback(null , res) ;
+              }
+          });
+    }else if(msg.category == "month"){
+
+      console.log(msg.param)
+      var monthAndYearArray = msg.param.split(" ");
+      console.log(monthAndYearArray) ; 
+
+      billingModel.aggregate(  [
+                                 {
+                                   $project:
+                                     {
+                                       bookingId : "$bookingId",
+                                       listingType : "$listingType",
+                                       totalAmount : "$totalAmount",
+                                       createdDate: "$createdDate",
+                                       year: { $year: "$createdDate" },
+                                       month: { $month: "$createdDate" }
+                                     }
+                                 },
+                                 { $match : { "month" : parseInt(monthAndYearArray[0]), "year": parseInt(monthAndYearArray[1]) } }
+                               ]  ,  function(err, result){
+              if(err){
+                res.code = 500 ;
+                res.status  = 500 ;
+                res.message = "Fail to get all bills from the server"
+                callback(null , res) ;
+              }else{
+                console.log(result)
+                res.code = 200  ;
+                res.status  = 200 ;
+                res.message = "Success"
+                res.data = result;
+                callback(null , res) ;
+              }
+          });
+
+
+    }
+
+   
+ 
+
+
 }
 
 function getBillById(msg, callback){
