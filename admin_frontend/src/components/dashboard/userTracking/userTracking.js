@@ -86,7 +86,7 @@ class UserTracking extends Component {
 			       <CartesianGrid strokeDasharray="3 3"/>
 			       <Tooltip/>
 			       <Legend />
-			       <Bar dataKey="value" stackId="a" fill="#8884d8" />
+			       <Bar dataKey="value" stackId="a" fill="#82ca9d" />
 			    </BarChart>
 		        <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewCar} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
@@ -96,7 +96,7 @@ class UserTracking extends Component {
 			       <CartesianGrid strokeDasharray="3 3"/>
 			       <Tooltip/>
 			       <Legend />
-			       <Bar dataKey="value" stackId="a" fill="#8884d8" />
+			       <Bar dataKey="value" stackId="a" fill="#f46b42" />
 			    </BarChart>
 		        <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewHotel} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
@@ -116,11 +116,13 @@ class UserTracking extends Component {
 			       <CartesianGrid strokeDasharray="3 3"/>
 			       <Tooltip/>
 			       <Legend />
-			       <Bar dataKey="value" stackId="a" fill="#8884d8" />
+			       <Bar dataKey="value" stackId="a" fill="#82ca9d" />
 			      </BarChart>
 			      <BarChart width={600} height={600} data={this.props.userActivityTracking} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
-			       <XAxis dataKey="name"/>
-			       <YAxis/>
+			      <XAxis dataKey="name">
+		        		<Label value="User" offset={0} position="insideBottom" />
+		      		</XAxis>
+		           <YAxis label={{ value: 'Time spent on page (in seconds)', angle: -90, position: 'insideLeft', textAnchor: 'middle' }} />
 			       <CartesianGrid strokeDasharray="3 3"/>
 			       <Tooltip/>
 			       {this.state.bars}
