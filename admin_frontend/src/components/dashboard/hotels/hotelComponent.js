@@ -37,6 +37,7 @@ class HotelComponent extends Component {
         }
         this.amenitiesChanged = this.amenitiesChanged.bind(this) ;
         this.fetchHotelData = this.fetchHotelData.bind(this);
+        this.deleteHotel = this.deleteHotel.bind(this);
     }
 
     handleCityChange(val,item){
@@ -62,8 +63,7 @@ class HotelComponent extends Component {
     componentWillReceiveProps(newProps) {
         if( (newProps.hotelDeleteSuccess != null && newProps.hotelDeleteSuccess) ) {
             this.setState({
-                showHotelUpdateModal : false ,
-                updateHotelError : ''
+                openDeleteModal : false
             })
         }
         if(newProps.hotelUpdateSuccess != null && newProps.hotelUpdateSuccess){
@@ -200,6 +200,10 @@ class HotelComponent extends Component {
         this.props.updateHotelById(obj, this.props.hotel._id  , this.state.hotelFile);
     }
 
+    deleteHotel(){
+        this.props.deleteHotelById(this.props.hotel._id) ;
+    }
+
     render() {
         var options = this.props.cities;
         return (
@@ -209,7 +213,7 @@ class HotelComponent extends Component {
                         <div className="col-xs-3">
                             {this.props.hotel.hotelName}
                         </div>
-                        <div className="col-xs-4">
+                        <div className="col-xs-3">
                             {this.props.hotel.hotelAddress},
                             {this.props.hotel.hotelCity},
                             {this.props.hotel.hotelState},
@@ -219,17 +223,17 @@ class HotelComponent extends Component {
                             {this.props.hotel.hotelPhoneNumber},
                             {this.props.hotel.hotelEmail}
                         </div>
-                        <div className=" col-xs-1">
+                        <div className=" col-xs-2">
                             {this.props.hotel.hotelStar}
                         </div>
                     </div>
                     <div className="col-xs-2 buttonGroup">
-                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-2x edit-icon" aria-hidden="true" onClick={() => {
+                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 showHotelUpdateModal : true
                             })
                         }}></i></a>
-                        <a href="javascript:void(0)"><i className="fa fa-times fa-2x delete-icon" aria-hidden="true" onClick={() => {
+                        <a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 openDeleteModal : true
                             })
@@ -245,10 +249,7 @@ class HotelComponent extends Component {
                     </Modal.Body>
 
                     <Modal.Footer>
-                        <button className="btn btn-primary btn-kayak" onClick={() => {
-                            this.props.deleteHotelById(this.props.hotel._id)
-                            this.setState({openDeleteModal : false})
-                        }}>YES</button>
+                        <button className="btn btn-primary btn-kayak"  onClick={this.deleteHotel} >YES</button>
                         <button className="btn btn-default btn-kayak btn-kayak-default" onClick={() => {
                             this.setState({openDeleteModal : false})
                         }}>NO</button>
@@ -563,6 +564,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         hotelUpdateSuccess : state.hotelsReducer.hotelUpdateSuccess,
+        hotelDeleteSuccess : state.hotelsReducer.hotelDeleteSuccess,
         currentHotelToUpdate : state.hotelsReducer.currentHotelToUpdate,
         cities:state.citiesReducer.cities
     };

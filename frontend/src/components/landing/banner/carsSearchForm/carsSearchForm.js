@@ -15,8 +15,8 @@ class CarsSearchForm extends Component {
         const queryParams = queryString.parse(this.props.location.search);
         this.state = {
             city:queryParams.city ? queryParams.city:'',
-            startDate:queryParams.startDate ? moment(queryParams.startDate):moment(),
-            endDate:queryParams.endDate ? moment(queryParams.endDate):moment(),
+            startDate:queryParams.startDate ? moment(queryParams.startDate,"MM-DD-YYYY"):moment(),
+            endDate:queryParams.endDate ? moment(queryParams.endDate,"MM-DD-YYYY"):moment(),
             citySearch:queryParams.city ? queryParams.city:''
         }
 		this.search = this.search.bind(this);

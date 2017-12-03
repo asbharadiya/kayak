@@ -16,7 +16,7 @@ class FlightsSearchForm extends Component {
         this.state = {
             source:queryParams.source ? queryParams.source:'',
             dest:queryParams.dest ? queryParams.dest:'',
-            date:queryParams.date ? moment(queryParams.date):moment(),
+            date:queryParams.date ? moment(queryParams.date,"MM-DD-YYYY"):moment(),
             cabin:queryParams.cabin ? queryParams.cabin:'Economy',
             travelers:queryParams.travelers ? queryParams.travelers:1,
             sourceSearch:queryParams.source ? queryParams.source:'',
@@ -65,9 +65,9 @@ class FlightsSearchForm extends Component {
         });
     }
 
-    handleTravelersChange(travelers){
+    handleTravelersChange(e){
         this.setState({
-            travelers: travelers
+            travelers: e.target.value
         });
     }
 

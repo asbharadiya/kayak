@@ -241,9 +241,9 @@ class CarComponent extends Component {
                     </div>
                     <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-2x edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
+                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
 
-                        <a href="javascript:void(0)"><i className="fa fa-times fa-2x delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
+                        <a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
 
                     </div>
 
