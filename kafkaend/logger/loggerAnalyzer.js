@@ -30,14 +30,21 @@ function processClickPerPage(lineObj, callback) {
 function processListingView(lineObj) {
   listingName = lineObj.message.name
   listingName= listingName.replace(/ /g,"_");
-  console.log(listingName);
-  if(results.viewsPerListing.cars[listingName]) {
-    results.viewsPerListing.cars[listingName].push({'timestamp' : lineObj.message.time});
-  } else {
-    results.viewsPerListing.cars[listingName] = [];
-    results.viewsPerListing.cars[listingName].push({'timestamp' : lineObj.message.time});
+  if(lineObj.message.category === 'car') {
+    if(results.viewsPerListing.cars[listingName]) {
+      results.viewsPerListing.cars[listingName].push({'timestamp' : lineObj.message.time});
+    } else {
+      results.viewsPerListing.cars[listingName] = [];
+      results.viewsPerListing.cars[listingName].push({'timestamp' : lineObj.message.time});
+    }
+  } else if(lineObj.message.category === 'hotel') {
+    if(results.viewsPerListing.hotels[listingName]) {
+      results.viewsPerListing.hotels[listingName].push({'timestamp' : lineObj.message.time});
+    } else {
+      results.viewsPerListing.hotels[listingName] = [];
+      results.viewsPerListing.hotels[listingName].push({'timestamp' : lineObj.message.time});
+    }
   }
-
 }
 
 function readEachLine(line, callback) {
@@ -61,6 +68,9 @@ function run(callback) {
     },
     viewsPerListing: {
       cars : {
+
+      },
+      hotels : {
 
       }
     }

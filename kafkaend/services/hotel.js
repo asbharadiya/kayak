@@ -2,6 +2,7 @@ var mongo = require('./mongo');
 var validator = require('validator');
 var ObjectID = require('mongodb').ObjectID;
 var hotelModel = require('../models/hotel.js');
+var analytics = require('./analytics');
 const moment = require('moment');
 
 function addHotel(msg, callback){
@@ -57,7 +58,7 @@ function addHotel(msg, callback){
 function getHotels(msg, callback){
 	var res = {};
 	hotelModel.find({ is_deleted : false}, function(err, result){
-		console.log(result) ; 
+		console.log(result) ;
 		if(err){
 			res.code = 500  ;
 			res.status  = 500 ;
@@ -195,11 +196,11 @@ function getHotelsForCustomer(msg, callback){
 	console.log(msg.queryParams);
 
 		var query = {
-			
+
 			hotelCity: msg.queryParams.city,
 			hotelStar: {"$lte": msg.queryParams.rating || 5},
 			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
-			
+
 
 			is_deleted : false,
 			// availability: {
@@ -308,6 +309,7 @@ function getHotelsForCustomer(msg, callback){
 			res.code = 200  ;
 			res.message = "Success";
 			res.data = result;
+			analytics.trackHotelPageViews(result);
 			callback(null , res) ;
 		}
 	});

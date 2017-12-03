@@ -29,17 +29,34 @@ function trackClick(msg, callback) {
 }
 
 function trackCarPageViews(cars) {
-  console.log('getting into tracking');
   cars.docs.forEach(function(entry) {
     var car = {};
     car.id = entry._id;
     car.name = entry.carName;
     car.type = 'listingView';
+    car.category = 'car';
     getFormattedDate(function(dateTime) {
   		car.time = dateTime;
       logger.log({
         level: 'info',
         message: car
+      });
+    });
+  });
+}
+
+function trackHotelPageViews(hotels) {
+  hotels.docs.forEach(function(entry) {
+    var hotel = {};
+    hotel.id = entry._id;
+    hotel.name = entry.hotelName;
+    hotel.type = 'listingView';
+    hotel.category = 'hotel';
+    getFormattedDate(function(dateTime) {
+  		hotel.time = dateTime;
+      logger.log({
+        level: 'info',
+        message: hotel
       });
     });
   });
@@ -178,4 +195,5 @@ exports.getRevenueByCity = getRevenueByCity;
 exports.getRevenueByTopCmpny = getRevenueByTopCmpny;
 exports.trackClick = trackClick;
 exports.trackCarPageViews = trackCarPageViews;
+exports.trackHotelPageViews = trackHotelPageViews;
 exports.getUserAnalytics = getUserAnalytics;
