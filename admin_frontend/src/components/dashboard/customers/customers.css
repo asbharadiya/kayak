@@ -1,0 +1,8 @@
+.module-content .search-div{
+	margin-bottom: 30px ;
+	margin-top: 20px
+}
+
+.module-content .search-div input{
+	border: 2px solid darkgray;
+}

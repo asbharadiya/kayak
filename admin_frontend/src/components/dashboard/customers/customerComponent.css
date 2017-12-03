@@ -1,0 +1,9 @@
+.profileImage{
+	height: 50px;
+    width: 50px;
+    border-radius: 50%
+}
+
+.customer-content{
+	padding-top: 12px
+}
