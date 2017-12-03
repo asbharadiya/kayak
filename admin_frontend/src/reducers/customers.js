@@ -5,16 +5,24 @@ const reducer = (state = initialState, action) => {
 	    case "GET_ALL_CUSTOMER_SUCCESS" :  
 	      	return {
 	      		...state,
-	        	allCustomers : action.payload
+	        	allCustomers : action.payload,
+                customerDeleteSuccess:null
 	    	};
+        case "GET_ALL_CUSTOMER_FAILURE" :
+            return {
+                ...state,
+                allCustomers : [],
+                customerDeleteSuccess:null
+            };
 	    case "DELETE_CUSTOMER_SUCCESS" :  
 	      	return {
 	      		...state,
-	        	allCustomers : action.payload
+                customerDeleteSuccess : true
 	    	};
 	    case "DELETE_CUSTOMER_FAILURE" :  
 	      	return {
-	      		...state
+	      		...state,
+                customerDeleteSuccess:false
 	    	};
 	    default : 
 	      	return state;

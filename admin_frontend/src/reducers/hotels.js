@@ -28,7 +28,6 @@ const reducer = (state = initialState, action) => {
 	    case "DELETE_HOTEL_SUCCESS" :  
 	      	return {
 	      		...state,
-	        	allHotels : action.payload,
 	        	hotelAddSuccess : null,
                 hotelUpdateSuccess : null,
                 hotelDeleteSuccess : true

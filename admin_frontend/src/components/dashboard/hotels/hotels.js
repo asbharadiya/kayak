@@ -491,13 +491,13 @@ class Hotels extends Component {
 							 <div className="col-xs-3">
 								 <b>Hotel Name</b>
 							 </div>
-							 <div className="col-xs-4">
+							 <div className="col-xs-3">
 								 <b>Address</b>
 							 </div>
 							 <div className="col-xs-4">
 								 <b>Contact Info</b>
 							 </div>
-							 <div className="col-xs-1">
+							 <div className="col-xs-2">
 								 <b>Rating</b>
 							 </div>
 						 </div>
