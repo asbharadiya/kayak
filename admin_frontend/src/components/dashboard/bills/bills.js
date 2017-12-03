@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import './bills.css';
-import {getAllBills } from '../../../actions/bills'
+import {getAllBills } from '../../../actions/bills';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
-import BillComponent  from './billComponent'
-import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
-
-//Loading
-import Loading from 'react-loading-spinner';
+import BillComponent  from './billComponent';
 
 class Bills extends Component {
 	constructor(props){
@@ -33,7 +28,7 @@ class Bills extends Component {
 
 	render() {
 		return (
-    		<div className="row bill-content">
+    		<div className="row module-content">
 				 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
 					 <div className="row listHeader">
 						 <div className="col-md-12 col-sm-12 col-lg-12 col-xs-12 dataDiv">

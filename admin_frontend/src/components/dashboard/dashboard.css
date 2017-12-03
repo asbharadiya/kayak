@@ -10,3 +10,95 @@
 .dashboard-page-wrapper .page-content .inner-page-content {
 	padding: 100px 40px 0px 40px;
 }
+
+.modal-dialog {
+	top: 15px;
+	bottom: 15px;
+	margin: 0px auto;
+	left: 0px;
+	right: 0px;
+	position: absolute;
+}
+
+.modal-content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.modal-body {
+	overflow-y: auto;
+	flex: 1;
+}
+
+.modal-footer {
+	flex: none;
+}
+
+.deleteModal .modal-dialog {
+	position: relative;
+}
+
+.module-content{
+	margin-top: 15px
+}
+
+.listHeader{
+	border-bottom: 1px solid #F0F0F0;
+	margin: 0px;
+	margin-top: 15px ;
+	text-align: left;
+}
+
+.radio-no{
+	margin-right: 40px
+}
+
+.singleComponent .mainRowDiv{
+	border-bottom: 1px solid #F0F0F0;
+	margin: 0px;
+    padding: 15px 0px;
+}
+
+.singleComponent .mainRowDiv  .buttonGroup a {
+    outline: none;
+}
+
+.singleComponent .mainRowDiv  .buttonGroup a i {
+	outline: none;
+}
+
+.singleComponent .mainRowDiv  .buttonGroup .edit-icon {
+	margin-right: 15px;
+}
+
+.singleComponent .mainRowDiv  .buttonGroup .delete-icon {
+
+}
+
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.image-preview-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+
+.pointer {
+    cursor: pointer;
+}

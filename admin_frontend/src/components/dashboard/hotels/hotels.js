@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './hotels.css';
-import {addHotel , getAllHotels } from '../../../actions/hotels'
+import {addHotel , getAllHotels } from '../../../actions/hotels';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
-import HotelComponent  from './hotelComponent'
+import HotelComponent  from './hotelComponent';
+import Autocomplete from 'react-autocomplete';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 
 //Loading
@@ -33,12 +34,27 @@ class Hotels extends Component {
 			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}],
 	        hotelFile : '' ,
 	        filename : '',
-	        amenities : []
+	        amenities : [],
+            citySearch:''
 		}
 
 		this.amenitiesChanged = this.amenitiesChanged.bind(this) ; 
 
 	}
+
+    handleCityChange(val,item){
+        this.setState({
+            citySearch:item.city+', '+item.state,
+            hotelCity:item.city+', '+item.state
+        });
+    }
+
+    handleCitySearchChange(e,val){
+        this.setState({
+            citySearch: val,
+            hotelCity:''
+        });
+    }
 
 	amenitiesChanged(newAmentieis){
 		this.setState({
@@ -70,7 +86,8 @@ class Hotels extends Component {
 			hotelRooms:[{ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0}],
             hotelFile : '' ,
             filename : '',
-            amenities : []
+            amenities : [],
+            citySearch:''
 		});
       	this.props.getAllHotels();
       }
@@ -165,63 +182,84 @@ class Hotels extends Component {
    	}
 
 	render() {
+        var options = this.props.cities;
 		return (
-    		<div className="row hotel-content">
-				<div className="col-lg-12 col-sm-12 col-md-12 addButtonDiv text-right">
+    		<div className="row module-content">
+				<div className="col-lg-12 col-sm-12 col-md-12 text-right">
 					<button className="btn btn-primary btn-kayak" onClick={() => {
                         this.setState({showHotelModal : true})
                     }}>Add Hotel</button>
 				</div>
-				 <Modal show={this.state.showHotelModal} onHide={this.closeHotelModal} id="hotelModal" className="hotelModal">	
-					<Modal.Body className="hotelModalBody">
-					    <div >
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+				 <Modal show={this.state.showHotelModal} onHide={this.closeHotelModal} id="hotelModal">
+					<Modal.Body>
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="hotelname">Hotel Name</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input className="form-control" onChange={(e) => {
 					      			this.setState({
 					      				hotelName : e.target.value
 					      			})
 					      		}} id="hotelname" type="text"  aria-describedby="basic-addon1"   />
 					      	</div>
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="hoteladdress">Address</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input className="form-control" onChange={(e) => {
 					      			this.setState({
 					      				hotelAddress : e.target.value
 					      			})
 					      		}} id="hoteladdress" type="text"  aria-describedby="basic-addon1"   />
 					      	</div>
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="hotelCity">City</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
-					      			this.setState({
-					      				hotelCity : e.target.value
-					      			})
-					      		}} id="hotelCity" type="text"  aria-describedby="basic-addon1"   />
+					      		<Autocomplete
+                                    inputProps={{ className: 'form-control'}}
+                                    wrapperProps={{ className:'react-autocomplete' }}
+                                    wrapperStyle={{ position: 'relative', display: 'inline-block', width: '100%' }}
+                                    shouldItemRender={(item, value) =>
+                                        value.length > 0 ? (item.city+', '+item.state).toLowerCase().indexOf(value.toLowerCase()) > -1 : false
+                                    }
+                                    getItemValue={(item) => item.city+', '+item.state}
+                                    items={options}
+                                    renderItem={(item, isHighlighted) =>
+                                        <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`} key={item.rank}>
+                                            <p>{item.city}, {item.state}</p>
+                                        </div>
+                                    }
+                                    value={this.state.citySearch}
+                                    onChange={this.handleCitySearchChange.bind(this)}
+                                    onSelect={this.handleCityChange.bind(this)}
+                                    renderMenu={children => (
+                                        <div className="menu">
+                                            {children}
+                                        </div>
+                                    )}
+                                    selectOnBlur={true}
+                                />
 					      	</div>
 					      
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
-					      		<div className="col-md-6 nopadding">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
+                                <div className="row">
+					      		<div className="col-md-6">
 							      	<label htmlFor="hotelState">State</label>
-						      		<input className="form-control sharpCorner" onChange={(e) => {
+						      		<input className="form-control" onChange={(e) => {
 						      			this.setState({
 						      				hotelState : e.target.value
 						      			})
 						      		}} id="hotelState" type="text"  aria-describedby="basic-addon1"   />
 						        </div>
-						      	<div className="col-md-6 nopadding">	
+						      	<div className="col-md-6">
 					      			<label htmlFor="hotelZip">Zip</label>
-						      		<input className="form-control sharpCorner" onChange={(e) => {
+						      		<input className="form-control" onChange={(e) => {
 						      			this.setState({
 						      				hotelZip : e.target.value
 						      			})
 						      		}} id="hotelZip" type="text"  aria-describedby="basic-addon1"   />
 						      	</div>
+                                </div>
 						    </div>
 
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="hotelPhoneNumber">Phone Number</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input className="form-control" onChange={(e) => {
 					      			this.setState({
 					      				hotelPhoneNumber : e.target.value
 					      			})
@@ -230,16 +268,16 @@ class Hotels extends Component {
 					      	
 
 
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="hotelEmail">Email</label>
-					      		<input className="form-control sharpCorner" onChange={(e) => {
+					      		<input className="form-control" onChange={(e) => {
 					      			this.setState({
 					      				hotelEmail : e.target.value
 					      			})
 					      		}} id="hotelEmail" type="text"  aria-describedby="basic-addon1"   />
 					      	</div>
 
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="hotelEmail">Amenities</label>
 					      		<CheckboxGroup
                                     name="amenities"
@@ -247,31 +285,31 @@ class Hotels extends Component {
                                     onChange={this.amenitiesChanged} className="CheckboxGroup">
                                     <div className="row">
                                     	<div className="col-xs-4">
-                                    		<label className="labelCheckBox"><Checkbox value="Pool"/> Pool</label>
-                                    	</div>
-                                    	<div className="div-check-box col-xs-4">
-                                    		<label className="labelCheckBox"><Checkbox value="Bar"/> Bar</label>
-                                    	</div>
-                                    	<div className="div-check-box col-xs-4">
-                                    		<label className="labelCheckBox"><Checkbox value="Jacuzzi"/> Jacuzzi</label>
+                                    		<label><Checkbox value="Pool"/> Pool</label>
                                     	</div>
                                     	<div className="col-xs-4">
-                                    		<label className="labelCheckBox"><Checkbox value="Lunch"/> Lunch</label>
-                                    	</div>
-                                    	<div className="col-xs-4 div-check-box">
-                                    		<label className="labelCheckBox"><Checkbox value="Dinner"/> Dinner</label>
-                                    	</div>
-                                    	<div className="col-xs-4 div-check-box">
-                                    		<label className="labelCheckBox"><Checkbox value="Air-conditioner"/> A/C</label>
+                                    		<label><Checkbox value="Bar"/> Bar</label>
                                     	</div>
                                     	<div className="col-xs-4">
-                                    		<label className="labelCheckBox"><Checkbox value="Parking"/> Parking</label>
+                                    		<label><Checkbox value="Jacuzzi"/> Jacuzzi</label>
                                     	</div>
-                                    	<div className="col-xs-4 div-check-box">
-                                    		<label className="labelCheckBox"><Checkbox value="Wifi"/> Wifi</label>
+                                    	<div className="col-xs-4">
+                                    		<label><Checkbox value="Lunch"/> Lunch</label>
                                     	</div>
-                                    	<div className="col-xs-4 div-check-box">
-                                    		<label className="labelCheckBox"><Checkbox value="TV"/> TV</label>
+                                    	<div className="col-xs-4">
+                                    		<label><Checkbox value="Dinner"/> Dinner</label>
+                                    	</div>
+                                    	<div className="col-xs-4">
+                                    		<label><Checkbox value="Air-conditioner"/> A/C</label>
+                                    	</div>
+                                    	<div className="col-xs-4">
+                                    		<label><Checkbox value="Parking"/> Parking</label>
+                                    	</div>
+                                    	<div className="col-xs-4">
+                                    		<label><Checkbox value="Wifi"/> Wifi</label>
+                                    	</div>
+                                    	<div className="col-xs-4">
+                                    		<label><Checkbox value="TV"/> TV</label>
                                     	</div>
                                     </div>
                                     
@@ -280,14 +318,15 @@ class Hotels extends Component {
 
 
 
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
-					      	<div className="col-md-6 nopadding">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
+                                <div className="row">
+					      	<div className="col-md-6">
 					      		<label htmlFor="hotelStar">Star</label>
 					      		<select value={this.state.hotelStar}  onChange={(e) => {
 						      			this.setState({
 						      				hotelStar : e.target.value
 						      			})
-									}} className="form-control selectpicker" id="hotelStar">
+									}} className="form-control" id="hotelStar">
 									    <option className="selected disabled hidden">Select</option>
 										<option>1</option>
 										<option>2</option>
@@ -296,13 +335,13 @@ class Hotels extends Component {
 										<option>5</option>
 								  </select>
 								  </div>
-								  <div className="col-md-6 nopadding">
-						      		<label htmlFor="hotelRating">Overall rating</label>
+								  <div className="col-md-6">
+						      		<label htmlFor="hotelRating">Overall Rating</label>
 						      		<select value={this.state.hotelRating}  onChange={(e) => {
 						      			this.setState({
 						      				hotelRating : e.target.value
 						      			})
-									}} className="form-control selectpicker" id="hotelStar">
+									}} className="form-control" id="hotelStar">
 									    <option className="selected disabled hidden">Select</option>
 										<option>1</option>
 										<option>2</option>
@@ -311,8 +350,9 @@ class Hotels extends Component {
 										<option>5</option>
 								   </select>
 								   </div>
+                                </div>
 						    </div>
-						    <div className="image-preview form-group col-xs-offset-2 col-xs-8 ignorePadd">
+						    <div className="image-preview form-group col-xs-offset-2 col-xs-8">
 	                            <label htmlFor="hotelname">Upload</label>
 	                            <div className="input-group image-preview">
 	                                <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
@@ -341,111 +381,107 @@ class Hotels extends Component {
 						            </span>
 	                            </div>
 	                        </div>
-					      	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2 col-xs-8">
 					      		<label htmlFor="serviceAvailable">Service Start Date</label>
-					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+					      		<input className="form-control" id="serviceAvailable" type="date"  onChange={(e) => {
 					      				this.setState({
 					      					serviceStartDate : e.target.value
 					      				})
 					      		}} aria-describedby="basic-addon1"   />
 					      	</div>
-					      	<div className="form-group marginBottom15 col-xs-offset-2  col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2  col-xs-8">
 					      		<label htmlFor="serviceAvailable">Service End Date</label>
-					      		<input className="form-control  sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+					      		<input className="form-control" id="serviceAvailable" type="date"  onChange={(e) => {
 					      				this.setState({
 					      					serviceEndDate : e.target.value
 					      				})
 					      		}} aria-describedby="basic-addon1"   />
 					      	</div>
-					      	<div className="room-category-button form-group marginBottom15 col-xs-offset-2  col-xs-8 ignorePadd">
+					      	<div className="form-group col-xs-offset-2  col-xs-8">
 					      		
-					      		<button type="button" className="btn btn-info btn-default sharpCornerForInfoButton" onClick={() => {
+					      		<button type="button" className="btn btn-primary btn-kayak" onClick={() => {
 					      			var tempRooms = this.state.hotelRooms;
 					      			tempRooms.push({ roomType : "", priceTotal : 0, totalAvailable : 0, personPerRoom : 0});
 				      				this.setState({hotelRooms : tempRooms})
-				      			}}>Add More Room categories</button>
+				      			}}>Add More Room Categories</button>
 					      	</div>
 
 					      	{(this.state.hotelRooms && this.state.hotelRooms.length > 0) ? this.state.hotelRooms.map((eachHotel, index) => 
-							    <div className="clearBoth">  	
-					      			<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
-							      		<div className="col-md-6 nopadding">
-									      	<label htmlFor="roomType">Room Type</label>
-									      	<select value={this.state.roomType}  onChange={(e) => {
-									      		var tempRooms = this.state.hotelRooms;
-									      		tempRooms[index].roomType = e.target.value;
-							      				this.setState({hotelRooms : tempRooms});
-												}} className="form-control selectpicker" id="roomType">
-											    <option className="selected disabled hidden">Select</option>
-												<option>Standard</option>
-												<option>Premium</option>
-												<option>Conference</option>
-												<option>Honeymoon</option>
-										  </select>
-								        </div>
-								      	<div className="col-md-6 nopadding">	
-							      			<label htmlFor="personPerRoom">Max person per room</label>
-							      			<select value={this.state.personPerRoom}  onChange={(e) => {
-							      				var tempRooms = this.state.hotelRooms;
-									      		tempRooms[index].personPerRoom = e.target.value;
-							      				this.setState({hotelRooms : tempRooms});
-												}} className="form-control selectpicker" id="personPerRoom">
-											    <option className="selected disabled hidden">Select</option>
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-												<option>6</option>
-												<option>7</option>
-												<option>8</option>
-												<option>9</option>
-												<option>10</option>
-										  </select>
-								      	</div>
-								    </div>
-								    <div className="form-group marginBottom15 col-xs-offset-2  col-xs-8 ignorePadd">
-							      		<div className="col-md-6 nopadding">
-									      	<label htmlFor="priceTotal">Rent for one day</label>
-								      		<input className="form-control sharpCorner" onChange={(e) => {
-							      				var tempRooms = this.state.hotelRooms;
-									      		tempRooms[index].priceTotal = e.target.value;
-							      				this.setState({hotelRooms : tempRooms});
-								      		}} id="priceTotal" type="text"  aria-describedby="basic-addon1"   />
-								        </div>
-								      	<div className="col-md-6 nopadding">	
-							      			<label htmlFor="totalAvailable">Total Room Available</label>
-								      		<input className="form-control sharpCorner" onChange={(e) => {
-							      				var tempRooms = this.state.hotelRooms;
-									      		tempRooms[index].totalAvailable = e.target.value;
-							      				this.setState({hotelRooms : tempRooms});
-								      		}} id="totalAvailable" type="text"  aria-describedby="basic-addon1"   />
-								      	</div>
-								    </div>
+							    <div key={index}>
+                                    <div className="form-group col-xs-offset-2 col-xs-8">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label htmlFor="roomType">Room Type</label>
+                                                <select value={this.state.roomType}  onChange={(e) => {
+                                                    var tempRooms = this.state.hotelRooms;
+                                                    tempRooms[index].roomType = e.target.value;
+                                                    this.setState({hotelRooms : tempRooms});
+                                                }} className="form-control" id="roomType">
+                                                    <option className="selected disabled hidden">Select</option>
+                                                    <option>Standard</option>
+                                                    <option>Premium</option>
+                                                    <option>Conference</option>
+                                                    <option>Honeymoon</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label htmlFor="personPerRoom">Max Person Per Room</label>
+                                                <select value={this.state.personPerRoom}  onChange={(e) => {
+                                                    var tempRooms = this.state.hotelRooms;
+                                                    tempRooms[index].personPerRoom = e.target.value;
+                                                    this.setState({hotelRooms : tempRooms});
+                                                }} className="form-control" id="personPerRoom">
+                                                    <option className="selected disabled hidden">Select</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
+                                                    <option>9</option>
+                                                    <option>10</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-group col-xs-offset-2  col-xs-8">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <label htmlFor="priceTotal">Rent For One Day</label>
+                                                <input className="form-control" onChange={(e) => {
+                                                    var tempRooms = this.state.hotelRooms;
+                                                    tempRooms[index].priceTotal = e.target.value;
+                                                    this.setState({hotelRooms : tempRooms});
+                                                }} id="priceTotal" type="text"  aria-describedby="basic-addon1"   />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <label htmlFor="totalAvailable">Total Room Available</label>
+                                                <input className="form-control" onChange={(e) => {
+                                                    var tempRooms = this.state.hotelRooms;
+                                                    tempRooms[index].totalAvailable = e.target.value;
+                                                    this.setState({hotelRooms : tempRooms});
+                                                }} id="totalAvailable" type="text"  aria-describedby="basic-addon1"   />
+                                            </div>
+                                        </div>
+                                    </div>
 								</div>)
 					      	: null }
-					     </div>					      
 					   </Modal.Body>
-					   <Modal.Footer className="hotelModalFooter">
-                               	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">
-						      		<div className="col-sm-5 pull-right  text-right">
+					   <Modal.Footer>
+                               	<div className="form-group col-xs-offset-2 col-xs-8 text-right">
 						      			<Loading isLoading={this.state.hotelAddLoading} ></Loading>
-						      		</div>
 						      	</div>
-                               	<div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd hotelAddErrorText">
+                               	<div className="form-group col-xs-offset-2 col-xs-8 text-right error">
 					      			{this.state.addHotelError} 					      			
 					      		</div>
-						        <div className="form-group marginBottom15 col-xs-offset-2 col-xs-8 ignorePadd">						      		
-						      		<div className="col-sm-3  pull-right  text-right">
-						      			<button type="button" className="btn btn-default btn-kayak" onClick={this.addHotelServer.bind(this)} >Submit 
-						      			</button>
-
-						      		</div>
-						      		<div className="col-sm-9  pull-right  divForAddHotelConfirm ">
-						      					<button type="button" className="btn btn-default sharpCornerForInfoButton" onClick={() => {
-								      				this.setState({showHotelModal : false})
-								      			}}>Close</button>				      			
-						      		</div>
+						        <div className="form-group col-xs-offset-2 col-xs-8 text-right">
+                                    <button type="button" className="btn btn-default btn-kayak btn-kayak-default" onClick={() => {
+                                        this.setState({showHotelModal : false})
+                                    }}>Close</button>
+                                    <button type="button" className="btn btn-primary btn-kayak" onClick={this.addHotelServer.bind(this)} >Submit
+                                    </button>
 						      	</div>
                           </Modal.Footer>
 					 </Modal>
@@ -490,7 +526,8 @@ function mapStateToProps(state) {
         listOfHotels : state.hotelsReducer ? state.hotelsReducer.allHotels : null, 
         hotelAddSuccess : state.hotelsReducer ? state.hotelsReducer.hotelAddSuccess : null,
 		  hotelUpdateSuccess : state.hotelsReducer ? state.hotelsReducer.hotelUpdateSuccess : null,
-		  hotelDeleteSuccess : state.hotelsReducer ? state.hotelsReducer.hotelDeleteSuccess : null
+		  hotelDeleteSuccess : state.hotelsReducer ? state.hotelsReducer.hotelDeleteSuccess : null,
+        cities:state.citiesReducer.cities
     };
 }
 

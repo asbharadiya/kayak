@@ -5,6 +5,7 @@ import * as actions from '../../../actions/cars';
 import * as api from '../../../api/cars';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import Autocomplete from 'react-autocomplete';
 import Loading from 'react-loading-spinner';
 
 class CarComponent extends Component {
@@ -29,7 +30,8 @@ class CarComponent extends Component {
             showCarUpdateModal : false ,
             filename : '' , 
             carFile : '',
-            carCity : ''
+            carCity : '',
+            citySearch:''
 
         }
         this.openUpdateCar = this.openUpdateCar.bind(this);
@@ -39,6 +41,20 @@ class CarComponent extends Component {
         this.openDeleteCar = this.openDeleteCar.bind(this);
         this.closeDeleteCar = this.closeDeleteCar.bind(this);
         this.deleteCar = this.deleteCar.bind(this);
+    }
+
+    handleCityChange(val,item){
+        this.setState({
+            citySearch:item.city+', '+item.state,
+            carCity:item.city+', '+item.state
+        });
+    }
+
+    handleCitySearchChange(e,val){
+        this.setState({
+            citySearch: val,
+            carCity:''
+        });
     }
 
 
@@ -95,8 +111,9 @@ class CarComponent extends Component {
                             dailyRentalValue : res.data[0].dailyRentalValue,
                             serviceStartDate : res.data[0].serviceStartDate ,
                             serviceEndDate : res.data[0].serviceEndDate,
-                            filename : res.data[0].images[0] , 
-                            carCity : res.data[0].carCity
+                            //filename : res.data[0].images[0] ,
+                            carCity : res.data[0].carCity,
+                            citySearch:res.data[0].carCity
                         })
                     }else{
 
@@ -203,11 +220,11 @@ class CarComponent extends Component {
     }
 
     render() {
-        
+        var options = this.props.cities;
         return (
-            <div className="singleCarComponent">
+            <div className="singleComponent">
                 <div className="row mainRowDiv">
-                    <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9 dataDiv">
+                    <div className="col-md-9 col-sm-9 col-lg-9 col-xs-9">
                         <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
                             {this.props.car.carName}
                         </div>
@@ -224,36 +241,36 @@ class CarComponent extends Component {
                     </div>
                     <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-                        <a><i className="fa fa-pencil-square-o fa-2x updateFontAwesome" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
+                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-2x edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
 
-                        <a className="redIcon"><i className="fa fa-times fa-2x" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
+                        <a href="javascript:void(0)"><i className="fa fa-times fa-2x delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
 
                     </div>
 
                 </div>
 
-                <Modal show={this.state.openDeleteModal}  id="carModal" className="deleteCarModal">
+                <Modal show={this.state.openDeleteModal}  id="carModal" className="deleteModal">
 
                     <Modal.Body>
                         <b>Are you sure to delete {this.props.car.carName } ?  </b>
                     </Modal.Body>
 
-                    <Modal.Footer className="carDeleteFooter">
+                    <Modal.Footer>
                         <button className="btn btn-primary btn-kayak" onClick={this.deleteCar}>YES</button>
                         <button className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeDeleteCar}>NO</button>
                     </Modal.Footer>
 
                 </Modal>
 
-                <Modal show={this.state.showCarUpdateModal}  id="carModal" className="carModal" onEntered={this.fetchCarData}>
-                    <Modal.Body className="carModalBody">
+                <Modal show={this.state.showCarUpdateModal}  id="carModal" onEntered={this.fetchCarData}>
+                    <Modal.Body>
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="carType">Car Type</label>
                             <select value={this.state.carType}  onChange={(e) => {
                                 this.setState({
                                     carType : e.target.value
                                 })
-                            }} className="form-control selectpicker" id="carType">
+                            }} className="form-control" id="carType">
                                 <option  className="selected disabled hidden">Select</option>
                                 <optgroup label="All className">
                                     <option>Standard</option>
@@ -273,7 +290,7 @@ class CarComponent extends Component {
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="carname">Car Name</label>
-                            <input value={this.state.carName}  className="form-control sharpCorner" onChange={(e) => {
+                            <input value={this.state.carName}  className="form-control" onChange={(e) => {
                                 this.setState({
                                     carName : e.target.value
                                 })
@@ -333,7 +350,7 @@ class CarComponent extends Component {
                                 this.setState({
                                     occupancy : e.target.value
                                 })
-                            }}className="form-control selectpicker" id="carType">
+                            }}className="form-control" id="carType">
                                 <option  className="selected disabled hidden">No of Occupants</option>
                                 <optgroup label="No of occupants">
                                     <option>2</option>
@@ -348,8 +365,8 @@ class CarComponent extends Component {
                         </div>
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
-                            <label htmlFor="carid">No of Cars to add</label>
-                            <input className="form-control sharpCorner" value={this.state.carQuantity} id="carid" type="number"  onChange={(e) => {
+                            <label htmlFor="carid">No Of Cars To Add</label>
+                            <input className="form-control" value={this.state.carQuantity} id="carid" type="number"  onChange={(e) => {
                                 this.setState({
                                     carQuantity : e.target.value
                                 })
@@ -359,7 +376,7 @@ class CarComponent extends Component {
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="serviceAvailable">Service Start Date</label>
-                            <input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control value={this.state.serviceStartDate} sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+                            <input value={this.state.serviceStartDate ? this.state.serviceStartDate.substr(0,10) : this.state.serviceStartDate} className="form-control" id="serviceAvailable" type="date"  onChange={(e) => {
                                 this.setState({
                                     serviceStartDate : e.target.value
                                 })
@@ -369,7 +386,7 @@ class CarComponent extends Component {
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="serviceAvailable">Service End Date</label>
-                            <input  value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control value={this.state.serviceEndDate} sharpCorner" id="serviceAvailable" type="date"  onChange={(e) => {
+                            <input  value={this.state.serviceEndDate ? this.state.serviceEndDate.substr(0,10) : this.state.serviceEndDate} className="form-control" id="serviceAvailable" type="date"  onChange={(e) => {
                                 this.setState({
                                     serviceEndDate : e.target.value
                                 })
@@ -379,11 +396,30 @@ class CarComponent extends Component {
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="carCity">Car City</label>
-                            <input value={this.state.carCity}  className="form-control sharpCorner" onChange={(e) => {
-                                this.setState({
-                                	carCity : e.target.value
-                                })
-                            }} id="carCity" type="text"  aria-describedby="basic-addon1"   />
+                            <Autocomplete
+                                inputProps={{ className: 'form-control'}}
+                                wrapperProps={{ className:'react-autocomplete' }}
+                                wrapperStyle={{ position: 'relative', display: 'inline-block', width: '100%' }}
+                                shouldItemRender={(item, value) =>
+                                    value.length > 0 ? (item.city+', '+item.state).toLowerCase().indexOf(value.toLowerCase()) > -1 : false
+                                }
+                                getItemValue={(item) => item.city+', '+item.state}
+                                items={options}
+                                renderItem={(item, isHighlighted) =>
+                                    <div className={`item ${isHighlighted ? 'item-highlighted' : ''}`} key={item.rank}>
+                                        <p>{item.city}, {item.state}</p>
+                                    </div>
+                                }
+                                value={this.state.citySearch}
+                                onChange={this.handleCitySearchChange.bind(this)}
+                                onSelect={this.handleCityChange.bind(this)}
+                                renderMenu={children => (
+                                    <div className="menu">
+                                        {children}
+                                    </div>
+                                )}
+                                selectOnBlur={true}
+                            />
                         </div>
 
 
@@ -410,12 +446,12 @@ class CarComponent extends Component {
                         </div>
 
                     </Modal.Body>
-                    <Modal.Footer className="carModalFooter">
+                    <Modal.Footer>
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right">
                             <Loading isLoading={this.state.carUpdateLoading} ></Loading>
                         </div>
 
-                        <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 carAddErrorText">
+                        <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8 text-right error">
                             {this.state.updateCarError}
                             {this.state.updateErrorMessage}
                         </div>
@@ -449,7 +485,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         carUpdateSuccess : state.carsReducer.carUpdateSuccess,
-        carDeleteSuccess : state.carsReducer.carDeleteSuccess
+        carDeleteSuccess : state.carsReducer.carDeleteSuccess,
+        cities:state.citiesReducer.cities
     };
 }
 
