@@ -35,7 +35,7 @@ function getRevenueByType(msg, callback){
 function getRevenueByTopCmpny(msg, callback){
     var res = {};
     billingModel.aggregate([{ '$match': { 'createdDate': { $gte: new Date("2016-12-22T00:00:00.000Z"), $lt: new Date("2017-12-22T00:00:00.000Z")}}},
-    		{ $group: { _id: "$listingId", totalAmount: { $sum: "$totalAmount" }, count: { $sum: 1 } } }, 
+    		{ $group: { _id: "$listingId", totalAmount: { $sum: "$totalAmount" }, count: { $sum: 1 }, listingType: { "$first": "$listingType" } } }, 
     		{$sort: {totalAmount: -1}}], function(err, result){
         if(err){
             res.code = 500  ;
@@ -43,8 +43,8 @@ function getRevenueByTopCmpny(msg, callback){
             callback(null , res) ;
         }else{
         	billingModel.aggregate([{ '$match': { 'createdDate': { $gte: new Date("2017-11-22T00:00:00.000Z"), $lt: new Date("2017-12-22T00:00:00.000Z")}}},
-        		{ $group: { _id: "$listingId", totalAmount: { $sum: "$totalAmount" }, count: { $sum: 1 } } }, 
-        		{$sort: {totalAmount: -1}}], function(err, result1){
+        		{ $group: { _id: "$listingId", totalAmount: { $sum: "$totalAmount" }, count: { $sum: 1 }, listingType: { "$first": "$listingType" }, } }, 
+        		{$sort: {totalAmount: -1}}], function(err, result0){
         		 if(err){
     	            res.code = 500  ;
     	            res.message = "Fail to get data from the server"
@@ -54,38 +54,47 @@ function getRevenueByTopCmpny(msg, callback){
     	            res.message = "Success";
     	            res.data = {};
     	            res.data.revenueYr = result;
-    	            res.data.revenueMonth = result1;
-    	            callback(null , res) ;    	        	
+    	            res.data.revenueMonth = result0;
+    	            callback(null , res) ;
+
+    	        	/*var count = 0;
+    	        	while(count<result.length){
+    	        		var idToGet = new ObjectID("5a228e9cac41232ec4e8e590") ;
+    	        		if(result[count].listingType=="cars"){
+    	        			console.log("cars");
+    	            		flightModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result1){
+    	            			if(result1!=null){
+    	            				result[count].listingName = result1.airline;
+    	            				count++;
+    	            			}
+    	            		});
+    	        		} else if(result[count].listingType=="flights"){
+    	        			consoloe.log("flights");
+    	        			carModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result1){
+    	            			if(result1!=null){
+    	            				result[count].listingName = result1.carName;
+    	            				count++;
+    	            			}
+    	            		});            			
+    	            	} else if(result[count].listingType=="hotels"){
+    	            		console.log(count);
+    	            		hotelModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result1){
+        	            		console.log("pppppppp");
+    	            			if(result1!=null){
+    	            				result[count].listingName = result1.hotelName;
+    	            				count++;
+    	            			}
+    	            		});
+    	            	}
+    	        		if(count==(result.length-1) || count==11){
+    		                res.code = 200  ;
+    		                res.message = "Success";
+    		                res.data = result[0,10];
+    		                callback(null , res) ;
+    	        		}
+    	        	}*/
     	        }
         	});
-        	/*var count = 0;
-        	while(count<result.length){
-        		var idToGet = new ObjectID(result[count]._id) ;
-        		flightModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result1){
-        			if(result1!=null){
-        				result[count].listingName = result1.airline;
-        				count++;
-        			} else {
-	        			hotelModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result2){
-	        				if(result2!=null){
-	            				result[count].listingName = result2.hotelName;
-	            				count++;
-	            			} else {
-		        				carModel.findOne({ is_deleted : false , _id : idToGet }, function(err, result3){
-		        					result[count].listingName = result3.carName;
-		        					count++;
-		                		});
-	            			}
-	            		});
-        			}
-        		});
-        		if(count==(result.length-1)){
-	                res.code = 200  ;
-	                res.message = "Success"
-	                res.data = result
-	                callback(null , res) ;
-        		}
-        	}*/
         }
     });
 }

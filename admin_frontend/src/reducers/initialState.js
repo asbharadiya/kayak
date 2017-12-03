@@ -57,7 +57,8 @@ export default {
 	userId : '',
 	listingId : '',
 	listingType : '',
-	userData : null	
+	userData : null	,
+	listingData : null
   },
   
     revenueByType : [] ,
