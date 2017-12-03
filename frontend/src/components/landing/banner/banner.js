@@ -9,10 +9,6 @@ import * as analytics from '../../../actions/analytics';
 
 class Banner extends Component {
 
-	constructor(props){
-		super(props);
-	}
-
 	trackClick(click, page) {
 		var payload = {'click' : click, 'page' : page};
 		this.props.trackClick(payload);

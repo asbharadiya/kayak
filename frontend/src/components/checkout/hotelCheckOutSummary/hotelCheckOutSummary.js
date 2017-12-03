@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import './hotelCheckOutSummary.css';
-import moment from 'moment';
-
-
 
 class HotelCheckoutSummary extends Component {
 
 	constructor(props){
 		super(props) ;
-		
+
 		this.state = {
 			baseFare : 0,
 			tax : 0 ,
@@ -21,18 +18,17 @@ class HotelCheckoutSummary extends Component {
 	}
 
 	componentDidMount(){
-		console.log("Lola") ; 
         var serviceDays = ((new Date(this.props.queryParams.endDate)- new Date(this.props.queryParams.startDate))/(1000*60*60*24))+1 ;
         {this.props.details.hotelRooms.map((room, key) => {
             console.log(room.roomType , '  -  ' ,  this.props.queryParams.roomType) ;
 
 			if(room.roomType === this.props.queryParams.roomType) {
-                console.log("Room Info " , room.priceTotal , serviceDays ) ; 
+                console.log("Room Info " , room.priceTotal , serviceDays ) ;
 				this.setState({
 					baseFare: room.priceTotal,
 					totalBaseFare: serviceDays * room.priceTotal,
 					total: serviceDays * room.priceTotal ,
-                    totalDays : serviceDays 
+                    totalDays : serviceDays
 				}, function() {
 						this.props.updateTotal(this.state.total);
 					})
@@ -41,7 +37,7 @@ class HotelCheckoutSummary extends Component {
 		)}
 	}
 
-  
+
 
 
 	render() {

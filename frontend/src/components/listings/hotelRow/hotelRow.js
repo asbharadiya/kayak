@@ -33,11 +33,11 @@ class HotelRow extends Component {
           <div className="number-rating-container col-xs-3 text-right">
             <span className="number-rating"> {(this.props.data.hotelRating).toFixed(1)} </span>
             <span className="rating-type">
-              {this.props.data.hotelRating == 5 ? "Excellent" : ""}
-              {this.props.data.hotelRating == 4 ? "Good" : ""}
-              {this.props.data.hotelRating == 3 ? "Average" : ""}
-              {this.props.data.hotelRating == 2 ? "Below Average" : ""}
-              {this.props.data.hotelRating == 1 ? "Poor" : ""}
+              {this.props.data.hotelRating === 5 ? "Excellent" : ""}
+              {this.props.data.hotelRating === 4 ? "Good" : ""}
+              {this.props.data.hotelRating === 3 ? "Average" : ""}
+              {this.props.data.hotelRating === 2 ? "Below Average" : ""}
+              {this.props.data.hotelRating === 1 ? "Poor" : ""}
             </span>
           </div>
           <div className="star-rating col-xs-12 no-padding">

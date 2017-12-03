@@ -64,14 +64,14 @@ class FlightCheckoutBookingInfo extends Component {
     }
 
     componentWillReceiveProps(newProps){
-        if(this.props.queryParams != undefined){
+        if(this.props.queryParams !== undefined){
             this.setState({ cabin :  newProps.queryParams.cabin,
                             dest :  newProps.queryParams.dest ,
                             date :  newProps.queryParams.date,
                             source :  newProps.queryParams.source,
                             travelers :   newProps.queryParams.travelers,
-                            phoneNumber : newProps.profile != undefined ? (newProps.profile.phone_number != null ? newProps.profile.phone_number : ''  ) : '',
-                            emailAddress : newProps.profile != undefined ? newProps.profile.email : '' ,
+                            phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number !== null ? newProps.profile.phone_number : ''  ) : '',
+                            emailAddress : newProps.profile !== undefined ? newProps.profile.email : '' ,
                         } , function(){
                              newProps.updateBookingInfo(this.state);
                         } )

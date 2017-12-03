@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'react-rater/lib/react-rater.css';
-import Rater from 'react-rater' ;
 import './carRow.css';
 
 class CarRow extends Component {
@@ -27,7 +26,7 @@ class CarRow extends Component {
                             </div>
                         </div>
                         <div className="carImageDiv col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                            <img className="carImage" src="/assets/images/hyundai.png"   /*src={this.props.data.images[0]}*/ 
+                            <img className="carImage" src="/assets/images/hyundai.png"   /*src={this.props.data.images[0]}*/
                                  alt="Vehicle type: Economy - Hyundai Accent or similar"/>
                         </div>
                     </div>

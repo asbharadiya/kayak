@@ -4,7 +4,7 @@ import './carFilters.css';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import {connect} from 'react-redux';
 import * as carActions from '../../../../actions/car';
-import Slider, { Range } from 'rc-slider';
+import { Range } from 'rc-slider';
 
 class CarFilters extends Component {
 

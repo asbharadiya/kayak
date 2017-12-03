@@ -16,10 +16,10 @@ class BookedComponent extends Component {
 
 		this.getBillingDetails = this.getBillingDetails.bind(this) ;
 		this.openBillingModal = this.openBillingModal.bind(this);
-		this.closeBillingModal = this.closeBillingModal.bind(this); 
+		this.closeBillingModal = this.closeBillingModal.bind(this);
 	}
 
-	
+
 	openBillingModal(){
 		this.setState({ openBookingDetailModal : true })
 	}
@@ -30,7 +30,7 @@ class BookedComponent extends Component {
 
 
 	getBillingDetails(){
-		var _this = this ; 
+		var _this = this ;
 		Profiles.getBookingDetailsById(this.props.data.bookingId , function(err , response){
 			if(!err){
 				response.then(res => {
@@ -41,7 +41,7 @@ class BookedComponent extends Component {
 	}
 
     render() {
-    	console.log(this.state.bookingDetails) ; 
+    	console.log(this.state.bookingDetails) ;
     	return (
            <div  className="row past-booking-content-list">
 	                			<div className="col-md-3 col-lg-3 col-sm-3 col-xs-3">
@@ -65,9 +65,9 @@ class BookedComponent extends Component {
 		                		 <Modal show={this.state.openBookingDetailModal}  onEntered={this.getBillingDetails} id="carModal" className="booking-detail-modal">
 
 				                    <Modal.Body>
-				                       
+
 				                    {
-				                    	this.state.bookingDetails.date != undefined ? 
+				                    	this.state.bookingDetails.date !== undefined ?
 
 				                    	<div className="booking-panel-body-component">
 
@@ -128,17 +128,17 @@ class BookedComponent extends Component {
 											</div>
 
 
-											
+
 													<div className="row single-price-component">
 														<div className=" fair-type-div col-xs-7 pull-left">
 															<div className="fair-type">
 																<span >
 
-																	{ this.state.bookingDetails.commodity == "cars"  ?  
+																	{ this.state.bookingDetails.commodity === "cars"  ?
 																		<span>Duration</span>
 																		:
 																		(
-																			this.state.bookingDetails.commodity == "flights" ?
+																			this.state.bookingDetails.commodity === "flights" ?
 																			<span>Journey Date</span>
 																			:
 																			<span>Hotel Stay</span>
@@ -151,9 +151,9 @@ class BookedComponent extends Component {
 
 														<div className="fair-type-price col-xs-5 pull-right">
 															<div className="fair-type">
-																
+
 																{
-																	this.state.bookingDetails.commodity == "cars"  ?  
+																	this.state.bookingDetails.commodity === "cars"  ?
 
 																	<span className="price">
 																		{ (this.state.bookingDetails.bookingInfo.startDate).toString().substr(0,10)}
@@ -164,15 +164,15 @@ class BookedComponent extends Component {
 	    															:
 
 	    															(
-	    																this.state.bookingDetails.commodity == "flights"  ?  
+	    																this.state.bookingDetails.commodity === "flights"  ?
 	    																<span>{this.state.bookingDetails.bookingInfo.date}</span>
 	    																:
 	    																<span className="price">{this.state.bookingDetails.bookingInfo.checkInDate} - {this.state.bookingDetails.bookingInfo.checkOutDate}</span>
 	    															)
-	    															
+
 																}
 
-																
+
 															</div>
 														</div>
 													</div>
@@ -181,11 +181,11 @@ class BookedComponent extends Component {
 														<div className=" fair-type-div col-xs-7 pull-left">
 															<div className="fair-type">
 																{
-																	this.state.bookingDetails.commodity == "cars"  ?  
+																	this.state.bookingDetails.commodity === "cars"  ?
 																 	<span >City</span>
 																 	:
 																 	(
-																 		this.state.bookingDetails.commodity == "flights"  ?
+																 		this.state.bookingDetails.commodity === "flights"  ?
 																 		<span>From - To</span>
 																 		:
 																 		<span>Hotel</span>
@@ -198,27 +198,27 @@ class BookedComponent extends Component {
 														<div className="fair-type-price col-xs-5 pull-right">
 															<div className="fair-type">
 																{
-																	this.state.bookingDetails.commodity == "cars"  ?  
+																	this.state.bookingDetails.commodity === "cars"  ?
 																	<span className="price">{this.state.bookingDetails.bookingInfo.city}</span>
 																	:
 																	(
-																		this.state.bookingDetails.commodity == "flights"  ?
+																		this.state.bookingDetails.commodity === "flights"  ?
 																		<span className="price">{this.state.bookingDetails.bookingInfo.source} - {this.state.bookingDetails.bookingInfo.dest}</span>
 																		:
 																		<span>{this.state.bookingDetails.bookingInfo.city} - {this.state.bookingDetails.bookingInfo.roomType}</span>
 																	)
-																 	
-																 	
-																 	
+
+
+
 																}
-																
+
 															</div>
 														</div>
 													</div>
-											
+
 
 												{
-													this.state.bookingDetails.commodity == "flights" ? 
+													this.state.bookingDetails.commodity === "flights" ?
 													<div className="row single-price-component">
 														<div className=" fair-type-div col-xs-7 pull-left">
 															<div className="fair-type">
@@ -236,22 +236,22 @@ class BookedComponent extends Component {
 													<div></div>
 
 												}
-										
 
-											
 
-											
+
+
+
 										</div>
 
 										:
 
 										<div></div>
 				                    }
-				                        
+
 				                    </Modal.Body>
 
 				                    <Modal.Footer className="billing-details-footer">
-				                        
+
 				                        <button className="btn btn-default btn-kayak btn-kayak-default width-40" onClick={this.closeBillingModal}>Close</button>
 				                    </Modal.Footer>
 

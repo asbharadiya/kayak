@@ -6,8 +6,7 @@ import 'react-rater/lib/react-rater.css'
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import {connect} from 'react-redux';
 import * as hotelActions from '../../../../actions/hotel';
-import Slider, { Range } from 'rc-slider';
-import Tooltip from 'rc-tooltip';
+import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 class HotelFilters extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import './paymentMethods.css';
 import * as profileApis from '../../../api/profile';
 import PaymentMethodComponents from './paymentMethodComponents/paymentMethodComponents'
@@ -31,9 +31,7 @@ class PaymentMethods extends Component {
     }
 
     getCardNumber(e){
-        var cardNo = e.target.value ;
-
-        if(e.target.value.length == 4 || e.target.value.length == 11 || e.target.value.length == 18 ){
+        if(e.target.value.length === 4 || e.target.value.length === 11 || e.target.value.length === 18 ){
             e.target.value += " - "
         }
 
@@ -61,7 +59,7 @@ class PaymentMethods extends Component {
 
     getExpiryDate(e){
 
-    if(e.target.value.length == 2 && e.target.value.indexOf("/") == -1){
+    if(e.target.value.length === 2 && e.target.value.indexOf("/") === -1){
             e.target.value += "/"
         }
 
@@ -97,7 +95,7 @@ class PaymentMethods extends Component {
     saveCard(){
         var _this = this ;
         console.log(_this.state)
-       if(_this.state.cardNumber == "" || _this.state.cvv == "" || _this.state.nameOnCard == ""  || _this.state.expiryDate == ""){
+       if(_this.state.cardNumber === "" || _this.state.cvv === "" || _this.state.nameOnCard === ""  || _this.state.expiryDate === ""){
         alert("Invalid Card Details");
         return ;
        }
@@ -113,7 +111,7 @@ class PaymentMethods extends Component {
        profileApis.addCreditCard(_obj, function(err , response){
             if(!err){
                 response.then(res => {
-                    if(res.status == 200){
+                    if(res.status === 200){
                         console.log("Successful");
 
                         _this.setState({ cardNumber : '',
@@ -245,6 +243,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <PaymentMethods {...props}/>));
-function mapStateToProps(state) {
-    return {};
-}
