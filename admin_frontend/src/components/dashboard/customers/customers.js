@@ -9,16 +9,7 @@ class Customers extends Component {
     constructor(props){
         super(props);
         this.state = {
-            firstName : '' ,
-            address : '',
-            city : '',
-            state : '',
-            zip_code : '',
-            profile_image : '',
-            phone_number : '',
-            email : '',
-            lastName : '' ,
-            tempCustomerArray : [] , 
+            tempCustomerArray : [] ,
             arrayToShow : [] 
         }
     }
@@ -28,29 +19,30 @@ class Customers extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        var tempArray = [] ; 
-         if(newProps.listOfCustomers.length > 0){
+        if(newProps.customerDeleteSuccess != null && newProps.customerDeleteSuccess){
+            this.props.getAllCustomers();
+        }
+        var tempArray = [] ;
+        if(newProps.listOfCustomers.length > 0){
             newProps.listOfCustomers.forEach(customer => {
-                var address = (customer.address ? customer.address : null )  +  (customer.city ? ", " + customer.city : null ) +  ( customer.state ? ", " + customer.state : null)  +  (customer.zip_code ? ", " + customer.zip_code : null ) ; 
-                var name = customer.firstName + " " +  customer.lastName ; 
-                var contact = ( customer.email ? customer.email : null ) +  ( customer.phone_number ? ", " + customer.phone_number : null ) ;
-                tempArray.push({ name : name ,   address : address , contact : contact })
-                  
+                tempArray.push({ ...customer,name:customer.firstName + " " +  customer.lastName })
+
             })
-         }
-        this.setState({ tempCustomerArray : tempArray , arrayToShow : tempArray })
+        }
+        this.setState({ tempCustomerArray : tempArray , arrayToShow : tempArray });
     }
 
     searchCustomers(e){
-     
-        if(this.state.tempCustomerArray.length > 0){
-            var filtererdArray = this.state.tempCustomerArray.filter(function(customer) { 
-                return ( customer.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1 || 
-                        customer.contact.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1 || 
-                        customer.address.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1 ) 
-            });
-            this.setState({arrayToShow : filtererdArray} , function(){console.log(this.state.arrayToShow) ; }) ; 
-        }
+        var filtererdArray = this.state.tempCustomerArray.filter(function(customer) {
+            return ( customer.name.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1 ||
+                (customer.address ? (customer.address.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1):false) ||
+                (customer.city ? (customer.city.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1):false) ||
+                (customer.state ? (customer.state.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1):false) ||
+                (customer.zip_code ? (customer.zip_code.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1):false) ||
+                (customer.email ? (customer.email.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1):false) ||
+                (customer.phone_number ? (customer.phone_number.toLowerCase().indexOf(e.target.value.trim().toLowerCase()) > -1):false) );
+        });
+        this.setState({arrayToShow : filtererdArray}) ;
     }
 
     render() {
@@ -96,7 +88,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        listOfCustomers : state.customersReducer ? state.customersReducer.allCustomers : null
+        listOfCustomers : state.customersReducer.allCustomers,
+        customerDeleteSuccess : state.customersReducer.customerDeleteSuccess,
     };
 }
 

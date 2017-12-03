@@ -319,27 +319,23 @@ class FlightComponent extends Component {
                         <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
                             {this.props.flight.flightNumber}
                         </div>
-                        <div>
-                            <div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
-                                <div>
-                                    {this.props.flight.source}
-                                </div>
-                                <div>
-                                    {this.props.flight.departure}
-                                </div>
-
+                        <div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                            <div>
+                                {this.props.flight.source}
                             </div>
+                            <div>
+                                {this.props.flight.departure}
+                            </div>
+
                         </div>
-                        <div>
-                            <div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
-                                <div>
-                                    {this.props.flight.destination}
-                                </div>
-                                <div>
-                                    {this.props.flight.arrival}
-                                </div>
-
+                        <div className=" col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                            <div>
+                                {this.props.flight.destination}
                             </div>
+                            <div>
+                                {this.props.flight.arrival}
+                            </div>
+
                         </div>
 
                         <div className=" col-md-1 col-sm-1 col-lg-1 col-xs-1">
@@ -352,9 +348,9 @@ class FlightComponent extends Component {
                     </div>
                     <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-2x edit-icon" aria-hidden="true" onClick={this.openUpdateFlight}></i></a>
+                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateFlight}></i></a>
 
-                        <a href="javascript:void(0)"><i className="fa fa-times fa-2x delete-icon" aria-hidden="true" onClick={this.openDeleteFlight}></i></a>
+                        <a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteFlight}></i></a>
 
                     </div>
 

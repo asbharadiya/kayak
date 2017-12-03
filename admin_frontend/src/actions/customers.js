@@ -22,8 +22,8 @@ export function getAllCustomers() {
 	};
 }
 
-function deleteCustomerSuccess(data) {
-  	return {type: "DELETE_CUSTOMER_SUCCESS" , payload : data}
+function deleteCustomerSuccess() {
+  	return {type: "DELETE_CUSTOMER_SUCCESS"}
 }
 
 export function deleteCustomerById(id) {
@@ -34,7 +34,7 @@ export function deleteCustomerById(id) {
 			} else {
 				response.then((res) => {
 					if(res.status === 200){
-						dispatch(deleteCustomerSuccess(res.data));
+						dispatch(deleteCustomerSuccess());
 					}else{
 						dispatch( deleteCustomerFailure()) ;
 					}
