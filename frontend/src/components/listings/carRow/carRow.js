@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'react-rater/lib/react-rater.css';
-import Rater from 'react-rater' ;
 import './carRow.css';
 
 class CarRow extends Component {

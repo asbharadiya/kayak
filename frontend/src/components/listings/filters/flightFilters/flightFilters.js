@@ -4,8 +4,7 @@ import './flightFilters.css';
 import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import {connect} from 'react-redux';
 import * as carActions from '../../../../actions/car';
-import Slider, { Range } from 'rc-slider';
-import { RadioGroup, RadioButton } from 'react-radio-buttons'
+import { Range } from 'rc-slider';
 
 class FlightFilters extends Component {
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import './App.css';
@@ -23,11 +22,7 @@ class App extends Component {
     }
 
     componentDidUpdate(prevProps) {
-      console.log("previous");
-      console.log(prevProps.location.pathname);
-      console.log("this");
-      console.log(this.props.location.pathname);
-      if(this.props.location != prevProps.location) {
+       if(this.props.location !== prevProps.location) {
         this.props.trackUserActivity(this.props.location);
       }
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import './paymentMethodComponents.css';
 import { Modal } from 'react-bootstrap';
 import * as profiles from '../../../../api/profile.js' ;
@@ -28,7 +28,7 @@ class PaymentMethodsComponents extends Component {
        profiles.deleteCreditCard(this.props.card._id , function(err , response){
             if(!err){
                 response.then(res => {
-                    if(res.status == 200){
+                    if(res.status === 200){
                         _this.props.getCreditCardsForUser();
                         _this.setState({ openCardDeleteModal : false})
                     }
@@ -58,7 +58,7 @@ class PaymentMethodsComponents extends Component {
                     <label>{this.props.card.cardNumber}</label>
                 </div>
                 <div className="pull-right">
-                    <a onClick={this.openDeleteCardModal.bind(this)}><i className="fa fa-minus-circle fa-lg" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)" onClick={this.openDeleteCardModal.bind(this)}><i className="fa fa-minus-circle fa-lg" aria-hidden="true"></i></a>
                 </div>
 
                 <Modal show={this.state.openCardDeleteModal}   id="carModal" className="booking-detail-modal">
@@ -100,6 +100,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(props => <PaymentMethodsComponents {...props}/>));
-function mapStateToProps(state) {
-    return {};
-}

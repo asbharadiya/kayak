@@ -160,9 +160,7 @@ class Checkout extends Component {
     }
 
     getCardNumber(e){
-        var cardNo = e.target.value ; 
-        
-        if(e.target.value.length == 4 || e.target.value.length == 11 || e.target.value.length == 18 ){
+        if(e.target.value.length === 4 || e.target.value.length === 11 || e.target.value.length === 18 ){
             e.target.value += " - "
         }
 
@@ -182,7 +180,7 @@ class Checkout extends Component {
     }
 
     getExpiryDate(e){
-        if(e.target.value.length == 2 && e.target.value.indexOf("/") == -1){
+        if(e.target.value.length === 2 && e.target.value.indexOf("/") === -1){
             e.target.value += "/"
         }
 
@@ -214,7 +212,7 @@ class Checkout extends Component {
                 alert('Please fill out all the required booking information!');
                 return;
             }
-            this.state.bookingInfo.travelerInfo.map((traveler , key) => {
+            this.state.bookingInfo.travelerInfo.forEach(traveler => {
                 if(traveler.firstName === '' || traveler.lastName === ''){
                     alert('Please fill out all the required booking information!');
                     return;

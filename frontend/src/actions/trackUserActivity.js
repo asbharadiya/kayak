@@ -42,10 +42,8 @@ function generateUuid(callback) {
 }
 
 function storeCurrentPageLog(page, callback) {
-  console.log('getting time');
   var time = new Date().getTime();
   sessionStorage.lastPageVisited = page;
   sessionStorage.lastTimeSeen = time;
-  console.log('saving local store');
   callback();
 }

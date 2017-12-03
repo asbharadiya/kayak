@@ -25,7 +25,7 @@ class SuccessModal extends Component {
    
 
     componentWillReceiveProps(props){
-      if(props.bookingSuccess == true ) {
+      if(props.bookingSuccess === true ) {
         this.setState({
           show:true
         });
@@ -33,7 +33,7 @@ class SuccessModal extends Component {
         this.props.resetSuccessBookingFlag() ;
       }
 
-      if(props.bookingSuccess == false ) {
+      if(props.bookingSuccess === false ) {
         this.setState({
           showError:true
         });
