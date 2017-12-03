@@ -7,10 +7,6 @@ import CarsSearchForm from './carsSearchForm/carsSearchForm';
 
 class Banner extends Component {
 
-	constructor(props){
-		super(props);
-	}
-
   	render() {
   		const category = this.props.match.params.category;
 	    return (

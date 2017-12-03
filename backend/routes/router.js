@@ -1,3 +1,6 @@
+var kafka = require('./kafka/client');
+var config = require('config');
+var topic_name = config.kafkaTopic;
 
 module.exports = function(router,passport) {
 
