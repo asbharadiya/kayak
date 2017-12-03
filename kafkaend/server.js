@@ -8,6 +8,7 @@ var booking = require('./services/booking');
 var customer = require('./services/customer');
 var profile = require('./services/profile');
 var analytics = require('./services/analytics');
+var redis = require('./services/redis');
 
 var mongo = require('./services/mongo');
 mongo.createConnectionPool();
