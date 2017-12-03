@@ -17,9 +17,9 @@ class FlightsSearchForm extends Component {
 	}
 
 	search() {
-				this.trackClick('flights-search', 'home')
-        //TODO: take these value from input
-        this.props.history.push('/flights/listings?source=San Jose&dest=San Fransisco&date=12-10-2017&travelers=1&cabin=economy');
+		this.trackClick('flights-search', 'home')
+    //TODO: take these value from input
+    this.props.history.push('/flights/listings?source=San Jose&dest=San Fransisco&date=12-10-2017&travelers=1&cabin=economy');
 	}
 
   	render() {

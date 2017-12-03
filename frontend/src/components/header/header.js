@@ -55,17 +55,17 @@ class Header extends Component {
 					</div>
 					<div className="nav-container">
 						<ul className="nav">
-							<li className="nav-item" onClick={()=> {this.trackClick('hotels-search-header', 'home')}}>
+							<li className="nav-item" onClick={()=> {this.trackClick('hotels-search', this.props.location.pathname)}}>
 								<NavLink to="/hotels">
 									Hotels
 								</NavLink>
 							</li>
-							<li className="nav-item" onClick={()=> {this.trackClick('flights-search-header', 'home')}}>
+							<li className="nav-item" onClick={()=> {this.trackClick('flights-search', this.props.location.pathname)}}>
 								<NavLink to="/flights">
 									Flights
 								</NavLink>
 							</li>
-							<li className="nav-item" onClick={()=> {this.trackClick('cars-search-header', 'home')}}>
+							<li className="nav-item" onClick={()=> {this.trackClick('cars-search', this.props.location.pathname)}}>
 								<NavLink to="/cars">
 									Cars
 								</NavLink>

@@ -17,9 +17,8 @@ class HotelsSearchForm extends Component {
 	}
 
 	search() {
-		this.trackClick('hotels-search', 'home');
+		this.trackClick('hotels-search', '/hotels');
 		this.props.history.push('/hotels/listings?city=test city&checkInDate=12-10-2017&checkOutDate=12-15-2017&guests=2&roomType=Conference');
-
 	}
 
   	render() {
