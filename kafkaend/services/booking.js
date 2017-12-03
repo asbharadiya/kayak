@@ -5,6 +5,7 @@ var billingModel = require('../models/billing.js');
 var userModel = require('../models/authUsers.js');
 var carModel = require('../models/car.js');
 var creditCardModel = require('../models/creditCard.js')
+var flightModel = require('../models/flight.js');
 
 function getBills(msg, callback){
     var res = {};
@@ -75,6 +76,7 @@ function makeBooking(msg, callback){
     var res = {};
     var curr_date = new Date();
     var revenueGeneratingCity = "";
+    
     if( msg.data.listingType === "cars"){
            var query = { is_deleted : false , _id : new ObjectID(msg.data.listingId) , 
                         availability : { $elemMatch : { 
@@ -100,10 +102,57 @@ function makeBooking(msg, callback){
           }
           revenueGeneratingCity = msg.data.bookingInfo.city;
     } else if( msg.data.listingType === "hotels"){
-    	revenueGeneratingCity = msg.data.bookingInfo.city;
+
+
+
+
+      revenueGeneratingCity = msg.data.bookingInfo.city;
     } else if( msg.data.listingType === "flights"){
+
+       var idToGet = new ObjectID(msg.data.listingId);
+      console.log(idToGet)
+      flightModel.find({ is_deleted : false , _id : idToGet }).lean().exec(function(err, result){
+        if(err){
+          res.code = 500  ; 
+          res.message = "Fail to get all flights from the server"
+          callback(null , res) ; 
+        }else{
+          
+          availabilityArray = result[0].availability;
+          availabilityArray.forEach(function(singleAvailability){
+            if((new Date(singleAvailability.availabilityDate)).getTime() ==   new Date(new Date(msg.data.bookingInfo.date).setUTCHours(0,0,0,0)).getTime() ){
+              singleAvailability.sections.forEach(section => {
+                if(section.class.toLowerCase() == msg.data.bookingInfo.cabin.toLowerCase()){
+                  section.available -= 1 
+                }
+
+              }) 
+            }
+          })
+
+          flightModel.update({is_deleted : false , _id : idToGet }, {availability : availabilityArray}, function(err , response){
+              console.log(err , response) ; 
+              if(err){
+                  res.code = 500 ;
+                  res.message = "Error occured while updating  a car";
+                  callback(null , res);
+              }else{
+
+                  res.code = 200  ;
+                  res.message = "Success";
+                  callback(null , res) ;
+              }
+          })
+        }
+      })  
+
+
     	revenueGeneratingCity = msg.data.bookingInfo.source;
     }
+
+
+
+
 
     //TODO: first subtract availability based on category and travellers, take additional data from frontend if needed
     var booking = new bookingModel();
