@@ -20,3 +20,13 @@
   background-color: #292b2c;
   border-radius: 2px;
 }
+
+
+.home-button-close{
+	width : 100px;
+}
+
+.div-success-footer{
+	text-align: center;
+	width: 100%
+}
