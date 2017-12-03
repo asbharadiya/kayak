@@ -1,0 +1,2 @@
+listingType,listingId,bookingInfo,paymentMethod,selectedCreditCard,cardNumber,nameOnCard,expiryDate,cvv,saveCard,total
+cars,5a220898efed232090355819,Test Data,old,5a220898efed232090355819,1212 - 1212 - 1212 - 1212,Aman,11-Nov,111,FALSE,99
