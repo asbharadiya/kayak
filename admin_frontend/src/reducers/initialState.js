@@ -57,6 +57,17 @@ export default {
 	userId : '',
 	listingId : '',
 	listingType : '',
-	userData : null	
+	userData : null	,
+	listingData : null
   },
+  
+    revenueByType : [] ,
+    orderByType : [],
+    totalRevenue : 0,
+    totalOrders : 0,
+	revenueByCity : [],
+	revenueByTopCmpny : [],
+	revenueByTopCmpnyMonth : [],
+	userCount : [],
+	listingCount : []
 }

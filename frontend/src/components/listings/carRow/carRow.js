@@ -5,18 +5,13 @@ import './carRow.css';
 
 class CarRow extends Component {
 
-
     render() {
-        
+        console.log(this.props.data)
         return (
-
             <div className="cars-row">
                 <div className="info-section">
                     <div className="divForImageAndName row">
                         <div className="carName-category col-lg-7 col-md-7 col-sm-7 col-xs-7">
-
-                            
-
                             <div className="category-section">
                                 {this.props.data.carType}
                             </div>
@@ -35,15 +30,12 @@ class CarRow extends Component {
                             <img className="carImage" src="/assets/images/hyundai.png"   /*src={this.props.data.images[0]}*/ 
                                  alt="Vehicle type: Economy - Hyundai Accent or similar"/>
                         </div>
-
                     </div>
                 </div>
-
                 <div className="price-section">
                     <p>${this.props.data.dailyRentalValue}</p>
                     <button className="btn btn-primary btn-kayak" onClick={(id)=>this.props.onBookClick(this.props.data.id)}>Book</button>
                 </div>
-
             </div>
         );
     }

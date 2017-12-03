@@ -196,9 +196,9 @@ function getHotelsForCustomer(msg, callback){
 
 		var query = {
 			
-			hotelCity: msg.queryParams.city,
-			hotelStar: {"$lte": msg.queryParams.rating || 5},
-			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
+			//hotelCity: msg.queryParams.city,
+			//hotelStar: {"$lte": msg.queryParams.rating || 5},
+			//hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
 			
 
 			is_deleted : false,
