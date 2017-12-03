@@ -18,7 +18,7 @@ body {
 }
 
 .btn-kayak {
-	color: #fff;
+    color: #fff;
     background: #ff690f;
     background-image: linear-gradient(135deg,#ff690f 0%,#ff4f3a 100%);
     border: none;
@@ -29,23 +29,32 @@ body {
 }
 
 .btn-kayak:hover {
-	background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background: #d15500;
 }
 
 .btn-kayak:active {
-	background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
-	background: #d15500;
+    background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background: #d15500;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
 }
 
 .btn-kayak:focus {
-	outline: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .btn-kayak:active:focus {
-	outline: none;
-	background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
-	background: #d15500;
+    outline: none;
+    background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background: #d15500;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.btn-kayak:active:hover {
+    outline: none;
+    background-image: linear-gradient(135deg,#db5200 0%,#ff2107 100%);
+    background: #d15500;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
 }
 
@@ -72,14 +81,43 @@ body {
 input, select {
 	box-shadow: none !important;
     border-radius: 0px !important;
+    font-weight: normal;
 }
 
-input:focus, select:focus {
-	border-color: #ff690f !important;
+input:focus, select:focus, .form-control:focus {
+    border-color: #ff690f !important;
+    box-shadow: none;
 }
 
 .error {
   color: #e82110;
   font-size: 12px;
   float: left;
+}
+
+.react-autocomplete .menu {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9;
+}
+
+
+.react-autocomplete .menu .item {
+    padding: 15px 12px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.react-autocomplete .menu .item p {
+    margin: 0px;
+}
+
+.react-autocomplete .menu .item.item-highlighted {
+    color: white;
+    background-color: #ff690f;
 }
