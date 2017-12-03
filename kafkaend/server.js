@@ -750,23 +750,41 @@ consumer.on('message', function (message) {
     });
     break;
     case 'getRevenueByTopCmpny':
-    analytics.getRevenueByTopCmpny(data.data, function(err,res){
-      var payloads = [
-        {
-          topic: data.replyTo,
-          messages:JSON.stringify({
-            correlationId:data.correlationId,
-            data : res
-          }),
-          partition : 0
-        }
-      ];
-      producer.send(payloads, function(err, data){
-        //console.log(data);
-      });
-      return;
-    });
-    break;
+	    analytics.getRevenueByTopCmpny(data.data, function(err,res){
+	      var payloads = [
+	        {
+	          topic: data.replyTo,
+	          messages:JSON.stringify({
+	            correlationId:data.correlationId,
+	            data : res
+	          }),
+	          partition : 0
+	        }
+	      ];
+	      producer.send(payloads, function(err, data){
+	        //console.log(data);
+	      });
+	      return;
+	    });
+	    break;
+    case 'getUserAnalytics':
+	    analytics.getUserAnalytics(data.data, function(err,res){
+	      var payloads = [
+	        {
+	          topic: data.replyTo,
+	          messages:JSON.stringify({
+	            correlationId:data.correlationId,
+	            data : res
+	          }),
+	          partition : 0
+	        }
+	      ];
+	      producer.send(payloads, function(err, data){
+	        //console.log(data);
+	      });
+	      return;
+	    });
+	    break;
     default:
     return;
   }
