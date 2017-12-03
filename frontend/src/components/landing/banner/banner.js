@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 import './banner.css';
 import HotelsSearchForm from './hotelsSearchForm/hotelsSearchForm';
 import FlightsSearchForm from './flightsSearchForm/flightsSearchForm';
 import CarsSearchForm from './carsSearchForm/carsSearchForm';
+import * as analytics from '../../../actions/analytics';
 
 class Banner extends Component {
+
+	constructor(props){
+		super(props);
+	}
+
+	trackClick(click, page) {
+		var payload = {'click' : click, 'page' : page};
+		this.props.trackClick(payload);
+	}
 
   	render() {
   		const category = this.props.match.params.category;
@@ -19,17 +30,17 @@ class Banner extends Component {
 	        		</div>
 	        		<div className="nav-section">
 	        			<ul className="nav">
-	  						<li className="nav-item">
+	  						<li className="nav-item" onClick={()=> {this.trackClick('hotels-search-banner', '/home')}}>
 	  							<NavLink to="/hotels">
 	  								Hotels
 	  							</NavLink>
 	  						</li>
-	  						<li className="nav-item">
+	  						<li className="nav-item" onClick={()=> {this.trackClick('flights-search-banner', '/home')}}>
 	  							<NavLink to="/flights">
 	  								Flights
 	  							</NavLink>
 	  						</li>
-	  						<li className="nav-item">
+	  						<li className="nav-item" onClick={()=> {this.trackClick('cars-search-banner', '/home')}}>
 	  							<NavLink to="/cars">
 	  								Cars
 	  							</NavLink>
@@ -54,4 +65,15 @@ class Banner extends Component {
   	}
 }
 
-export default withRouter(props => <Banner {...props}/>);
+function mapStateToProps(state) {
+    return {
+		};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(props => <Banner {...props}/>));

@@ -7,9 +7,9 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import Autocomplete from 'react-autocomplete';
 import './hotelsSearchForm.css';
+import * as analytics from '../../../../actions/analytics';
 
 class HotelsSearchForm extends Component {
-
     constructor(props) {
         super(props);
         const queryParams = queryString.parse(this.props.location.search);
@@ -23,6 +23,11 @@ class HotelsSearchForm extends Component {
         }
         this.search = this.search.bind(this);
     }
+
+		trackClick(click, page) {
+				var payload = {'click' : click, 'page' : page};
+				this.props.trackClick(payload);
+		}
 
     handleCityChange(val,item){
         this.setState({
@@ -64,6 +69,7 @@ class HotelsSearchForm extends Component {
     }
 
     search() {
+				this.trackClick('hotels-search', '/hotels/listings');
         if(this.state.city === ''){
             alert("Please select city!");
             return;
@@ -166,16 +172,17 @@ class HotelsSearchForm extends Component {
     }
 }
 
+function mapStateToProps(state) {
+	return {
+			cities:state.citiesReducer.cities
+	};
+}
+
 function mapDispatchToProps(dispatch) {
     return {
-
-    }
-}
-
-function mapStateToProps(state) {
-    return {
-        cities:state.citiesReducer.cities
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
     };
 }
+
 
 export default withRouter(connect(mapStateToProps , mapDispatchToProps )(props => <HotelsSearchForm {...props}/>));

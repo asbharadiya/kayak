@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import {getUserDetails, updateUserProfile } from '../../../actions/profile';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import * as analytics from '../../../actions/analytics';
 import './profileInfo.css';
 
 class ProfileInfo extends Component {
@@ -53,20 +54,27 @@ class ProfileInfo extends Component {
     }
 
     openEditProfile(){
+        this.trackClick('edit-profile', '/profile');
         this.setState({
             showProfileEditModal : true
         })
     }
 
     closeEditProfile(){
+        this.trackClick('close-edit-profile', '/profile');
         this.setState({
-            showProfileEditModal : false 
+            showProfileEditModal : false
         })
+    }
+
+    trackClick(click, page) {
+      var payload = {'click' : click, 'page' : page};
+      this.props.trackClick(payload);
     }
 
     updateProfile() {
         //var _id= this.props.profile[0]._id;
-
+        this.trackClick('update-profile', '/profile');
         var obj = {
             _id  : this.state._id,
             auth_user_id : this.state.auth_user_id,
@@ -164,10 +172,10 @@ class ProfileInfo extends Component {
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                          <div className="modal-dialog" role="document">
                             <div className="profile-modal-content">
-                            
+
                                 <Modal.Header className="profile-modal-header">
                                     <h3 className="modal-title" id="exampleModalLabel">Edit Profile</h3>
-                                    
+
                                 </Modal.Header>
 
                                 <Modal.Body className="profile-modal-body">
@@ -282,8 +290,8 @@ class ProfileInfo extends Component {
                                 </Modal.Footer>
 
                             </div>
-                        </div>    
-                    </Modal>     
+                        </div>
+                    </Modal>
 
 
 
@@ -299,7 +307,7 @@ function mapDispatchToProps(dispatch) {
     return {
         getUserDetails : () => dispatch(getUserDetails()),
         updateUserProfile : (obj, file) => dispatch(updateUserProfile(obj, file)),
-
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
     };
 }
 

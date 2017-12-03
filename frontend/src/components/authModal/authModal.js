@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './authModal.css';
 import * as api from '../../api/auth';
 import * as actions from '../../actions/auth';
+import * as analytics from '../../actions/analytics';
 
 class AuthModal extends Component {
 
@@ -64,6 +65,7 @@ class AuthModal extends Component {
             isFormValid = false;
         }
         if(isFormValid) {
+            this.trackClick('signin', 'home');
             api.signin({email:this.email.value,password:this.password.value})
                 .then((res) => {
                     if (res.status === 200) {
@@ -107,6 +109,7 @@ class AuthModal extends Component {
             isFormValid = false;
         }
         if(isFormValid) {
+            this.trackClick('signup', 'home');
             api.signup({email:this.email.value,password:this.password.value,firstName:this.firstName.value,lastName:this.lastName.value})
                 .then((res) => {
                     if (res.status === 200) {
@@ -120,6 +123,12 @@ class AuthModal extends Component {
                 });
         }
     };
+
+    trackClick(click, page) {
+      var payload = {'click' : click, 'page' : page};
+      this.props.trackClick(payload);
+    }
+
 
     render() {
         return (
@@ -193,7 +202,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        checkSession : () => dispatch(actions.checkSession())
+        checkSession : () => dispatch(actions.checkSession()),
+        trackClick : (payload) => dispatch(analytics.trackClick(payload))
     };
 }
 

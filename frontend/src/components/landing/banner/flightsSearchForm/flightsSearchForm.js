@@ -7,6 +7,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import Autocomplete from 'react-autocomplete';
 import './flightsSearchForm.css';
+import * as analytics from '../../../../actions/analytics';
 
 class FlightsSearchForm extends Component {
 
@@ -24,6 +25,11 @@ class FlightsSearchForm extends Component {
         }
 		this.search = this.search.bind(this);
   	}
+
+		trackClick(click, page) {
+				var payload = {'click' : click, 'page' : page};
+				this.props.trackClick(payload);
+		}
 
     handleSourceChange(val,item){
         this.setState({
@@ -72,6 +78,7 @@ class FlightsSearchForm extends Component {
     }
 
 	search() {
+				this.trackClick('flights-search', '/flights/listings')
         if(this.state.source === ''){
             alert("Please select source city!");
             return;
@@ -193,7 +200,7 @@ class FlightsSearchForm extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+			trackClick : (payload) => dispatch(analytics.trackClick(payload))
     }
 }
 

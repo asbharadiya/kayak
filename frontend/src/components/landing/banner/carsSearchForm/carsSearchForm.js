@@ -7,6 +7,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import Autocomplete from 'react-autocomplete';
 import './carsSearchForm.css';
+import * as analytics from '../../../../actions/analytics';
 
 class CarsSearchForm extends Component {
 
@@ -20,7 +21,12 @@ class CarsSearchForm extends Component {
             citySearch:queryParams.city ? queryParams.city:''
         }
 		this.search = this.search.bind(this);
-  	}
+  }
+
+	trackClick(click, page) {
+			var payload = {'click' : click, 'page' : page};
+			this.props.trackClick(payload);
+	}
 
     handleStartDateChange(date){
         this.setState({
@@ -50,6 +56,8 @@ class CarsSearchForm extends Component {
     }
 
 	search() {
+    this.trackClick('cars-search', '/cars/listings')
+
 		if(this.state.city === ''){
             alert("Please select city!");
             return;
@@ -118,9 +126,10 @@ class CarsSearchForm extends Component {
   	}
 }
 
+
 function mapDispatchToProps(dispatch) {
     return {
-
+      trackClick : (payload) => dispatch(analytics.trackClick(payload))
     }
 }
 

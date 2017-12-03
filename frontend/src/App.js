@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import { PropTypes } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import './App.css';
 import './Responsive.css';
@@ -12,11 +13,23 @@ import Checkout from "./components/checkout/checkout";
 import Bookings from "./components/profile/bookings/bookings";
 import ProfileInfo from "./components/profile/profileInfo/profileInfo";
 import PaymentMethods from "./components/profile/paymentMethods/paymentMethods";
+import {withRouter} from 'react-router-dom';
+import * as analytics from './actions/analytics';
 
 class App extends Component {
 
     componentDidMount(){
         this.props.checkSession();
+    }
+
+    componentDidUpdate(prevProps) {
+      console.log("previous");
+      console.log(prevProps.location.pathname);
+      console.log("this");
+      console.log(this.props.location.pathname);
+      if(this.props.location != prevProps.location) {
+        this.props.trackUserActivity(this.props.location);
+      }
     }
 
     render() {
@@ -27,7 +40,6 @@ class App extends Component {
                     isLogged === undefined ? (
                         <div className="text-center"><h1>Loading...</h1></div>
                     ) : (
-                        <BrowserRouter>
                             <div className="inner-page-wrapper">
                                 <Header/>
                                 <Switch>
@@ -68,7 +80,6 @@ class App extends Component {
                                     </Profile>
                                 </Switch>
                             </div>
-                        </BrowserRouter>
                     )
                 }
             </div>
@@ -82,8 +93,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        checkSession : () => dispatch(actions.checkSession())
+        checkSession : () => dispatch(actions.checkSession()),
+        trackUserActivity : (page) => dispatch(analytics.trackUserActivity(page))
     };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps , mapDispatchToProps )(props => <App {...props}/>));

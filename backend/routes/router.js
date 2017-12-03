@@ -43,16 +43,16 @@ module.exports = function(router,passport) {
 
 	router.get('/a/billings/:category/:param', booking.getBills);
 	router.get('/a/billings/:id', booking.getBillById);
-	
+
 	router.get('/a/revenueByType', analytics.getRevenueByType);
 	router.get('/a/revenueByTopCmpny', analytics.getRevenueByTopCmpny);
 	router.get('/a/revenueByCity', analytics.getRevenueByCity);
+	router.get('/a/userAnalytics', analytics.getUserAnalytics);
 
 	//user
 	router.post('/c/signin', auth.customerSignIn);
-    router.post('/c/signup', auth.signup);
-    router.get('/c/check_session', isAuthenticated, auth.checkSession);
-
+  router.post('/c/signup', auth.signup);
+  router.get('/c/check_session', isAuthenticated, auth.checkSession);
 	router.get('/c/profile', isAuthenticated, profile.getProfile);
 	router.put('/c/profile', isAuthenticated, profile.updateProfile);
 	router.post('/c/credit_cards', isAuthenticated, profile.addCreditCard);
@@ -61,13 +61,15 @@ module.exports = function(router,passport) {
 	router.get('/c/hotels', hotel.getHotelsForCustomer);
 	router.get('/c/flights', flight.getFlightsForCustomer);
 	router.get('/c/cars', car.getCarsForCustomer);
-    router.get('/c/hotels/:id', isAuthenticated, hotel.getHotelByIdForCustomer);
-    router.get('/c/flights/:id', isAuthenticated, flight.getFlightByIdForCustomer);
-    router.get('/c/cars/:id', isAuthenticated, car.getCarByIdForCustomer);
+  router.get('/c/hotels/:id', isAuthenticated, hotel.getHotelByIdForCustomer);
+  router.get('/c/flights/:id', isAuthenticated, flight.getFlightByIdForCustomer);
+  router.get('/c/cars/:id', isAuthenticated, car.getCarByIdForCustomer);
 	router.post('/c/bookings', isAuthenticated, booking.makeBooking);
 	router.get('/c/bookings', isAuthenticated, booking.getBookings);
 	router.get('/c/bookings/:id', isAuthenticated, booking.getBookingById);
-	
+	router.post('/c/track-click', analytics.trackClick);
+	router.post('/c/track-total-duration-spent', analytics.trackTotalDurationSpent);
+
 	function isAuthenticated(req, res, next) {
 		if(req.session.passport && req.session.passport.user._id && req.session.passport.user.role === 'USER') {
 			next();
