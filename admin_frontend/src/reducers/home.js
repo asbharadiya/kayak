@@ -49,7 +49,8 @@ const reducer = (state = initialState, action) => {
 	      		revenueByCity : revenueByCityObj
 	    	};
         case "GET_REVENUEBYTOPCMPNY_SUCCESS" :
-        	var revenueYrObj=action.payload.revenueYr, revenueByTopCmpnyMonthObj=action.payload.revenueMonth;
+        	var revenueYrObj=action.payload.revenueYr;
+        	var revenueMonthObj=action.payload.revenueMonth;
         	/*if(action.payload && action.payload.revenueYr){
 	        	var revenueYrStr = JSON.stringify(action.payload.revenueYr);
 	        	revenueYrStr = revenueYrStr.replace(/_id/g, 'name');
@@ -74,10 +75,23 @@ const reducer = (state = initialState, action) => {
         		}
         	}
 
+        	for(i=0; i<revenueMonthObj.length; i++){
+        		if(revenueMonthObj[i].listingHotelName.length>0){
+        			console.log(revenueMonthObj[i].listingHotelName[0].hotelName);
+        			revenueMonthObj[i].name = revenueMonthObj[i].listingHotelName[0].hotelName;
+        		} else if(revenueMonthObj[i].listingCarName.length>0){
+        			console.log(revenueMonthObj[i].listingCarName);
+        			revenueMonthObj[i].name = revenueMonthObj[i].listingCarName[0].carName;
+        		} else if(revenueMonthObj[i].listingFlightName.length>0){
+        			console.log(revenueMonthObj[i].listingFlightName);
+        			revenueMonthObj[i].name = revenueMonthObj[i].listingFlightName[0].airline;
+        		}
+        	}
+
 	    	return {
 	      		...state,
 	      		revenueByTopCmpny : revenueYrObj,
-	      		revenueByTopCmpnyMonth : revenueByTopCmpnyMonthObj
+	      		revenueByTopCmpnyMonth : revenueMonthObj
 	    	};
         case "GET_REVENUEBYTYPE_FAILURE" :
         case "GET_REVENUEBYCITY_FAILURE" :
