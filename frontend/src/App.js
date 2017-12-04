@@ -22,10 +22,6 @@ class App extends Component {
     }
 
     componentDidUpdate(prevProps) {
-      console.log("previous");
-      console.log(prevProps.location.pathname);
-      console.log("this");
-      console.log(this.props.location.pathname);
       if(this.props.location !== prevProps.location) {
         this.props.trackUserActivity(this.props.location);
       }

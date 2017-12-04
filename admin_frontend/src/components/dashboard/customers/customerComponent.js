@@ -34,9 +34,8 @@ class CustomerComponent extends Component {
 				<div className="row mainRowDiv customer-row">
 					<div className="col-md-10 col-sm-10 col-lg-10 col-xs-10">
 						<div className="col-md-1 col-sm-1 col-lg-1 col-xs-1">
-                            <img className="profileImage" src="/assets/images/kayak-logo.png"   /*src= {this.props.customer.profile_image}*/
-                                 alt="Vehicle type: Economy - Hyundai Accent or similar"/>
-
+                            <img className="profileImage" src={this.props.customer.profile_image ? this.props.customer.profile_image:'/assets/images/user.png'}
+                                 alt="profile"/>
 						</div>
                         <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
                             {this.props.customer.firstName} {this.props.customer.lastName}
