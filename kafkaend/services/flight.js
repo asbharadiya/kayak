@@ -152,31 +152,17 @@ function deleteFlightById(msg, callback){
 
 function getFlightsForCustomer(msg, callback){
     var res = {};
-
-
-
     var queryParams = msg.queryParams ;
 	var cabin= msg.queryParams.cabin ;
-
 	var query = {
         is_deleted : false,
 
     };
-
-
-
-
-
-
-
     if(queryParams.minPrice != undefined ){
     	var minPrice = parseInt(queryParams.minPrice) ;
    	    var maxPrice = parseInt(queryParams.maxPrice) ;
-
 		var mealsArray = msg.queryParams.meals.split(',')
         var lugaggeArray = msg.queryParams.luggage.split(',')
-
-
         if(( mealsArray.length == 1 && mealsArray[0] == '' )) {
             mealsArray = []
         }else if(mealsArray.length > 0){
@@ -185,36 +171,43 @@ function getFlightsForCustomer(msg, callback){
         	  }
 			 query.meals =  { "$in" : mealsArray }
         }
-
-
-
         if(( lugaggeArray.length == 1 && lugaggeArray[0] == '' )) {
             lugaggeArray = []
         }else if(lugaggeArray.length > 0 ){
 			 for(var i = 0 ; i < lugaggeArray.length ; i++){
-
         	  	lugaggeArray[i] = parseInt(lugaggeArray[i])
         	  }
 			 query.luggage =  { "$in" : lugaggeArray }
         }
-
-
-
         query.availability = { $elemMatch :
 								{ sections : { $elemMatch :
 												{ class: { $regex : new RegExp( cabin, "i") } ,   price : {$gte : minPrice , $lte : maxPrice  }  }
 											 }
 								}
 							}
-
 	}
-
-
+	var sortingObj = {};
+	var priceKey;
+	if(msg.queryParams.cabin=="First"){
+		priceKey = "firstClassPrice";
+	} else if(msg.queryParams.cabin=="Business"){
+		priceKey = "businessClassPrice";
+	} else {
+		priceKey = "economyClassPrice";
+	}
+	if(msg.queryParams.sort=="priceHtoL"){
+		sortingObj[priceKey] = -1;
+	} else if(msg.queryParams.sort=="dep"){
+		sortingObj[priceKey] = -1;
+	} else {
+		sortingObj[priceKey] = 1;
+	}
    var options = {
         select: 'flightNumber airline source destination departure arrival firstClassPrice businessClassPrice economyClassPrice',
         lean: true,
         page: msg.queryParams.pageNo || 1,
-        limit: 20
+        limit: 20,
+		sort: sortingObj
     };
     flightModel.paginate(query,options, function(err, result){
         if(err){

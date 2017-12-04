@@ -190,7 +190,6 @@ function getHotelsForCustomer(msg, callback){
     var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
     parts = msg.queryParams.endDate.split("-");
     var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
-    console.log("kkkkkkkkkkkkkkkk"+JSON.stringify(msg.queryParams));
 	var query = {
 		hotelCity: msg.queryParams.city,
 		hotelStar: {"$lte": Number.parseInt(msg.queryParams.rating) || 5, "$gte": 0},
@@ -246,8 +245,6 @@ function getHotelsForCustomer(msg, callback){
 		limit: 20,
 		sort: sortingObj
 	};
-	console.log("pppppppppppppppppppp"+JSON.stringify(query));
-	console.log("oooooooooooooooooooo"+JSON.stringify(options));
 	hotelModel.paginate(query,options, function(err, result){
 		if(err){
 		    console.log(err);
