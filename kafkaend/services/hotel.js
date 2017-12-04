@@ -11,9 +11,6 @@ function addHotel(msg, callback){
 		msg.is_deleted = false;
 		var now = msg.serviceStartDate;
 		msg.availability = [];
-		var availabilityObj = {};
-		var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
-		var availabilityDateObject = [] ;
 		var hotelMinPrice = msg.hotelRooms[0].priceTotal;
 		var hotelMaxPrice = msg.hotelRooms[0].priceTotal;
 		for (var i=0 ; i < msg.hotelRooms.length ; i++) {
@@ -26,6 +23,10 @@ function addHotel(msg, callback){
 		}
 		msg.hotelMinPrice = hotelMinPrice;
 		msg.hotelMaxPrice = hotelMaxPrice;
+
+		var availabilityObj = {};
+		var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
+		var availabilityDateObject = [] ;
 		for (var i=0 ; i <= serviceDays ; i++) {
 			var date = new Date(new Date(msg.serviceStartDate).setUTCHours(0,0,0,0));
 			date.setDate(date.getDate() + i);
@@ -123,12 +124,15 @@ function updateHotelById(msg, callback){
 	}
 	msg.hotelMinPrice = hotelMinPrice;
 	msg.hotelMaxPrice = hotelMaxPrice;
-	
-	for (var d = new Date(msg.serviceStartDate); d <= new Date(msg.serviceEndDate); d.setDate(d.getDate() + 1)) {
-		availabilityObj.availableDate = new Date(d);
-		availabilityObj.hotelRooms = msg.hotelRooms;
-		msg.availability.push(availabilityObj);
+
+	var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
+	var availabilityDateObject = [] ;
+	for (var i=0 ; i <= serviceDays ; i++) {
+		var date = new Date(new Date(msg.serviceStartDate).setUTCHours(0,0,0,0));
+		date.setDate(date.getDate() + i);
+		availabilityDateObject.push({availableDate : date , hotelRooms : msg.hotelRooms});
 	}
+	msg.availability = availabilityDateObject ;
 	if(true){
 		hotelModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , response){
 			if(err){
