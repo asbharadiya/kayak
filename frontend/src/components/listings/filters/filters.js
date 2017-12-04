@@ -22,11 +22,11 @@ class Filters extends Component {
       			</div>
                 {
                     this.state.category === "cars" ? (
-                        <CarFilters applyFilters={this.props.applyFilters}/>
+                        <CarFilters applyFilters={this.props.applyFilters} timestamp={this.props.timestamp}/>
                     ) : this.state.category === "flights" ? (
-                        <FlightFilters applyFilters={this.props.applyFilters}></FlightFilters>
+                        <FlightFilters applyFilters={this.props.applyFilters} timestamp={this.props.timestamp}></FlightFilters>
                     ) : (
-                        <HotelFilters applyFilters={this.props.applyFilters}></HotelFilters>
+                        <HotelFilters applyFilters={this.props.applyFilters} timestamp={this.props.timestamp}></HotelFilters>
                     )
                 }
       		</div>

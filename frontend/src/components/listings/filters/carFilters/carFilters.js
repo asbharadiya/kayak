@@ -24,6 +24,19 @@ class CarFilters extends Component {
         this.updatePrice = this.updatePrice.bind(this);
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.timestamp !== this.props.timestamp){
+            this.setState({
+                occupants: [] ,
+                luggage : [] ,
+                category : [] ,
+
+                minPrice : 0  ,
+                maxPrice : 500
+            });
+        }
+    }
+
     updatePrice(value) {
         var min = value[0];
         var max = value[1];

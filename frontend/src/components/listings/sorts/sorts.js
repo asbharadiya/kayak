@@ -20,6 +20,14 @@ class Sorts extends Component {
         });
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.timestamp !== this.props.timestamp){
+            this.setState({
+                sort:'priceLtoH'
+            });
+        }
+    }
+
   	render() {
         const category = this.props.match.params.category;
         var sortOptions = [

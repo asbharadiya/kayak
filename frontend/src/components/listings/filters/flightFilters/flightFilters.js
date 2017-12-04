@@ -23,6 +23,18 @@ class FlightFilters extends Component {
 
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.timestamp !== this.props.timestamp){
+            this.setState({
+                meals : [] ,
+                luggage : [] ,
+
+                minPrice : 0  ,
+                maxPrice : 5000
+            });
+        }
+    }
+
     updatePrice(value) {
         var min = value[0];
         var max = value[1];

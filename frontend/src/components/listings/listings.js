@@ -24,7 +24,8 @@ class Listings extends Component {
             queryParams : this.props.location.search,
             showAuthModal:false,
             filters:{},
-            sorts:{}
+            sorts:{},
+            timestamp:new Date().getTime()
         }
         this.closeAuthModal = this.closeAuthModal.bind(this);
         this.loadPage = this.loadPage.bind(this);
@@ -48,20 +49,35 @@ class Listings extends Component {
         this.loadPage(this.state.queryParams);
     }
 
+    componentWillReceiveProps(newProps){
+        if(this.props.location.search !== newProps.location.search){
+            this.setState({
+                category : newProps.match.params.category,
+                queryParams : newProps.location.search,
+                showAuthModal:false,
+                filters:{},
+                sorts:{},
+                timestamp:new Date().getTime()
+            }, function(){
+                this.loadPage(this.state.queryParams);
+            });
+        }
+    }
+
     componentWillUnmount(){
         this.props.clearListingsFromStore();
     }
 
-    loadPage(queryParams,filters,sorts){
+    loadPage(queryParams,filters,sorts,pageNo){
         if(this.state.category === 'cars'){
             this.trackClick('cars-filters', '/cars/listings')
-            this.props.getAllCars(queryParams,filters,sorts) ;
+            this.props.getAllCars(queryParams,filters,sorts,pageNo) ;
         } else if(this.state.category === 'flights') {
             this.trackClick('flights-filters', '/flights/listings')
-            this.props.getAllFlights(queryParams,filters,sorts);
+            this.props.getAllFlights(queryParams,filters,sorts,pageNo);
         } else {
             this.trackClick('hotels-filters', '/hotels/listings')
-            this.props.getAllHotels(queryParams,filters,sorts);
+            this.props.getAllHotels(queryParams,filters,sorts,pageNo);
         }
     }
 
@@ -93,7 +109,13 @@ class Listings extends Component {
         });
     }
 
+    onLoadMoreClick(){
+        this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts,this.props.currentPage+1);
+    }
+
     render() {
+        console.log(this.props.listings);
+        console.log(this.props.totalListings);
         return (
 			<div className="listings-page-wrapper">
 				<div className="inline-search-container">
@@ -101,16 +123,16 @@ class Listings extends Component {
 				</div>
 				<div className="page-container">
 					<div className="filters-container">
-                        <Filters applyFilters={this.applyFilters}/>
+                        <Filters applyFilters={this.applyFilters} timestamp={this.state.timestamp}/>
 					</div>
 					<div className="center-container">
 						<div className="sorting-container">
-							<Sorts applySorts={this.applySorts}/>
+							<Sorts applySorts={this.applySorts} timestamp={this.state.timestamp}/>
 						</div>
-						<div className="data-container">
+						<div className="row data-container">
                             {
-                                this.props.listings.total > 0 ? (
-                                    this.props.listings.docs.map((listing , key) => {
+                                this.props.totalListings > 0 ? (
+                                    this.props.listings.map((listing , key) => {
                                         if(this.state.category === 'hotels') {
                                             return <HotelRow data={listing} key={key} onBookClick={this.onBookClick}/>
                                         } else if (this.state.category === 'flights') {
@@ -124,6 +146,15 @@ class Listings extends Component {
                                 )
                             }
 						</div>
+                        {
+                            this.props.totalListings > this.props.listings.length ? (
+                                <div className="load-more-btn">
+                                    <button className="btn btn-primary btn-kayak" onClick={this.onLoadMoreClick.bind(this)}>Load more</button>
+                                </div>
+                            ):(
+                                <div></div>
+                            )
+                        }
 					</div>
 					<div className="clearfix"></div>
 				</div>
@@ -136,17 +167,19 @@ class Listings extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllCars : (queryParams,filters,sorts) => dispatch(carActions.getAllCars(queryParams,filters,sorts)),
-        getAllFlights : (queryParams,filters,sorts) => dispatch(flightActions.getAllFlights(queryParams,filters,sorts)),
-        getAllHotels : (queryParams,filters,sorts) => dispatch(hotelActions.getAllHotels(queryParams,filters,sorts)),
+        getAllCars : (queryParams,filters,sorts,pageNo) => dispatch(carActions.getAllCars(queryParams,filters,sorts,pageNo)),
+        getAllFlights : (queryParams,filters,sorts,pageNo) => dispatch(flightActions.getAllFlights(queryParams,filters,sorts,pageNo)),
+        getAllHotels : (queryParams,filters,sorts,pageNo) => dispatch(hotelActions.getAllHotels(queryParams,filters,sorts,pageNo)),
         clearListingsFromStore : () => dispatch(utilActions.clearListingsFromStore()),
         trackClick : (payload) => dispatch(analytics.trackClick(payload))
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {
-        listings:state.listingsReducer.listings,
+        listings:ownProps.listings ? ownProps.listings.concat(state.listingsReducer.listings.docs):state.listingsReducer.listings.docs,
+        totalListings:state.listingsReducer.listings.total,
+        currentPage:state.listingsReducer.listings.page,
         isLogged:state.authReducer.isLogged
     };
 }

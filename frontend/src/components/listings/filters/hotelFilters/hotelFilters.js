@@ -28,6 +28,19 @@ class HotelFilters extends Component {
       this.updateAnemities = this.updateAnemities.bind(this);
   }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.timestamp !== this.props.timestamp){
+            this.setState({
+                rating:5,
+                reviewScoreMin: 0,
+                reviewScoreMax: 5,
+                priceMin: 0,
+                priceMax: 2000,
+                amenities: []
+            });
+        }
+    }
+
   updateReviewScore(value) {
     var min = value[0];
     var max = value[1];

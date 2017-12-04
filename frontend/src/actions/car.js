@@ -2,7 +2,7 @@ import * as api from '../api/car';
 import * as util from './util';
 
 // Get all Cars
-export function getAllCars(queryParams, filters, sorts) {
+export function getAllCars(queryParams, filters, sorts, pageNo) {
     var params = queryParams;
     if(filters){
         if(util.toQueryString(filters).length > 0) {
@@ -15,6 +15,9 @@ export function getAllCars(queryParams, filters, sorts) {
             params += "&";
             params += util.toQueryString(sorts);
         }
+    }
+    if(pageNo){
+        params += "&pageNo="+pageNo;
     }
 	return function(dispatch) {
 		return api.getAllCars(params, function(error , response){
