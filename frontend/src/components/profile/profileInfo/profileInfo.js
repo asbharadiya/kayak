@@ -224,14 +224,14 @@ class ProfileInfo extends Component {
                                     <div className="row ModalRow">
                                         <label className="col-sm-3 ">Zip Code :</label>
                                         <div className="col-sm-8 ">
-                                            <input type="number" className="form-control" name="zip_code" id="zip_code"
+                                            <input type="text" className="form-control" name="zip_code" id="zip_code"
                                                    defaultValue={this.props.profile[0].zip_code}></input>
                                         </div>
                                     </div>
                                     <div className="row ModalRow ">
                                         <label className="col-sm-3 ">Phone :</label>
                                         <div className="col-sm-8 ">
-                                            <input type="number" className="form-control" name="phone_number"
+                                            <input type="text" className="form-control" name="phone_number"
                                                    id="phone_number"
                                                    defaultValue={this.props.profile[0].phone_number}></input>
                                         </div>

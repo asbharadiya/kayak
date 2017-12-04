@@ -295,7 +295,7 @@ function getHotelsForCustomer(msg, callback){
 	// }
 
 	var options = {
-		select: 'hotelName hotelAddress hotelCity hotelState hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
+		select: 'hotelName hotelAddress hotelCity hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
 		lean: true,
 		page: msg.pageNo || 1,
 		limit: 20

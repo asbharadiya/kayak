@@ -19,7 +19,6 @@ class HotelComponent extends Component {
             hotelName : '' ,
             hotelAddress : '',
             hotelCity : '',
-            hotelState : '',
             hotelZip : '',
             hotelStar : '',
             hotelPhoneNumber : '',
@@ -93,7 +92,6 @@ class HotelComponent extends Component {
                             hotelName : res.data.hotelName,
                             hotelAddress : res.data.hotelAddress,
                             hotelCity : res.data.hotelCity,
-                            hotelState : res.data.hotelState,
                             hotelZip : res.data.hotelZip,
                             hotelStar : res.data.hotelStar,
                             hotelPhoneNumber : res.data.hotelPhoneNumber,
@@ -129,10 +127,6 @@ class HotelComponent extends Component {
         }
         if(this.state.hotelCity === '' ){
             this.setState({ updateHotelError : "Please enter hotel City"})
-            return ;
-        }
-        if(this.state.hotelState === '' ){
-            this.setState({ updateHotelError : "Please enter hotel state"})
             return ;
         }
         if(this.state.hotelZip === '' || isNaN(this.state.hotelZip)){
@@ -184,7 +178,6 @@ class HotelComponent extends Component {
             hotelName : this.state.hotelName ,
             hotelAddress : this.state.hotelAddress,
             hotelCity : this.state.hotelCity,
-            hotelState : this.state.hotelState,
             hotelZip : this.state.hotelZip,
             hotelStar : this.state.hotelStar,
             hotelRating : this.state.hotelRating,
@@ -216,7 +209,6 @@ class HotelComponent extends Component {
                         <div className="col-xs-3">
                             {this.props.hotel.hotelAddress},
                             {this.props.hotel.hotelCity},
-                            {this.props.hotel.hotelState},
                             {this.props.hotel.hotelZip}
                         </div>
                         <div className=" col-xs-4">
@@ -304,24 +296,12 @@ class HotelComponent extends Component {
                             />
                         </div>
                         <div className="form-group col-xs-offset-2 col-xs-8">
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <label htmlFor="hotelState">State</label>
-                                    <input value={this.state.hotelState} className="form-control" onChange={(e) => {
-                                        this.setState({
-                                            hotelState : e.target.value
-                                        })
-                                    }} id="hotelState" type="text"  aria-describedby="basic-addon1"   />
-                                </div>
-                                <div className="col-md-6">
-                                    <label htmlFor="hotelZip">Zip</label>
-                                    <input value={this.state.hotelZip} className="form-control" onChange={(e) => {
-                                        this.setState({
-                                            hotelZip : e.target.value
-                                        })
-                                    }} id="hotelZip" type="text"  aria-describedby="basic-addon1"   />
-                                </div>
-                            </div>
+                            <label htmlFor="hotelZip">Zip</label>
+                            <input value={this.state.hotelZip} className="form-control" onChange={(e) => {
+                                this.setState({
+                                    hotelZip : e.target.value
+                                })
+                            }} id="hotelZip" type="text"  aria-describedby="basic-addon1"   />
                         </div>
                         <div className="form-group col-xs-offset-2 col-xs-8">
                             <label htmlFor="hotelPhoneNumber">Phone Number</label>
