@@ -45,44 +45,28 @@ class PaymentMethodsComponents extends Component {
         this.setState({openCardDeleteModal : false  })
     }
 
-
-
     render() {
 
-
-
         return (
-            <div className="row credit-card-div">
-                <div className="col-xs-11">
+            <div className="credit-card-div">
+                <div className="col-xs-10">
                     <span>#{this.props.number}</span>
                     <label>{this.props.card.cardNumber}</label>
                 </div>
-                <div className="pull-right">
+                <div className="col-xs-2 text-right">
                     <a href="javascript:void(0)" onClick={this.openDeleteCardModal.bind(this)}><i className="fa fa-minus-circle fa-lg" aria-hidden="true"></i></a>
                 </div>
+                <div className="clearfix"></div>
 
-                <Modal show={this.state.openCardDeleteModal}   id="carModal" className="booking-detail-modal">
+                <Modal show={this.state.openCardDeleteModal}   id="carModal" className="profileModal cardModal">
 
                     <Modal.Body>
-                        <div className="delete-card-confirm">
-                            <h3>Are you sure to delete the Card ? </h3>
-                        </div>
-
-                        <div className="row delete-card-footer">
-                            <div className="col-xs-4 col-xs-offset-2">
-                                 <button onClick={this.closeDeleteCardModal.bind(this)} className="btn btn-default card-delete-cancel">Close</button>
-                            </div>
-                            <div className="col-xs-4 ">
-                                <button onClick={this.deleteCard.bind(this)} className="btn btn-default btn-kayak">Confirm</button>
-                            </div>
-                        </div>
-
+                        <b>Are you sure to delete the Card ? </b>
                     </Modal.Body>
-
-
-
-
-
+                    <Modal.Footer>
+                        <button className="btn btn-primary btn-kayak" onClick={this.deleteCard.bind(this)}>YES</button>
+                        <button className="btn btn-default btn-kayak btn-kayak-default" onClick={this.closeDeleteCardModal.bind(this)}>NO</button>
+                    </Modal.Footer>
                 </Modal>
             </div>
         );

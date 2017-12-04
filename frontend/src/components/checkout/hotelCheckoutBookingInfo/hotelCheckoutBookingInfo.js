@@ -87,7 +87,7 @@ class HotelCheckoutBookingInfo extends Component {
 
 
                 <div className="body-single-data-content col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <input value={ this.state.phoneNumber} onChange={this.setPhone} type="number" className="form-control booking-info-data-element " placeholder="Mobile" />
+                    <input value={ this.state.phoneNumber} onChange={this.setPhone} type="text" className="form-control booking-info-data-element " placeholder="Mobile" />
                 </div>
 
 
