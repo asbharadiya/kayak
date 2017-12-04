@@ -147,7 +147,7 @@ class Listings extends Component {
                             }
 						</div>
                         {
-                            this.props.totalListings > this.props.listings.length ? (
+                        	this.props.listings && this.props.totalListings > this.props.listings.length ? (
                                 <div className="load-more-btn">
                                     <button className="btn btn-primary btn-kayak" onClick={this.onLoadMoreClick.bind(this)}>Load more</button>
                                 </div>
