@@ -18,6 +18,7 @@ import * as actions from '../../actions/booking';
 import HotelCheckoutSummary from './hotelCheckOutSummary/hotelCheckOutSummary';
 import HotelCheckoutBookingInfo from './hotelCheckoutBookingInfo/hotelCheckoutBookingInfo';
 import SuccessModal from './checkoutSuccess/successModal';
+import * as analytics from '../../actions/analytics';
 
 
 class Checkout extends Component {
@@ -138,6 +139,11 @@ class Checkout extends Component {
 
 
 
+    }
+
+    trackClick(click, page) {
+        var payload = {'click' : click, 'page' : page};
+        this.props.trackClick(payload);
     }
 
     updateBookingInfo(info){
@@ -289,6 +295,7 @@ class Checkout extends Component {
             saveCard:this.state.saveCard,
             total:this.state.total
         }
+        this.trackClick('Booking-success-'+this.state.category, '/checkout/'+this.state.category);
         this.props.makeBooking(_obj);
     }
 
@@ -440,8 +447,7 @@ class Checkout extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-
-
+        trackClick : (payload) => dispatch(analytics.trackClick(payload)),
         makeBooking : (payload) => dispatch(actions.makeBooking(payload))
     }
 }

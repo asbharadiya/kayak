@@ -75,8 +75,10 @@ class Listings extends Component {
 
     onBookClick(id){
         if(this.props.isLogged){
+            this.trackClick('Book-'+this.state.category, '/'+this.state.category+'/listings');
             this.props.history.push('/'+this.state.category+'/'+id+'/checkout'+this.state.queryParams);
         } else {
+            this.trackClick('Anonymous-Book-'+this.state.category, '/'+this.state.category+'/listings');
             this.setState({
                 showAuthModal:true
             })

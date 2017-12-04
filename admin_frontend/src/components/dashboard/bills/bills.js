@@ -119,8 +119,6 @@ class Bills extends Component {
 						 	:
 						 		<div></div>
 						 	)
-
-
 					 	}
 
 				 	</div>
