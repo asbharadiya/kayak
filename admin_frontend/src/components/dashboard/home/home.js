@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, Brush, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
+import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
 import './home.css';
 import * as actions from '../../../actions/home';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 class Home extends Component {
-	
+
 	constructor(props){
 		super(props);
 		this.state = {
@@ -21,7 +21,7 @@ class Home extends Component {
 			listingCount : [],
 			pieData : [{name: 'Cars', value: 2400}, {name: 'Hotels', value: 4567},
                 {name: 'Flights', value: 1398}],
-            lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800}, 
+            lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800},
             	{name: 'Sonesta Collection Hotels', uv: 2000, pv: 750, amt: 750}, {name: 'W Hotels & Resorts', uv: 2000, pv: 1900, amt: 1900},
             	{name: 'Virgin America', uv: 2000, pv: 1350, amt: 1350}, {name: 'Delta Air Lines', uv: 2000, pv: 900, amt: 900},
             	{name: 'JetBlue', uv: 2000, pv: 2100, amt: 2100}, {name: 'United', uv: 2000, pv: 1625, amt: 1625},
@@ -50,7 +50,7 @@ class Home extends Component {
         this.props.getRevenueByCity();
         this.props.getRevenueByTopCmpny();
     }
-    
+
 	render() {
 		return (
     		<div className="homepage">

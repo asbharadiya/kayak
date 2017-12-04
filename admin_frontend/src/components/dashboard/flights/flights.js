@@ -94,9 +94,9 @@ class Flights extends Component {
 
     componentWillReceiveProps(newProps) {
 
-        if((newProps.flightAddSuccess != null && newProps.flightAddSuccess) ||
-            (newProps.flightDeleteSuccess != null && newProps.flightDeleteSuccess) ||
-            (newProps.flightUpdateSuccess != null && newProps.flightUpdateSuccess))
+        if((newProps.flightAddSuccess !== null && newProps.flightAddSuccess) ||
+            (newProps.flightDeleteSuccess !== null && newProps.flightDeleteSuccess) ||
+            (newProps.flightUpdateSuccess !== null && newProps.flightUpdateSuccess))
         {
             this.setState({flightAddLoading : false ,
                 showFlightModal : false,
@@ -219,11 +219,11 @@ class Flights extends Component {
             return ;
         }
 
-        if(this.state.firstClassSeats == '' || this.state.businessClassSeats == '' || this.state.economyClassSeats == ''){
+        if(this.state.firstClassSeats === '' || this.state.businessClassSeats === '' || this.state.economyClassSeats === ''){
             this.setState({ addFlightError : 'Please check SEATS for flight' })
             return
         }
-        if(this.state.firstClassPrice == '' || this.state.businessClassPrice == '' || this.state.economyClassPrice == ''){
+        if(this.state.firstClassPrice === '' || this.state.businessClassPrice === '' || this.state.economyClassPrice === ''){
             this.setState({ addFlightError : 'Please check PRICES for Corresponsing Flights' })
             return
         }
@@ -387,7 +387,7 @@ class Flights extends Component {
 
                                               <label  className="radio-no"><input type="radio" name="optradio" required value='false' onChange={this.onMealsChanged}/>No </label>
                                               <label><input type="radio" name="optradio" required value='true' onChange={this.onMealsChanged}/>Yes </label>
-                                              
+
                                             </div >
                                     </div>
 
@@ -404,7 +404,7 @@ class Flights extends Component {
                                             <option>3</option>
                                         </optgroup>
                                     </select>
-                                    
+
                             </div>
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './customerComponent.css'
 import { Modal } from 'react-bootstrap';
-import { deleteCustomerById , getCustomerById, getAllCustomers } from '../../../actions/customers';
+import { deleteCustomerById } from '../../../actions/customers';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
@@ -28,13 +28,13 @@ class CustomerComponent extends Component {
     }
 
     render() {
-       
+
         return (
 			<div className="singleComponent">
 				<div className="row mainRowDiv customer-row">
 					<div className="col-md-10 col-sm-10 col-lg-10 col-xs-10">
 						<div className="col-md-1 col-sm-1 col-lg-1 col-xs-1">
-                            <img className="profileImage" src="/assets/images/kayak-logo.png"   /*src= {this.props.customer.profile_image}*/ 
+                            <img className="profileImage" src="/assets/images/kayak-logo.png"   /*src= {this.props.customer.profile_image}*/
                                  alt="Vehicle type: Economy - Hyundai Accent or similar"/>
 
 						</div>
@@ -53,7 +53,7 @@ class CustomerComponent extends Component {
                         </div>
 					</div>
 					<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 buttonGroup ">
-						<a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
+						<a class="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 openDeleteModal : true
                             })
