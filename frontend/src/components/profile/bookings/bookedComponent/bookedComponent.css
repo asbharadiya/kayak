@@ -1,7 +1,6 @@
 
 .booking-panel-body-component .single-price-component:last-child{
 	font-size: 12px ;
-	color : darkgrey ;
 	margin-top: 15px ;
 	margin-bottom: 17px !important
 }
@@ -9,14 +8,32 @@
 
 .booking-panel-body-component .single-price-component{
 	font-size: 12px ;
-	color : darkgrey ;
 	margin-top: 15px ;
 	margin-bottom: 25px
 }
 
+
+
+
+.booking-panel-body-component .header-additional-info{
+	text-align: center;
+}
+
+
+.booking-panel-body-component .travellers-info{
+	font-size: 12px ;
+	margin-top: 15px ;
+	margin-bottom: 25px
+}
+
+
 .booking-panel-body-component .single-price-component .fair-type-div .fair-type{
 
 	border-bottom: 1px solid #e4e5ea;
+	padding-bottom: 4px
+}
+
+.booking-panel-body-component .single-price-component .fair-type-div .fair-type-add-info{
 	padding-bottom: 4px
 }
 

@@ -41,6 +41,7 @@ class BookedComponent extends Component {
     }
 
     render() {
+    	console.log("Booking data " , this.state.bookingDetails.bookingInfo) ; 
         return (
 			<div className="past-booking-content-list">
 				<div className="col-md-3 col-lg-3 col-sm-3 col-xs-3">
@@ -72,13 +73,13 @@ class BookedComponent extends Component {
 									<div className="row single-price-component">
 										<div className=" fair-type-div col-xs-7 pull-left">
 											<div className="fair-type">
-												<span >Billing ID</span>
+												<span >Booking ID</span>
 											</div>
 
 										</div>
 										<div className="fair-type-price col-xs-5 pull-right">
 											<div className="fair-type">
-												<span className="price">{this.state.bookingDetails.billingId}</span>
+												<span className="price">{this.state.bookingDetails.bookingId}</span>
 											</div>
 										</div>
 									</div>
@@ -86,13 +87,29 @@ class BookedComponent extends Component {
 									<div className="row single-price-component">
 										<div className=" fair-type-div col-xs-7 pull-left">
 											<div className="fair-type">
-												<span >Purchase-Type</span>
+												<span >Booking-Type</span>
 											</div>
 
 										</div>
 										<div className="fair-type-price col-xs-5 pull-right">
 											<div className="fair-type">
 												<span className="price">{this.state.bookingDetails.commodity}</span>
+											</div>
+										</div>
+									</div>
+
+									
+
+									<div className="row single-price-component">
+										<div className=" fair-type-div col-xs-7 pull-left">
+											<div className="fair-type">
+												<span >Booking Date</span>
+											</div>
+
+										</div>
+										<div className="fair-type-price col-xs-5 pull-right">
+											<div className="fair-type">
+												<span className="price">{ (this.state.bookingDetails.date).toString().substr(0,10)}</span>
 											</div>
 										</div>
 									</div>
@@ -106,137 +123,389 @@ class BookedComponent extends Component {
 										</div>
 										<div className="fair-type-price col-xs-5 pull-right">
 											<div className="fair-type">
-												<span className="price">${this.state.bookingDetails.amount}</span>
+												<span>${this.state.bookingDetails.amount}</span> 
 											</div>
 										</div>
 									</div>
-
-									<div className="row single-price-component">
-										<div className=" fair-type-div col-xs-7 pull-left">
-											<div className="fair-type">
-												<span >Purchase Date</span>
-											</div>
-
-										</div>
-										<div className="fair-type-price col-xs-5 pull-right">
-											<div className="fair-type">
-												<span className="price">{ (this.state.bookingDetails.date).toString().substr(0,10)}</span>
-											</div>
-										</div>
+									
+									<div className="header-additional-info">
+										<h3>Booking Information</h3>
 									</div>
 
-
-
-									<div className="row single-price-component">
-										<div className=" fair-type-div col-xs-7 pull-left">
-											<div className="fair-type">
-																<span >
-
-																	{ this.state.bookingDetails.commodity === "cars"  ?
-																		<span>Duration</span>
-                                                                        :
-                                                                        (
-                                                                            this.state.bookingDetails.commodity === "flights" ?
-																				<span>Journey Date</span>
-                                                                                :
-																				<span>Hotel Stay</span>
-                                                                        )
-                                                                    }
-																</span>
-											</div>
-
-										</div>
-
-										<div className="fair-type-price col-xs-5 pull-right">
-											<div className="fair-type">
-
-                                                {
-                                                    this.state.bookingDetails.commodity === "cars"  ?
-
-														<span className="price">
-																		{ (this.state.bookingDetails.bookingInfo.startDate).toString().substr(0,10)}
-															<span>-</span>
-                                                            { (this.state.bookingDetails.bookingInfo.endDate).toString().substr(0,10)}
-	    															</span>
-
-                                                        :
-
-                                                        (
-                                                            this.state.bookingDetails.commodity === "flights"  ?
-																<span>{this.state.bookingDetails.bookingInfo.date}</span>
-                                                                :
-																<span className="price">{this.state.bookingDetails.bookingInfo.checkInDate} - {this.state.bookingDetails.bookingInfo.checkOutDate}</span>
-                                                        )
-
-                                                }
-
-
-											</div>
-										</div>
-									</div>
-
-									<div className="row single-price-component">
-										<div className=" fair-type-div col-xs-7 pull-left">
-											<div className="fair-type">
-                                                {
-                                                    this.state.bookingDetails.commodity === "cars"  ?
-														<span >City</span>
-                                                        :
-                                                        (
-                                                            this.state.bookingDetails.commodity === "flights"  ?
-																<span>From - To</span>
-                                                                :
-																<span>Hotel</span>
-
-                                                        )
-                                                }
-											</div>
-
-										</div>
-										<div className="fair-type-price col-xs-5 pull-right">
-											<div className="fair-type">
-                                                {
-                                                    this.state.bookingDetails.commodity === "cars"  ?
-														<span className="price">{this.state.bookingDetails.bookingInfo.city}</span>
-                                                        :
-                                                        (
-                                                            this.state.bookingDetails.commodity === "flights"  ?
-																<span className="price">{this.state.bookingDetails.bookingInfo.source} - {this.state.bookingDetails.bookingInfo.dest}</span>
-                                                                :
-																<span>{this.state.bookingDetails.bookingInfo.city} - {this.state.bookingDetails.bookingInfo.roomType}</span>
-                                                        )
-
-
-
-                                                }
-
-											</div>
-										</div>
-									</div>
-
-
-                                    {
-                                        this.state.bookingDetails.commodity === "flights" ?
+									{
+										this.state.bookingDetails.commodity === "flights" ?
+										<div>
 											<div className="row single-price-component">
 												<div className=" fair-type-div col-xs-7 pull-left">
-													<div className="fair-type">
-														<span ># of travellers</span>
+													<div className="fair-type-add-info">
+														<span >Source</span>
 													</div>
 
 												</div>
 												<div className="fair-type-price col-xs-5 pull-right">
-													<div className="fair-type">
-														<span className="price">{this.state.bookingDetails.bookingInfo.travelers}</span>
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.source}</span> 
 													</div>
 												</div>
 											</div>
-                                            :
-											<div></div>
 
-                                    }
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Destination</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.dest}</span> 
+													</div>
+												</div>
+											</div>
+
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Airline</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.flightName}</span> 
+													</div>
+												</div>
+											</div>
+
+											
+
+
+											{
+													this.state.bookingDetails.bookingInfo.travelerInfo.map((traveller , key) => {
+														return <div key={key} className="row travellers-info">
+																	<div className="col-xs-4 pull-left">
+																		Traveller #{key+1}
+																	</div>
+																	<div className="col-xs-8 ">
+																		<span className="pull-right">{traveller.firstName} {traveller.lastName}</span>
+																	</div>
+																</div>
+														})
+
+											}
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Email</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.emailAddress}</span> 
+													</div>
+												</div>
+											</div>	
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Contact</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.phoneNumber}</span> 
+													</div>
+												</div>
+											</div>
+
+
+										</div>
+
+										:
+										<div>
+										</div>
+									}
+									
+
+
+									{
+										this.state.bookingDetails.commodity === "cars" ?
+											
+										<div>
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >City</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.city}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Start Date</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.startDate}</span> 
+													</div>
+												</div>
+											</div>
+
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >End Date</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.endDate}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Car Name</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.carName}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Name</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.firstName} {this.state.bookingDetails.bookingInfo.lastName} </span> 
+													</div>
+												</div>
+											</div>
+
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >License #</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.licenseNumber}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Contact Email</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.email}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Contact Number</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.phoneNumber}</span> 
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+
+										:
+										<div>
+										</div>
+
+									}
 
 
 
+									
+
+									{
+										this.state.bookingDetails.commodity === "hotels" ?
+											
+										<div>
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >City</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.city}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Check-in Date</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.checkInDate}</span> 
+													</div>
+												</div>
+											</div>
+
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Check-out Date</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.checkOutDate}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Hotel Name</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.hotelName}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Room Type</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.roomType}  </span> 
+													</div>
+												</div>
+											</div>
+
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >No of Guest</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.guests}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Name</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.firstName} {this.state.bookingDetails.bookingInfo.lastName}</span> 
+													</div>
+												</div>
+											</div>
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Email</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.email}</span> 
+													</div>
+												</div>
+											</div>
+
+
+											<div className="row single-price-component">
+												<div className=" fair-type-div col-xs-7 pull-left">
+													<div className="fair-type-add-info">
+														<span >Contact</span>
+													</div>
+
+												</div>
+												<div className="fair-type-price col-xs-5 pull-right">
+													<div className="fair-type-add-info">
+														<span>{this.state.bookingDetails.bookingInfo.phoneNumber}</span> 
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+
+										:
+										<div>
+										</div>
+
+									}
+                                  
 
 
 								</div>
