@@ -20,8 +20,9 @@ function getProfile(msg, callback){
 
 function updateProfile(msg, callback){
 	var res = {};
-	idToUpdate = msg.id ;
-	userModel.update({is_deleted : false , _id : idToUpdate }, msg, { multi: false }, function(err , result){
+	idToUpdate = msg.auth_user_id ;
+	delete msg.id;
+	userModel.update({is_deleted : false , auth_user_id : idToUpdate }, {$set:msg}, { multi: false }, function(err , result){
         if(err){
             res.code = 500 ;
             res.message = "Error occured while updating Profle";
@@ -78,7 +79,7 @@ function getCreditCards(msg, callback){
 function deleteCreditCardById(msg, callback){
     var res = {};
     
-    creditCardModel.update({isDeleted: false , _id : msg.cardId , userId : msg.user_id}, {isDeleted : true }, { multi: false }, function(err , response){
+    creditCardModel.update({is_deleted: false , _id : msg.cardId , userId : msg.user_id}, {isDeleted : true }, { multi: false }, function(err , response){
         if(err){
             res.code = 500 ; 
             res.message = "Error occured while updating  a flight"
