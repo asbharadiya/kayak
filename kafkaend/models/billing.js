@@ -6,7 +6,7 @@ var billingSchema = new mongoose.Schema({
     listingId:mongoose.Schema.ObjectId,
     bookingId:mongoose.Schema.ObjectId,
     userId:String,
-    totalAmount:String,
+    totalAmount:Number,
     createdDate:Date,
     creditCardId:mongoose.Schema.ObjectId,
     revenueGeneratingCity:String

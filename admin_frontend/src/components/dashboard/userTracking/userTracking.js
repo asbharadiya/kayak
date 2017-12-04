@@ -29,7 +29,8 @@ class UserTracking extends Component {
 			userAnalyticsListingViewCar : [],
 			userAnalyticsListingViewHotel : [],
 			userAnalyticsListingViewFlight : [],
-			userActivityTracking : []
+			userActivityTracking : [],
+			width : window.innerWidth-400
 		}
 	}
 
@@ -78,7 +79,7 @@ class UserTracking extends Component {
 	                </div>
 	            </div>
 	        </div>
-		        <BarChart width={1200} height={300} data={this.props.userAnalyticsPageClicks} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsPageClicks} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Pages" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -88,7 +89,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#82ca9d" />
 			    </BarChart>
-		        <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewCar} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsListingViewCar} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Car Service" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -98,7 +99,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#f46b42" />
 			    </BarChart>
-		        <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewHotel} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsListingViewHotel} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Hotel" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -108,7 +109,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#8884d8" />
 			    </BarChart>
-			    <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewFlight} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+			    <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsListingViewFlight} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Airline" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -118,7 +119,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#82ca9d" />
 			      </BarChart>
-			      <BarChart width={600} height={600} data={this.props.userActivityTracking} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+			    <BarChart width={this.state.width} height={600} data={this.props.userActivityTracking} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 			      <XAxis dataKey="name">
 		        		<Label value="User" offset={0} position="insideBottom" />
 		      		</XAxis>

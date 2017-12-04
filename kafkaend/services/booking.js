@@ -283,7 +283,7 @@ function makeBooking(msg, callback){
             billing.listingType = msg.data.listingType;
             billing.listingId = new ObjectID(msg.data.listingId);
             billing.userId = msg.userId;
-            billing.totalAmount = msg.data.total;
+            billing.totalAmount = Number.parseFloat(msg.data.total);
             billing.createdDate = curr_date;
             billing.bookingId = new ObjectID(booking._id);
             billing.revenueGeneratingCity = revenueGeneratingCity;
