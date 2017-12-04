@@ -105,19 +105,19 @@ class Home extends Component {
 	                </div>
 	            </div>
 	        </div>
-		   		 <PieChart width={375} height={400}>
+		   		 <PieChart width={350} height={400}>
 					<text x={200} y={200} dy={8} textAnchor="middle" fill="#f46b42">Listings</text>
-			        <Pie data={this.props.listingCount} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#f46b42" label/>
+			        <Pie dataKey='value' data={this.props.listingCount} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#f46b42" label/>
 			        <Tooltip/>
 			   </PieChart>
-	    		<PieChart width={375} height={400}>
+	    		<PieChart width={350} height={400}>
 	    			<text x={200} y={200} dy={8} textAnchor="middle" fill="#8884d8">Revenue</text>
-		            <Pie data={this.props.revenueByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#8884d8" label/>
+		            <Pie dataKey='value' data={this.props.revenueByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#8884d8" label/>
 		            <Tooltip/>
 	           </PieChart>
-	           <PieChart width={375} height={400}>
+	           <PieChart width={350} height={400}>
 	    			<text x={200} y={200} dy={8} textAnchor="middle" fill="#82ca9d">Orders</text>
-		            <Pie data={this.props.orderByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" label/>
+		            <Pie dataKey='value' data={this.props.orderByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" label/>
 		            <Tooltip/>
 	           </PieChart>
 			   <LineChart width={this.state.width/2} height={300} data={this.props.revenueByTopCmpny} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
