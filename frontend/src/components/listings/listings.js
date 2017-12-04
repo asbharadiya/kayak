@@ -25,7 +25,8 @@ class Listings extends Component {
             showAuthModal:false,
             filters:{},
             sorts:{},
-            timestamp:new Date().getTime()
+            timestamp:new Date().getTime(),
+            listings:[]
         }
         this.closeAuthModal = this.closeAuthModal.bind(this);
         this.loadPage = this.loadPage.bind(this);
@@ -57,10 +58,15 @@ class Listings extends Component {
                 showAuthModal:false,
                 filters:{},
                 sorts:{},
-                timestamp:new Date().getTime()
+                timestamp:new Date().getTime(),
+                listings:[]
             }, function(){
                 this.loadPage(this.state.queryParams);
             });
+        } else {
+            this.setState({
+                listings:this.state.listings.concat(newProps.listings)
+            })
         }
     }
 
@@ -110,12 +116,10 @@ class Listings extends Component {
     }
 
     onLoadMoreClick(){
-        this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts,this.props.currentPage+1);
+        this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts,parseInt(this.props.currentPage)+1);
     }
 
     render() {
-        console.log(this.props.listings);
-        console.log(this.props.totalListings);
         return (
 			<div className="listings-page-wrapper">
 				<div className="inline-search-container">
@@ -132,7 +136,7 @@ class Listings extends Component {
 						<div className="row data-container">
                             {
                                 this.props.totalListings > 0 ? (
-                                    this.props.listings.map((listing , key) => {
+                                    this.state.listings.map((listing , key) => {
                                         if(this.state.category === 'hotels') {
                                             return <HotelRow data={listing} key={key} onBookClick={this.onBookClick}/>
                                         } else if (this.state.category === 'flights') {
@@ -147,7 +151,7 @@ class Listings extends Component {
                             }
 						</div>
                         {
-                        	this.props.listings && this.props.totalListings > this.props.listings.length ? (
+                        	this.state.listings && this.props.totalListings > this.state.listings.length ? (
                                 <div className="load-more-btn">
                                     <button className="btn btn-primary btn-kayak" onClick={this.onLoadMoreClick.bind(this)}>Load more</button>
                                 </div>
@@ -175,9 +179,9 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
-        listings:ownProps.listings ? ownProps.listings.concat(state.listingsReducer.listings.docs):state.listingsReducer.listings.docs,
+        listings:state.listingsReducer.listings.docs,
         totalListings:state.listingsReducer.listings.total,
         currentPage:state.listingsReducer.listings.page,
         isLogged:state.authReducer.isLogged
