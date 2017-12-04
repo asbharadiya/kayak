@@ -1,7 +1,3 @@
-.past-booking-content-list a{
-	color:  #337ab7 !important
-}
-
 
 .booking-panel-body-component .single-price-component:last-child{
 	font-size: 12px ;
@@ -11,64 +7,59 @@
 }
 
 
- .booking-panel-body-component .single-price-component{
+.booking-panel-body-component .single-price-component{
 	font-size: 12px ;
 	color : darkgrey ;
 	margin-top: 15px ;
 	margin-bottom: 25px
 }
 
- .booking-panel-body-component .single-price-component .fair-type-div .fair-type{
+.booking-panel-body-component .single-price-component .fair-type-div .fair-type{
 
 	border-bottom: 1px solid #e4e5ea;
 	padding-bottom: 4px
 }
 
 
- .booking-panel-body-component .single-price-component .buy{
+.booking-panel-body-component .single-price-component .buy{
 	padding-top: 16px ;
 	padding-left: 16px ;
 	padding-right: 16px
 }
 
- .booking-panel-body-component .single-price-component .buy button{
+.booking-panel-body-component .single-price-component .buy button{
 	width : 100%;
 }
 
 
 
 
- .booking-panel-body-component .single-price-component .fair-type-price .fair-type{
+.booking-panel-body-component .single-price-component .fair-type-price .fair-type{
 
 	border-bottom: 2px solid #747474 ;
 	padding-bottom: 4px
 }
 
 
- .booking-panel-body-component .single-price-component .fair-type-price{
+.booking-panel-body-component .single-price-component .fair-type-price{
 	padding: 0px ;
 	padding-right: 15px ;
 	text-align: right
 }
 
- .booking-panel-body-component .single-price-component .fair-type-price .price{
+.booking-panel-body-component .single-price-component .fair-type-price .price{
 	margin-left: 15px
 }
 
 
- .booking-panel-body-component .single-price-component .fair-type-price .price span{
+.booking-panel-body-component .single-price-component .fair-type-price .price span{
 	margin-left: 15px ;
 	margin-right: 15px
 }
 
 
 
- .booking-panel-body-component .single-price-component .fair-type-div {
+.booking-panel-body-component .single-price-component .fair-type-div {
 
 	padding-right: 0
-}
-
-
-.billing-details-footer .width-40{
-	width : 195px;
 }
