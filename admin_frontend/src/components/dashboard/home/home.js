@@ -74,7 +74,7 @@ class Home extends Component {
 	                        <div className="d-flex flex-row">
 	                            <div className="round round-lg align-self-center round-warning"><i className="fa fa-money"></i></div>
 	                            <div className="m-l-10 align-self-center">
-	                                <h3 className="m-b-0 font-lgiht">{"$"+this.props.totalRevenue}</h3>
+	                                <h3 className="m-b-0 font-lgiht">{"$"+this.props.totalRevenue.toFixed(2)}</h3>
 	                                <h5 className="text-muted m-b-0">Revenue</h5></div>
 	                        </div>
 	                    </div>
@@ -86,7 +86,7 @@ class Home extends Component {
 	                        <div className="d-flex flex-row">
 	                            <div className="round round-lg align-self-center round-primary"><i className="fa fa-usd"></i></div>
 	                            <div className="m-l-10 align-self-center">
-	                                <h3 className="m-b-0 font-lgiht">{"$"+(this.props.totalRevenue*0.20)}</h3>
+	                                <h3 className="m-b-0 font-lgiht">{"$"+(this.props.totalRevenue*0.20).toFixed(2)}</h3>
 	                                <h5 className="text-muted m-b-0">Earning</h5></div>
 	                        </div>
 	                    </div>

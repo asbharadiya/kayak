@@ -19,7 +19,10 @@ class HotelRow extends Component {
     return (
       <div className="hotels-row col-xs-12 no-padding">
         <div className="hotel-image col-xs-3">
-          <img className="img-responsive" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
+          {this.props.data.images[0]?
+            <img className="img-responsive" src={this.props.data.images[0]} alt="hotel-thumb"></img>
+          : <img className="img-responsive" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
+          }
         </div>
         <div className="title-section col-xs-7">
           <div className="hotel-title col-xs-9  no-padding">
