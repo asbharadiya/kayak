@@ -14,9 +14,9 @@ class CarCheckoutBookingInfo extends Component {
             phoneNumber : 0 ,
             email : '' ,
             licenseNumber : '',
-            city : '',
-            startDate : '' ,
-            endDate : ''
+            city : this.props.queryParams.city ,
+            startDate : this.props.queryParams.startDate ,
+            endDate : this.props.queryParams.endDate
         }
 
         this.setFname = this.setFname.bind(this);
@@ -74,10 +74,7 @@ class CarCheckoutBookingInfo extends Component {
             firstName :  newProps.profile !== undefined ? newProps.profile.firstName : '' ,
             lastName : newProps.profile !== undefined ? newProps.profile.lastName : '' ,
             phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number != null ? newProps.profile.phone_number : ''  ) : '',
-            email : newProps.profile !== undefined ? newProps.profile.email : '' ,
-            city : this.props.queryParams.city ,
-            startDate : this.props.queryParams.startDate ,
-            endDate : this.props.queryParams.endDate
+            email : newProps.profile !== undefined ? newProps.profile.email : ''
         } , function(){
             this.props.updateBookingInfo(this.state)
         })
@@ -100,7 +97,7 @@ class CarCheckoutBookingInfo extends Component {
 
 
                 <div className="body-single-data-content col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <input value={ this.state.phoneNumber} onChange={this.setPhone} type="number" className="form-control booking-info-data-element " placeholder="Mobile" />
+                    <input value={ this.state.phoneNumber} onChange={this.setPhone} type="text" className="form-control booking-info-data-element " placeholder="Mobile" />
                 </div>
 
 

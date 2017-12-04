@@ -14,8 +14,9 @@ class HotelCheckoutBookingInfo extends Component {
             email : '' ,
             city : this.props.queryParams.city,
             roomType: this.props.queryParams.roomType,
-            checkInDate : this.props.queryParams.checkInDate ,
-            checkOutDate : this.props.queryParams.checkOutDate
+            checkInDate : this.props.queryParams.startDate ,
+            checkOutDate : this.props.queryParams.endDate,
+            guests :   this.props.queryParams.guests,
         }
 
         this.setFname = this.setFname.bind(this);
@@ -57,14 +58,6 @@ class HotelCheckoutBookingInfo extends Component {
         })
     }
 
-    setLicense = (e) => {
-        this.setState({
-            licenseNumber : e.target.value
-        }, function(){
-            this.props.updateBookingInfo(this.state);
-        })
-    }
-
 
     componentWillReceiveProps(newProps){
 
@@ -72,8 +65,7 @@ class HotelCheckoutBookingInfo extends Component {
             firstName :  newProps.profile !== undefined ? newProps.profile.firstName : '' ,
             lastName : newProps.profile !== undefined ? newProps.profile.lastName : '' ,
             phoneNumber : newProps.profile !== undefined ? (newProps.profile.phone_number !== null ? newProps.profile.phone_number : ''  ) : '',
-            email : newProps.profile !== undefined ? newProps.profile.email : '' ,
-            city : this.props.queryParams.city
+            email : newProps.profile !== undefined ? newProps.profile.email : '' 
         } , function(){
             this.props.updateBookingInfo(this.state)
         })
