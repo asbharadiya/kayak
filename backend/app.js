@@ -45,7 +45,7 @@ if(config.util.getEnv('NODE_ENV') === 'test'){
   });
 }
 
-var whitelist = ['http://localhost:3000', 'http://localhost:3001']
+var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5000']
 var corsOptions = {
     origin: function (origin, callback) {
         /*if (whitelist.indexOf(origin) !== -1) {

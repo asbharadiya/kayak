@@ -4,8 +4,11 @@ module.exports = function(passport) {
 	var module = {};
 
 	module.adminSignIn = function(req,res, next){
+		console.log('SIGN IN')
 		passport.authenticate('local-adminSignIn', function(err,result) {
 	        if(err) {
+	        	console.log('ERROR')
+	        	console.log(err)
 	            return res.status(500).json({status:500,statusText:"Internal server error"});
 	        }
 	        if(result.code === 200) {
