@@ -12,25 +12,27 @@ function addHotel(msg, callback){
 		var now = msg.serviceStartDate;
 		msg.availability = [];
 		var availabilityObj = {};
-
-
-
 		var serviceDays = (new Date(msg.serviceEndDate)- new Date(msg.serviceStartDate))/(1000*60*60*24) ;
 		var availabilityDateObject = [] ;
+		var hotelMinPrice = msg.hotelRooms[0].priceTotal;
+		var hotelMaxPrice = msg.hotelRooms[0].priceTotal;
+		for (var i=0 ; i < msg.hotelRooms.length ; i++) {
+			if(msg.hotelRooms[i].priceTotal<hotelMinPrice){
+				hotelMinPrice=msg.hotelRooms[i].priceTotal;
+			}
+			if(msg.hotelRooms[i].priceTotal>hotelMinPrice){
+				hotelMaxPrice=msg.hotelRooms[i].priceTotal;
+			}
+		}
+		msg.hotelMinPrice = hotelMinPrice;
+		msg.hotelMaxPrice = hotelMaxPrice;
 		for (var i=0 ; i <= serviceDays ; i++) {
-
 			var date = new Date(new Date(msg.serviceStartDate).setUTCHours(0,0,0,0));
 			date.setDate(date.getDate() + i);
-
 			availabilityDateObject.push({availableDate : date , hotelRooms : msg.hotelRooms});
 		}
-
 		msg.availability = availabilityDateObject ;
-		console.log(msg) ;
-
-
-
-
+		//console.log(msg) ;
 		var newHotel = new hotelModel(msg);
 		newHotel.save(function (err) {
 			if(err) {
@@ -108,6 +110,20 @@ function updateHotelById(msg, callback){
 	var now = msg.serviceStartDate;
 	msg.availability = [];
 	var availabilityObj = {};
+
+	var hotelMinPrice = msg.hotelRooms[0].priceTotal;
+	var hotelMaxPrice = msg.hotelRooms[0].priceTotal;
+	for (var i=0 ; i < msg.hotelRooms.length ; i++) {
+		if(msg.hotelRooms[i].priceTotal<hotelMinPrice){
+			hotelMinPrice=msg.hotelRooms[i].priceTotal;
+		}
+		if(msg.hotelRooms[i].priceTotal>hotelMinPrice){
+			hotelMaxPrice=msg.hotelRooms[i].priceTotal;
+		}
+	}
+	msg.hotelMinPrice = hotelMinPrice;
+	msg.hotelMaxPrice = hotelMaxPrice;
+	
 	for (var d = new Date(msg.serviceStartDate); d <= new Date(msg.serviceEndDate); d.setDate(d.getDate() + 1)) {
 		availabilityObj.availableDate = new Date(d);
 		availabilityObj.hotelRooms = msg.hotelRooms;
@@ -166,140 +182,68 @@ function deleteHotelById(msg, callback){
 
 function getHotelsForCustomer(msg, callback){
     var res = {};
-
-   /* var parts = msg.queryParams.checkInDate.split("-");
+    var parts = msg.queryParams.startDate.split("-");
     var startDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
-    parts = msg.queryParams.checkOutDate.split("-");
+    parts = msg.queryParams.endDate.split("-");
     var endDate = new Date(parts[2]+"-"+parts[0]+"-"+parts[1]);
-		console.log(msg.queryParams);*/
-	// var query = {
-  //       is_deleted : false,
-  //       hotelCity: msg.queryParams.city,
-  //       serviceStartDate : { $lte: startDate },
-  //       serviceEndDate : { $gte: endDate },
-  //       availability: {
-  //           $elemMatch: {
-  //               availableDate: {
-  //                   $gte: startDate,
-  //                   $lte: endDate
-  //               },
-  //               hotelRooms : {
-  //                   $elemMatch: {
-  //                       roomType :msg.queryParams.roomType,
-  //                       totalAvailable: {
-  //                           $gte: 1
-  //                       }
-  //                   }
-  //               }
-  //           }
-  //       }
-  //   };
-	console.log(msg.queryParams);
+    console.log("kkkkkkkkkkkkkkkk"+JSON.stringify(msg.queryParams));
+	var query = {
+		hotelCity: msg.queryParams.city,
+		hotelStar: {"$lte": Number.parseInt(msg.queryParams.rating) || 5, "$gte": 0},
+		hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
+		serviceStartDate : { $lte: startDate },
+		serviceEndDate : { $gte: endDate },
+		is_deleted : false,
+		availability: {
+			$elemMatch: {
+				availableDate: {
+		            $gte: startDate,
+		            $lte: endDate
+		        },
+		        hotelRooms : {
+		        	$elemMatch: {
+		        		 priceTotal : {"$lte": msg.queryParams.priceMax || 2000, "$gte": msg.queryParams.priceMin || 0},
+		        		 personPerRoom : Number.parseInt(msg.queryParams.guests) || 2,
+		                 roomType : msg.queryParams.roomType,
+		                 totalAvailable: {
+		                     $gte: 1
+		                 }
+		        	}
+	           }
+	        }
+	    }
+		//availability:  {$exists:true}
+		//$where: 'this.availability.length > ' + daysCount
+	};
 
-		var query = {
-
-			//hotelCity: msg.queryParams.city,
-			hotelStar: {"$lte": msg.queryParams.rating || 5},
-			hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
-
-
-			is_deleted : false,
-			// availability: {
-			// 	$elemMatch: {
-			// 		availableDate: {
-			// 			$gte: msg.queryParams.checkInDate,
-			// 			$lte: msg.queryParams.checkOutDate
-			// 		}
-			// 	}
-			// },
-			//availability:  {$exists:true},
-			//$where: 'this.availability.length > ' + daysCount
-		};
-
-		if(msg.queryParams.amenities != undefined ){
-			var amenitiesArray = msg.queryParams.amenities.split(',');
-			if(amenitiesArray.length == 1 && amenitiesArray[0] == '' ){
-				amenitiesArray = []
-			}else if(amenitiesArray.length > 0 ){
-				query.hotelAmenities =  { "$all" : amenitiesArray }
-			}
+	if(msg.queryParams.amenities != undefined ){
+		var amenitiesArray = msg.queryParams.amenities.split(',');
+		if(amenitiesArray.length == 1 && amenitiesArray[0] == '' ){
+			amenitiesArray = []
+		}else if(amenitiesArray.length > 0 ){
+			query.hotelAmenities =  { "$all" : amenitiesArray }
 		}
-
-
-    // if(msg.queryParams.luggage != undefined ){
-    //
-     //    var priceRangeArray = [] ;
-     //    priceRangeArray.push(parseInt(msg.queryParams.minPrice));
-     //    priceRangeArray.push(parseInt(msg.queryParams.maxPrice));
-    //
-    //
-    //
-     //    var lugaggesArray = msg.queryParams.luggage.split(',')
-     //    var occupantsArray = msg.queryParams.occupants.split(',')
-     //    var categoryArray = msg.queryParams.category.split(',')
-    //
-    //
-     //    if(priceRangeArray.length == 2){
-     //        query.dailyRentalValue = { $gte : priceRangeArray[0]  , $lte: priceRangeArray[1] }
-     //    }
-    //
-     //    if(( lugaggesArray.length == 1 && lugaggesArray[0] == '' )) {
-     //        lugaggesArray = []
-     //    }else if(lugaggesArray.length > 0){
-     //        query.luggage  =  { "$in" : lugaggesArray}
-     //    }
-    //
-     //    if( occupantsArray.length == 1 && occupantsArray[0] == '' ){
-     //        occupantsArray = []
-     //    }else if(occupantsArray.length > 0 ){
-     //        query.occupancy =  { "$in" : occupantsArray }
-     //    }
-    //
-     //    if( categoryArray.length == 1 && categoryArray[0] == '' ){
-     //        categoryArray = []
-     //    }else if(categoryArray.length > 0){
-     //        query.carType = {"$in" : categoryArray}
-     //    }
-    //
-    // }
-	// var query = {
-	// 	hotelCity: msg.queryParams.city,
-	// 	hotelStar: {"$lte": msg.queryParams.rating || 5},
-	// 	hotelRating : {"$lte": msg.queryParams.reviewScoreMax || 5, "$gte": msg.queryParams.reviewScoreMin || 0},
-	// 	is_deleted : false,
-	// 	availability: {
-	// 		$elemMatch: {
-	// 			availableDate: {
-	// 				$gte: msg.queryParams.checkInDate,
-	// 				$lte: msg.queryParams.checkOutDate
-	// 			}
-	// 		}
-	// 	},
-	// 	availability:  {$exists:true},
-	// 	$where: 'this.availability.length > ' + daysCount
-	// };
-
-	// query.availability = {
-	// 	$group : {
-	// 		$elemMatch: {
-	// 			availability :{$gte: msg.queryParams.checkInDate, $lte: msg.queryParams.checkOutDate},
-	// 			$elemMatch : {
-	// 				hotelRooms: {
-	// 					$elemMatch : {
-	// 						totalAvailable : 0
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-
+	}
+	
+	var sortingObj = {};
+	if(msg.queryParams.sort=="priceHtoL"){
+		sortingObj["hotelMinPrice"] = -1;
+	} else if(msg.queryParams.sort=="highRated"){
+		sortingObj["hotelRating"] = -1;	
+	} else if(msg.queryParams.sort=="stars"){
+		sortingObj["hotelStar"] = -1;
+	} else {
+		sortingObj["hotelMinPrice"] = 1;
+	}
 	var options = {
 		select: 'hotelName hotelAddress hotelCity hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
 		lean: true,
-		page: msg.pageNo || 1,
-		limit: 20
+		page: msg.queryParams.pageNo || 1,
+		limit: 4,
+		sort: sortingObj
 	};
+	console.log("pppppppppppppppppppp"+JSON.stringify(query));
+	console.log("oooooooooooooooooooo"+JSON.stringify(options));
 	hotelModel.paginate(query,options, function(err, result){
 		if(err){
 		    console.log(err);

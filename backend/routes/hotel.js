@@ -29,7 +29,7 @@ function addHotel(req,res){
 		serviceStartDate : req.body.serviceStartDate,
 		serviceEndDate : req.body.serviceEndDate,
 		hotelRooms: tempHotelRooms ,
-        amenities : amenities
+		hotelAmenities : amenities
     }
     
 
@@ -86,6 +86,10 @@ function updateHotelById(req,res){
 		tempHotelRooms[i].totalAvailable = parseInt(tempHotelRooms[i].totalAvailable);
 		tempHotelRooms[i].personPerRoom = parseInt(tempHotelRooms[i].personPerRoom);
 	}
+    var amenities = req.body.amenities.split(",") ;
+    if(amenities.length == 1 && amenities[0] == ''){
+        amenities = [] ; 
+    }
 	var obj = {
 		hotelName : req.body.hotelName ,
 		hotelAddress : req.body.hotelAddress,
@@ -100,7 +104,8 @@ function updateHotelById(req,res){
 		serviceEndDate : req.body.serviceEndDate,
 		hotelRooms: tempHotelRooms,
         _id : req.body._id,
-        idToUpdate : req.params.id
+        idToUpdate : req.params.id,
+		hotelAmenities : amenities
     }
     if(req.files == null){
         kafka.make_request(topic_name,'updateHotelById',obj, function(err,result){

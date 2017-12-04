@@ -17,7 +17,9 @@ var hotelSchema = new mongoose.Schema({
   serviceStartDate : Date,
   serviceEndDate : Date,
   availability : [{ availableDate: Date, hotelRooms : [{ roomType : String, priceTotal : Number, totalAvailable : Number, personPerRoom : Number}] } ],
-  images : [String]
+  images : [String],
+  hotelMinPrice: Number,
+  hotelMaxPrice: Number
 });
 
 hotelSchema.plugin(mongoosePaginate);

@@ -35,7 +35,7 @@ function processUserActivityTracking(lineObj, callback) {
   payload.page = lineObj.message.page;
   payload.duration = lineObj.message.duration;
   payload.time = lineObj.message.time;
-  console.log(lineObj);
+  //console.log(lineObj);
   if(results.userActivityTracking[lineObj.message.userId]) {
     results.userActivityTracking[lineObj.message.userId].push(payload);
   } else {
@@ -116,17 +116,17 @@ function run(callback) {
 
   rl.on('line', (line) => {
     //rl.pause();
-    console.log('reading line' + fileCursor.y);
+    //console.log('reading line' + fileCursor.y);
     readEachLine(line, function() {
       fileCursor.y++;
     });
   })
   rl.on('close',(line) => {
-    console.log('file cursar at',fileCursor);
+   /* console.log('file cursar at',fileCursor);
     //clearInterval(intervalHandler);
     console.log('---------------------------------------------- '+
     '\n-------------------Summary--------------------'+
-    '\n---------------------------------------------- ');
+    '\n---------------------------------------------- ');*/
     analyticsModel.remove({}, function() {
       var newAnalytics = new analyticsModel({"results": results});
       newAnalytics.save();
@@ -141,16 +141,16 @@ function run(callback) {
     if (isPaused) {
       rl.resume();
       isPaused = false;
-      console.log('---------------------------------------------- '+
+      /*console.log('---------------------------------------------- '+
       '\n-----------------------resuming----------------------- '+isPaused+
-      '\n---------------------------------------------- ');
+      '\n---------------------------------------------- ');*/
     }
     else {
       rl.pause();
       isPaused = true;
-      console.log('---------------------------------------------- '+
+      /*console.log('---------------------------------------------- '+
       '\n-----------------------pausing----------------------- '+isPaused+
-      '\n---------------------------------------------- ');
+      '\n---------------------------------------------- ');*/
     }
   }
 }
