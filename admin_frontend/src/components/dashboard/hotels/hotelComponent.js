@@ -220,12 +220,12 @@ class HotelComponent extends Component {
                         </div>
                     </div>
                     <div className="col-xs-2 buttonGroup">
-                        <a classsName="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={() => {
+                        <a className="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 showHotelUpdateModal : true
                             })
                         }}></i></a>
-                        <a classsName="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
+                        <a className="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 openDeleteModal : true
                             })

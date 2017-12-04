@@ -213,9 +213,10 @@ function getFlightsForCustomer(msg, callback){
    var options = {
         select: 'flightNumber airline source destination departure arrival firstClassPrice businessClassPrice economyClassPrice',
         lean: true,
-        page: msg.pageNo || 1,
+        page: msg.queryParams.pageNo || 1,
         limit: 20
     };
+    console.log(options);
     flightModel.paginate(query,options, function(err, result){
         if(err){
             res.code = 500  ;
