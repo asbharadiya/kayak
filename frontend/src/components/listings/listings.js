@@ -22,11 +22,14 @@ class Listings extends Component {
         this.state = {
             category : this.props.match.params.category,
             queryParams : this.props.location.search,
-            showAuthModal:false
+            showAuthModal:false,
+            filters:{},
+            sorts:{}
         }
         this.closeAuthModal = this.closeAuthModal.bind(this);
         this.loadPage = this.loadPage.bind(this);
         this.applyFilters = this.applyFilters.bind(this);
+        this.applySorts = this.applySorts.bind(this);
         this.onBookClick = this.onBookClick.bind(this);
     }
 
@@ -49,21 +52,25 @@ class Listings extends Component {
         this.props.clearListingsFromStore();
     }
 
-    loadPage(queryParams,filters){
+    loadPage(queryParams,filters,sorts){
         if(this.state.category === 'cars'){
             this.trackClick('cars-filters', '/cars/listings')
-            this.props.getAllCars(queryParams,filters) ;
+            this.props.getAllCars(queryParams,filters,sorts) ;
         } else if(this.state.category === 'flights') {
             this.trackClick('flights-filters', '/flights/listings')
-            this.props.getAllFlights(queryParams,filters);
+            this.props.getAllFlights(queryParams,filters,sorts);
         } else {
             this.trackClick('hotels-filters', '/hotels/listings')
-            this.props.getAllHotels(queryParams,filters);
+            this.props.getAllHotels(queryParams,filters,sorts);
         }
     }
 
     applyFilters(filters){
-        this.loadPage(this.state.queryParams,filters);
+        this.setState({
+            filters:filters
+        }, function(){
+            this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts);
+        });
     }
 
     onBookClick(id){
@@ -74,6 +81,14 @@ class Listings extends Component {
                 showAuthModal:true
             })
         }
+    }
+
+    applySorts(sorts){
+        this.setState({
+            sorts:sorts
+        }, function(){
+            this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts);
+        });
     }
 
     render() {
@@ -88,7 +103,7 @@ class Listings extends Component {
 					</div>
 					<div className="center-container">
 						<div className="sorting-container">
-							<Sorts/>
+							<Sorts applySorts={this.applySorts}/>
 						</div>
 						<div className="data-container">
                             {
@@ -119,9 +134,9 @@ class Listings extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllCars : (queryParams,filters) => dispatch(carActions.getAllCars(queryParams,filters)),
-        getAllFlights : (queryParams,filters) => dispatch(flightActions.getAllFlights(queryParams,filters)),
-        getAllHotels : (queryParams,filters) => dispatch(hotelActions.getAllHotels(queryParams,filters)),
+        getAllCars : (queryParams,filters,sorts) => dispatch(carActions.getAllCars(queryParams,filters,sorts)),
+        getAllFlights : (queryParams,filters,sorts) => dispatch(flightActions.getAllFlights(queryParams,filters,sorts)),
+        getAllHotels : (queryParams,filters,sorts) => dispatch(hotelActions.getAllHotels(queryParams,filters,sorts)),
         clearListingsFromStore : () => dispatch(utilActions.clearListingsFromStore()),
         trackClick : (payload) => dispatch(analytics.trackClick(payload))
     }
