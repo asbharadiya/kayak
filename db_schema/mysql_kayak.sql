@@ -41,7 +41,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'admin@gmail.com','$2a$10$dylgJhF6JSiVjvbKH5KeoOfZurViVCxsmauOfEUcUNXOaDBrqx5DO','admin@gmail.com',1,'ADMIN');
+INSERT INTO `auth_user` VALUES (1,'admin@gmail.com','$2a$10$ZS8Dc6H8Rb1YjVAiMuTyH.sZ6OgU9ryWY40ivrzrW1i.IlUvoSI6u','admin@gmail.com',1,'ADMIN');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
