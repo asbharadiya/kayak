@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, Brush, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
+import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
 import './home.css';
 import * as actions from '../../../actions/home';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 class Home extends Component {
-	
+
 	constructor(props){
 		super(props);
 		this.state = {
@@ -19,9 +19,10 @@ class Home extends Component {
 			revenueByTopCmpnyMonth : [],
 			userCount : [],
 			listingCount : [],
+			width : window.innerWidth-400,
 			pieData : [{name: 'Cars', value: 2400}, {name: 'Hotels', value: 4567},
                 {name: 'Flights', value: 1398}],
-            lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800}, 
+            lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800},
             	{name: 'Sonesta Collection Hotels', uv: 2000, pv: 750, amt: 750}, {name: 'W Hotels & Resorts', uv: 2000, pv: 1900, amt: 1900},
             	{name: 'Virgin America', uv: 2000, pv: 1350, amt: 1350}, {name: 'Delta Air Lines', uv: 2000, pv: 900, amt: 900},
             	{name: 'JetBlue', uv: 2000, pv: 2100, amt: 2100}, {name: 'United', uv: 2000, pv: 1625, amt: 1625},
@@ -50,7 +51,7 @@ class Home extends Component {
         this.props.getRevenueByCity();
         this.props.getRevenueByTopCmpny();
     }
-    
+
 	render() {
 		return (
     		<div className="homepage">
@@ -104,22 +105,22 @@ class Home extends Component {
 	                </div>
 	            </div>
 	        </div>
-		   		 <PieChart width={375} height={400}>
+		   		 <PieChart width={350} height={400}>
 					<text x={200} y={200} dy={8} textAnchor="middle" fill="#f46b42">Listings</text>
-			        <Pie data={this.props.listingCount} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#f46b42" label/>
+			        <Pie dataKey='value' data={this.props.listingCount} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#f46b42" label/>
 			        <Tooltip/>
 			   </PieChart>
-	    		<PieChart width={375} height={400}>
+	    		<PieChart width={350} height={400}>
 	    			<text x={200} y={200} dy={8} textAnchor="middle" fill="#8884d8">Revenue</text>
-		            <Pie data={this.props.revenueByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#8884d8" label/>
+		            <Pie dataKey='value' data={this.props.revenueByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#8884d8" label/>
 		            <Tooltip/>
 	           </PieChart>
-	           <PieChart width={375} height={400}>
+	           <PieChart width={350} height={400}>
 	    			<text x={200} y={200} dy={8} textAnchor="middle" fill="#82ca9d">Orders</text>
-		            <Pie data={this.props.orderByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" label/>
+		            <Pie dataKey='value' data={this.props.orderByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" label/>
 		            <Tooltip/>
 	           </PieChart>
-			   <LineChart width={580} height={300} data={this.props.revenueByTopCmpny} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+			   <LineChart width={this.state.width/2} height={300} data={this.props.revenueByTopCmpny} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 				   <XAxis dataKey="name">
 		       		<Label value="Top 10 Revenue Generating Company in last year" offset={0} position="insideBottom" />
 		     	   </XAxis>
@@ -129,7 +130,7 @@ class Home extends Component {
 			       <Legend />
 			       <Line type="monotone" dataKey="totalAmount" stroke="#8884d8" />
 		       </LineChart>
-			   <AreaChart width={580} height={300} data={this.props.revenueByTopCmpnyMonth} syncId="anyId" margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+			   <AreaChart width={this.state.width/2} height={300} data={this.props.revenueByTopCmpnyMonth} syncId="anyId" margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 			   	  <XAxis dataKey="name">
 		       		<Label value="Top 10 Revenue Generating Company in last month" offset={0} position="insideBottom" />
 		     	  </XAxis>
@@ -138,7 +139,7 @@ class Home extends Component {
 		          <Tooltip/>
 		          <Area type='monotone' dataKey='totalAmount' stroke='#82ca9d' fill='#82ca9d' />
 		        </AreaChart>
-		        <BarChart width={1200} height={300} data={this.props.revenueByCity} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.revenueByCity} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Cities" offset={0} position="insideBottom" />
 		      		</XAxis>

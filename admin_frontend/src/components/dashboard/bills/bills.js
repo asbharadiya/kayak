@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './bills.css';
 import {getAllBills } from '../../../actions/bills';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
@@ -7,15 +6,18 @@ import BillComponent  from './billComponent';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import  MonthPickerInput from 'react-month-picker-input';
+import 'react-datepicker/dist/react-datepicker.css';
+require('react-month-picker-input/dist/react-month-picker-input.css');
+require('./bills.css');
 
 class Bills extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			bookingId : '' ,
-			createdDate : '', 
+			createdDate : '',
 			_id : '',
-			totalAmount : '', 
+			totalAmount : '',
 			userId : '',
 			listingId : '',
 			listingType : '' ,
@@ -28,7 +30,7 @@ class Bills extends Component {
 		this.props.getAllBills('all' ,'*');
 	}
 
-	componentWillReceiveProps(newProps) { 
+	componentWillReceiveProps(newProps) {
     }
 
     handleSelectBy(param){
@@ -46,17 +48,19 @@ class Bills extends Component {
         this.props.getAllBills('date' , moment(date).format('MM-DD-YYYY'));
     }
 
-    handleFetchBillingMonthChange(){
-    	this.props.getAllBills('month' , '12 2017');
+    handleFetchBillingMonthChange(fullYearAndMonth, year){
+			fullYearAndMonth = fullYearAndMonth.substring(0, 2);
+			var yearAndMonth = fullYearAndMonth + ' ' + year;
+    	this.props.getAllBills('month' , yearAndMonth);
     }
 
 	render() {
-		
+
 
 		return (
     		<div className="row module-content">
 				 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
-						 
+
 				 	<div className="div-filter-area">
 				 		<div className="radio-options">
                            	<label className="radio-inline">
@@ -69,7 +73,7 @@ class Bills extends Component {
                                 <input type="radio" name="pickByDate"
                                        value="date" checked={this.state.selectBy === 'date'}
                                        onChange={this.handleSelectBy.bind(this,'date')}/>
-                                Select by Date
+																		 Select By Date
                             </label>
                             <label className="radio-inline">
                                 <input type="radio" name="pickByMonth"
@@ -77,29 +81,28 @@ class Bills extends Component {
                                        onChange={this.handleSelectBy.bind(this,'month')}/>
                                 Select By Month
                             </label>
-                            
+
                         </div>
 				 	</div>
 
-				 	
+
 				 	<div className="select-category">
 					 	{
-					 		this.state.selectBy == 'date' ? 
+					 		this.state.selectBy === 'date' ?
 					 		<div>
 						 		<div className="field-container date">
 		                            <label>Select Bill Date</label>
-		                            <DatePicker className="form-control" readOnly={true}
-		                                        minDate={moment()}
+		                            <DatePicker className="form-control"
+																	forceShowMonthNavigation ={true} readOnly={true}
 		                                        selected={this.state.checkInDate}
-		                                        onChange={this.handleFetchBillingDateChange.bind(this)}
-		                            />
+		                                        onChange={this.handleFetchBillingDateChange.bind(this)}/>
 		                        </div>
 						 	</div>
 
-						 	: 
+						 	:
 
 						 	(
-						 		this.state.selectBy == 'month' ? 
+						 		this.state.selectBy === 'month' ?
 						 		<div className="month-picker-div">
 						 			<div className="select-month">
 						 				<b>Select Month and Year</b>
@@ -107,19 +110,20 @@ class Bills extends Component {
 
 							 		<MonthPickerInput className="month-picker"
 										  value={new Date()}
-										  onChange={this.handleFetchBillingMonthChange.bind(this)}
+											year={2017}
+										  onChange={function(fullDate, year) {
+												this.handleFetchBillingMonthChange(fullDate, year);
+											}.bind(this)}
 									/>
 							 	</div>
 						 	:
 						 		<div></div>
 						 	)
-
-
 					 	}
-				 	
+
 				 	</div>
 
-				 	
+
 
 
 					 <div className="row listHeader">
@@ -152,7 +156,7 @@ class Bills extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllBills : (category , value) => dispatch(getAllBills( category , value)) 
+    getAllBills : (category , value) => dispatch(getAllBills( category , value))
   };
 }
 

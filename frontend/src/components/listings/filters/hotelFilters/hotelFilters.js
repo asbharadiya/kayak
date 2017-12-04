@@ -85,7 +85,7 @@ class HotelFilters extends Component {
           </div>
           <div className="groups-section">
               <div className="groups-title">
-                  Review Score
+                  Rating
               </div>
               <div className="groups-list">
                   <ul>

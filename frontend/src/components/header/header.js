@@ -78,7 +78,6 @@ class Header extends Component {
 								<Nav>
 									<NavDropdown eventKey={1} title={
 										<div className="pull-left">
-											<i className="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
 											<span>My Account</span>
 										</div>
                                     } id="user-dropdown">
@@ -88,7 +87,6 @@ class Header extends Component {
 								</Nav>
                             ) : (
 								<a onClick={this.openAuthModal}>
-									<i className="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
 									<span>My Account</span>
 								</a>
                             )

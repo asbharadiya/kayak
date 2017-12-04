@@ -283,7 +283,7 @@ function makeBooking(msg, callback){
             billing.listingType = msg.data.listingType;
             billing.listingId = new ObjectID(msg.data.listingId);
             billing.userId = msg.userId;
-            billing.totalAmount = msg.data.total;
+            billing.totalAmount = Number.parseFloat(msg.data.total);
             billing.createdDate = curr_date;
             billing.bookingId = new ObjectID(booking._id);
             billing.revenueGeneratingCity = revenueGeneratingCity;
@@ -364,7 +364,7 @@ function makeBooking(msg, callback){
 function getBookings(msg, callback){
     var res = {};
     var userid = msg.userId ; 
-     billingModel.find({  userId : userid}, function(err, result){
+     billingModel.find({  userId : userid}, null,{sort: {createdDate: -1}}, function(err, result){
         if(err){
             res.code = 500  ;
             res.message = "Fail to get all Cars from the server"

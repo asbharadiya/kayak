@@ -4,7 +4,7 @@ const headers = {
     'Accept': 'application/json'
 };
 
-export const getUserDetails = () =>
+export const getUserDetails = (callback) =>
 
     fetch(api+'/c/profile', {
         method: 'GET',
@@ -15,10 +15,9 @@ export const getUserDetails = () =>
         credentials: 'include'
         
     }).then(res => {
-        
-        return res.json();
+        callback( null , res.json());
     }).catch(error => {
-        return error;
+        callback( error , {});
     }); 
     
 export const updateUserProfile = (data , callback) => {

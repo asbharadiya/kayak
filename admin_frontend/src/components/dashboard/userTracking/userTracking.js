@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
-import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, Brush, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
+import { Legend, Tooltip, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
 import './userTracking.css';
 import * as actions from '../../../actions/userTracking';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 class UserTracking extends Component {
-	
+
 	constructor(props){
 		super(props);
 		let bars = [];
 		for (var i = 0; i < 5; i++) {
-			bars.push(<Bar dataKey={"Bookings-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
-			bars.push(<Bar dataKey={"Cars-"+i+"-visit"} stackId="a" fill="#f46b42" />);
-			bars.push(<Bar dataKey={"Flights-"+i+"-visit"} stackId="a" fill="#8884d8" />);
-			bars.push(<Bar dataKey={"Hotels-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
-			bars.push(<Bar dataKey={"Car-listing-"+i+"-visit"} stackId="a" fill="#f46b42" />);
-			bars.push(<Bar dataKey={"Hotel-listing-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
-			bars.push(<Bar dataKey={"Flight-listing-"+i+"-visit"} stackId="a" fill="#8884d8" />);
-			bars.push(<Bar dataKey={"Payment-methods-"+i+"-visit"} stackId="a" fill="#d641f4" />);
-			bars.push(<Bar dataKey={"Home-"+i+"-visit"} stackId="a" fill="#f44176" />);
-			bars.push(<Bar dataKey={"Profile-"+i+"-visit"} stackId="a" fill="#f4cd41" />);
-			bars.push(<Bar dataKey={"Checkout-"+i+"-visit"} stackId="a" fill="#41d6f4" />);
+			bars.push(<Bar key={"Bookings-"+i+"-visit"} dataKey={"Bookings-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar key={"Cars-"+i+"-visit"} dataKey={"Cars-"+i+"-visit"} stackId="a" fill="#f46b42" />);
+			bars.push(<Bar key={"Flights-"+i+"-visit"} dataKey={"Flights-"+i+"-visit"} stackId="a" fill="#8884d8" />);
+			bars.push(<Bar key={"Hotels-"+i+"-visit"} dataKey={"Hotels-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar key={"Car-listing-"+i+"-visit"} dataKey={"Car-listing-"+i+"-visit"} stackId="a" fill="#f46b42" />);
+			bars.push(<Bar key={"Hotel-listing-"+i+"-visit"} dataKey={"Hotel-listing-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar key={"Flight-listing-"+i+"-visit"} dataKey={"Flight-listing-"+i+"-visit"} stackId="a" fill="#8884d8" />);
+			bars.push(<Bar key={"Payment-methods-"+i+"-visit"} dataKey={"Payment-methods-"+i+"-visit"} stackId="a" fill="#d641f4" />);
+			bars.push(<Bar key={"Home-"+i+"-visit"} dataKey={"Home-"+i+"-visit"} stackId="a" fill="#f44176" />);
+			bars.push(<Bar key={"Profile-"+i+"-visit"} dataKey={"Profile-"+i+"-visit"} stackId="a" fill="#f4cd41" />);
+			bars.push(<Bar key={"Checkout-"+i+"-visit"} dataKey={"Checkout-"+i+"-visit"} stackId="a" fill="#41d6f4" />);
 	    }
 		this.state = {
 			bars : bars,
@@ -29,14 +29,15 @@ class UserTracking extends Component {
 			userAnalyticsListingViewCar : [],
 			userAnalyticsListingViewHotel : [],
 			userAnalyticsListingViewFlight : [],
-			userActivityTracking : []
+			userActivityTracking : [],
+			width : window.innerWidth-400
 		}
 	}
 
     componentDidMount(){
         this.props.getUserAnalytics();
     }
-    
+
 	render() {
 		return (
     		<div className="userTrackingpage">
@@ -78,7 +79,7 @@ class UserTracking extends Component {
 	                </div>
 	            </div>
 	        </div>
-		        <BarChart width={1200} height={300} data={this.props.userAnalyticsPageClicks} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsPageClicks} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Pages" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -88,7 +89,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#82ca9d" />
 			    </BarChart>
-		        <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewCar} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsListingViewCar} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Car Service" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -98,7 +99,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#f46b42" />
 			    </BarChart>
-		        <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewHotel} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsListingViewHotel} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Hotel" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -108,7 +109,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#8884d8" />
 			    </BarChart>
-			    <BarChart width={1200} height={300} data={this.props.userAnalyticsListingViewFlight} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+			    <BarChart width={this.state.width} height={300} data={this.props.userAnalyticsListingViewFlight} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Airline" offset={0} position="insideBottom" />
 		      		</XAxis>
@@ -118,7 +119,7 @@ class UserTracking extends Component {
 			       <Legend />
 			       <Bar dataKey="value" stackId="a" fill="#82ca9d" />
 			      </BarChart>
-			      <BarChart width={600} height={600} data={this.props.userActivityTracking} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+			    <BarChart width={this.state.width} height={600} data={this.props.userActivityTracking} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 			      <XAxis dataKey="name">
 		        		<Label value="User" offset={0} position="insideBottom" />
 		      		</XAxis>

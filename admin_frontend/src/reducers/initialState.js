@@ -13,7 +13,7 @@ export default {
   allFlights : [],
   flightAddSuccess : null ,
   flightUpdateSuccess : null,
-  flightDeleteSuccess  : null , 
+  flightDeleteSuccess  : null ,
   currentFlightToUpdate : {
                 flightNumber : '' ,
                 airline : '' ,
@@ -35,9 +35,9 @@ export default {
   hotelDeleteSuccess : null,
   currentHotelToUpdate : {
     hotelName : '',
-    hotelAddress : '', 
+    hotelAddress : '',
     hotelCity : '',
-    hotelState : '', 
+    hotelState : '',
     hotelZip : '',
     hotelStar : '',
     hotelRating : '',
@@ -46,21 +46,20 @@ export default {
     hotelRooms : []
   },
   allCustomers : [],
-  
+
   allBills : [] ,
-  hotelUpdateSuccess : null,
   currentBillToUpdate : {
     bookingId : '',
-	createdDate : '', 
+	createdDate : '',
 	_id : '',
-	totalAmount : '', 
+	totalAmount : '',
 	userId : '',
 	listingId : '',
 	listingType : '',
 	userData : null	,
 	listingData : null
   },
-  
+
     revenueByType : [] ,
     orderByType : [],
     totalRevenue : 0,
