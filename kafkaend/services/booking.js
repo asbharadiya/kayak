@@ -120,7 +120,7 @@ function getBillById(msg, callback){
 								res.message = "Fail to get bill from the server";
 								callback(null , res);
 							} else {
-								result.listingData = result1.bookingInfo;
+                result.listingData = result1.bookingInfo;
 								res.code = 200 ;
 								res.status  = 200;
 								res.message = "Success";
@@ -409,7 +409,8 @@ function getBookingById(msg, callback){
                     callback(null , res) ;
                 }else{
                   data.bookingInfo = result1[0].bookingInfo ;
-                  
+                  var listingId = result1[0].listingId ; 
+
                   creditCardModel.find({_id : new ObjectID(creditCard)} , function(err , result2 ){
                       if(err){
                         res.code = 500  ;
@@ -417,11 +418,81 @@ function getBookingById(msg, callback){
                         callback(null , res) ;
                       }else{
                         if(result2.length > 0 ){
-                              data.creditCard = result[0].cardNumber ;
-                               res.code = 200  ;
-                                res.message = "Success"
-                                res.data = data
-                                callback(null , res) ;
+
+                            if(data.commodity == "cars"){
+                              carModel.find({ is_deleted : false , _id : new ObjectID(listingId) }).lean().exec(function(err, resultCar){
+                                  if(err){
+                                      res.code = 500  ;
+                                      res.message = "Fail to get all cars from the server"
+                                      callback(null , res) ;
+                                  }else{
+                                      if(result) {
+                                        
+                                          data.creditCard = result[0].cardNumber ;
+                                          data.carName = resultCar[0].carName; 
+                                          res.code = 200  ;
+                                          res.message = "Success"
+                                          res.data = data
+                                          callback(null , res) ;
+                                      } else {
+                                          res.code = 500  ;
+                                          res.message = "Fail to get all cars from the server"
+                                          callback(null , res) ;
+                                      }
+                                  }
+                              })
+                            }
+                            if(data.commodity == "flights"){
+                              flightModel.find({ is_deleted : false , _id : new ObjectID(listingId) }).lean().exec(function(err, resultCar){
+                                  if(err){
+                                      res.code = 500  ;
+                                      res.message = "Fail to get all cars from the server"
+                                      callback(null , res) ;
+                                  }else{
+                                      if(result) {
+                                         
+                                         
+                                         data.creditCard = result[0].cardNumber ;
+                                          data.flightNumber = resultCar[0].flightNumber; 
+                                           data.flightName = resultCar[0].airline; 
+                                          res.code = 200  ;
+                                          res.message = "Success"
+                                          res.data = data
+                                          callback(null , res) ;
+                                      } else {
+                                          res.code = 500  ;
+                                          res.message = "Fail to get all cars from the server"
+                                          callback(null , res) ;
+                                      }
+                                  }
+                              })
+                            }
+                            if(data.commodity == "hotels"){
+                              hotelModel.find({ is_deleted : false , _id : new ObjectID(listingId) }).lean().exec(function(err, resultCar){
+                                  if(err){
+                                      res.code = 500  ;
+                                      res.message = "Fail to get all cars from the server"
+                                      callback(null , res) ;
+                                  }else{
+                                      if(result) {
+                                         
+                                         
+                                         data.creditCard = result[0].cardNumber ;
+                                          data.hotelName = resultCar[0].hotelName; 
+                                          
+                                          res.code = 200  ;
+                                          res.message = "Success"
+                                          res.data = data
+                                          callback(null , res) ;
+                                      } else {
+                                          res.code = 500  ;
+                                          res.message = "Fail to get all cars from the server"
+                                          callback(null , res) ;
+                                      }
+                                  }
+                              })
+                            }
+                              
                           }else{
                              res.code = 200  ;
                               res.message = "Success"
