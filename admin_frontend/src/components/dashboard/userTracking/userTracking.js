@@ -11,17 +11,17 @@ class UserTracking extends Component {
 		super(props);
 		let bars = [];
 		for (var i = 0; i < 5; i++) {
-			bars.push(<Bar dataKey={"Bookings-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
-			bars.push(<Bar dataKey={"Cars-"+i+"-visit"} stackId="a" fill="#f46b42" />);
-			bars.push(<Bar dataKey={"Flights-"+i+"-visit"} stackId="a" fill="#8884d8" />);
-			bars.push(<Bar dataKey={"Hotels-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
-			bars.push(<Bar dataKey={"Car-listing-"+i+"-visit"} stackId="a" fill="#f46b42" />);
-			bars.push(<Bar dataKey={"Hotel-listing-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
-			bars.push(<Bar dataKey={"Flight-listing-"+i+"-visit"} stackId="a" fill="#8884d8" />);
-			bars.push(<Bar dataKey={"Payment-methods-"+i+"-visit"} stackId="a" fill="#d641f4" />);
-			bars.push(<Bar dataKey={"Home-"+i+"-visit"} stackId="a" fill="#f44176" />);
-			bars.push(<Bar dataKey={"Profile-"+i+"-visit"} stackId="a" fill="#f4cd41" />);
-			bars.push(<Bar dataKey={"Checkout-"+i+"-visit"} stackId="a" fill="#41d6f4" />);
+			bars.push(<Bar key={"Bookings-"+i+"-visit"} dataKey={"Bookings-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar key={"Cars-"+i+"-visit"} dataKey={"Cars-"+i+"-visit"} stackId="a" fill="#f46b42" />);
+			bars.push(<Bar key={"Flights-"+i+"-visit"} dataKey={"Flights-"+i+"-visit"} stackId="a" fill="#8884d8" />);
+			bars.push(<Bar key={"Hotels-"+i+"-visit"} dataKey={"Hotels-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar key={"Car-listing-"+i+"-visit"} dataKey={"Car-listing-"+i+"-visit"} stackId="a" fill="#f46b42" />);
+			bars.push(<Bar key={"Hotel-listing-"+i+"-visit"} dataKey={"Hotel-listing-"+i+"-visit"} stackId="a" fill="#82ca9d" />);
+			bars.push(<Bar key={"Flight-listing-"+i+"-visit"} dataKey={"Flight-listing-"+i+"-visit"} stackId="a" fill="#8884d8" />);
+			bars.push(<Bar key={"Payment-methods-"+i+"-visit"} dataKey={"Payment-methods-"+i+"-visit"} stackId="a" fill="#d641f4" />);
+			bars.push(<Bar key={"Home-"+i+"-visit"} dataKey={"Home-"+i+"-visit"} stackId="a" fill="#f44176" />);
+			bars.push(<Bar key={"Profile-"+i+"-visit"} dataKey={"Profile-"+i+"-visit"} stackId="a" fill="#f4cd41" />);
+			bars.push(<Bar key={"Checkout-"+i+"-visit"} dataKey={"Checkout-"+i+"-visit"} stackId="a" fill="#41d6f4" />);
 	    }
 		this.state = {
 			bars : bars,
