@@ -43,7 +43,7 @@ class FlightComponent extends Component {
             flightUpdateLoading : false ,
             updateErrorMessage : '',
 
-           
+
 
 
         }
@@ -100,7 +100,7 @@ class FlightComponent extends Component {
         })
     }
 
-   
+
 
 
     fetchFlightData(){
@@ -231,11 +231,11 @@ class FlightComponent extends Component {
             this.setState({ updateFlightError : "Please Specify Date on which service will end"})
             return ;
         }
-        if(this.state.firstClassSeats == '' || this.state.businessClassSeats == '' || this.state.economyClassSeats == ''){
+        if(this.state.firstClassSeats === '' || this.state.businessClassSeats === '' || this.state.economyClassSeats === ''){
             this.setState({ updateFlightError : 'Please check SEATS for flight' })
             return
         }
-        if(this.state.firstClassPrice == '' || this.state.businessClassPrice == '' || this.state.economyClassPrice == ''){
+        if(this.state.firstClassPrice === '' || this.state.businessClassPrice === '' || this.state.economyClassPrice === ''){
             this.setState({ updateFlightError : 'Please check PRICES for Corresponsing Flights' })
             return
         }
@@ -348,9 +348,9 @@ class FlightComponent extends Component {
                     </div>
                     <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateFlight}></i></a>
+                        <a className="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateFlight}></i></a>
 
-                        <a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteFlight}></i></a>
+                        <a className="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteFlight}></i></a>
 
                     </div>
 

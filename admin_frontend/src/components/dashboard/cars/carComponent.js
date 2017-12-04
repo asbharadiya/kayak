@@ -28,7 +28,7 @@ class CarComponent extends Component {
             //
             openDeleteModal : false,
             showCarUpdateModal : false ,
-            filename : '' , 
+            filename : '' ,
             carFile : '',
             carCity : '',
             citySearch:''
@@ -85,7 +85,7 @@ class CarComponent extends Component {
 
     closeUpdateCar(){
         this.setState({
-            showCarUpdateModal : false , 
+            showCarUpdateModal : false ,
             updateErrorMessage : ''
         })
     }
@@ -98,7 +98,7 @@ class CarComponent extends Component {
             } else {
                 response.then((res) => {
 
-                    
+
 
 
                     if(res.status === 200){
@@ -241,9 +241,8 @@ class CarComponent extends Component {
                     </div>
                     <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
-
-                        <a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
+                        <a class="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
+                        <a class="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
 
                     </div>
 
@@ -300,7 +299,7 @@ class CarComponent extends Component {
 
                         <div className="form-group col-md-offset-2 col-lg-offset-2 col-sm-offset-2 col-sm-8">
                             <label htmlFor="carname">Upload</label>
-                           
+
                              <div className="input-group image-preview">
                               <input type="text" value={this.state.filename} className="form-control image-preview-filename" disabled="disabled" />
                                    <span className="input-group-btn">
@@ -315,30 +314,30 @@ class CarComponent extends Component {
                                                          <span className="glyphicon glyphicon-remove"></span> Clear
                                                      </button>
                                              }
- 
- 
- 
+
+
+
                                      <div className="btn btn-default image-preview-input">
                                                  <span className="glyphicon glyphicon-folder-open"></span>
                                                  <span className="image-preview-input-title"></span> Browse
                                                  <input type="file" onChange={(e) => {
                                                      var file = e.target.files[0];
- 
- 
+
+
                                                      if(file === undefined){
                                                          return ;
                                                      }
- 
+
                                                      this.setState({ carFile : file , filename : file.name})
- 
+
                                                  }} accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
                                              </div>
- 
+
                                          </span>
- 
+
                              </div>
 
-                            
+
                         </div>
 
 

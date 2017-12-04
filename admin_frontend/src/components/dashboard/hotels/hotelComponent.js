@@ -228,12 +228,12 @@ class HotelComponent extends Component {
                         </div>
                     </div>
                     <div className="col-xs-2 buttonGroup">
-                        <a href="javascript:void(0)"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={() => {
+                        <a classsName="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 showHotelUpdateModal : true
                             })
                         }}></i></a>
-                        <a href="javascript:void(0)"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
+                        <a classsName="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 openDeleteModal : true
                             })

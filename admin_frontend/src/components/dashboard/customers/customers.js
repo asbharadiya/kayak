@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './customers.css';
-import {addCustomer , getAllCustomers } from '../../../actions/customers'
+import { getAllCustomers } from '../../../actions/customers'
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import CustomerComponent  from './customerComponent';
@@ -10,7 +10,7 @@ class Customers extends Component {
         super(props);
         this.state = {
             tempCustomerArray : [] ,
-            arrayToShow : [] 
+            arrayToShow : []
         }
     }
 
@@ -46,7 +46,7 @@ class Customers extends Component {
     }
 
     render() {
-        
+
         return (
 			<div className="row module-content">
 				<div className="search-div col-xs-12">
@@ -56,7 +56,7 @@ class Customers extends Component {
 					<div className="row listHeader">
 						<div className="col-md-10 col-sm-10 col-lg-10 col-xs-10 dataDiv">
 							<div className="col-md-1 col-sm-1 col-lg-1 col-xs-1">
-								
+
 							</div>
 							<div className="col-md-3 col-sm-3 col-lg-3 col-xs-3">
 								<b>Name</b>

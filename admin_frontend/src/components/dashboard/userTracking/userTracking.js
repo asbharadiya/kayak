@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {PieChart, Pie, Legend, Tooltip, LineChart, Line, AreaChart, Area, Brush, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
+import { Legend, Tooltip, XAxis, YAxis, CartesianGrid, BarChart, Bar, Label } from 'recharts';
 import './userTracking.css';
 import * as actions from '../../../actions/userTracking';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 class UserTracking extends Component {
-	
+
 	constructor(props){
 		super(props);
 		let bars = [];
@@ -37,7 +37,7 @@ class UserTracking extends Component {
     componentDidMount(){
         this.props.getUserAnalytics();
     }
-    
+
 	render() {
 		return (
     		<div className="userTrackingpage">

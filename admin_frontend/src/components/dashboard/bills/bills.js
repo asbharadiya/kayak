@@ -13,9 +13,9 @@ class Bills extends Component {
 		super(props);
 		this.state = {
 			bookingId : '' ,
-			createdDate : '', 
+			createdDate : '',
 			_id : '',
-			totalAmount : '', 
+			totalAmount : '',
 			userId : '',
 			listingId : '',
 			listingType : '' ,
@@ -28,7 +28,7 @@ class Bills extends Component {
 		this.props.getAllBills('all' ,'*');
 	}
 
-	componentWillReceiveProps(newProps) { 
+	componentWillReceiveProps(newProps) {
     }
 
     handleSelectBy(param){
@@ -51,12 +51,12 @@ class Bills extends Component {
     }
 
 	render() {
-		
+
 
 		return (
     		<div className="row module-content">
 				 <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 divForHeaders">
-						 
+
 				 	<div className="div-filter-area">
 				 		<div className="radio-options">
                            	<label className="radio-inline">
@@ -77,14 +77,14 @@ class Bills extends Component {
                                        onChange={this.handleSelectBy.bind(this,'month')}/>
                                 Select By Month
                             </label>
-                            
+
                         </div>
 				 	</div>
 
-				 	
+
 				 	<div className="select-category">
 					 	{
-					 		this.state.selectBy == 'date' ? 
+					 		this.state.selectBy === 'date' ?
 					 		<div>
 						 		<div className="field-container date">
 		                            <label>Select Bill Date</label>
@@ -96,10 +96,10 @@ class Bills extends Component {
 		                        </div>
 						 	</div>
 
-						 	: 
+						 	:
 
 						 	(
-						 		this.state.selectBy == 'month' ? 
+						 		this.state.selectBy === 'month' ?
 						 		<div className="month-picker-div">
 						 			<div className="select-month">
 						 				<b>Select Month and Year</b>
@@ -116,10 +116,10 @@ class Bills extends Component {
 
 
 					 	}
-				 	
+
 				 	</div>
 
-				 	
+
 
 
 					 <div className="row listHeader">
@@ -152,7 +152,7 @@ class Bills extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllBills : (category , value) => dispatch(getAllBills( category , value)) 
+    getAllBills : (category , value) => dispatch(getAllBills( category , value))
   };
 }
 
