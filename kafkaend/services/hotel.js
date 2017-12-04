@@ -243,7 +243,7 @@ function getHotelsForCustomer(msg, callback){
 		select: 'hotelName hotelAddress hotelCity hotelZip hotelPhoneNumber hotelEmail hotelStar hotelRating hotelAmenities hotelRooms images',
 		lean: true,
 		page: msg.queryParams.pageNo || 1,
-		limit: 4,
+		limit: 20,
 		sort: sortingObj
 	};
 	console.log("pppppppppppppppppppp"+JSON.stringify(query));

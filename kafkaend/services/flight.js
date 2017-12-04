@@ -216,7 +216,6 @@ function getFlightsForCustomer(msg, callback){
         page: msg.queryParams.pageNo || 1,
         limit: 20
     };
-    console.log(options);
     flightModel.paginate(query,options, function(err, result){
         if(err){
             res.code = 500  ;
