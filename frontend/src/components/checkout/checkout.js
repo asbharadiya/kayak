@@ -90,7 +90,6 @@ class Checkout extends Component {
             })
         } else {
             hotelApis.getHotelById(this.state.id, function(error, response){
-              console.log("response");
                 if(error){
 
                 } else {
@@ -340,9 +339,9 @@ class Checkout extends Component {
                                         this.state.creditCards.length > 0 ? (
                                             this.state.creditCards.map((creditCard , key) => {
                                                 return <div className="radio" key={key}>
-                                                    <label><input type="radio" name="creditcard" value={creditCard.id}
-                                                                  checked={this.state.selectedCreditCard === creditCard.id}
-                                                                  onChange={(id)=>this.onCreditCardSelected(creditCard.id)}/>{creditCard.cardNumber}</label>
+                                                    <label><input type="radio" name="creditcard" value={creditCard._id}
+                                                                  checked={this.state.selectedCreditCard === creditCard._id}
+                                                                  onChange={(id)=>this.onCreditCardSelected(creditCard._id)}/>{creditCard.cardNumber}</label>
                                                 </div>
                                             })
                                         ) : (

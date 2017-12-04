@@ -64,7 +64,7 @@ class SuccessModal extends Component {
                   <div className="form-body">
                     <div className="form-group">
                       <div className="success-congrats"> Congratulations! </div>
-                      <div className="booking-successfull"> <i className="fa fa-check-circle"> </i> Your booking was successful </div>
+                      <div className="booking-successfull"> <i className="fa fa-check-circle orange"> </i> Your booking was successful </div>
                     </div>
                   </div>
                 </Modal.Body>
