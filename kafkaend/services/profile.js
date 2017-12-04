@@ -1,5 +1,6 @@
 var userModel = require('../models/authUsers.js');
 var creditCardModel = require('../models/creditCard.js');
+var ObjectID = require('mongodb').ObjectID;
 
 
 function getProfile(msg, callback){
@@ -79,7 +80,7 @@ function getCreditCards(msg, callback){
 function deleteCreditCardById(msg, callback){
     var res = {};
     
-    creditCardModel.update({is_deleted: false , _id : msg.cardId , userId : msg.user_id}, {isDeleted : true }, { multi: false }, function(err , response){
+    creditCardModel.update({is_deleted: false , _id : new ObjectID(msg.cardId) , userId : msg.user_id}, {is_deleted : true }, { multi: false }, function(err , response){
         if(err){
             res.code = 500 ; 
             res.message = "Error occured while updating  a flight"

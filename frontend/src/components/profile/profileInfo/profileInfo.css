@@ -21,28 +21,3 @@
     font-size: 13px;
     margin-bottom: 15px;
 }
-
-
-.profileModal .modal-dialog {
-    top: 15px;
-    bottom: 15px;
-    margin: 0px auto;
-    left: 0px;
-    right: 0px;
-    position: absolute;
-}
-
-.profileModal .modal-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.profileModal .modal-body {
-    overflow-y: auto;
-    flex: 1;
-}
-
-.profileModal .modal-footer {
-    flex: none;
-}
