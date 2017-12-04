@@ -27,7 +27,7 @@ class HotelRow extends Component {
               { this.props.data.hotelName }
             </div>
             <div className="hotel-address">
-              { this.props.data.hotelCity }, { this.props.data.hotelState }
+              { this.props.data.hotelCity }
             </div>
           </div>
           <div className="number-rating-container col-xs-3 text-right">

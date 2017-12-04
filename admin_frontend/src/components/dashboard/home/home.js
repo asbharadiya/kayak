@@ -19,6 +19,7 @@ class Home extends Component {
 			revenueByTopCmpnyMonth : [],
 			userCount : [],
 			listingCount : [],
+			width : window.innerWidth-400,
 			pieData : [{name: 'Cars', value: 2400}, {name: 'Hotels', value: 4567},
                 {name: 'Flights', value: 1398}],
             lineData : [{name: 'Rosewood Hotels & Resorts', uv: 4000, pv: 9000, amt: 2400}, {name: 'Sandals Resorts', uv: 1800, pv: 7222, amt: 1800},
@@ -119,7 +120,7 @@ class Home extends Component {
 		            <Pie data={this.props.orderByType} cx={200} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" label/>
 		            <Tooltip/>
 	           </PieChart>
-			   <LineChart width={580} height={300} data={this.props.revenueByTopCmpny} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+			   <LineChart width={this.state.width/2} height={300} data={this.props.revenueByTopCmpny} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 				   <XAxis dataKey="name">
 		       		<Label value="Top 10 Revenue Generating Company in last year" offset={0} position="insideBottom" />
 		     	   </XAxis>
@@ -129,7 +130,7 @@ class Home extends Component {
 			       <Legend />
 			       <Line type="monotone" dataKey="totalAmount" stroke="#8884d8" />
 		       </LineChart>
-			   <AreaChart width={580} height={300} data={this.props.revenueByTopCmpnyMonth} syncId="anyId" margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+			   <AreaChart width={this.state.width/2} height={300} data={this.props.revenueByTopCmpnyMonth} syncId="anyId" margin={{top: 5, right: 30, left: 20, bottom: 5}}>
 			   	  <XAxis dataKey="name">
 		       		<Label value="Top 10 Revenue Generating Company in last month" offset={0} position="insideBottom" />
 		     	  </XAxis>
@@ -138,7 +139,7 @@ class Home extends Component {
 		          <Tooltip/>
 		          <Area type='monotone' dataKey='totalAmount' stroke='#82ca9d' fill='#82ca9d' />
 		        </AreaChart>
-		        <BarChart width={1200} height={300} data={this.props.revenueByCity} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+		        <BarChart width={this.state.width} height={300} data={this.props.revenueByCity} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
 		        	<XAxis dataKey="name">
 		        		<Label value="Cities" offset={0} position="insideBottom" />
 		      		</XAxis>

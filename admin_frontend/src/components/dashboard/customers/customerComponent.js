@@ -52,7 +52,7 @@ class CustomerComponent extends Component {
                         </div>
 					</div>
 					<div className="col-md-2 col-sm-2 col-lg-2 col-xs-2 buttonGroup ">
-						<a class="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
+						<a className="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={() => {
                             this.setState({
                                 openDeleteModal : true
                             })

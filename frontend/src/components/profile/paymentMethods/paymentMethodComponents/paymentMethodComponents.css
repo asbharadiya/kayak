@@ -1,37 +1,18 @@
 .profile-panel-body .credit-card-div{
-	padding-top: 10px;
-	padding-bottom: 5px;
-	font-size: 15px ;
-	border-bottom: 1px solid lightgrey
+	padding: 15px 0px 0px;
+	border-bottom: 1px solid #ccc
 
 }
-
 
 .profile-panel-body .credit-card-div label{
 	font-weight: normal
 }
 
 .profile-panel-body .credit-card-div a{
-	color : #D91A1A;
+	color : #ff690f;
 }
 
 
 .profile-panel-body .credit-card-div span{
 	margin-right: 20px
-}
-
-
-.delete-card-confirm{
-	text-align: center;
-
-}
-
-.delete-card-footer{
-	padding: 20px ;
-	text-align: center;
-}
-
-.delete-card-footer .card-delete-cancel{
-	border-radius: 0 ;
-	width: 70px
 }

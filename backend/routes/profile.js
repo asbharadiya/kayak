@@ -13,8 +13,7 @@ function getProfile(req,res){
         if(err) {
             return res.status(500).json({status:500,statusText:"Internal server error"});
         } else {
-        	console.log('Backend Passed' + result.data)
-            return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
+        	return res.status(result.code).json({status:result.code,statusText:result.message,data:result.data});
         }
     });
 }
@@ -24,18 +23,14 @@ function updateProfile(req,res){
 	
 	var obj = {
 			
-		    id : req.body._id,
-		    auth_user_id : req.body.auth_user_id,
+		    auth_user_id : req.session.passport.user._id,
 		    firstName : req.body.firstName,
 		    lastName : req.body.lastName,
 		    address: req.body.address,
 		    city: req.body.city,
 		    state: req.body.state,
 		    zip_code: req.body.zip_code,
-		    phone_number: req.body.phone_number,
-		    profile_image: '',
-		    role: 'USER',
-		    email: req.body.email
+		    phone_number: req.body.phone_number
     }
 	
 	if(req.files == null){
@@ -52,7 +47,7 @@ function updateProfile(req,res){
 	        if(err) {
 	            return res.status(500).json({status: 500, statusText: "Failed to upload images to S3 storage"});
 	        } else {
-	            obj.profile_image = result;
+	            obj.profile_image = result[0];
 	            kafka.make_request(topic_name,'updateProfile',obj, function(err,result){
 	                if(err) {
 	                    return res.status(500).json({status:500,statusText:"Internal server error"});

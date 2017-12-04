@@ -21,7 +21,7 @@ class HotelCheckoutDetails extends Component {
                 <div className="content-name">
                     <div className="col-xs-12 checkout-panel-body-content-head">
                         <span className="hotelName"> {this.props.details.hotelName} </span>
-                        <span className="hotelProperty"> {this.props.details.hotelCity}, {this.props.details.hotelState} - {this.props.details.hotelZip} </span>
+                        <span className="hotelProperty"> {this.props.details.hotelCity} - {this.props.details.hotelZip} </span>
                     </div>
                 </div>
                 <div className="content-name">
@@ -73,7 +73,7 @@ class HotelCheckoutDetails extends Component {
                             <div className="detail-data">
                                 <div> { this.props.details.hotelAddress } </div>
                                 <div> { this.props.details.hotelCity } </div>
-                                <div> { this.props.details.hotelState } - { this.props.details.hotelZip} </div>
+                                <div> { this.props.details.hotelZip} </div>
                             </div>
                         </div>
                         <div className="col-xs-3">

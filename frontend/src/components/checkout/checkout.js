@@ -15,7 +15,6 @@ import * as flightApis from '../../api/flight';
 import * as hotelApis from '../../api/hotel';
 import * as profileApis from '../../api/profile';
 import * as actions from '../../actions/booking';
-import {getUserDetails} from '../../actions/profile'
 import HotelCheckoutSummary from './hotelCheckOutSummary/hotelCheckOutSummary';
 import HotelCheckoutBookingInfo from './hotelCheckoutBookingInfo/hotelCheckoutBookingInfo';
 import SuccessModal from './checkoutSuccess/successModal';
@@ -43,7 +42,7 @@ class Checkout extends Component {
             bookingInfo: null,
 
             //added for profile in CHeckout page to preopulate the data
-            profile : null
+            profile : {}
         }
         this.updateTotal = this.updateTotal.bind(this);
         this.updateBookingInfo = this.updateBookingInfo.bind(this);
@@ -121,9 +120,22 @@ class Checkout extends Component {
             }
         })
 
+        profileApis.getUserDetails(function(error, response){
+            if(error){
 
+            } else {
+                response.then((res) => {
+                    if(res.status === 200){
+                        _this.setState({
+                            profile:res.data[0]
+                        })
+                    }else{
 
-        this.props.getUserDetails();
+                    }
+                })
+            }
+        })
+
 
 
     }
@@ -315,11 +327,11 @@ class Checkout extends Component {
                             <div className="checkout-panel-body">
                                 {
                                     this.state.category === 'cars' ? (
-                                        <CarCheckoutBookingInfo  profile={this.props.profileData[0]} updateBookingInfo={this.updateBookingInfo} queryParams={this.state.queryParams}/>
+                                        <CarCheckoutBookingInfo  profile={this.state.profile} updateBookingInfo={this.updateBookingInfo} queryParams={this.state.queryParams}/>
                                     ) : this.state.category === 'flights' ? (
-                                        <FlightCheckoutBookingInfo  profile={this.props.profileData[0]}  queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
+                                        <FlightCheckoutBookingInfo  profile={this.state.profile}  queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo}/>
                                     ) : (
-                                        <HotelCheckoutBookingInfo profile={this.props.profileData[0]} queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo} />
+                                        <HotelCheckoutBookingInfo profile={this.state.profile} queryParams={this.state.queryParams} updateBookingInfo={this.updateBookingInfo} />
                                     )
                                 }
                             </div>
@@ -430,16 +442,13 @@ function mapDispatchToProps(dispatch) {
     return {
 
 
-        makeBooking : (payload) => dispatch(actions.makeBooking(payload)),
-
-        getUserDetails : () => dispatch(getUserDetails())
-
+        makeBooking : (payload) => dispatch(actions.makeBooking(payload))
     }
 }
 
 function mapStateToProps(state) {
     return {
-        profileData : state.profileReducer.profile
+
     };
 }
 

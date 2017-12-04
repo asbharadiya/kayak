@@ -47,8 +47,8 @@ class PaymentMethods extends Component {
 
 
     trackClick(click, page) {
-      var payload = {'click' : click, 'page' : page};
-      this.props.trackClick(payload);
+        var payload = {'click' : click, 'page' : page};
+        this.props.trackClick(payload);
     }
 
     getNameOnCard(e){
@@ -59,12 +59,12 @@ class PaymentMethods extends Component {
 
     getExpiryDate(e){
 
-    if(e.target.value.length === 2 && e.target.value.indexOf("/") === -1){
+        if(e.target.value.length === 2 && e.target.value.indexOf("/") === -1){
             e.target.value += "/"
         }
 
-         var mm = ( e.target.value.substring(0 , e.target.value.indexOf("/")));
-         var yy = ( e.target.value.substring(e.target.value.indexOf("/") +1, e.target.value.length));
+        var mm = ( e.target.value.substring(0 , e.target.value.indexOf("/")));
+        var yy = ( e.target.value.substring(e.target.value.indexOf("/") +1, e.target.value.length));
 
         if(e.target.value.length < 6 && (!isNaN(mm) && !isNaN(yy)    )){
             this.setState({
@@ -94,39 +94,37 @@ class PaymentMethods extends Component {
 
     saveCard(){
         var _this = this ;
-        console.log(_this.state)
-       if(_this.state.cardNumber === "" || _this.state.cvv === "" || _this.state.nameOnCard === ""  || _this.state.expiryDate === ""){
-        alert("Invalid Card Details");
-        return ;
-       }
+        if(_this.state.cardNumber === "" || _this.state.cvv === "" || _this.state.nameOnCard === ""  || _this.state.expiryDate === ""){
+            alert("Invalid Card Details");
+            return ;
+        }
 
 
-       var _obj = {
+        var _obj = {
             cardNumber : _this.state.cardNumber ,
             cvv : _this.state.cvv ,
             nameOnCard : _this.state.nameOnCard ,
             expiryDate : _this.state.expiryDate
         }
 
-       profileApis.addCreditCard(_obj, function(err , response){
+        profileApis.addCreditCard(_obj, function(err , response){
             if(!err){
                 response.then(res => {
                     if(res.status === 200){
-                        console.log("Successful");
 
                         _this.setState({ cardNumber : '',
-                                        nameOnCard : '',
-                                        expiryDate : '',
-                                        cvv : '' ,
-                                        showCardModal : false
-                                      })
+                            nameOnCard : '',
+                            expiryDate : '',
+                            cvv : '' ,
+                            showCardModal : false
+                        })
 
                         _this.getCreditCardsForUser() ;
 
                     }
                 })
             }
-       })
+        })
 
     }
 
@@ -164,66 +162,56 @@ class PaymentMethods extends Component {
 
         return (
             <div className="profile-panel payments-page-wrapper">
-            	<div className="profile-panel-body">
-            		<div className="col-xs-offset-10 add-card-button-div">
-                        <button onClick={this.showCardModal} className="btn btn-primary btn-kayak">
-                                <i className="fa fa-plus add-card-button" aria-hidden="true"> New card</i>
-                        </button>
+                <div className="profile-panel-body">
+                    <div className="row">
+                        <div className="col-xs-12 text-right">
+                            <button onClick={this.showCardModal} className="btn btn-primary btn-kayak">
+                                <i className="fa fa-plus add-card-button" aria-hidden="true"></i> New card
+                            </button>
+                        </div>
+
+
+                        <div className="col-xs-12">
+                            {creditCardsList}
+                        </div>
                     </div>
 
 
-
-
-
-
-                    <Modal show={this.state.showCardModal}   id="carModal" className="booking-detail-modal">
+                    <Modal show={this.state.showCardModal}  id="carModal" className="profileModal cardModal">
                         <Modal.Body>
-                               <div className="row modal-main-div">
-
-                                         <div className="add-new-card-div col-cs-6">
-                                                    <div className="form-group row">
-                                                        <div className="col-xs-12">
-                                                            <input value={this.state.cardNumber} type="text" className="form-control" placeholder="Card number (XXXX XXXX XXXX XXXX)"
-                                                                onChange={this.getCardNumber.bind(this)}  />
-                                                        </div>
-                                                    </div>
-                                                    <div className="form-group row">
-                                                        <div className="col-xs-12">
-                                                            <input value={this.state.nameOnCard} onChange={this.getNameOnCard.bind(this)} type="text" className="form-control" placeholder="Name on card"
-                                                                  />
-                                                        </div>
-                                                    </div>
-                                                    <div className="form-group row">
-                                                        <div className="col-xs-6">
-                                                            <input value={this.state.expiryDate} onChange={this.getExpiryDate.bind(this)} type="text" className="form-control" placeholder="Expiry date (MM/YY)"
-                                                                   />
-                                                        </div>
-                                                        <div className="col-xs-6">
-                                                            <input type="text" value={this.state.cvv} onChange={this.getCvv.bind(this)} className="form-control" placeholder="CVV"
-                                                                   />
-                                                        </div>
-                                                    </div>
-
-
-                                         </div>
-                                         <div className="add-card-confirm-button-div col-cs-6">
-                                            <button onClick={this.saveCard} className="btn btn-primary btn-kayak button-add">Add card</button>
-                                         </div>
-
-                                          <div className="add-card-confirm-button-div col-cs-6">
-                                            <button onClick={this.hideCardModal} className="btn btn-default button-add">Cancel</button>
-                                         </div>
+                            <div className="form-group row">
+                                <div className="col-xs-12">
+                                    <input value={this.state.cardNumber} type="text" className="form-control" placeholder="Card number (XXXX XXXX XXXX XXXX)"
+                                           onChange={this.getCardNumber.bind(this)}  />
                                 </div>
-
+                            </div>
+                            <div className="form-group row">
+                                <div className="col-xs-12">
+                                    <input value={this.state.nameOnCard} onChange={this.getNameOnCard.bind(this)} type="text" className="form-control" placeholder="Name on card"
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <div className="col-xs-6">
+                                    <input value={this.state.expiryDate} onChange={this.getExpiryDate.bind(this)} type="text" className="form-control" placeholder="Expiry date (MM/YY)"
+                                    />
+                                </div>
+                                <div className="col-xs-6">
+                                    <input type="text" value={this.state.cvv} onChange={this.getCvv.bind(this)} className="form-control" placeholder="CVV"
+                                    />
+                                </div>
+                            </div>
                         </Modal.Body>
+                        <Modal.Footer>
+                            <div className="row">
+                                <div className="col-xs-12">
+                                    <button onClick={this.hideCardModal} className="btn btn-default btn-kayak btn-kayak-default">Cancel</button>
+                                    <button onClick={this.saveCard} className="btn btn-primary btn-kayak">Add card</button>
+                                </div>
+                            </div>
+                        </Modal.Footer>
+
                     </Modal>
-
-
-
-                    <div >
-                        {creditCardsList}
-                    </div>
-
 
 
                 </div>
