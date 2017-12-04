@@ -89,7 +89,8 @@ class Listings extends Component {
 
     applyFilters(filters){
         this.setState({
-            filters:filters
+            filters:filters,
+            listings:[]
         }, function(){
             this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts);
         });
@@ -109,7 +110,8 @@ class Listings extends Component {
 
     applySorts(sorts){
         this.setState({
-            sorts:sorts
+            sorts:sorts,
+            listings:[]
         }, function(){
             this.loadPage(this.state.queryParams,this.state.filters,this.state.sorts);
         });
@@ -180,6 +182,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+    console.log(state);
     return {
         listings:state.listingsReducer.listings.docs,
         totalListings:state.listingsReducer.listings.total,

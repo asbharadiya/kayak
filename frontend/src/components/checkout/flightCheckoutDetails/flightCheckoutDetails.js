@@ -58,10 +58,10 @@ class FlightCheckoutDetails extends Component {
                             <label>Cabin: </label><p>{this.props.queryParams.cabin.toUpperCase()}</p>
                         </div>
                         <div className="info-child">
-                            <label>No of baggage: </label><p>{this.props.details.baggage}</p>
+                            <label>No of baggage: </label><p>{this.props.details.luggage}</p>
                         </div>
                         <div className="info-child">
-                            <label>Free meal included: </label><p>{this.props.details.mealIncluded}</p>
+                            <label>Free meal included: </label><p>{this.props.details.meals ? 'Yes':'No'}</p>
                         </div>
                     </div>
                 </div>
