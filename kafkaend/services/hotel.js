@@ -207,7 +207,7 @@ function getHotelsForCustomer(msg, callback){
 		        hotelRooms : {
 		        	$elemMatch: {
 		        		 priceTotal : {"$lte": msg.queryParams.priceMax || 2000, "$gte": msg.queryParams.priceMin || 0},
-		        		 personPerRoom : Number.parseInt(msg.queryParams.guests) || 2,
+		        		 personPerRoom : {"$gte": Number.parseInt(msg.queryParams.guests)},
 		                 roomType : msg.queryParams.roomType,
 		                 totalAvailable: {
 		                     $gte: 1

@@ -131,10 +131,10 @@ function getRevenueByType(msg, callback){
 								            res.message = "Success";
 								            res.data = {};
 								            res.data.revenueByType = result;
-								            res.data.userCount = result1[0].count;
-								            res.data.hotelCount = result2[0].count;
-								            res.data.flightCount = result3[0].count;
-								            res.data.carCount = result4[0].count;
+								            res.data.userCount = result1 ? result1[0].count : 0;
+								            res.data.hotelCount = result2 ? result2[0].count : 0;
+								            res.data.flightCount = result3 ? result3[0].count : 0;
+								            res.data.carCount = result4 ? result4[0].count : 0;
 								            callback(null , res) ;
 								        }
 						        	});
