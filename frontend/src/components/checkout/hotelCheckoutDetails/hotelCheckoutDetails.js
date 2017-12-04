@@ -26,8 +26,10 @@ class HotelCheckoutDetails extends Component {
                 </div>
                 <div className="content-name">
                     <div className="col-xs-2 checkout-panel-body-content-image">
-                      <img className="hotelImage" src="/assets/images/hotel_placeholder.png"
-                      alt="Vehicle type: Economy - Hyundai Accent or similar"/>
+                      {this.props.details.images[0]?
+                        <img className="hotelImage" src={this.props.details.images[0]} alt="hotel-thumb"></img>
+                      : <img className="hotelImage" src="/assets/images/hotel_placeholder.png" alt="hotel-thumb"></img>
+                      }
                     </div>
                     <div className="col-xs-10 checkout-panel-body-content-data">
                         <div className="col-xs-3">
