@@ -4,14 +4,14 @@ var carModel = require('../models/car.js');
 var analytics = require('./analytics');
 
 //Redis
-/*var redisClient = require('redis').createClient;
-var redis = redisClient(6379, 'localhost');*/
+var redisClient = require('redis').createClient;
+var redis = redisClient(6379, 'localhost');
 
 
 function addCar(msg, callback){
     var res = {};
 
-    console.log("Plasg " , msg)
+    
     if(validator.isNumeric( msg.carQuantity) && validator.isNumeric( msg.dailyRentalValue) && validator.isNumeric( msg.occupancy) )
     {
         var _date = new Date();
@@ -35,7 +35,7 @@ function addCar(msg, callback){
 
         msg.availability = availabilityDateObject ;
 
-        console.log("Message " , msg)
+        
 
 
 
@@ -231,25 +231,39 @@ function getCarsForCustomer(msg, callback){
         sort: sortingObj
     };
 
+    var redisKey= {
+       options : options ,
+       query : query 
+    }
 
 
 
 
-    carModel.paginate(query,options, function(err, result){
-        if(err){
-            res.code = 500  ;
-            res.message = "Fail to get all hotels from the server";
-            callback(null , res) ;
-        }else{
-          	console.log('results');
-        	  console.log(result) ;
-            res.code = 200  ;
-            res.message = "Success";
-            res.data = result;
-            analytics.trackCarPageViews(result);
-            callback(null , res) ;
-        }
-    });
+    redis.get( JSON.stringify(redisKey)  , function(err , reply){
+       if(!err && reply != null){
+            
+               res.code = 200  ;
+               res.message = "Success";
+               res.data = JSON.parse(reply);
+               callback(null , res) ;
+       }else{
+           
+           carModel.paginate(query,options, function(err, result){
+               if(err){
+                   res.code = 500  ;
+                   res.message = "Fail to get all hotels from the server";
+                   callback(null , res) ;
+               }else{
+                   redis.set( JSON.stringify(redisKey)  , JSON.stringify(result)  , 'EX', 30 , function () {
+                       res.code = 200  ;
+                       res.message = "Success";
+                       res.data = result;
+                       callback(null , res) ;
+                   });
+               }
+           });
+       }
+   })
 }
 
 function getCarByIdForCustomer(msg, callback){

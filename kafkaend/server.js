@@ -9,6 +9,8 @@ var profile = require('./services/profile');
 var analytics = require('./services/analytics');
 var mongo = require('./services/mongo');
 var cron = require('./services/cron');
+var redis = require('./services/redis');
+
 
 mongo.createConnectionPool();
 
