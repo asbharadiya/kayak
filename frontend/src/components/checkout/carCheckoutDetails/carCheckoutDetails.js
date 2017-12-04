@@ -52,8 +52,8 @@ class CarCheckoutDetails extends Component {
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 checkout-panel-body-content-image">
-                        <img className="carImage" src="/assets/images/hyundai.png"
-                             alt="Vehicle type: Economy - Hyundai Accent or similar"/>
+                        <img className="carImage" src={ this.props.details.images.length > 0 ? this.props.details.images[0] : "/assets/images/car-placeholder.png" }
+                             alt="car image"/>
                     </div>
                 </div>
             </div>

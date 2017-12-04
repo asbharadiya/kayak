@@ -63,7 +63,7 @@ class Listings extends Component {
             }, function(){
                 this.loadPage(this.state.queryParams);
             });
-        } else {
+        } else if(this.props.currentPage !== newProps.currentPage){
             this.setState({
                 listings:this.state.listings.concat(newProps.listings)
             })
@@ -182,7 +182,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
         listings:state.listingsReducer.listings.docs,
         totalListings:state.listingsReducer.listings.total,
