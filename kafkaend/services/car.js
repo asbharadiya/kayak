@@ -216,13 +216,19 @@ function getCarsForCustomer(msg, callback){
 
     }
 
-
+    var sortingObj = {};
+    if(msg.queryParams.sort=="priceHtoL"){
+        sortingObj["dailyRentalValue"] = -1;
+    } else {
+        sortingObj["dailyRentalValue"] = 1;
+    }
 
     var options = {
         select: 'carType carName occupancy luggage dailyRentalValue images carQuantity',
         lean: true,
-        page: msg.pageNo || 1,
-        limit: 20
+        page: msg.queryParams.pageNo || 1,
+        limit: 20,
+        sort: sortingObj
     };
 
 
