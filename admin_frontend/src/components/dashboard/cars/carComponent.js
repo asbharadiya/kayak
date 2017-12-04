@@ -241,8 +241,8 @@ class CarComponent extends Component {
                     </div>
                     <div className="col-md-3 col-sm-3 col-lg-3 col-xs-3 buttonGroup ">
 
-                        <a class="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
-                        <a class="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
+                        <a className="pointer"><i className="fa fa-pencil-square-o fa-lg edit-icon" aria-hidden="true" onClick={this.openUpdateCar}></i></a>
+                        <a className="pointer"><i className="fa fa-times fa-lg delete-icon" aria-hidden="true" onClick={this.openDeleteCar}></i></a>
 
                     </div>
 
