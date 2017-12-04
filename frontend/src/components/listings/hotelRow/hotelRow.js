@@ -8,13 +8,32 @@ class HotelRow extends Component {
 
   constructor(props){
     super(props) ;
-    var prices = [];
+
+    this.state = {
+       prices : [] ,
+       minFare : 0 ,
+       maxFare : 0
+    }
+   
+  }
+
+  componentWillMount(){
+     var prices = [];
     this.props.data.hotelRooms.forEach(room => {
       prices.push(room.priceTotal);
     })
-    this.minFare = Math.min.apply(null, prices);
-    this.maxFare = Math.max.apply(null, prices);
+    this.setState({ prices : prices , minFare :  Math.min.apply(null, prices) , maxFare : Math.max.apply(null, prices)})
   }
+
+
+  componentWillReceiveProps(newProps){
+     var prices = [];
+    newProps.data.hotelRooms.forEach(room => {
+      prices.push(room.priceTotal);
+    })
+    this.setState({ prices : prices , minFare :  Math.min.apply(null, prices) , maxFare : Math.max.apply(null, prices)})
+  }
+
   render() {
     return (
       <div className="hotels-row col-xs-12 no-padding">
@@ -59,7 +78,7 @@ class HotelRow extends Component {
         </div>
         <div className="price-section col-xs-2 no-padding">
           {
-            this.minFare !== this.maxFare ? <p>${this.minFare} - ${this.maxFare}</p> :  <p>${this.minFare} </p>
+            this.state.minFare !== this.state.maxFare ? <p>${this.state.minFare} - ${this.state.maxFare}</p> :  <p>${this.state.minFare} </p>
         }
 
         <button className="btn btn-primary btn-kayak" onClick={(id)=>this.props.onBookClick(this.props.data.id)}>Book</button>
