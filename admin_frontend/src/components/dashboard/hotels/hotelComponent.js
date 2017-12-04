@@ -207,13 +207,13 @@ class HotelComponent extends Component {
                             {this.props.hotel.hotelName}
                         </div>
                         <div className="col-xs-3">
-                            {this.props.hotel.hotelAddress},
-                            {this.props.hotel.hotelCity},
-                            {this.props.hotel.hotelZip}
+                            <div>{this.props.hotel.hotelAddress}</div>
+                            <div>{this.props.hotel.hotelCity}</div>
+                            <div>{this.props.hotel.hotelZip}</div>
                         </div>
                         <div className=" col-xs-4">
-                            {this.props.hotel.hotelPhoneNumber},
-                            {this.props.hotel.hotelEmail}
+                            <div>{this.props.hotel.hotelPhoneNumber}</div>
+                            <div>{this.props.hotel.hotelEmail}</div>
                         </div>
                         <div className=" col-xs-2">
                             {this.props.hotel.hotelStar}

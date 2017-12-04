@@ -364,7 +364,7 @@ function makeBooking(msg, callback){
 function getBookings(msg, callback){
     var res = {};
     var userid = msg.userId ; 
-     billingModel.find({  userId : userid}, function(err, result){
+     billingModel.find({  userId : userid}, null,{sort: {createdDate: -1}}, function(err, result){
         if(err){
             res.code = 500  ;
             res.message = "Fail to get all Cars from the server"
