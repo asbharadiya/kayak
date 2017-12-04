@@ -28,10 +28,16 @@
 }
 
 .listings-page-wrapper .page-container .center-container .data-container {
-
+    margin: 0px;
 }
 
 .listings-page-wrapper .page-container .center-container .data-container .empty-message {
 	text-align: center;
 	margin: 0px;
+	margin-top: 100px;
+}
+
+.listings-page-wrapper .page-container .center-container .load-more-btn {
+    text-align: center;
+    margin-top: 50px;
 }

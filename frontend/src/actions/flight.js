@@ -2,7 +2,7 @@ import * as api from '../api/flight';
 import * as util from './util';
 
 // Get all flights
-export function getAllFlights(queryParams, filters, sorts) {
+export function getAllFlights(queryParams, filters, sorts, pageNo) {
     var params = queryParams;
     if(filters){
         if(util.toQueryString(filters).length > 0) {
@@ -15,6 +15,9 @@ export function getAllFlights(queryParams, filters, sorts) {
             params += "&";
             params += util.toQueryString(sorts);
         }
+    }
+    if(pageNo){
+        params += "&pageNo="+pageNo;
     }
     return function(dispatch) {
         return api.getAllFlights(params, function(error , response){

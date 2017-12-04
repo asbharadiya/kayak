@@ -2,7 +2,7 @@ import * as api from '../api/hotel';
 import * as util from './util';
 
 // Get all hotels
-export function getAllHotels(queryParams, filters, sorts) {
+export function getAllHotels(queryParams, filters, sorts, pageNo) {
     var params = queryParams;
     if(filters){
         if(util.toQueryString(filters).length > 0) {
@@ -15,6 +15,9 @@ export function getAllHotels(queryParams, filters, sorts) {
             params += "&";
             params += util.toQueryString(sorts);
         }
+    }
+    if(pageNo){
+        params += "&pageNo="+pageNo;
     }
     return function(dispatch) {
         return api.getAllHotels(params, function(error , response){
