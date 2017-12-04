@@ -245,6 +245,7 @@ function getCarsForCustomer(msg, callback){
                res.code = 200  ;
                res.message = "Success";
                res.data = JSON.parse(reply);
+           analytics.trackCarPageViews(res.data);
                callback(null , res) ;
        }else{
            
@@ -258,6 +259,7 @@ function getCarsForCustomer(msg, callback){
                        res.code = 200  ;
                        res.message = "Success";
                        res.data = result;
+                       analytics.trackCarPageViews(result);
                        callback(null , res) ;
                    });
                }

@@ -26,7 +26,7 @@ class CarRow extends Component {
                         </div>
                         <div className="carImageDiv col-lg-5 col-md-5 col-sm-5 col-xs-5">
                             <img className="carImage" src={ this.props.data.images.length > 0 ? this.props.data.images[0] : "/assets/images/car-placeholder.png" }
-                                 alt="Vehicle type: Economy - Hyundai Accent or similar"/>
+                                 alt="car image"/>
                         </div>
                     </div>
                 </div>
