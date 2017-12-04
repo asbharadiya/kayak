@@ -6,5 +6,7 @@
 	"mySqlPassword" : "root",
 	"mySqlDb" : "kayak",
 	"kafkaTopic" : "kayak",
-	"kafkaResponseTopic" : "response_topic"
+	"kafkaResponseTopic" : "response_topic",
+	"redisHost" : "localhost",
+	"redisPort" : "6379"
 }
