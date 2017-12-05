@@ -13,7 +13,7 @@ class FlightsSearchForm extends Component {
 
 	constructor(props) {
 		super(props);
-		const queryParams = queryString.parse(this.props.location.search);
+		const queryParams = queryString.parse(decodeURI(this.props.location.search));
         this.state = {
             source:queryParams.source ? queryParams.source:'',
             dest:queryParams.dest ? queryParams.dest:'',

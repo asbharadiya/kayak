@@ -51,7 +51,7 @@ class Listings extends Component {
     }
 
     componentWillReceiveProps(newProps){
-        if(this.props.location.search !== newProps.location.search){
+        if(decodeURI(this.props.location.search) !== decodeURI(newProps.location.search)){
             this.setState({
                 category : newProps.match.params.category,
                 queryParams : newProps.location.search,
